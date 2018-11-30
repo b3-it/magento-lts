@@ -139,23 +139,44 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			$this->getSession()->setQuoteId($quote->getId());
 		}
 		if ($product = $this->getSession()->getProductToAdd()) {
-			if (($item = $quote->getItemByProduct($product)) !== false) {
-				$this->updateQuote(
-						array(
-								$item->getId() => $item->getDescription()
-						),
-						array(
-								$item->getId() => array('qty' => $item->getQty() * 1 + 1)
-						)
-				);
-				return true;				
-			}
 			$params = new Varien_Object($this->getSession()->getParams());
+			$cartCandidates = $product->getTypeInstance(true)
+				->prepareForCartAdvanced($params, $product, Mage_Catalog_Model_Product_Type_Abstract::PROCESS_MODE_FULL);
+			/**
+			 * If prepare process return one object
+			 */
+			if (!is_array($cartCandidates)) {
+				$cartCandidates = array($cartCandidates);
+			}
+			
+			$_updateQuote = false;
+			foreach ($cartCandidates as $_product) {
+				if (($item = $quote->getItemByProduct($_product)) !== false) {
+					if ($item->getParentItemId() || $item->getParentItem()) {
+						continue;
+					}
+					$this->updateQuote(
+							array(
+									$item->getId() => $item->getDescription()
+							),
+							array(
+									$item->getId() => array('qty' => $item->getQty() * 1 + 1)
+							)
+					);
+					$_updateQuote = true;
+				}
+			}
+			if ($_updateQuote) {
+				return true;
+			}
+			
 			$related = $params->getRelatedProduct();
 			$result = $quote->addProduct($product, $params);
 			
 			if (is_string($result)) {
-				throw new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
+			    $e = new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
+			    $e->setRefererUrl($product->getProductUrl());
+			    throw $e;
 			}
 			if (!empty($related)) {
 				$this->addProductsByIds($quote, explode(',', $related));
@@ -233,8 +254,7 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 		if (!$this->getSession()->hasQuoteId()) {
 			Mage::throwException($this->__('No collection list available'));
 		}
-		
-		$hasChanges = false;
+
 		$errors = array();
 		//$desc und $collection haben die gleichen keys
 		foreach ($collection as $id => $value) {
@@ -256,7 +276,6 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			
 			if (is_null($item)) {
 				//Item wurde entfernt
-				$hasChanges = true;
 				continue;
 			}
 			
@@ -273,11 +292,21 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 				} else {
 					$item->setQtyRequested($value['qty']);
 				}
-			}			
+			}
+
+            // collect errors instead of throwing first one
+            if ($item->getHasError()) {
+                $message = $item->getMessage();
+                if (!in_array($message, $errors)) { // filter duplicate messages
+                    $errors[] = $message;
+                }
+                $item->setData($item->getOrigData());
+                Mage::getSingleton('sidwishlist/session')->setTriggerRecollect(true);
+                $item->setDataChanges(false);
+            }
 			
-			if ($item->hasDataChanges()) {
+			if ($item->hasDataChanges() && empty($errors)) {
 				$item->save();
-				$hasChanges = true;
 			}
 		}
 		
@@ -287,14 +316,12 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			}
 		}
 		
-		//Da andere Benutzer ebenfalls Änderungen gemacht haben könnten
-// 		if ($hasChanges) {
-			$this->getQuote()
-				->setTotalsCollectedFlag(false) //Force recollect
-				->collectTotals()
-				->save()
-			;
-// 		}
+		//Da andere Benutzer ebenfalls Änderungen gemacht haben könnten --> immer ausführen
+        $this->getQuote()
+            ->setTotalsCollectedFlag(false) //Force recollect
+            ->collectTotals()
+            ->save()
+        ;
 		
 		return $this;
 	}

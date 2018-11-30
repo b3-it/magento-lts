@@ -7,7 +7,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Price_Tier
     /**
      * Form element instance
      *
-     * @var Varien_Data_Form_Element
+     * @var Varien_Data_Form_Element_Abstract
      */
     protected $_element;
 

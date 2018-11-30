@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -79,12 +79,20 @@
     .cart-empty {
         @extend .egov-default-message;
 
+        .button {
+            display: inline-block;
+            float: none;
+            padding-top: 15px;
+
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
         p:first-of-type {
             margin-bottom: $global-listmargin;
         }
-    }
-
-    #postcode {
     }
 
     .col2-left-layout {
@@ -94,16 +102,6 @@
                 /* Abstand bei Warenkorb-Anzeige entfernen (-BoxMargin) */
                 position: relative;
                 top: 0 - $global-boxmargin;
-            }
-
-            .cart {
-                .cart-totals-wrapper, .shipping {
-                    .button {
-
-                        &:hover, &:active {
-                        }
-                    }
-                }
             }
         }
     }
@@ -130,6 +128,12 @@
     .cart-totals-wrapper,
     .crosssell {
         width: 50%;
+
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            displax: block;
+            padding: 0;
+        }
     }
 
     .crosssell {
@@ -178,7 +182,7 @@
 
 .cart .page-title {
     margin-bottom: 15px;
-    border-bottom: 1px solid $c-module-border-light;
+    border-bottom: 1px solid $global-active-color;
 
     &:after {
         @include clearfix;
@@ -315,6 +319,10 @@
         font-size: $global-fontsize;
         font-weight: 600;
         margin-bottom: 0;
+
+        @include bp(max-width, $bp-small){
+            overflow: hidden;
+        }
     }
 
     .product-cart-info {
@@ -347,10 +355,16 @@
         font-family: $f-stack-special;
     }
 
+    .cart-total-head {
+        border-radius: 0 4px 0 0;
+    }
+
+    .product-cart-remove,
+    .cart-remove-head,
     .product-cart-image .cart-links,
     .product-cart-info .btn-remove,
     .product-cart-actions .button {
-        display: none;
+        display: none !important;
     }
 
     .product-cart-image {
@@ -423,6 +437,10 @@
         min-width: 50px;
         text-align: center;
 
+        @include bp(max-width, $bp-small) {
+            padding: 10px !important;
+        }
+
         .qty {
             height: 30px;
             border-color: $c-input-border;
@@ -437,6 +455,9 @@
         }
 
         .product-cart-symbols {
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+            }
         }
     }
 
@@ -474,7 +495,7 @@
     }
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
 
     .cart-table {
         colgroup, thead {
@@ -509,14 +530,16 @@
                 padding-left: 15px;
                 margin-bottom: 6px;
 
+                @include bp(max-width, $bp-small) {
+                    margin: 0;
+                }
+
                 .price {
                     font-weight: normal;
                 }
 
                 &:before {
                     content: attr(data-rwd-label) ":";
-                    font-size: $f-size-xs;
-                    font-family: $f-stack-special;
                     padding-right: 5px;
                     text-transform: uppercase;
                 }
@@ -524,6 +547,7 @@
 
             &.product-cart-price {
                 text-align: left;
+                border: 0 $global-active-border 0 0;
             }
         }
 
@@ -621,8 +645,6 @@
         .price,
         .product-cart-price:before {
             font-weight: 500;
-            font-size: $f-size-l;
-            font-family: $f-stack-sans;
         }
 
         .cart-footer-actions {
@@ -631,10 +653,24 @@
 
             #empty_cart_button {
                 float: right;
+
+                @include bp(max-width, $bp-xsmall) {
+                    float: none;
+                    display: block;
+                    width: 100%;
+                    margin: 0 !important;
+                }
             }
 
             .btn-continue {
                 float: left;
+
+                @include bp(max-width, $bp-xsmall) {
+                    float: none;
+                    display: block;
+                    width: 100%;
+                    margin: 0 0 10px 0 !important;
+                }
             }
 
             .btn-update,
@@ -683,12 +719,6 @@
 
     .shipping-desc {
         display: none;
-    }
-
-    .buttons-set {
-        border: none;
-        margin: 0;
-        padding: 0;
     }
 
     .form-list {
@@ -755,20 +785,6 @@
         }
     }
 
-    .shipping-form {
-        .buttons-set {
-            text-align: right;
-
-            button {
-                float: right !important;
-            }
-        }
-    }
-
-    #co-shipping-method-form .buttons-set .button {
-        float: left;
-        margin-left: 0;
-    }
     #co-shipping-method-form .sp-methods dd label {
         border: 1px solid $c-module-border;
         background-color: $c-module-background-hover;

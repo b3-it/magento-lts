@@ -175,7 +175,7 @@ class Sid_Report_Model_Mysql4_Report_Collection extends Mage_Reports_Model_Mysql
     /**
      * Setzt den Kategorienfilter
      * 
-     * @param unknown_type $filter Filter
+     * @param Mage_Core_Model_Input_Filter $filter Filter
      * 
      * @return void
      */
@@ -186,7 +186,7 @@ class Sid_Report_Model_Mysql4_Report_Collection extends Mage_Reports_Model_Mysql
     /**
      * Setzt den Haushaltstellenfilter
      *
-     * @param unknown_type $filter Filter
+     * @param Mage_Core_Model_Input_Filter $filter Filter
      *
      * @return void
      */

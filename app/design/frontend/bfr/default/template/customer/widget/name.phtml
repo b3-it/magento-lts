@@ -80,7 +80,7 @@ For checkout/onepage/shipping.phtml:
           <?php else: ?>
             <select id="<?php echo $this->getFieldId('academic_titel')?>" name="<?php echo $this->getFieldName('academic_titel')?>" title="<?php echo $this->__('Academic Title') ?>" class="<?php echo $this->getValidationClass('academic_titel') ?>" <?php echo $this->getFieldParams() ?>>
               <?php foreach ($this->getAcademicTitleOptions() as $_option): ?>
-                <option value="<?php echo $_option?>"<?php if ($this->getObject()->getAcademicTitle()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
+                <option value="<?php echo $_option?>"<?php if ($this->getObject()->getAcademicTitel()==$_option):?> selected="selected"<?php endif; ?>><?php echo $this->__($_option)?></option>
               <?php endforeach; ?>
             </select>
           <?php endif; ?>

@@ -132,15 +132,14 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 						return;
 					}
 				}
-					
+				
 				if (isset($post[Egovs_ProductFile_Helper_Data::PRODUCT_FILE_DESCRIPTION])) {
 					$product->setProductfiledescription($post[Egovs_ProductFile_Helper_Data::PRODUCT_FILE_DESCRIPTION]);
 				}
-					
 			} catch(Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($helper->__($e->getMessage()));
 			}
-				
+			
 		}
 	}
 }

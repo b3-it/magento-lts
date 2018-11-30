@@ -1,0 +1,213 @@
+﻿﻿<?php
+/**
+ * @category    design
+ * @package     dwd_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Temlate for Mage_Customer_Block_Address_Book block
+ * @var $this Mage_Customer_Block_Address_Book
+ */
+$customer = Mage::getSingleton('customer/session')->getCustomer();
+$shippingIsBilling = false;
+$billingIsBase = false;
+$shippingIsBase = false;
+if($customer->getDefaultShipping()!= null &&  $customer->getDefaultBilling() != null)
+{
+	$shippingIsBilling = $customer->getDefaultShipping() == $customer->getDefaultBilling();
+}
+if($customer->getDefaultBilling() != null &&  $customer->getBaseAddress() != null)
+{
+	$billingIsBase =  $customer->getBaseAddress() == $customer->getDefaultBilling();
+}
+if($customer->getDefaultShipping()!= null &&  $customer->getBaseAddress() != null)
+{
+	$shippingIsBase =  $customer->getDefaultShipping() == $customer->getBaseAddress();
+}
+?>
+<div class="page-title">
+    <h1>
+        <?php echo $this->__('Address Book') ?>
+    </h1>
+</div>
+<div class="new-adress-button">
+    <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>';">
+        <?php echo $this->__('Add New Address') ?>
+    </button>
+</div>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<!--Sprungziel Tastatursteuerung -->
+<div id="jumptarget<?php echo $this->getNameInLayout();?>" class="col2-set addresses-list">
+    <div class="col-1 addresses-primary">
+        <h2>
+            <?php echo $this->__('Default Addresses') ?>
+        </h2>
+        <?php if($_pAddress = Mage::getSingleton('customer/session')->getCustomer()->getBaseAddress()): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Base Address')?>
+                    <?php if($billingIsBase) echo "<br />".$this->__('Default Billing Address');?>
+                    <?php if($shippingIsBase) echo "<br />".$this->__('Default Shipping Address') ?>
+                    <span class="spacer"> | </span>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                    <a class="egov-pencile"
+                       href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>"
+                       title="<?php echo $this->__('Edit Base Address'); ?>"> </a>
+                  <?php else: ?>
+                    <span class="locked_address_text egov-password">
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
+                    </span>
+                  <?php endif;?>
+                    
+
+                </h3>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>
+                </address>
+            </div>
+        </div>
+        <?php endif;?>
+
+        <?php if(($_pAddress = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()) && !$billingIsBase): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Default Billing Address') ?>
+					<?php if($shippingIsBilling) echo "<br />" . $this->__('Default Shipping Address') ?>
+                    <span class="spacer"> | </span>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                    <?php if(!$shippingIsBilling) $_link_text = $this->__('Change Billing Address'); else $_link_text = $this->__('Change Default Address'); ?>
+                    <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" title="<?php echo $_link_text; ?>"> </a>
+                  <?php else: ?>
+                    <span class="locked_address_text egov-password">
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
+                    </span>
+                  <?php endif;?>
+                    
+                    
+                </h3>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>
+                </address>
+            </div>
+        </div>
+        <?php endif;?>
+        <?php if(($_pAddress = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) && !$shippingIsBase  && !$shippingIsBilling): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Default Shipping Address') ?>
+                    <span class="spacer"> | </span>
+                  <?php if(!$this->rejectAddressEditing($_pAddress)):?>
+                    <a class="egov-pencile" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>" title="<?php echo $this->__('Edit Base Address'); ?>"> </a>
+                  <?php else: ?>
+                    <span class="locked_address_text egov-password">
+                        <span>
+                            <?php echo $this->getLockedAddressText();?>
+                        </span>
+                    </span>
+                  <?php endif;?>
+
+                </h3>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddress)) ?>
+                </address>
+            </div>
+        </div>
+        <?php endif ?>
+
+        <?php if((!Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()) &&  !$billingIsBase): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Default Billing Address') ?>
+                </h3>
+            </div>
+            <div class="box-content">
+                <?php echo $this->__('You have no default billing address in your address book.') ?>
+            </div>
+        </div>
+        <?php endif ?>
+
+        <?php if((!Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()) &&  !$shippingIsBase  && !$shippingIsBilling): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Default Shipping Address') ?>
+                </h3>
+            </div>
+            <div class="box-content">
+                <?php echo $this->__('You have no default shipping address in your address book.') ?>
+            </div>
+        </div>
+        <?php endif ?>
+    </div>
+
+    <div class="col-2 addresses-additional">
+        <h2>
+            <?php echo $this->__('Additional Address Entries') ?>
+        </h2>
+
+        <?php if($_pAddress = $this->getAdditionalAddresses()): ?>
+        <?php foreach($_pAddress as $_address): ?>
+        <div class="box">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Edit Address') ?>
+                    <span class="spacer">|</span>
+                    <a class="egov-pencile" href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>" title="<?php echo $this->__('Edit Address') ?>"> </a>
+                    <span class="spacer">|</span>
+                    <a class="egov-delete" href="javascript:void(0);" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');" title="<?php echo $this->__('Delete Address') ?>"> </a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <address>
+                    <?php echo $this->getAddressHtml($_address) ?>
+                </address>
+            </div>
+        </div>
+        <?php endforeach; ?>
+        <?php else: ?>
+        <div class="box">
+            <div class="box-content">
+                <?php echo $this->__('You have no additional address entries in your address book.') ?>
+            </div>
+        </div>
+        <?php endif ?>
+    </div>
+</div>
+<div class="buttons-set">
+    <button class="button back-button egov-float-left" title="<?php echo $this->__('Back') ?>" onclick="window.location.href='<?php echo $this->escapeUrl($this->getBackUrl()) ?>'">
+        <small>&laquo; </small>
+        <?php echo $this->__('Back') ?>
+    </button>
+</div>
+
+
+<script type="text/javascript">
+//<![CDATA[
+    function deleteAddress(addressId) {
+        if(confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Are you sure you want to delete this address?')) ?>')) {
+            window.location='<?php echo $this->getDeleteUrl() ?>id/'+addressId;
+        }
+        return false;
+    }
+
+    $j('.my-account ul.messages').delay(10000).fadeOut('slow');
+//]]>
+</script>

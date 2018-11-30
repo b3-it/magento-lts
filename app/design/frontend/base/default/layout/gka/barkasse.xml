@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -33,7 +34,11 @@
 
     <customer_account>
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="gka_barkasse"><name>kassenbuch_journal</name><path>gka_barkasse/kassenbuch_journal/index</path><label>Kassenbuch Journal</label></action>
+            <action method="addLink" translate="label" module="gka_barkasse">
+                <name>kassenbuch_journal</name>
+                <path>gka_barkasse/kassenbuch_journal/index</path>
+                <label>Cash Journal</label>
+            </action>
         </reference>
     </customer_account>
 
@@ -53,6 +58,10 @@
         <reference name="head">
             <action method="addJs"><script>mage/adminhtml/grid.js</script></action>
             <action method="addJs"><script>mage/adminhtml/hash.js</script></action>
+             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml" />
         </reference>
     </gka_barkasse_kassenbuch_journal_index>
     <gka_barkasse_kassenbuch_journalitems_index translate="label">

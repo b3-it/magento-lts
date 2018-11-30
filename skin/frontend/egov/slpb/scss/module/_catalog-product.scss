@@ -5,6 +5,10 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+#product-attribute-row-delivery_time {
+	display: none;
+}
+
 .catalog-product-view,
 .catalog-category-view {
     .main-container {
@@ -398,6 +402,10 @@
         &:after {
             @include clearfix;
         }
+        
+        .delivery-time {
+            display: none;
+        }
     }
 
     .product-name {
@@ -444,6 +452,10 @@
         .ratings {
             margin-bottom: 8px;
         }
+        
+        .tax-details {
+            display: none;
+        }
 
         .price-box {
             margin-top: 0;
@@ -451,7 +463,7 @@
             .price-from, .price-to {
                 padding: 10px 0;
             }
-                        .old-price,
+            .old-price,
             .special-price,
             .regular-price {
                 padding-right: 0;
@@ -461,8 +473,8 @@
             .regular-price .price,
             .special-price .price,
             .full-product-price .price {
-                color: $global-price-normal-color;
-                font-size: 24px;
+                color: $global-fontcolor-dark;
+                font-size: $global-fontsize;
             }
 
             .special-price {
@@ -496,7 +508,9 @@
                     font-weight: bold;
                 }
             }
-
+        }
+        .slpb-lieferung-hinweis a {
+            display: block;
         }
     }
 
@@ -1211,7 +1225,7 @@
 
 .product-options-bottom .tier-prices .price,
 .product-options-bottom .tier-prices .benefit {
-    color: $global-price-normal-color;
+    color: $global-fontcolor-dark;
 }
 
 /* "display: none" should be removed if products on site have a long list of product options and those product options */

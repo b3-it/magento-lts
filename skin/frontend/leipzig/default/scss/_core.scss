@@ -1,0 +1,108 @@
+﻿//
+// @category    design
+// @package     leipzig_default
+// @copyright   Copyright (c) 2017 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// Browser Resets
+@import "../../../egov/default/scss/vendor/normalize";
+@import "../../../egov/default/scss/core/reset";
+
+
+// ----------------------------------------------
+// EGOV-Definitionen
+//    ACHTUNG!!!
+//    Variablen werden in "_framework.scss" eingebunden
+@import "../../../egov/default/scss/egov/bitv";
+@import "../../../egov/default/scss/egov/video";
+@import "../../../egov/default/scss/egov/egov-base";
+@import "../../../egov/default/scss/egov/fa-icons";
+@import "../../../egov/default/scss/egov/mp-checkout";
+@import "../../../egov/default/scss/egov/checkiban";
+@import "../../../egov/default/scss/egov/silver-track";
+@import "../../../egov/default/scss/egov/credit-cards";
+@import "../../../egov/default/scss/egov/mobile-switch";
+
+
+// ----------------------------------------------
+// Core
+@import "../../../egov/default/scss/core/common";
+
+
+// ----------------------------------------------
+// Vendor
+
+
+// ----------------------------------------------
+// Layout
+@import "../../../egov/default/scss/layout/button-set";
+@import "../../../egov/default/scss/layout/buttons";
+@import "../../../egov/default/scss/layout/global";
+@import "../../../egov/default/scss/layout/header";
+@import "../../../egov/default/scss/layout/header-nav";
+@import "../../../egov/default/scss/layout/header-search";
+@import "../../../egov/default/scss/layout/header-account";
+@import "../../../egov/default/scss/layout/header-cart";
+@import "../../../egov/default/scss/layout/footer";
+@import "../../../egov/default/scss/layout/marginal-blocks";
+
+
+// ----------------------------------------------
+// Modules
+
+// The sort order here is important for two reasons:
+//  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
+//  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
+//     so we should try not to change this order once it is in place
+@import "../../../egov/default/scss/module/select-language";
+@import "../../../egov/default/scss/module/product-list";
+@import "../../../egov/default/scss/module/catalog-product";
+@import "../../../egov/default/scss/module/catalog-msrp";
+@import "../../../egov/default/scss/module/catalog-seo-sitemap-category";
+@import "../../../egov/default/scss/module/catalog-compare";
+@import "../../../egov/default/scss/module/catalogsearch-advanced-result";
+@import "../../../egov/default/scss/module/catalogsearch-term-popular";
+@import "../../../egov/default/scss/module/checkout-cart";
+@import "../../../egov/default/scss/module/checkout-onepage";
+@import "../../../egov/default/scss/module/checkout-success";
+@import "../../../egov/default/scss/module/configurableswatches";
+@import "../../../egov/default/scss/module/customer";
+@import "../../../egov/default/scss/module/customer-account-forgotpassword";
+@import "../../../egov/default/scss/module/contacts";
+@import "../../../egov/default/scss/module/egovs-checkout-multipage-login";
+@import "../../../egov/default/scss/module/paypal";
+@import "../../../egov/default/scss/module/review";
+@import "../../../egov/default/scss/module/sales-order-print";
+@import "../../../egov/default/scss/module/slideshow";
+@import "../../../egov/default/scss/module/wishlist";
+@import "../../../egov/default/scss/module/checkout-cart-minicart";
+@import "../../../egov/default/scss/module/search";
+@import "../../../egov/default/scss/module/account-reviews";
+@import "../../../egov/default/scss/module/account-login";
+@import "../../../egov/default/scss/module/cms";
+@import "../../../egov/default/scss/module/pricing_conditions";
+@import "../../../egov/default/scss/module/cookies";
+@import "../../../egov/default/scss/module/sales-guest-form";
+@import "../../../egov/default/scss/module/tags";
+@import "../../../egov/default/scss/module/captcha";
+@import "../../../egov/default/scss/module/account-orders";
+@import "../../../egov/default/scss/module/recurring-profiles";
+@import "../../../egov/default/scss/module/billing-agreements";
+@import "../../../egov/default/scss/module/popular-terms";
+@import "../../../egov/default/scss/module/widget";
+@import "../../../egov/default/scss/module/checkout-multi-address";
+@import "../../../egov/default/scss/module/my-account";
+@import "../../../egov/default/scss/module/my-recent-tags";
+@import "../../../egov/default/scss/module/sid-wishlist";
+@import "../../../egov/default/scss/module/grid-table";
+@import "../../../egov/default/scss/module/sales-order-printshipment";
+
+// ----------------------------------------------
+// Override
+

@@ -38,7 +38,7 @@
             <p><?php echo $this->__('Enter your destination to get a shipping estimate.') ?></p>
             <ul class="form-list">
                 <li>
-                    <label for="country" ><?php echo $this->__('Country') ?></label>
+                    <label for="country"><?php echo $this->__('Country') ?></label>
                     <div class="input-box">
                         <?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($this->getEstimateCountryId()) ?>
                     </div>
@@ -52,132 +52,70 @@
                 </li>
             <?php endif; ?>
                 <li>
-                    <label for="postcode"<?php if ($this->isZipCodeRequired()) echo ' class="required"' ?>><?php if ($this->isZipCodeRequired()) echo '<em>*</em>' ?><?php echo $this->__('Zip/Postal Code') ?></label>
+                    <label for="postcode" id="label-postcode"<?php if ($this->isZipCodeRequired()) echo ' class="required"' ?>><?php if ($this->isZipCodeRequired()) echo '<em>*</em>' ?><?php echo $this->__('Zip/Postal Code') ?></label>
                     <div class="input-box">
-                        <input class="input-text validate-postcode<?php if ($this->isZipCodeRequired()):?> required-entry<?php endif;?>" type="text" id="postcode" name="estimate_postcode" value="<?php echo $this->htmlEscape($this->getEstimatePostcode()) ?>" />
+                        <input id="postcode" type="text" name="estimate_postcode" class="input-text validate-postcode<?php if ($this->isZipCodeRequired()) echo ' required-entry'; ?>" value="<?php echo $this->htmlEscape($this->getEstimatePostcode()) ?>" />
                     </div>
                 </li>
             </ul>
-            <!--
-            <div class="buttons-set">
-                <button type="button" title="<?php echo $this->__('Get a Quote') ?>" onclick="coShippingMethodForm.submit()" class="button"><span><span><?php echo $this->__('xGet a Quote') ?></span></span></button>
-                <button type="submit" title="<?php echo $this->__('Get a Quote') ?>" class="button"><span><span><?php echo $this->__('Get a Quote') ?></span></span></button>
-            </div>
-
-       -->
-
-<div id="estimateRate">
-        <?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
-			<?php if(count($_shippingRateGroups) > 1):?>
-            <dl class="sp-methods">
-                <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
-                    <dt><?php echo $this->getCarrierName($code) ?></dt>
-                    <dd>
-                        <ul>
-                        <?php foreach ($_rates as $_rate): ?>
-                            <li<?php if ($_rate->getErrorMessage()) echo ' class="error-msg"';?>>
-                               <?php if ($_rate->getErrorMessage()): ?>
-                                    <?php echo $_rate->getErrorMessage() ?>
-                               <?php else: ?>
-                                    <input name="estimate_method" type="radio" value="<?php echo $this->htmlEscape($_rate->getCode()) ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio" />
-                                    <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $_rate->getMethodTitle() ?>
-                                    <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                                    <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                                    <?php echo $_excl; ?>
-                                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                                    <?php endif; ?>
-                                    </label>
-                               <?php endif ?>
-                            </li>
-                        <?php endforeach; ?>
-                        </ul>
-                    </dd>
-                <?php endforeach; ?>
-            </dl>
-            <?php endif; ?>
-            <?php else:?>
-             <?php $zip = $this->getEstimatePostcode(); if (empty($zip)) {
-            		echo $this->__('Calculation of shipping cost requires postcode!'); 
+            <div id="estimateRate">
+              <?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
+			   <?php if(count($_shippingRateGroups) > 1):?>
+                <dl class="sp-methods">
+                    <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+                        <dt><?php echo $this->getCarrierName($code) ?></dt>
+                        <dd>
+                            <ul>
+                            <?php foreach ($_rates as $_rate): ?>
+                                <li<?php if ($_rate->getErrorMessage()) echo ' class="error-msg"';?>>
+                                   <?php if ($_rate->getErrorMessage()): ?>
+                                        <?php echo $_rate->getErrorMessage() ?>
+                                   <?php else: ?>
+                                        <input name="estimate_method" type="radio" value="<?php echo $this->htmlEscape($_rate->getCode()) ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio" />
+                                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $_rate->getMethodTitle() ?>
+                                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                        <?php echo $_excl; ?>
+                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                        <?php endif; ?>
+                                        </label>
+                                   <?php endif ?>
+                                </li>
+                            <?php endforeach; ?>
+                            </ul>
+                        </dd>
+                    <?php endforeach; ?>
+                </dl>
+               <?php endif; ?>
+              <?php else:?>
+              <?php
+                $zip = $this->getEstimatePostcode();
+                if (empty($zip)) {
+            		echo $this->__('Calculation of shipping cost requires postcode!');
 				} else{
 					echo $this->__('No Valid Shipping Method found!');
 				}?>
-          <?php endif; ?>
-
-</div>
-
-
+              <?php endif; ?>
+            </div>
             <div class="buttons-set" >
                 <div id="update_total">
-                    <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button" value="<?php echo $this->__('Update Total') ?>">
-                        <span><span>
-                            <?php echo $this->__('Update shipping cost') ?>
-                        </span></span>
+                    <button type="submit" class="button" title="<?php echo $this->__('Update Total') ?>" value="<?php echo $this->__('Update Total') ?>">
+                        <?php echo $this->__('Update shipping cost') ?>
                     </button>
-                </div>
-                <div id="update_total_js" class="jsunsichtbar">
-                	 <button type="button" title="<?php echo $this->__('Get a Quote') ?>" onclick="coShippingMethodForm.submit()" class="button">
-                        <span><span>
-                            <?php echo $this->__('Update shipping cost') ?>
-                        </span></span>
-                	 </button>
                 </div>
             </div>
         </form>
+        <?php $isSecure = Mage::app()->getFrontController()->getRequest()->isSecure(); ?>
         <script type="text/javascript">
-            $('update_total').addClassName('jsunsichtbar');
-            $('update_total_js').removeClassName('jsunsichtbar');
-
             var coShippingMethodForm = new VarienForm('shipping-zip-form');
-            var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true) ?>;
-
-            coShippingMethodForm.submit = function () {
-                var country = $F('country');
-                var optionalZip = false;
-
-				        if($('loading-mask'))
-				        {
-				            $('loading-mask').show();
-				        }
-
-                for (i=0; i < countriesWithOptionalZip.length; i++) {
-                    if (countriesWithOptionalZip[i] == country) {
-                        optionalZip = true;
-                    }
-                }
-
-                if (optionalZip) {
-                    $('postcode').removeClassName('required-entry');
-                }
-                else {
-                    $('postcode').addClassName('required-entry');
-                }
-
-                new Ajax.Request('<?php echo $this->getUrl('egovs_shipment/cart/estimate/')?>', {
-                    parameters: Form.serialize('shipping-zip-form'),
-              	    onSuccess: function(response) {
-              	        $('estimateRate').update(response.responseText);
-
-	                      new Ajax.Request('<?php echo $this->getUrl('egovs_shipment/cart/totals/')?>', {
-	                    	  parameters: Form.serialize('shipping-zip-form'),
-	                          onSuccess: function(response) {
-	                              if($('loading-mask'))
-	                              {
-	                            	    $('loading-mask').hide();
-	                              }
-	                              $('shopping-cart-totals-table').update(response.responseText);
-	                      	  },
-	                      	  onFailure: function(){
-	                              if($('loading-mask'))
-	                              {
-	                            	    $('loading-mask').hide();
-	                              }
-	                      	  }
-	                      });
-                    }
-                });
-            }
+            var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true); ?>;
+            var urlEstimate = '<?php echo $this->getUrl('egovs_shipment/cart/estimate/', array('_secure' => $isSecure)); ?>';
+            var urlTotals = '<?php echo $this->getUrl('egovs_shipment/cart/totals/', array('_secure' => $isSecure)); ?>';
+            var btnUpdateTitle = '<?php echo $this->__('Get a Quote') ?>';
+            var btnUpdateCaption = '<?php echo $this->__('Update shipping cost') ?>';
         </script>
+        <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.updateShippingCoasts.js"></script>
     </div>
 </div>
 <?php endif;?>

@@ -25,7 +25,7 @@
 .category-products {
     position: relative;
     top: -32px;
-    
+
     @include bp(max-width, $bp-mobil) {
         top: -15px;
     }
@@ -59,12 +59,12 @@
 #suggest, #list {
      display: block;
      width: 100%;
-     
+
      input, select, #stationenListe-button {
          margin: 0;
          width: 100%;
      }
-     
+
      @include bp(max-width, $bp-mobil) {
          display: block;
          width: 100%;
@@ -112,15 +112,91 @@
     top: -20px;
     z-index: 1000;
 }
-.olPopupContent {
+
+.ol-popup {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 15px 25px 15px 15px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.ol-popup-content {
+    min-width: 220px;
+    max-height: 200px;
+    overflow-x: auto;
+}
+
+.ol-popup-closer {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 150%;
+    padding: 0 4px;
+    color: gray;
+    text-decoration: none;
+}
+
+.ol-popup-closer:after {
+    content: "\2716";
+}
+
+.ol-popup div.infoResult {
+    min-width: 130px;
+}
+
+.ol-popup div.infoResult p {
+    padding: 0.1em;
+    margin: 0;
+}
+
+.ol-popup-content h3 {
+    margin: 0.25em 0;
+}
+
+.ol-popup.marker {
+    margin-bottom: 30px;
+}
+
+
+.ol-popup-content {
 	background-color: $grundfarbe-weiss;
-	
+
 	.olLayerGeoRSSTitle, .olLayerGeoRSSClose {
 	    display: block;
 	    background-color: $grundfarbe-blau;
 	    color: $grundfarbe-weiss;
 	    padding: 5px 50px 5px 10px;
 	}
+    .olLayerGeoRSSTitle > span {
+       font-weight: bold;
+    }
 	.olLayerGeoRSSClose {
 	    @include hover-blau-weiss;
 	    cursor: pointer;
@@ -136,7 +212,7 @@
 	    width: 100%;
 	    height: 75%;
 	    border: $global-active-border solid $grundfarbe-weiss;
-	    
+
 	    span {
 		    @include grau-hover-blau;
 		    cursor: pointer;
@@ -145,8 +221,8 @@
 		    height: 51px;
 		    position: relative;
 		    top: 35%;
-		    display: inline-block;
-		    margin: 10px;
+		    display: block;
+		    margin: 10px auto;
 		}
 	}
 }
@@ -156,18 +232,18 @@
  * ============================================ */
 #quick_autocomplete {
     z-index: 9999;
-    
+
     ul {
         width: 100%;
     }
-    
+
     li {
         display: inline-block;
         width: 33%;
-        
+
         @include bp(max-width, $bp-mobil) {
             width: 48%;
-            
+
             &:nth-child(2n+0) {
             	margin-left: 4%;
         	}
@@ -198,7 +274,7 @@
 .col3-layout {
     .category-products, .product-view {
         width: $global-content-3col-percent;
-        
+
         @include bp(max-width, $bp-medium) {
         	width: 100%;
         }
@@ -222,12 +298,12 @@
 	}
 	.validation-failed {
 	    border-color: $global-warning-color !important;
-	    
+
 	    label {
 	        color: $global-warning-color;
 	    }
 	}
-	
+
     .col1-layout {
         .col-main {
             padding-top: 13px;
@@ -298,7 +374,7 @@
             position: absolute;
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
-            
+
             @include bp(max-width, $bp-mobil) {
             	position: relative;
             	top: auto;
@@ -333,7 +409,7 @@
                 height: 100%;
             }
         }
-        
+
         .add-to-cart {
             @include bp(max-width, $global-fullpage-width) {
                 padding: 10px 5px;
@@ -367,7 +443,7 @@
                 width: 70%;
                 float: none;
             }
-            
+
             span.egov-cart {
                 &:before {
                     @include bp(max-width, $global-fullpage-width) {
@@ -376,7 +452,7 @@
                 }
             }
         }
-       
+
         .product-img-box, .short-description, .product-shop {
             display: table-cell;
             vertical-align: top;
@@ -385,11 +461,11 @@
             line-height: 1rem;
             color: $textfarbe-mittel;
         }
-        
+
         .product-img-box {
             padding-right: 30px;
             width: 27.5%;
-            
+
             @include bp(max-width, $bp-mobil) {
                 display: none;
             }
@@ -397,7 +473,7 @@
         .mobile-product-img-box {
             display: none;
             max-height: 190px;
-            
+
             @include bp(max-width, $bp-mobil) {
                 display: inline;
                 float: left;
@@ -406,15 +482,17 @@
                 top: -0.1rem;
                 width: 40%;
             }
-            
+
             img {
-               height: 170px;
+               height: 100%;
+               max-width: 100%;
+               max-height: 180px;
             }
         }
-        
+
         .short-description {
             padding-right: 20px;
-            
+
             @include bp(max-width, $bp-mobil) {
                 display: block;
                 min-height: 200px;
@@ -424,7 +502,7 @@
         .product-shop {
             width: 30.5%;
             text-align: center;
-            
+
             @include bp(max-width, $global-fullpage-width) {
                 display: block;
                 width: 100%;
@@ -432,7 +510,7 @@
                 padding: 0;
             }
         }
-        
+
         .short-description-title {
             font-weight: bold;
         }
@@ -469,7 +547,7 @@
             .type-checkbox {
                 vertical-align: top;
                 display: block;
-                
+
                 .options-list li {
                     display: inline-block;
                     width: 48%;
@@ -531,18 +609,18 @@
 .product-view {
     #grouped-product-avalible-moved {
         display: none;
-        font-size: 0.9rem;        
-        
+        font-size: 0.9rem;
+
         span.in-stock, span.not-in-stock, .value {
             font-size: 1.2rem;
             color: $grundfarbe-blau;
         }
-        
+
         .label {
             font-size: 0.9rem;
         }
     }
-    
+
     .required {
         color: $global-warning-color;
 
@@ -759,16 +837,16 @@
     form > div.price-box, form > span.tax-details {
         display: none;
     }
-    
+
     #add-to-cart-top, .add-to-cart {
         background-color: $grundfarbe-blgr;
 	    padding: 10px 5px;
-	    
+
 	    .input-text {
 	        padding: 10px;
 	        border-color: $grundfarbe-blau;
 	        margin: 7px 0;
-	        
+
 	        @include bp(max-width, $global-fullpage-width) {
 	            padding: 10px 3px;
 	        }
@@ -777,15 +855,16 @@
 	    .button {
 	        width: 100px;
 	        padding: 7px 5px;
-	        
+	        height: 58px;
+
 	        @include bp(max-width, $global-fullpage-width) {
 	            float: none !important;
-	            width: 200px !important;
+	            width: 180px !important;
 	            padding: 10px 5px !important;
 	        }
 	    }
 	}
-	
+
 	#add-to-cart-top {
         width: 100%;
 
@@ -795,32 +874,33 @@
 
 	    .input-text {
 	        width: 20%;
-	        
+
 	        @include bp(max-width, $global-fullpage-width) {
 	            width: 10%;
 	        }
 	    }
 	}
-	
+
 	.add-to-cart {
 	    position: relative;
         top: -15px;
 	    width: 260px;
-	
+
 	    .button {
 	        width: 120px;
 	        padding: 7px 20px;
+	        height: 58px;
 	    }
 
 	    .input-text {
             width: 30%;
-	        
+
 	        @include bp(max-width, $global-fullpage-width) {
 	             width: 10%;
 	        }
 	    }
 	}
-	
+
 	.background-transparent {
 	    background: transparent;
 	    padding: 0;
@@ -839,7 +919,7 @@
     .add-to-cart .qty-wrapper .qty {
         height: 40px;
         width: 65%;
-        height: 51px;            
+        height: 51px;
     }
 
     .alert-price,
@@ -969,16 +1049,16 @@
 
 .grouped-items-table {
 	width: 100%;
-	
+
 	input {
 	    padding: 5px 15px;
 	    width: 70px;
-	    
+
 	    &:hover, &:active, &:focus {
 	        background-color: $grundfarbe-weiss;
 	    }
 	}
-	
+
     .name-wrapper {
         display: inline-block;
     }
@@ -996,12 +1076,12 @@
     td {
         padding: 4px;
         vertical-align: bottom;
-        
+
         &.image-cell {
             vertical-align: top;
             text-align: left;
         }
-        
+
         img {
             width: 100%;
             height: auto;
@@ -1149,7 +1229,7 @@
 
 .product-options-bottom {
     margin-bottom: $global-boxmargin;
-    
+
     .tax-details, .add-to-links {
         display: none;
     }
@@ -1228,11 +1308,11 @@ div.block-cart {
 
     .block-content {
         padding: 0px 5px;
-        
+
         .egov-cart {
             font-size: 20px;
         }
-        
+
         .price {
             font-size: 1rem;
         }

@@ -5,6 +5,36 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+// Accordion auf dem Single-Page-Checkout
+.ui-accordion .ui-accordion-header {
+	font-size: 1.5em;
+}
+.ui-icon {
+	margin-right: 10px;
+}
+.ui-state-active {
+	border-color: $global-active-color;
+	background-color: $global-active-color;
+}
+
+.show-print-only {
+	display: none;
+}
+
+.validation-advice {
+	display: block;
+	margin-top: 5px;
+	color: $global-warning-color;
+}
+.validation-failed, .validation-failed:focus, .validation-failed:active {
+	outline: $global-active-border solid $global-warning-color !important;
+	background-color: $global-warning-background !important;
+}
+
+.multiple-checkout .col2-set {
+	margin: 20px 0;
+}
+
 .mp-checkout {
     text-align: left;
 
@@ -239,6 +269,10 @@
 
             thead th, tbody td {
                 padding: $global-tdpadding;
+            }
+            
+            .checkout-product-image {
+            	display: none !important;
             }
 
             thead {

@@ -108,7 +108,10 @@
     <div>
     	<?php echo $this->getChildHtml('newsletter') ?>
     </div>
-    <p class="grand-total"><big><?php echo $this->__('Grand Total:') ?></big> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?></p>
+    <p class="grand-total">
+        <span style="font-size: 1.1rem;"><?php echo $this->__('Grand Total:') ?></span>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
+    </p>
     <div class="buttons-set" id="review-buttons-container">
         <a href="<?php echo $this->getBackUrl() ?>" class="back-link">&laquo; <?php echo $this->__('Back') ?></a>
         <a class="break-link" href="<?php echo $this->getUrl() ?>" class="button"><span><?php echo $this->__('Continue Shopping') ?></span></a>

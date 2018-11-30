@@ -1,0 +1,93 @@
+//
+// @category    design
+// @package     freiberg_iec
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Mixin - Typography
+// =============================================
+
+@mixin h1 {
+    margin: 0;
+    /* margin-bottom: 0.7em; */  // Deaktiviert, damit die Welcome-Schrift korrekt sitzt
+    color: $global-h1-color;
+    font-family: $base-font-family;
+    font-size: $global-h1-size;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.2;
+    text-rendering: optimizeLegibility;
+    text-shadow: 0 1px 2px $global-text-shadow;
+}
+
+@mixin h2 {
+    margin: 0;
+    margin-bottom: 0.5em;
+    color: $global-h2-color;
+    font-family: $base-font-family;
+    font-size: $global-h2-size;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.2;
+    text-rendering: optimizeLegibility;
+}
+
+@mixin h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    color: $global-h3-color;
+    font-family: $base-font-family;
+    font-size: $global-h3-size;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.4;
+    text-rendering: optimizeSpeed;
+}
+
+@mixin h4 {
+    margin: 0;
+    margin-bottom: 10px;
+    color: $global-h4-color;
+    font-family: $base-font-family;
+    font-size: $global-h4-size;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.4;
+    text-rendering: optimizeSpeed;
+}
+
+@mixin h5 {
+    margin: 0;
+    margin-bottom: 10px;
+    color: $global-h5-color;
+    font-family: $base-font-family;
+    font-size: $global-h5-size;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.4;
+    text-rendering: optimizeSpeed;
+    text-transform: uppercase;
+}
+
+@mixin h6 {
+    margin: 0;
+    margin-bottom: 5px;
+    color: $global-h6-color;
+    font-family: $base-font-family;
+    font-size: $global-h6-size;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.4;
+    text-rendering: optimizeSpeed;
+}
+
+
+@mixin pageTitle() {
+    font-size: 24px;
+    font-weight: 600;
+    border-bottom: $global-box-border solid $global-border-color;
+    padding-bottom: 3px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Widget für Kreditkartenlogos
+ *
+ * @category	Egovs
+ * @package		Egovs_Paymentbase
+ * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
+ * @copyright	Copyright (c) 2013 EDV Beratung Hempel
+ * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+/**
+ * Credit Card Logos Widget
+ *
+ * @see Egovs_Paymentbase_Block_Widget_Creditcardlogos
+ */
+ 
+ /* @var $this Egovs_Paymentbase_Block_Widget_Creditcardlogos */
+?>
+<div class="block">
+	<div class="block-title">
+		<h2><?php echo $this->escapeHtml($this->getTitle())?></h2>
+	</div>
+	<div class="block-content">
+		<div id="widget_credit_cards" class="widget_credit_cards">
+			<img id="widget_logo_master_card" title="MasterCard" src="<?php echo $this->getSkinUrl('credit_cards/mc.jpg') ?>" alt="MasterCard" />
+			<img id="widget_logo_master_card_secure" title="MasterCard SecureCode" src="<?php echo $this->getSkinUrl('credit_cards/mc_sc.jpg') ?>" alt="MasterCard SecureCode" />
+			<img id="widget_logo_visa" title="VISA" src="<?php echo $this->getSkinUrl('credit_cards/visa.jpg') ?>" alt="VISA" />
+			<img id="widget_logo_visa_verified" title="Verified by VISA" src="<?php echo $this->getSkinUrl('credit_cards/vbv.jpg') ?>" alt="Verified by VISA" />
+		</div>
+	</div>
+</div>

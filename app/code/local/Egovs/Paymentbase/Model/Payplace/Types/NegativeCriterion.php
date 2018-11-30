@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_NegativeCriterion extends Egovs_Pay
      * Meta informations extracted from the WSDL
      * - documentation : Bürgel only
      * - minOccurs : 0
-     * @var long
+     * @var float
      */
     public $amount;
     /**
@@ -100,7 +100,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_NegativeCriterion extends Egovs_Pay
      * @see parent::__construct()
      * @param string $_kind
      * @param string $_text
-     * @param long $_amount
+     * @param float $_amount
      * @param string $_currency
      * @param int $_count
      * @param string $_date
@@ -149,7 +149,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_NegativeCriterion extends Egovs_Pay
     }
     /**
      * Get amount value
-     * @return long|null
+     * @return float|null
      */
     public function getAmount()
     {
@@ -157,8 +157,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_NegativeCriterion extends Egovs_Pay
     }
     /**
      * Set amount value
-     * @param long $_amount the amount
-     * @return long
+     * @param float $_amount the amount
+     * @return bool
      */
     public function setAmount($_amount)
     {

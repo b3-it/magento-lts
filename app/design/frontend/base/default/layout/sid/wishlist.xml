@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <default>
     </default>
@@ -10,16 +11,18 @@
         </reference>
     </customer_account>
     
-    <sidwishlist_index_index>
+    <sidwishlist_index_index translate="label">
         <!-- Sid_Wishlist -->
+        <label>SiD Wishlist Index</label>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sidwishlist/overview" name="collector_list_overview" template="sid/wishlist/overview.phtml" />
         </reference>
     </sidwishlist_index_index>
     
-    <sidwishlist_index_view>
+    <sidwishlist_index_view translate="label">
         <!-- Sid_Wishlist -->
+        <label>SiD Wishlist Index View</label>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sidwishlist/view" name="collector_list_view" template="sid/wishlist/view.phtml">
@@ -28,8 +31,9 @@
         </reference>
     </sidwishlist_index_view>
     
-    <sidwishlist_index_share>
+    <sidwishlist_index_share translate="label">
         <!-- Sid_Wishlist -->
+        <label>SiD Wishlist Share</label>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sidwishlist/share_sharing" name="collector_list_share" template="sid/wishlist/sharing.phtml" />
@@ -58,7 +62,8 @@
         </reference>
     </catalog_category_layered>
     
-    <sidwishlist_index_add>
+    <sidwishlist_index_add translate="label">
+        <label>SiD Wishlist add</label>
         <reference name="content">
             <block type="sidwishlist/wishlists" name="collector_list_select" template="sid/wishlist/wishlists.phtml" />
         </reference>
@@ -68,7 +73,8 @@
         <update handle="sidwishlist_index_view" />
     </sidwishlist_index_addpost>
     
-    <sidwishlist_index_newwishlist>
+    <sidwishlist_index_newwishlist translate="label">
+        <label>SiD Wishlist new Wishlist</label>
         <reference name="content">
             <block type="sidwishlist/wishlist_new" name="collector_list_new" template="sid/wishlist/newwishlist.phtml" />
         </reference>

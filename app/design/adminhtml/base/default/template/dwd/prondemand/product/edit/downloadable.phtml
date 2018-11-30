@@ -224,7 +224,7 @@ Downloadable.FileList.prototype = {
 var alertAlreadyDisplayed = false;
 
 Validation.addAllThese([
-    ['validate-downloadable-file', 'Please upload a file.', function(v,element) {
+    ['validate-downloadable-file', '<?php echo $this->__('Please upload a file.'); ?>', function(v,element) {
             linkType = element.up(0).down('input[value="file"]');
             if (linkType.checked && (v == '' || v == '[]')) {
                 newFileContainer = element.up(0).down('div.new-file');
@@ -239,7 +239,7 @@ Validation.addAllThese([
     ]);
 
 Validation.addAllThese([
-    ['validate-downloadable-url', 'Please specify Url.', function(v,element) {
+    ['validate-downloadable-url', '<?php echo $this->__('Please specify Url.'); ?>', function(v,element) {
             linkType = element.up(0).down('input[value="url"]');
             if (linkType.checked && v == '') {
                 return false;

@@ -27,7 +27,7 @@
 <?php $_shippingCarrier = $this->getOrder()->getShippingCarrier(); ?>
 <?php if ($_shippingCarrier && $_shippingCarrier->isTrackingAvailable()): ?>
 <span class="field-row" id="order_tracking_info">
-<table cellpadding="0" cellspacing="0" width="100%">
+<table style="width:100%;">
     <tr>
         <td><label for="tracking_number"><?php echo Mage::helper('sales')->__('Tracking Number') ?></label></td>
         <td width="100%">

@@ -42,6 +42,8 @@ $fa-var-balance-scale: "\f24e";
 $fa-var-rss-square   : "\f143";
 $fa-var-credit-card  : "\f09d";
 $fa-var-eur          : "\f153";
+$fa-var-refresh      : "\f021";
+$fa-question-circle  : "\f059";
 
 /* FONT PATH
  * -------------------------- */
@@ -73,32 +75,34 @@ $fa-var-eur          : "\f153";
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
-.#{$fa-css-prefix}-spinner:before       { content: $fa-var-spinner; }
-.#{$fa-css-prefix}-search:before        { content: $fa-var-search; }
-.#{$fa-css-prefix}-pencil:before        { content: $fa-var-pencil; }
-.#{$fa-css-prefix}-trash-o:before       { content: $fa-var-trash-o; }
-.#{$fa-css-prefix}-lock:before          { content: $fa-var-lock; }
-.#{$fa-css-prefix}-envelope:before      { content: $fa-var-envelope; }
-.#{$fa-css-prefix}-phone:before         { content: $fa-var-phone; }
-.#{$fa-css-prefix}-mobile:before        { content: $fa-var-mobile; }
-.#{$fa-css-prefix}-fax:before           { content: $fa-var-fax; }
-.#{$fa-css-prefix}-th-large:before      { content: $fa-var-th-large; }
-.#{$fa-css-prefix}-bars:before          { content: $fa-var-bars; }
-.#{$fa-css-prefix}-home:before          { content: $fa-var-home; }
-.#{$fa-css-prefix}-user:before          { content: $fa-var-user; }
-.#{$fa-css-prefix}-shopping-cart:before { content: $fa-var-shopping-cart; }
-.#{$fa-css-prefix}-star:before          { content: $fa-var-star; }
-.#{$fa-css-prefix}-arrow-up:before      { content: $fa-var-arrow-up; }
-.#{$fa-css-prefix}-arrow-down:before    { content: $fa-var-arrow-down; }
-.#{$fa-css-prefix}-repeat:before        { content: $fa-var-repeat; }
-.#{$fa-css-prefix}-print:before         { content: $fa-var-print; }
-.#{$fa-css-prefix}-eye:before           { content: $fa-var-eye; }
-.#{$fa-css-prefix}-files-o:before       { content: $fa-var-files-o; }
-.#{$fa-css-prefix}-balance-scale:before { content: $fa-var-balance-scale; }
-.#{$fa-css-prefix}-rss-square:before    { content: $fa-var-rss-square; }
-.#{$fa-css-prefix}-times:before         { content: $fa-var-times; }
-.#{$fa-css-prefix}-credit-card:before   { content: $fa-var-credit-card; }
-.#{$fa-css-prefix}-eur:before           { content: $fa-var-eur; }
+.#{$fa-css-prefix}-spinner:before         { content: $fa-var-spinner; }
+.#{$fa-css-prefix}-search:before          { content: $fa-var-search; }
+.#{$fa-css-prefix}-pencil:before          { content: $fa-var-pencil; }
+.#{$fa-css-prefix}-trash-o:before         { content: $fa-var-trash-o; }
+.#{$fa-css-prefix}-lock:before            { content: $fa-var-lock; }
+.#{$fa-css-prefix}-envelope:before        { content: $fa-var-envelope; }
+.#{$fa-css-prefix}-phone:before           { content: $fa-var-phone; }
+.#{$fa-css-prefix}-mobile:before          { content: $fa-var-mobile; }
+.#{$fa-css-prefix}-fax:before             { content: $fa-var-fax; }
+.#{$fa-css-prefix}-th-large:before        { content: $fa-var-th-large; }
+.#{$fa-css-prefix}-bars:before            { content: $fa-var-bars; }
+.#{$fa-css-prefix}-home:before            { content: $fa-var-home; }
+.#{$fa-css-prefix}-user:before            { content: $fa-var-user; }
+.#{$fa-css-prefix}-shopping-cart:before   { content: $fa-var-shopping-cart; }
+.#{$fa-css-prefix}-star:before            { content: $fa-var-star; }
+.#{$fa-css-prefix}-arrow-up:before        { content: $fa-var-arrow-up; }
+.#{$fa-css-prefix}-arrow-down:before      { content: $fa-var-arrow-down; }
+.#{$fa-css-prefix}-repeat:before          { content: $fa-var-repeat; }
+.#{$fa-css-prefix}-print:before           { content: $fa-var-print; }
+.#{$fa-css-prefix}-eye:before             { content: $fa-var-eye; }
+.#{$fa-css-prefix}-files-o:before         { content: $fa-var-files-o; }
+.#{$fa-css-prefix}-balance-scale:before   { content: $fa-var-balance-scale; }
+.#{$fa-css-prefix}-rss-square:before      { content: $fa-var-rss-square; }
+.#{$fa-css-prefix}-times:before           { content: $fa-var-times; }
+.#{$fa-css-prefix}-credit-card:before     { content: $fa-var-credit-card; }
+.#{$fa-css-prefix}-eur:before             { content: $fa-var-eur; }
+.#{$fa-css-prefix}-question-circle:before { content: $fa-question-circle; }
+.#{$fa-css-prefix}-refresh:before         { content: $fa-var-refresh; }
 
 // Spinning Icons
 // --------------------------

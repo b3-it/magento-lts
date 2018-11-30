@@ -11,7 +11,7 @@
     $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
-<li class="item" xmlns="http://www.w3.org/1999/html">
+<li class="item">
     <?php if ($this->hasProductUrl()): ?>
         <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image">
             <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
@@ -152,13 +152,13 @@
 	            <div class="mini-cart-label">&nbsp;</div>
 	            <div class="mini-cart-items">
 	          <?php if ($isVisibleProduct): ?>
-	            <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" class="btn-edit egov-pencile" title="<?php echo $this->__('Edit item')?>" alt="<?php echo $this->__('Edit item')?>"> </a>
+	            <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" class="btn-edit egov-pencile"> </a>
 	           <?php if (!$this->isOnCheckoutPage()): ?>
 	            <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>"
 	               data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
-	               class="remove egov-delete2" alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+	               class="remove egov-delete2" title="<?php echo $this->__('Remove Item') ?>"> </a>
 	           <?php else: ?>
-	            <span class="egov-delete2" alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </span>
+	            <span class="egov-delete2" title="<?php echo $this->__('Remove Item') ?>"> </span>
 	           <?php endif; ?>
 	          <?php endif ?>
 	            </div>

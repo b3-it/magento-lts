@@ -1,0 +1,105 @@
+﻿//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// Browser Resets
+@import "../../../egov_old/default/scss/vendor/normalize";
+@import "../../../egov_old/default/scss/core/reset";
+
+
+// ----------------------------------------------
+// EGOV-Definitionen
+//    ACHTUNG!!!
+//    Variablen werden in "_framework.scss" eingebunden
+@import "egov/bitv";
+@import "../../../egov_old/default/scss/egov/video";
+@import "egov/egov-base";
+@import "../../../egov_old/default/scss/egov/fa-icons";
+@import "egov/mp-checkout";
+@import "../../../egov_old/default/scss/egov/checkiban";
+@import "../../../egov_old/default/scss/egov/silver-track";
+@import "../../../egov_old/default/scss/egov/credit-cards";
+@import "../../../egov/default/scss/egov/mobile-switch";
+
+
+// ----------------------------------------------
+// Core
+@import "core/common";
+
+
+// ----------------------------------------------
+// Vendor
+
+
+// ----------------------------------------------
+// Layout
+@import "layout/button-set";
+@import "layout/buttons";
+@import "layout/global";
+@import "layout/header";
+@import "layout/header-nav";
+@import "layout/header-search";
+@import "layout/header-account";
+@import "layout/header-cart";
+@import "layout/footer";
+
+
+// ----------------------------------------------
+// Modules
+
+// The sort order here is important for two reasons:
+//  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
+//  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
+//     so we should try not to change this order once it is in place
+@import "../../../egov_old/default/scss/module/select-language";
+@import "module/product-list";
+@import "module/catalog-product";
+@import "../../../egov_old/default/scss/module/catalog-msrp";
+@import "module/catalog-seo-sitemap-category";
+@import "../../../egov_old/default/scss/module/catalog-compare";
+@import "../../../egov_old/default/scss/module/catalogsearch-advanced-result";
+@import "module/catalogsearch-term-popular";
+@import "module/checkout-cart";
+@import "module/checkout-onepage";
+@import "../../../egov_old/default/scss/module/checkout-success";
+@import "../../../egov_old/default/scss/module/configurableswatches";
+@import "module/customer";
+@import "../../../egov_old/default/scss/module/customer-account-forgotpassword";
+@import "../../../egov_old/default/scss/module/contacts";
+@import "../../../egov_old/default/scss/module/egovs-checkout-multipage-login";
+@import "../../../egov_old/default/scss/module/paypal";
+@import "../../../egov_old/default/scss/module/review";
+@import "../../../egov_old/default/scss/module/sales-order-print";
+@import "../../../egov_old/default/scss/module/slideshow";
+@import "module/wishlist";
+@import "module/checkout-cart-minicart";
+@import "module/search";
+@import "../../../egov_old/default/scss/module/account-reviews";
+@import "module/account-login";
+@import "../../../egov_old/default/scss/module/cms";
+@import "../../../egov_old/default/scss/module/pricing_conditions";
+@import "../../../egov_old/default/scss/module/cookies";
+@import "module/sales-guest-form";
+@import "../../../egov_old/default/scss/module/tags";
+@import "../../../egov_old/default/scss/module/captcha";
+@import "../../../egov_old/default/scss/module/account-orders";
+@import "../../../egov_old/default/scss/module/recurring-profiles";
+@import "../../../egov_old/default/scss/module/billing-agreements";
+@import "../../../egov_old/default/scss/module/popular-terms";
+@import "module/widget";
+@import "../../../egov_old/default/scss/module/checkout-multi-address";
+@import "module/my-account";
+@import "../../../egov_old/default/scss/module/my-recent-tags";
+
+
+// ----------------------------------------------
+// Override
+

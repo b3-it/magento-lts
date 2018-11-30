@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Class Dwd_ProductOnDemand_Helper_Downloadable_Download
+ *
+ * @category  Dwd
+ * @package   Dwd_ProductOnDemand
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2013 - 2018 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable_Helper_Download
 {
 	/**
@@ -25,8 +35,8 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 					$urlProp = parse_url($this->_resourceFile);
 					if (!isset($urlProp['scheme'])
 						|| (
-								strtolower($urlProp['scheme'] != 'http')
-								&& strtolower($urlProp['scheme'] != 'https')
+								strtolower($urlProp['scheme']) != 'http'
+								&& strtolower($urlProp['scheme']) != 'https'
 						)
 					) {
 						Mage::throwException(Mage::helper('downloadable')->__('Invalid download URL scheme.'));
@@ -36,7 +46,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 					}
 					
 					$hostname = $urlProp['host'];
-					if (strtolower($urlProp['scheme'] == 'https')) {
+					if (strtolower($urlProp['scheme']) == 'https') {
 						/*
 						 * 20150929::Frank Rochlitzer
 						 * PHP < 5.6 unterstützt TLS > 1.0 nur über SSL Transport!
@@ -70,7 +80,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 		
 					try {
 						$_verifyPeer = Mage::getStoreConfigFlag('catalog/dwd_pod/verfiy_peer');
-						if (strtolower($urlProp['scheme'] == 'https') && $_verifyPeer) {
+						if (strtolower($urlProp['scheme']) == 'https' && $_verifyPeer) {
 							
 							if (version_compare(phpversion(), '5.6.0', '<')===true) {
 								$context = stream_context_create(
@@ -179,7 +189,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 				}
 				$this->_handle->open(array('path'=>Mage::getBaseDir('var')));
 				if (!$this->_handle->fileExists($this->_resourceFile, true)) {
-					Mage::throwException(Mage::helper('downloadable')->__('The file does not exist.'));
+					Mage::throwException(Mage::helper('downloadable')->__('The file %s does not exist.', $this->_resourceFile));
 				}
 				$this->_handle->streamOpen($this->_resourceFile, 'r');
 			}

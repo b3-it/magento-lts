@@ -1,0 +1,44 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * @category		Egovs
+ * @package			Egovs_Ready
+ * @name			Egovs_Ready_Block_Catalog_Product_Price
+ * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright		Copyright (c) 2010 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @license			http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
+
+/** @var $this Egovs_Ready_Block_Checkout_Cart_Cartinfo */
+?>
+<ul class="cartinfo">
+	<?php if ($this->getOrderUrl() != null): ?>
+    <li id="cartinfo-order">
+    	<a href="<?php echo $this->getOrderUrl() ?>">
+    		<?php echo Mage::helper('egovsready')->__('How to order') ?>.
+    	</a>
+    </li>
+    <?php endif; ?>
+    <?php if ($this->getRevocationUrl() != null): ?>
+    <?php $link = '<a href="' . $this->getRevocationUrl() . '">' ?>
+    <li id="cartinfo-withdrawal">
+    	<?php echo Mage::helper('egovsready')->__('Click here to read the %s details about your Right of Withdrawal</a>', $link) ?>.
+    </li>
+    <?php endif; ?>
+    <li id="cartinfo-lieferung">
+        <a href="<?php echo $this->getUrl('abholungspauschale') ?>">
+            <?php echo $this->__('Here you will find information on the calculation of the supply fee.'); ?>
+        </a>
+    </li>
+</ul>

@@ -23,6 +23,7 @@
         <h1><?php echo $this->__('Enter New Address') ?></h1>
     </div>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
+    	<?php echo $this->getBlockHtml('formkey') ?>
         <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
     <?php if (!$this->canShip()): ?>
         <input type="hidden" name="billing[use_for_shipping]" value="1" />
@@ -96,9 +97,9 @@
                             <?php echo $_egov_helper->getFieldRequiredHtml('street', $_checkout_method) ?>
                             <?php echo $this->__('Street Address') ?>
                         </label>
-	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="22" />
-                    <?php for ($_i=1, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
-		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
+	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="22" />
+                    <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" class="input-text" maxlength="21" />
 		                <?php endfor ?>
                     </div>
 		    		    </li>
@@ -245,17 +246,19 @@
 		    		    <?php endif; ?>
 		    		  <?php endif; ?>
 
-		    		  <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()):?>
 		    		    <li class="fields">
+		    		  <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()):?>
 		    		        <div class="field">
 		    		            <input tabindex="20" type="checkbox" name="billing[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="billing:save_in_address_book" onchange="shipping.setSameAsBilling(false);"<?php if ($this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?> class="checkbox" />
-		    		            <input type="hidden" name="billing[save_in_address_book]" value="1" />
+		    		           
 		    		            <label for="billing:save_in_address_book">
 		    		                <?php echo $this->__('Save in address book') ?>
 		    		            </label>
 		    		        </div>
-		    		    </li>
+		    		  <?php else:?>
+		    		      <input type="hidden" name="billing[save_in_address_book]" value="1" />
 		    		  <?php endif ?>
+		    		    </li>
 
             </ul>
         </div>

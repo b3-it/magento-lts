@@ -1,7 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" ?>
 <!DOCTYPE config>
-    <config>
-      <default>
+<config>
+    <modules>
+        <Slpb_Shipping>
+            <version>0.1.0</version>
+           	<depends>
+				<Mage_Shipping />
+    		</depends>	
+        </Slpb_Shipping>
+    </modules>
+    <adminhtml>
+		<translate>
+			<modules>
+				<Slpb_Shipping>
+					<files>
+						<default>Slpb_Shipping.csv</default>
+					</files>
+				</Slpb_Shipping>
+			</modules>
+		</translate>
+    </adminhtml>
+    <default>
           <carriers>
 	          <slpbshipping>
 	              <active>1</active>
@@ -32,15 +51,7 @@
 	              <rank>1000</rank>
 	          </storepickup>
           </carriers>
-        </default>
-        <modules>
-        <Slpb_Shipping>
-            <version>0.1.0</version>
-           	<depends>
-				<Mage_Shipping />
-		</depends>	
-        </Slpb_Shipping>
-    </modules>
+    </default>
     <global>
         <models>
         	<storepickup>

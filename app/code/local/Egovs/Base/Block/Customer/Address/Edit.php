@@ -98,13 +98,18 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
         if ($this->isFieldRequired('country_id')) {
         	$class .= ' required-entry';
         }
-        $html = $this->getLayout()->createBlock('core/html_select')
+        $block = $this->getLayout()->createBlock('core/html_select')
             ->setName($name)
             ->setId($id)
             ->setTitle(Mage::helper('directory')->__($title))
             ->setClass($class)
             ->setValue($defValue)
-            ->setOptions($options)
+            ->setOptions($options);
+
+        $data = array('block' => $block, 'parent' => $this);
+        Mage::dispatchEvent('egovs_base_customer_address_edit_block_before_html', $data);
+
+        $html = $block
             ->getHtml();
 
         Varien_Profiler::stop('TEST: '.__METHOD__);
@@ -221,7 +226,10 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
     	$nameBlock = $this->getLayout()
     		->createBlock('egovsbase/customer_widget_name')
     		->setObject($this->getAddress());
-    
+
+		$data = array('block' => $nameBlock, 'parent' => $this);
+		Mage::dispatchEvent('egovs_base_customer_address_edit_block_before_html', $data);
+
     	return $nameBlock->toHtml();
     }
     

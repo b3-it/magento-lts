@@ -1,5 +1,5 @@
 <?php
-require "Mage/Adminhtml/controllers/Sales/Order/CreditmemoController.php";
+require_once "Mage/Adminhtml/controllers/Sales/Order/CreditmemoController.php";
 /**
  *  
  * Adminhtml sales order creditmemo controller
@@ -9,12 +9,12 @@ require "Mage/Adminhtml/controllers/Sales/Order/CreditmemoController.php";
  * @name       	 Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @author 		Holger Kögel <h.koegel@b3-it.de>
- * @copyright  	Copyright (c) 2010 - 2015 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright  	Copyright (c) 2010 - 2018 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends Mage_Adminhtml_Sales_Order_CreditmemoController
 {
-	/**
+    /**
 	 * Kann Gutschrift erstellen?
 	 * 
 	 * @param Mage_Sales_Model_Order $order Order
@@ -28,7 +28,7 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
          * Check order existing
          */
         if ($order === false || !$order->getId()) {
-            $this->_getSession()->addError($this->__('Order not longer exist'));
+            $this->_getSession()->addError($this->__('The order no longer exists.'));
             return false;
         }
 
@@ -38,93 +38,18 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
         if (!$order->canCreditmemo()
         	&& abs($order->getTotalPaid()-$order->getTotalRefunded())>=.0001
         	) {
-            $this->_getSession()->addError($this->__('Can not do credit memo for order'));
+            $this->_getSession()->addError($this->__('Cannot create credit memo for the order.'));
             return false;
         }
         return true;
 	}
 	
 	/**
-	 * State prüfen
-	 * 
-	 * @param Mage_Sales_Model_Order $order Order
-	 * 
-	 * @return void
-	 * @see Mage_Sales_Model_Order->_checkState()
-	 */
-	protected function _checkState(Mage_Sales_Model_Order $order = null) {
-		if ($order == null) {
-            if ($orderId = $this->getRequest()->getParam('order_id')) {
-        		$order  = Mage::getModel('sales/order')->load($orderId);
-            }
-		}
-            
-		if (!$this->_canCreditmemo($order)) {
-			return;
-		}
-		
-		$data = $this->getRequest()->getPost('creditmemo');
-		$unlockCustomer = false;
-		if (array_key_exists('special_cancel', $data) && $data['special_cancel'] == true) {
-			$unlockCustomer = true;
-		}
-		
-		$items = array();
-		foreach ($order->getAllItems() as $orderItem) {
-			if (!$orderItem->isDummy() && !$orderItem->getQtyToRefund()) {
-				continue;
-			}
-			
-			if ($orderItem->isDummy()) {
-				$qty = 1;				
-			} else {
-				$qty = $orderItem->getQtyToRefund();
-			}			
-
-			if ($qty > 0)
-				$items[] = $orderItem;
-		}
-		
-		if (count($items) > 0) {
-			return;
-		}
-		
-		//Bestellung enthält keine Produkte für Gutschrift mehr --> storniert
-		//In Magento 1.6 kann der STATE CLOSED nicht mehr von außen gesetzt werden!
-// 		$order->setState(Mage_Sales_Model_Order::STATE_CLOSED, true);
-		
-		if ($order->getConfig()->getStatusLabel(Egovs_Extsalesorder_Model_Sales_Order::SPECIAL_CANCEL_STATUS)
-			&& $unlockCustomer
-		) {
-			$order->setStatus(Egovs_Extsalesorder_Model_Sales_Order::SPECIAL_CANCEL_STATUS);
-		}
-	}
-	
-	/**
-     * Erstell-Seite für Gutschrift
-     * 
-     * @return void
-     */
-    /* public function newAction() {
-        if ($creditmemo = $this->_initCreditmemo()) {
-            $commentText = Mage::getSingleton('adminhtml/session')->getCommentText(true);
-
-            $creditmemo->addData(array('commentText'=>$commentText));
-
-            $this->loadLayout()
-                ->_setActiveMenu('sales/order')
-                ->renderLayout();
-        } else {
-            $this->_forward('noRoute');
-        }
-    } */
-	
-	/**
 	 * Eigentliche Speicheraktion
 	 * 
 	 * @param Mage_Sales_Model_Order_Creditmemo $creditmemo Gutschrift
 	 *  
-	 * @return Egovs_Extsalesorder_Adminhtml_Sales_Order_CreditmemoController
+	 * @return Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
 	 * 
 	 * @see Mage_Adminhtml_Sales_Order_CreditmemoController::_saveCreditmemo()
 	 */
@@ -144,31 +69,13 @@ class Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController extends M
     }
     
     /**
-     * Save data for invoice and related order
-     *
-     * @param Mage_Sales_Model_Order_Invoice $invoice Rechnung
-     * 
-     * @return Egovs_Extsalesorder_Adminhtml_Sales_Order_CreditmemoController
-     */
-    protected function _saveInvoice($invoice)
-    {
-    	$invoice->getOrder()->setIsInProcess(true);
-    	$transactionSave = Mage::getModel('core/resource_transaction')
-	    	->addObject($invoice)
-	    	->addObject($invoice->getOrder())
-	    	->save();
-    
-    	return $this;
-    }
-
-    /**
      * Save creditmemo
      * 
      * We can save only new creditmemo. Existing creditmemos are not editable
      * 
      * @return void
      */
-public function saveAction()
+    public function saveAction()
     {
         $data = $this->getRequest()->getPost('creditmemo');
         if (!empty($data['comment_text'])) {
@@ -178,12 +85,12 @@ public function saveAction()
         try {
             $creditmemo = $this->_initCreditmemo();
             if ($creditmemo) {
-            	$betrag = abs($creditmemo->getOrder()->getTotalPaid()-$creditmemo->getOrder()->getTotalRefunded());
-            	//Normale Stornierung (Bestellung > 0 €, Noch kein Geld erhalten, Noch keine Sendung erstellt)
-            	if ($creditmemo->getOrder()->getGrandTotal() > 0.0001
-            		&& $creditmemo->getOrder()->getTotalPaid() <= 0.0001
-//             		&& !$creditmemo->getOrder()->hasShipments()
+            	$betrag = abs($creditmemo->getOrder()->getBaseTotalPaid()-$creditmemo->getOrder()->getBaseTotalRefunded());
+            	
+            	//Normale Stornierung (Bestellung > 0 €, Noch kein Geld erhalten)
+            	if ($creditmemo->getOrder()->getBaseGrandTotal() > 0.0001 && $creditmemo->getOrder()->getBaseTotalPaid() <= 0.0001
             	) {
+            		//Prüfen ob Sendungen existieren
             		if ($creditmemo->getOrder()->hasShipments()) {
             			$creditmemoItems = $creditmemo->getAllItems();
             			if (count($creditmemoItems) < 1) {
@@ -217,10 +124,7 @@ public function saveAction()
             				$this->_getSession()->addError($this->__('Invoice cancel error.'));
             			}
             		}
-//             		$this->_redirect('adminhtml/sales_order/view', array('order_id' => $creditmemo->getOrderId()));
-             		//keine weitere Verarbeitung!!!
-//             		return;
-            		//Bestellung stornieren
+            		//Dann Bestellung stornieren
             		$order = $creditmemo->getOrder();
             		try {
             			$order->cancel()
@@ -272,9 +176,6 @@ public function saveAction()
                         $this->__('No Items To Refund').'.');
                 	}
                 }
-//                 $this->_redirect('adminhtml/sales_order/view', array('order_id' => $creditmemo->getOrderId()));
-//                 //keine weitere Verarbeitung!!!
-//                 return;
 
                 $comment = '';
                 if (!empty($data['comment_text'])) {
@@ -317,8 +218,81 @@ public function saveAction()
 			Mage::getSingleton('adminhtml/session')->setFormData($data);
         } catch (Exception $e) {
 			Mage::logException($e);
-            $this->_getSession()->addError($this->__('Cannot save the credit memo'));
+            $this->_getSession()->addError($this->__('Cannot save the credit memo.'));
         }
         $this->_redirect('*/*/new', array('_current' => true));
+    }
+
+    /**
+     * State prüfen
+     *
+     * @param Mage_Sales_Model_Order $order Order
+     *
+     * @return void
+     * @see Mage_Sales_Model_Order->_checkState()
+     */
+    protected function _checkState(Mage_Sales_Model_Order $order = null) {
+        if ($order == null) {
+            if ($orderId = $this->getRequest()->getParam('order_id')) {
+                $order  = Mage::getModel('sales/order')->load($orderId);
+            }
+        }
+
+        if (!$this->_canCreditmemo($order)) {
+            return;
+        }
+
+        $data = $this->getRequest()->getPost('creditmemo');
+        $unlockCustomer = false;
+        if (array_key_exists('special_cancel', $data) && $data['special_cancel'] == true) {
+            $unlockCustomer = true;
+        }
+
+        $items = array();
+        foreach ($order->getAllItems() as $orderItem) {
+            if (!$orderItem->isDummy() && !$orderItem->getQtyToRefund()) {
+                continue;
+            }
+
+            if ($orderItem->isDummy()) {
+                $qty = 1;
+            } else {
+                $qty = $orderItem->getQtyToRefund();
+            }
+
+            if ($qty > 0)
+                $items[] = $orderItem;
+        }
+
+        if (count($items) > 0) {
+            return;
+        }
+
+        //Bestellung enthält keine Produkte für Gutschrift mehr --> storniert
+        //In Magento 1.6 kann der STATE CLOSED nicht mehr von außen gesetzt werden!
+// 		$order->setState(Mage_Sales_Model_Order::STATE_CLOSED, true);
+
+        if ($order->getConfig()->getStatusLabel(Egovs_Extsalesorder_Model_Sales_Order::SPECIAL_CANCEL_STATUS)
+            && $unlockCustomer
+        ) {
+            $order->setStatus(Egovs_Extsalesorder_Model_Sales_Order::SPECIAL_CANCEL_STATUS);
+        }
+    }
+
+    /**
+     * Save data for invoice and related order
+     *
+     * @param Mage_Sales_Model_Order_Invoice $invoice Rechnung
+     *
+     * @return Egovs_Extsalesorder_Adminhtml_Extsalesorder_CreditmemoController
+     */
+    protected function _saveInvoice($invoice) {
+        $invoice->getOrder()->setIsInProcess(true);
+        $transactionSave = Mage::getModel('core/resource_transaction')
+            ->addObject($invoice)
+            ->addObject($invoice->getOrder())
+            ->save();
+
+        return $this;
     }
 }

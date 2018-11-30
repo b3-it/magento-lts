@@ -26,7 +26,7 @@ class Egovs_Base_Block_Adminhtml_Widget_Grid_Column_Renderer_Balance extends Mag
     			$btp = 0.0;
     		}
     		
-    		$data = $bgt - $btp;
+    		$data = $btp - $bgt;
     	} else {
     		$data = $row->getData($this->getColumn()->getIndex());
     	}
@@ -40,17 +40,28 @@ class Egovs_Base_Block_Adminhtml_Widget_Grid_Column_Renderer_Balance extends Mag
 
             $data = floatval($data) * $this->_getRate($row);
             $data = Mage::app()->getStore()->roundPrice($data);
-            $html = '<span class="';
-            //span geht nicht!
-            if ($data <= 0) {
-            	$html .= 'balanced">';
-            } else {
-            	$html .= 'unbalanced">';
-            }
-            $data = sprintf("%f", $data);
-            $data = Mage::app()->getLocale()->currency($currencyCode)->toCurrency($data);
             
-            return $html . $data.'</span>';            
+          
+            $price = sprintf("%f", $data);
+            $price = Mage::app()->getLocale()->currency($currencyCode)->toCurrency($price);
+            //bei export werden keine Tags gebraucht
+            $export = $this->getColumn()->getGrid()->getIsExport();
+	        if(!$export)
+	        {
+		            //span geht nicht!
+		            if ($data >= 0) {
+		            	return  "<span class=\"balanced\"> {$price}</span>";
+		            } else {
+		            	return  "<span class=\"unbalanced\"> {$price}</span>"; 	
+		            }
+		           
+	        }
+           
+	        return $price;
+            
+            
+            
+                        
         }
     	
         return $this->getColumn()->getDefault();

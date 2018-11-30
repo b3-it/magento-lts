@@ -71,10 +71,180 @@ ins {
 
 .col_diff_small
 {
-	height:50px; 
+	height:50px;
 	overflow:hidden;
 }
 
 .max-width-configcompare{
 	max-width: 400px;
+}
+
+/* Backend-Definitionen für VirtualGEO (Tabell-Layout) */
+.div-table-head {
+    width: 100%;
+    background: url("../images/sort_row_bg.gif") 0 50% repeat-x;
+}
+.div-table-body {
+    width: 100%;
+}
+.div-table-head > div,
+.div-table-body > div {
+    display: table-cell;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+.div-table-head > div {
+    border: 1px #f9f9f9 solid;
+    font-size: .9em;
+}
+.div-table-body > div {
+    border-width: 0 1px 1px 0;
+    border-color: #dadfe0;
+    border-style: solid;
+    background: #f6f6f6;
+    text-align: center;
+}
+.div-table-body > div:first-child {
+    border-left-width: 1px;
+}
+.div-table-body > div:last-child {
+    text-align: left;
+}
+.div-table-body input[type="text"] {
+    width: 95%;
+}
+.div-table-body:hover > div {
+    background: #fcf5dd;
+}
+/* Ende der Definitionen für VirtualGEO */
+
+/* jstree-Definitionen */
+.jstree li a {
+    width: calc(100% - 29px); /* Item auf maximale Breite "aufblasen" */
+    position: relative;
+}
+
+/* Start für Auswahl bei VirtualGeo-Inhalt */
+.tree-options {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+#jstree-info {
+    text-align: right;
+}
+.tree-head, .inline-tree-cell {
+    display: inline-block;
+    width: 20px;
+    font-size: 17px;
+}
+.tree-head {
+    text-align: left;
+    font-size: 15px;
+    width: 18px;
+}
+.option-tree-name, .option-tree-position {
+    font-size: 12px;
+}
+.option-tree-name {
+    width: auto;
+    text-align: right;
+}
+.option-tree-position {
+    width: 50px;
+    text-align: center;
+}
+.option-tree-true:after {
+    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box-with-check/ */
+    content:'\2611';
+    color: #008000;
+}
+.option-tree-false:after {
+    /* https://www.toptal.com/designers/htmlarrows/symbols/ballot-box/ */
+    content:'\2610';
+    color: #3E3E3E;
+}
+/* Ende für Auswahl bei VirtualGeo-Inhalt */
+
+.egovs-base-media-block {
+    width: 45%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 3px;
+}
+.egovs-base-media-block:hover {
+    background: #f5d6c7;
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+.egovs-base-media-block p.nm {
+    float: left;
+    margin-right: 10px !important;
+    display: inline-block;
+}
+
+.select-button-container {
+    width: 100%;
+}
+.select-button-container select {
+    width: 20% !important;
+}
+.select-button-container button {
+    float: right;
+}
+.position-sorting button {
+    height: 20px;
+    width: 20px;
+    margin: 0 6px;
+    padding: 0 1px;
+}
+.position-sorting button:first-child {
+    float: left;
+}
+.position-sorting button:last-child {
+    float: right;
+}
+.position-sorting button:disabled {
+    cursor: default;
+    background: transparent;
+    border-color: transparent;
+}
+.position-sorting button:disabled span {
+    background-image: none;
+}
+.position-sorting button span {
+    background-repeat: no-repeat;
+    background-size: 14px;
+    position: relative;
+    top: -1px;
+    left: 1px;
+}
+tr.move-row-highlight {
+	background-color: #ffff99;
+}
+.position-sorting .position-up span {
+    background-image: url('../images/entry_edit_orange_head_arrow_up.gif');
+}
+.position-sorting .position-down span {
+    background-image: url('../images/entry_edit_orange_head_arrow_down.gif');
+}
+.position-sorting .position-delete span {
+    background-image: url('../images/cancel_btn_icon.gif');
+}
+
+.doctype-select {
+    display: inline-block;
+    width: auto;
+    float: right;
+    margin-right: 10px;
+    min-width: 100px;
+}
+
+#contexthelp_form .select-button-container select {
+	width: 45% !important;
 }

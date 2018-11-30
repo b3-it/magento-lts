@@ -293,7 +293,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
     /**
      * Prüft ob das Produkt konfigurierbare Angaben besitzt.<br/>
      * 
-     * @param Mage_Catalog_Product $product Produkt
+     * @param Mage_Catalog_Block_Product $product Produkt
      * 
      * @return boolean
      * 
@@ -309,7 +309,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
     /**
      * Prüft ob das Produkt weitere Optionen benötigt.
      * 
-     * @param Mage_Catalog_Product $product Produkt
+     * @param Mage_Catalog_Block_Product $product Produkt
      * 
      * @return boolean
      * 
@@ -427,7 +427,7 @@ class Dwd_ConfigurableDownloadable_Model_Product_Type_Configurable extends Mage_
      * 
      * @param Varien_Object              $buyRequest  BuyRequest
      * @param Mage_Catalog_Model_Product $product     Produkt
-     * @param unkown                     $processMode Process Mode
+     * @param string                     $processMode Process Mode
      * 
      * @return string|array
      * 

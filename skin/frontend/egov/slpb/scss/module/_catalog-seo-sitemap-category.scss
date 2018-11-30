@@ -1,0 +1,25 @@
+﻿//
+// @category    design
+// @package     egov_slpb
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.catalog-seo-sitemap-category {
+    .page-sitemap {
+        width: $global-content-3col-percent;
+
+        div.pager {
+            width: auto;
+        }
+
+        ul li {
+            list-style-type: none;
+
+            a:before {
+                content: url($global-category-arrow-full-right);
+                margin-right: $fa-icon-margin + 3;
+            }
+        }
+    }
+}

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE config>
 <!--
 /**
@@ -21,7 +20,7 @@
             <groups>
                 <security>
                     <fields>
-                        <max_failed_logins translate="label comment" module="b3itadmin">>
+                        <max_failed_logins translate="label comment" module="b3itadmin">
                             <label>Max failed logins</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>

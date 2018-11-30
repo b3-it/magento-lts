@@ -74,8 +74,9 @@ class Stala_Extcustomer_Block_Adminhtml_Widget_Grid_Serializer extends Mage_Core
 
     /**
      * Get grid column input names to serialize
-     *
-     * @return unknown
+     * 
+     * @param  bool       $asJSON      Return as JSON or Serialized
+     * @return string
      */
     public function getColumnInputNames($asJSON = false)
     {

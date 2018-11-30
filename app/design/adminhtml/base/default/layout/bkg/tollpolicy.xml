@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_tollpolicy_tollcategory_index>
+        <reference name="content">
+            <block type="bkg_tollpolicy/adminhtml_tollcategory" name="tollcategory" />
+        </reference>
+    </adminhtml_tollpolicy_tollcategory_index>
+    <adminhtml_tollpolicy_toll_index>
+        <reference name="content">
+            <block type="bkg_tollpolicy/adminhtml_toll" name="tollentity" />
+        </reference>
+    </adminhtml_tollpolicy_toll_index>
+   
+    <adminhtml_tollpolicy_usetype_index>
+        <reference name="content">
+            <block type="bkg_tollpolicy/adminhtml_usetype" name="usetypeentity" />
+        </reference>
+    </adminhtml_tollpolicy_usetype_index>
+    <adminhtml_tollpolicy_useoptions_index>
+        <reference name="content">
+            <block type="bkg_tollpolicy/adminhtml_useoptions" name="useoptions" />
+        </reference>
+    </adminhtml_tollpolicy_useoptions_index>
+
+</layout>

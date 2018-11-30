@@ -250,15 +250,12 @@ class Egovs_SepaDebitSax_Block_Form extends Mage_Payment_Block_Form
 	/**
 	 * gibt das Mandate zurück
 	 */
-	public function getMandate()
-	{
-		if($this->_mandate == null)
-		{
+	public function getMandate() {
+		if ($this->_mandate == null)	{
 				
 			$ref = $this->getCustomer()->getData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
-			if($ref)
-			{
-				$this->_mandate = $this->getMethod()->getMandate($ref);
+			if ($ref) {
+			    $this->_mandate = $this->getMethod()->getMandate($ref);
 			}
 		}
 	

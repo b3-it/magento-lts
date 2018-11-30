@@ -62,20 +62,17 @@
                 <span class="nobr">
                 <a class="egov-view"
                    href="<?php echo $this->getViewUrl($_order) ?>"
-                   title="<?php echo $this->__('View Order') ?>"
-                   alt="<?php echo $this->__('View Order') ?>"> </a>
+                   title="<?php echo $this->__('View Order') ?>"> </a>
                 <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
                     <a href="<?php echo $this->getReorderUrl($_order) ?>"
                        class="link-reorder egov-reorder"
-                       alt="<?php echo $this->__('Reorder') ?>"
                        title="<?php echo $this->__('Reorder') ?>"> </a>
                 <?php endif ?>
                 <?php if ($this->canCancel($_order)) : ?>
                     <a href="<?php echo $this->getCancelUrl($_order) ?>"
                        class="egov-delete"
                        onclick="return confirm('<?php echo $this->__('You are sure to cancel these order?') ?>')"
-                       alt="<?php echo $this->__('Cancel Order') ?>"
-                       title="<?php echo $this->__('Cancel Order') ?>"> </a>
+                       title="<?php echo $this->__('Cancel order') ?>"> </a>
                 <?php endif ?>
                 </span>
             </td>

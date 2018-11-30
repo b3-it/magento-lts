@@ -41,7 +41,7 @@ class Egovs_Extstock_Model_Salesorder extends Mage_Core_Model_Abstract
     /**
      * Prüft ob die Voraussetzungen zum Speichern erfüllt sind
      * 
-     * @param unknown $salesOrderItem Sales Order Item
+     * @param Mage_Sales_Model_Order_Item $salesOrderItem Sales Order Item
      * 
      * @return boolean
      */

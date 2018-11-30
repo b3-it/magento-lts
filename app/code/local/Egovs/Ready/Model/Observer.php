@@ -101,7 +101,7 @@ class Egovs_Ready_Model_Observer
 	 *
 	 * @param  Varien_Event_Observer $observer Observer
 	 * 
-	 * @return FireGento_MageSetup_Model_Observer Observer
+	 * @return Varien_Event_Observer Observer
 	 */
 	public function onCatalogProductSaveBefore(Varien_Event_Observer $observer)
 	{

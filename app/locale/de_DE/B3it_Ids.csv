@@ -1,0 +1,6 @@
+"Intrusion Detection System","Angrifferkennungssystem (IDS)"
+"Logging Threshold","Protokollschwelle"
+"E-Mail Threshold","E-Mail-Schwelle"
+"Deny Threshold","Ablehnungsschwelle"
+"Hard Exit on Deny Event","Hartes Beenden bei Ablehnungsereignis"
+"Hard Exit on Deny Event Message","Nachrichteninhalt bei hartem Beenden"

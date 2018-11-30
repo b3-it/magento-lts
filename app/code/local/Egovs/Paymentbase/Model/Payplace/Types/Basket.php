@@ -25,7 +25,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Basket extends Egovs_Paymentbase_Mo
      * Meta informations extracted from the WSDL
      * - documentation : Shipping costs in lower currency unit, e.g. cent.
      * - minOccurs : 0
-     * @var long
+     * @var float
      */
     public $shippingCosts;
     /**
@@ -36,7 +36,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Basket extends Egovs_Paymentbase_Mo
     /**
      * Constructor method for basket
      * @see parent::__construct()
-     * @param long $_shippingCosts
+     * @param float $_shippingCosts
      * @param Egovs_Paymentbase_Model_Payplace_Types_Article $_article
      * @return Egovs_Paymentbase_Model_Payplace_Types_Basket
      */
@@ -46,7 +46,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Basket extends Egovs_Paymentbase_Mo
     }
     /**
      * Get shippingCosts value
-     * @return long|null
+     * @return float|null
      */
     public function getShippingCosts()
     {
@@ -54,8 +54,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Basket extends Egovs_Paymentbase_Mo
     }
     /**
      * Set shippingCosts value
-     * @param long $_shippingCosts the shippingCosts
-     * @return long
+     * @param float $_shippingCosts the shippingCosts
+     * @return bool
      */
     public function setShippingCosts($_shippingCosts)
     {

@@ -138,7 +138,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Address_Data extends Egovs_Paymentb
      * @param string $_country
      * @param string $_phone
      * @param string $_email
-     * @return Egovs_Paymentbase_Model_Payplace_Types_AddressData
+     * @return Egovs_Paymentbase_Model_Payplace_Types_Address_Data
      */
     public function __construct($_title = NULL,$_firstName = NULL,$_lastName = NULL,$_name2 = NULL,$_dateOfBirth = NULL,$_street = NULL,$_streetNumber = NULL,$_postcode = NULL,$_city = NULL,$_country = NULL,$_phone = NULL,$_email = NULL)
     {
@@ -359,7 +359,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Address_Data extends Egovs_Paymentb
      * @see Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @uses Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @param array $_array the exported values
-     * @return Egovs_Paymentbase_Model_Payplace_Types_AddressData
+     * @return Egovs_Paymentbase_Model_Payplace_Types_Address_Data
      */
     public static function __set_state(array $_array,$_className = __CLASS__)
     {

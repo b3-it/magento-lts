@@ -27,22 +27,23 @@
 <?php  $_order = $this->getOrder() ?>
 <?php $_item = $this->getItem() ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td><h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
-   	<!-- configvirtual -->
-         <?php if ($station = $this->getStationLabel()): ?>
+    <td>
+        <h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
+
+   	    <!-- configvirtual -->
+      <?php if ($station = $this->getStationLabel()): ?>
         <dl class="item-options">
-            <dt>Station: <?php echo $station; ?></dt>            
+            <dt><?php echo $this->__('Station'); ?>: </dt>
+            <dd><?php echo $station; ?></dd>            
         </dl>
-    <?php endif; ?>
-    <?php if ($periode = $this->getFormatedPeriode()): ?>
+      <?php endif; ?>
+      <?php if ($periode = $this->getFormatedPeriode()): ?>
         <dl class="item-options">
-            <dt>Periode: <?php echo $periode; ?></dt>
-            
+            <dt><?php echo $this->__('Periode'); ?>: </dt>
+            <dd><?php echo $periode; ?></dd>            
         </dl>
-    <?php endif; ?>
+      <?php endif; ?>
         <!-- EOF configvirtual -->
-    
-    
     
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">

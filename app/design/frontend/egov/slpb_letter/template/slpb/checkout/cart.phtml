@@ -32,6 +32,9 @@
  * @see Mage_Checkout_Block_Cart
  */
 ?>
+<?php 
+$_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getStore()));
+?>
 <div class="page-title">
     <h2><?php echo $this->__('Shopping Cart') ?></h2>
     <img alt="<?php echo $this->__('Loading'); ?>" src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" id="loading" style="display: none;" />
@@ -43,8 +46,20 @@
 </ul>
 <?php endif; ?>
 
+<ul class="messages">
+    <li class="success-msg">
+        <ul>
+            <li>
+                <?php echo $this->__('<span>Stars on cart</span>: <span id="star-cnt">--</span> from max %s', $_maxstar); ?>
+            </li>
+        </ul>
+    </li>
+</ul>
+
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
 	<table id="shopping-cart-table" class="cart-table data-table">
 	    <col width="40" />
 	    <col width="75" />

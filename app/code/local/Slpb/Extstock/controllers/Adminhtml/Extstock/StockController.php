@@ -223,4 +223,8 @@ class Slpb_Extstock_Adminhtml_Extstock_StockController extends Mage_Adminhtml_Co
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('system/stock');
+    }
 }

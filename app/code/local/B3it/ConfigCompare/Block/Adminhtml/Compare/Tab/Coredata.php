@@ -10,6 +10,11 @@
       $this->setNoFilterMassactionColumn(true);
   }
 
+  protected function _getStoreId()
+  {
+  	 return intval($this->getRequest()->getParam('store_id',0));
+  }
+  
   protected function _prepareCollection()
   {
       //$collection =Mage::getModel('core/config_data')->getCollection();
@@ -18,7 +23,9 @@
   	  $collection->getSelect()->where("type='core_config_data'");
   	  
   	  
-      $collection =Mage::getModel('configcompare/coreConfigData')->getCollectionDiff($collection->getItems());
+      $collection =Mage::getModel('configcompare/coreConfigData')
+      	->setStoreId($this->_getStoreId())
+      	->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
         parent::_prepareCollection();

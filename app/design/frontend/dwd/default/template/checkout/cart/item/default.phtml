@@ -85,7 +85,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 	        </dl>
         </div>
 
-		<div class="product-collateral item-options">
+		<dl class="product-collateral item-options">
 			<?php foreach ($_options as $_option) : ?>
 			<?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
 			<dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
@@ -100,7 +100,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 			    <?php endif; ?>
 			</dd>
 			<?php endforeach; ?>
-        </div>
+        </dl>
         <?php endif;?>
 
         <?php if ($messages = $this->getMessages()): ?>
@@ -132,7 +132,6 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
                 <?php endif; ?>
                 </div>
             <?php if (Mage::helper('weee')->getApplied($_item)): ?>
-
                 <div class="cart-tax-info" id="unit-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
                     <?php if (Mage::helper('weee')->typeOfDisplay($_item, 1, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
                         <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
@@ -169,7 +168,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 		           href="<?php echo $this->getDeleteUrl() ?>"
 		           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
 		           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-		           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+		           title="<?php echo $this->__('Remove Item') ?>"> </a>
             </div>            
         </div>
     </td>
@@ -280,11 +279,11 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
         <div class="product-cart-symbols">
         <?php if ($isVisibleProduct): ?>
-            <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
+            <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo $this->__('Edit') ?>"> </a>
         <?php endif ?>
         <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
             <?php if ($isVisibleProduct): ?>
-            <a class="egov-star link-wishlist use-ajax" href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" alt="<?php echo $this->__('Move to wishlist'); ?>" title="<?php echo $this->__('Move to wishlist'); ?>"> </a>
+            <a class="egov-star link-wishlist use-ajax" href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" title="<?php echo $this->__('Move to wishlist'); ?>"> </a>
             <?php endif ?>
         <?php endif ?>
         </div>
@@ -389,7 +388,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
            href="<?php echo $this->getDeleteUrl() ?>"
            onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
            title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+           title="<?php echo $this->__('Remove Item') ?>"> </a>
     </td>
 </tr>
 

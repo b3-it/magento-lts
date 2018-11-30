@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
 	 <checkout_onepage_index translate="label">
         <reference name="head">

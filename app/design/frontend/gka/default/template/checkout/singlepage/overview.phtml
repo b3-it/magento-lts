@@ -12,22 +12,38 @@
 	</h2>
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate">
 	<?php echo $this->getBlockHtml('formkey'); ?>
-	<fieldset>
-			<ul class="form-list group-select">
-				<li>
-					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
-				</li>
-			</ul>
+	
+<div class="col2-set">
+	<div class="col-1">
+		<?php echo $this->getChildHtml('singlepage_payment') ?>
+	</div>
+	<div class="col-2">
+	<?php if(!$this->isVirtual()):?>
+		<?php //echo $this->getChildHtml('singlepage_shipping') ?>
+	<?php endif;?>
+	</div>
+</div>
 
-			<div>
-				<?php echo $this->getChildHtml('infotexts'); ?>
-				<?php echo $this->getChildHtml('agreementtexts'); ?>
+<div id="address">
+	<?php echo $this->getChildHtml('singlepage_billing') ?>
+</div>	
+	
+<fieldset>
+	<ul class="form-list group-select">
+		<li>
+			<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/>
+		</li>
+	</ul>
 
-				<?php echo $this->getChildHtml('agreements') ?>
-			</div>
-	</fieldset>
+	<div>
+		<?php echo $this->getChildHtml('infotexts'); ?>
+		<?php echo $this->getChildHtml('agreementtexts'); ?>
+
+		<?php echo $this->getChildHtml('agreements') ?>
+	</div>
+</fieldset>
 	<fieldset class="multiple-checkout">
 		<?php $_address=$this->getBaseAddress() ?>
 		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
@@ -45,109 +61,9 @@
 				</div>
 			</div>
 		<?php endif;?>
-		<div class="col2-set">
-			<h3>
-				<?php echo $this->__('Billing Information') ?>
-			</h3>
-			<div class="col-1">
-				<?php $_address=$this->getBillingAddress() ?>
-				<h4>
-					<?php echo $this->__('Billing Address') ?>
-					<span class="spacer"> | </span>
-					<a class="egov-pencile"
-					   href="<?php echo $this->getAddressesEditUrl() ?>"
-					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
-				</h4>
-				<address>
-					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
-				</address>
-			</div>
-			<div class="col-2">
-				<h4>
-					<?php echo $this->__('Payment Method') ?>
-					<span class="spacer"> | </span>
-					<a class="egov-pencile"
-						 href="<?php echo $this->getEditBillingUrl() ?>"
-						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
-				</h4>
-				<input type="hidden" name="payment[cc_number]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
-				<input type="hidden" name="payment[cc_cid]" value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
-				<?php echo $this->getPaymentHtml() ?>
-			</div>
-		</div>
-		<?php if(!$this->isVirtual()):?>
-		<h3>
-			<?php echo $this->__('Shipping Information') ?>
-		</h3>
-		<?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
-		<?php  $_address = $this->getShippingAddress() ?>
-		<div class="col2-set">
-			<div class="col-1">
-				<?php if(!$this->isStorePickup()):?>
-				<h4>
-					<?php echo $this->__('Shipping to') ?>
-					<span class="spacer"> | </span>
-					<a class="egov-pencile"
-						 href="<?php echo $this->getEditShippingUrl() ?>"
-						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
-				</h4>
-				<address>
-					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
-				</address>
-				<?php endif;?>
+		
+	<div id='cashpayment'> </div> 	
 
-			</div>
-
-			<div class="col-2">
-				<h4>
-					<?php echo $this->__('Shipping Method') ?>
-					<span class="spacer"> | </span>
-					<a class="egov-pencile"
-						 href="<?php echo $this->getEditShippingmethodUrl() ?>"
-						 title="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"> </a>
-				</h4>
-				<?php if($_rate=$this->getShippingAddressRate($_address)): ?>
-				<div class="overview_shipping">
-					<?php
-					if($_rate->getCarrierTitle() === $_rate->getMethodTitle())
-						echo $_rate->getCarrierTitle();
-					else
-						echo $_rate->getCarrierTitle() ." (" . $_rate->getMethodTitle().")";
-					?>
-					<br /> <strong>Versandkosten:&nbsp;</strong>
-					<?php $_excl = $this->getShippingPriceExclTax($_address); ?>
-					<?php $_incl = $this->getShippingPriceInclTax($_address); ?>
-					<?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						<?php echo $_excl; ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						<?php echo $_incl; ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-						<?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
-					<?php endif; ?>
-				</div>
-				<?php endif; ?>
-
-
-			</div>
-		</div>
-		<?php endif; ?>
-<?php if($this->isCashPayment()):?>
-        <div class="col2-set">
-			<div class="col-1">
-                <h4><?php echo $this->__('Singular amount'); ?></h4>
-	            <div class="input-box">
-    	            <input type="text" name="givenamount" id="givenamount" value="" class="input-text" style="width:90%;" />
-    	            <h2><?php echo $this->__('Change') ?>: <span id="balance"></span></h2>
-    	        </div>
-    	        <script type="text/javascript">
-        	        var price = <?php echo $this->getTotal(); ?>;
-        	        var currency = '<?php echo $this->getCurrencySymbol(); ?>';
-    	        </script>
-	        </div>
-	    </div>
-<?php endif;?>
 		<div class="col1-wide">
 
 			<table class="data-table" id="checkout-review-table">
@@ -185,16 +101,13 @@
 					<?php endforeach ?>
 				</tbody>
 			</table>
-			<table id="checkout-review-totals-table" class="data-table">
-				<?php echo $this->getChildHtml('totals'); ?>
-			</table>
 		</div>
 		<p class="grand-total">
 			<span style="font-weight: bold;"><?php echo $this->__('Grand Total:') ?> </span>
 			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
 		</p>
 		<div class="buttons-set" id="review-buttons-container">
-			<a href="<?php echo $this->getBackUrl() ?>"class="button"><?php echo $this->__('Back') ?> </a>
+			
 			<a class="button" href="<?php echo $this->getUrl() ?>">
 			    <span><?php echo $this->__('Continue Shopping') ?></span>
 			</a>
@@ -211,5 +124,18 @@
 	</fieldset>
 </form>
 
-<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/barkasse.js'); ?>"></script>
-
+<script type="text/javascript">
+if(Validation) {
+	Validation.addAllThese([
+    	['validate-givenamount', '<?php echo $this->__('Change Amount not plausible!'); ?>', function(v) {
+    		v = parseFloat(v.replace(/,/g , "."));
+        	return v >= price ? true : false;
+        }],
+        ['validate-price', '<?php echo $this->__('Please enter a valid price in this field.'); ?>', function(v) {
+            v = v.replace(/,/g , ".");
+            return Validation.get('IsEmpty').test(v) || (!isNaN(parseNumber(v)) && !/^\s+$/.test(parseNumber(v)));
+        }]
+    ]);
+}
+var dataForm = new VarienForm('form-validate', true);
+</script>

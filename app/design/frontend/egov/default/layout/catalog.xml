@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
 <!--
 /**
  * @category    design
@@ -51,7 +52,7 @@ Category default layout
         <label>Catalog Category (Non-Anchor)</label>
 
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" as="category_filter" template="catalog/layer/view.phtml">
+            <block type="catalog/layer_view" name="catalog.leftnav" after="topEgovmenu" as="category_filter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
@@ -95,7 +96,7 @@ Category layered navigation layout
         <label>Catalog Category (Anchor)</label>
 
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav" before="left.newsletter" template="catalog/layer/view.phtml">
+            <block type="catalog/layer_view" name="catalog.leftnav" after="topEgovmenu" as="category_filter" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
             </block>
         </reference>
@@ -366,21 +367,14 @@ SEO Site Map
         -->
         <reference name="root">
         	  <!-- egovs custom code begin -->
-            <action method="setTemplate"><template>page/3columns.phtml</template></action>
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
             <!-- egovs custom code end -->
         </reference>
         <reference name="content">
             <block type="page/template_container" name="seo.sitemap.container" template="catalog/seo/sitemap/container.phtml">
-                <!-- egovs custom code begin -->
-                <block type="egovssitemap/cms" name="seo.sitemap.cms" as="cms" template="egovs/sitemap/cms.phtml"/>
-                <action method="setTitleSiteMap" translate="title" module="catalog"><title>Site Map</title></action>
-                <action method="setTitleSiteCms" translate="title" module="catalog"><title>General</title></action>
-        		    <!-- egovs custom code end -->
-                <!--
                 <block type="page/template_links" name="seo.sitemap.links" as="links" template="page/template/links.phtml"/>
                 <block type="page/html_pager" name="seo.sitemap.pager.top" as="pager_top" template="page/html/pager.phtml"/>
                 <block type="page/html_pager" name="seo.sitemap.pager.bottom" as="pager_bottom" template="page/html/pager.phtml"/>
-                -->
             </block>
         </reference>
     </catalog_seo_sitemap>
@@ -391,6 +385,25 @@ SEO Site Map
             <action method="setTitle" translate="title" module="catalog"><title>Site Map</title></action>
         </reference>
         <update handle="catalog_seo_sitemap" />
+
+        <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbname>Home</crumbname>
+                <crumbinfo>
+                    <label>Home</label>
+                    <title>Home</title>
+                    <url>/</url>
+                </crumbinfo>
+            </action>
+            <action method="addCrumb">
+                <crumbname>Sitemap</crumbname>
+                <crumbinfo>
+                    <label>Sitemap</label>
+                    <title>Sitemap</title>
+                </crumbinfo>
+            </action>
+        </reference>
+
         <reference name="seo.sitemap.container">
             <action method="setTitle" translate="title" module="catalog"><title>Categories</title></action>
             <block type="catalog/seo_sitemap_category" name="seo.sitemap.sitemap" as="sitemap" after="pager_top" template="catalog/seo/sitemap.phtml">

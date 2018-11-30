@@ -14,6 +14,7 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 	protected $_transport = null;
 	protected $_mail = null;
 	protected $_lastErrorMessage = null;
+	protected $_isQueue = false;
 	
 	protected function _initTransport() {
 		$config = array();
@@ -279,6 +280,9 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 				);
 			Mage::logException($e);
 			$this->_lastErrorMessage = $e->getMessage();
+			if ($this->getIsQueueProcess()) {
+			    throw $e;
+            }
 		}
 		
 		$this->_transport = null;
@@ -290,4 +294,12 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 	{
 		return $this->_lastErrorMessage;
 	}
+
+	public function setIsQueueProcess($isQueue = true) {
+	    $this->_isQueue = $isQueue;
+    }
+
+    public function getIsQueueProcess() {
+	    return $this->_isQueue;
+    }
 }

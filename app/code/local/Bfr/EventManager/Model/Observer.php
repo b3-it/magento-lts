@@ -36,7 +36,7 @@ class Bfr_EventManager_Model_Observer extends Varien_Object
  
     /**
      * Bei nueanlegen eines Eventbundles automatisch ein neues Event erzeugen
-     * @param unknown $observer
+     * @param Bfr_EventManager_Model_Observer $observer
      * @return Bfr_EventManager_Model_Observer
      */
     public function onEventbundleCreateAfter($observer)

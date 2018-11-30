@@ -1,0 +1,32 @@
+<?php $_itemID = $this->getElement()->getId(); ?>
+<tr class='grid'>
+	<td class="label">
+		<?php echo $this->__($this->getElement()->getLabel())?>
+	</td>
+	<td class="value">
+		
+		
+		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
+			
+			<thead>
+				<tr class="headings">
+					<?php foreach($this->getElement()->getColumns() as $column):?>
+					<th><?php echo $column; ?></th>
+					<?php endforeach;?>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($this->getElement()->getValue() AS $key => $_item):?>
+					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>">
+						<?php foreach($this->getElement()->getColumns() as $ckey =>$column):?>
+						<td><?php echo $_item->getData($ckey); ?></td>
+						<?php endforeach;?>
+						
+					</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+		
+	</td>
+</tr>

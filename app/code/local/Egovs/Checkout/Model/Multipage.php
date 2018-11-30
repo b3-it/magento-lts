@@ -68,8 +68,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         $checkout = $this->getCheckout();
         if (is_array($checkout->getStepData())) {
             foreach ($checkout->getStepData() as $step=>$data) {
-                if (!($step==='login'
-                    || Mage::getSingleton('customer/session')->isLoggedIn() && $step==='billing')) {
+                if ($step !== 'login' && (!Mage::getSingleton('customer/session')->isLoggedIn() || $step !== 'billing')) {
                     $checkout->setStepData($step, 'allow', false);
                 }
             }
@@ -197,8 +196,8 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 
     /**
      *
-     * @param unknown_type $data
-     * @param unknown_type $customerAddressId
+     * @param array $data
+     * @param integer $customerAddressId
      * 
      * @return boolean|string
      */
@@ -238,6 +237,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 			}
 		} else {
 			unset ( $data ['address_id'] );
+			$data ['customer_address_id'] = null;
 			if (! $this->getQuote ()->isVirtual ()) {
 				if (isset ( $data ['use_for_shipping'] ) && $data ['use_for_shipping'] == 1) {
 					$addressValidation = Mage::getModel ( 'mpcheckout/validateadr' )->validateShippingAddress ( $data );
@@ -484,12 +484,12 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 				if (Mage::helper('core')->isModuleEnabled('Egovs_Vies')) {
 					if (!Mage::app()->getStore()->isAdmin()) {
 						$validationMessage = Mage::helper('customer')->getVatValidationUserMessage($address, $customer->getDisableAutoGroupChange(), $result);
-		
+						$errorGroup = Mage::getStoreConfig(Mage_Customer_Helper_Data::XML_PATH_CUSTOMER_VIV_ERROR_GROUP);
 						if (!$validationMessage->getIsError()) {
 							//Mage::getSingleton('customer/session')->addSuccess($validationMessage->getMessage());
 							$address->setVatIsValid(true);
 							$customer->setTaxvatValid(true);
-						} else {
+						} elseif (empty($errorGroup)) {
 							//Mage::getSingleton('customer/session')->addError($validationMessage->getMessage());
 							$type = 'base';
 							if ($address->getAddressType() != 'base_address') {
@@ -533,7 +533,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
            
         } else {
             unset($data['address_id']);
-            
+            $data ['customer_address_id'] = null;
             //damit alle Felder der Adresse bei addData überschrieben werden können müssen auch alle da sein
             $eav = Mage::getModel('eav/entity_type')->loadByCode('customer_address');
             $attributes = $eav->getAttributeCollection();
@@ -820,6 +820,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 	
 	            $this->getQuote()->setCustomer($customer)
 	            	->setCustomerId(true);
+                $this->getQuote()->setPasswordHash('');
 	            break;
 	
 	        default:
@@ -1026,7 +1027,12 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	//falls das feld nicht gesetzt wurde braucht es nicht geprüft werden
     	if(!isset($data[$key])) return true;
     	
-    	if((strlen($data[$key]) < 1))
+    	$value = $data[$key];
+    	if(is_string($value)){
+    		$value = trim($value);
+    	}
+    	
+    	if((strlen($value) < 1))
     	{
     		if($this->isFieldRequired($key,$method)) return false;
     		else 
@@ -1061,7 +1067,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	{
     		$adr = $data['street'];
     		if (is_array($adr)) $adr = implode('',$adr);
-    		if(strlen($adr) < 1) $errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
+    		if(strlen(trim($adr)) < 1) $errors[] = Mage::helper('mpcheckout')->__('Please enter street.');
     	}
     	    	
     	if(!$this->isValid($data,'city',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter city.');

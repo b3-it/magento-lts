@@ -23,8 +23,7 @@
  * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-?>
-<?php
+
 /**
  * Multishipping checkout billing information
  *
@@ -32,17 +31,18 @@
  */
 
 $_method = $this->getMethodsForm();
-if ( $_method != null )
-{
+if ( $_method != null ) {
     $_code = $_method->getCode();
 }
-if (strpos($_code, 'sepa') === FALSE)
-{
+else {
+    $_code = null;
+}
+
+if ( strpos($_code, 'sepa') === FALSE ) {
     $_css_block_1 = 'col-1 narrow';
     $_css_block_2 = 'col-2 wide';
 }
-else
-{
+else {
     $_css_block_1 = 'full-wide';
     $_css_block_2 = 'full-wide sepa-details';
 }
@@ -56,7 +56,7 @@ else
     <fieldset class="multiple-checkout">
         <div class="col2-set">
             <div class="<?php echo $_css_block_1 ?>">
-                <h3><?php echo $this->__('Billing Address') ?> </h3>
+                <h3><?php echo $this->__('Billing Address') ?></h3>
                 <?php $_address=$this->getAddress() ?>
                 <address><?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?></address>
             </div>
@@ -79,15 +79,14 @@ else
         </div>
     </fieldset>
     <div class="buttons-set">
-        <a href="<?php echo $this->getBackUrl() ?>" class="button">
+        <a id="paymentInformationBack" href="<?php echo $this->getBackUrl() ?>" class="button">
             <?php echo $this->__('Back') ?>
         </a>
-        <a class="button" href="<?php echo $this->getUrl() ?>">
+        <a id="paymentInformationContinueShopping" class="button" href="<?php echo $this->getUrl() ?>">
             <span><?php echo $this->__('Continue Shopping') ?></span>
         </a>
-        <button  class="button" type="submit">
+        <button id="paymentInformationContinue" class="button" type="submit">
             <span><?php echo $this->__('Continue') ?></span>
         </button>
     </div>
 </form>
-

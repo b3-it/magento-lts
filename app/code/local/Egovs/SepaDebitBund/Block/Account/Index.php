@@ -15,14 +15,10 @@
  */
 class Egovs_SepaDebitBund_Block_Account_Index extends Mage_Core_Block_Template
 {
-	
-
-	/**
+    /**
 	 * URL für Controller
 	 * 
 	 * @return string
-	 * 
-	 * @see Egovs_SepaDepitBund_ChangeController::changeAction
 	 */
 	public function getActionUrl() {
 		return $this->getUrl('sepadebitbund/change/change', array('_secure'=>'true'));
@@ -32,17 +28,17 @@ class Egovs_SepaDebitBund_Block_Account_Index extends Mage_Core_Block_Template
 	protected function _toHtml()
 	{
 		$customer = $this->getCustomer();
-		if(!$customer) return "";
+		if(!$customer) {
+			return "";
+		}
+		
 		$mandateRef = $customer->getSepaMandateId();
 		if(!$mandateRef)
 		{
 			$mandateRef = Mage::helper('paymentbase')->getAdditionalCustomerMandateData($customer,"old_mandate");
 		}
-		if($mandateRef )
-		{
-			return parent::_toHtml();
-		}
-		return $this->__("<h4>Create your SEPA Mandate during checkout please.</h4>");
+		
+    	return parent::_toHtml();
 	}
 	
 	

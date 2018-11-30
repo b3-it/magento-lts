@@ -1,0 +1,29 @@
+﻿//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.catalog-seo-sitemap-category {
+    .main-container {
+    }
+
+    .page-sitemap {
+        position: relative;
+        top: -4px;
+    
+        div.pager {
+            width: auto;
+        }
+
+        ul li {
+            list-style-type: none;
+
+            a:before {
+                content: url($global-category-arrow-full-right);
+                margin-right: $fa-icon-margin + 3;
+            }
+        }
+    }
+}

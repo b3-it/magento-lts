@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -19,7 +19,7 @@
         <layout>
             <updates>
                 <eventmanager>
-                    <file>eventmanager.xml</file>
+                    <file>bfr/eventmanager.xml</file>
                 </eventmanager>
             </updates>
         </layout>
@@ -46,7 +46,7 @@
     </admin>
     <adminhtml>
         <menu>
-            <event module="eventmanager">
+            <bfr_eventmanager module="eventmanager">
                 <title>Events</title>
                 <sort_order>41</sort_order>
                 <children>
@@ -71,7 +71,7 @@
                         <action>adminhtml/eventmanager_translate</action>
                     </eventmanager_translate>
                 </children>
-            </event>
+            </bfr_eventmanager>
         </menu>
         <acl>
             <resources>

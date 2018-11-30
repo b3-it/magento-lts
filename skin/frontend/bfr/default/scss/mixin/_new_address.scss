@@ -61,6 +61,12 @@
                 .column-left, .column-right {
                     width: 47%;
                     float: left;
+
+                    @include bp(max-width, $bp-xsmall) {
+                        width: 100%;
+                        display: block;
+                        float: none;
+                    }
                 }
             }
 
@@ -75,7 +81,7 @@
                     display: inline-block;
                 }
             }
-           
+
             .function-rows label {
                 display: inline-block;
             }
@@ -121,6 +127,11 @@
             height: auto;
             display: inline-block;
             margin-bottom: 15px;
+
+            @include bp(max-width, $bp-xsmall) {
+                width: 100%;
+                display: block;
+            }
         }
 
         .wide {
@@ -168,6 +179,10 @@
 
         li.halfwide {
             width: 48%;
+
+            @include bp(max-width, $bp-xsmall) {
+                width: 100%;
+            }
         }
 
         .customer-name,
@@ -181,6 +196,11 @@
                 width: 48%;
                 vertical-align: top;
                 height: auto;
+
+                @include bp(max-width, $bp-xsmall) {
+                    width: 100%;
+                    display: block;
+                }
             }
         }
     }

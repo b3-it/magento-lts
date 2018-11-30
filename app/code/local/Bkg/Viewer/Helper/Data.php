@@ -72,4 +72,30 @@ class Bkg_Viewer_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $dir;
 	}
+	
+	//eine Liste mit Version für WMS ermitteln
+	public function getAvailableVersions()
+	{
+			//if (is_null($options))
+			//{
+				$options = array();
+// 				$options[] = array(
+// 						'label' =>'',
+// 						'value' =>''
+// 				);
+		
+				$options[""] = $this->__("-- Please Select --");
+				$einheiten = Mage::getConfig()->getNode('global/wms/versions')->asArray();
+				 
+				if(is_array($einheiten))
+				{
+		
+					foreach($einheiten as $v)
+					{
+						$options[$v[0]] = $v['@']['type'] . " " . $v[0];
+					}
+				}
+			//}
+			return $options;
+	}
 }

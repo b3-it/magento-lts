@@ -28,13 +28,26 @@
 }
 
 #slpb-suggest {
+	-webkit-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 7px 19px 0px rgba(0,0,0,0.75);
+	
 	.sku {
 	    display: inline-block;
 	    width: 40px;
 	}
 	
-	.even {}
+	.even {
+	    background-color: #F3F8F3;
+	}
 	.odd {}
+	
+	.even, .odd {
+	    &:hover, &:active {
+	        background-color: $global-active-color;
+	        color: $global-linkcolor-hover;
+	    }
+	}
 }
 
 /* ============================================ *
@@ -50,7 +63,6 @@
     z-index: 200;
 
     ul {
-        @include border-radius(2px);
         background-color: $global-lightcolor;
         border: 1px solid $global-border-color-light;
         left: 0;
@@ -61,7 +73,7 @@
 
         li {
             border-bottom: 1px solid $global-border-color;
-            color: $global-linkcolor;
+            color: $global-active-color;
             cursor: pointer;
             font-size: $global-fontsize;
             padding: 4px 6px;
@@ -75,6 +87,7 @@
 
             &:hover {
                 color: $global-linkcolor-hover;
+                background-color: $global-linkcolor;
             }
 
             &.selected {
@@ -94,8 +107,8 @@
     }
 
     &:before {
-        @include triangle(up, 7px, $global-linkcolor);
-        left: 50%;
+        @include triangle(up, 7px, $global-active-color);
+        left: 1.5%;
         top: -7px;
     }
 }

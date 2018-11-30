@@ -28,14 +28,14 @@ class Egovs_Paymentbase_Model_Payplace_Types_Label extends Egovs_Paymentbase_Mod
     public $_;
     /**
      * The key
-     * @var UNKNOWN
+     * @var string
      */
     public $key;
     /**
      * Constructor method for label
      * @see parent::__construct()
      * @param string $__
-     * @param UNKNOWN $_key
+     * @param string $_key
      * @return Egovs_Paymentbase_Model_Payplace_Types_Label
      */
     public function __construct($__ = NULL,$_key = NULL)
@@ -61,7 +61,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Label extends Egovs_Paymentbase_Mod
     }
     /**
      * Get key value
-     * @return UNKNOWN|null
+     * @return string|null
      */
     public function getKey()
     {
@@ -69,8 +69,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Label extends Egovs_Paymentbase_Mod
     }
     /**
      * Set key value
-     * @param UNKNOWN $_key the key
-     * @return UNKNOWN
+     * @param string $_key the key
+     * @return bool
      */
     public function setKey($_key)
     {

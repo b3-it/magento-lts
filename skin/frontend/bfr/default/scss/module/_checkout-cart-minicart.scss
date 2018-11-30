@@ -16,10 +16,6 @@
 .header-minicart {
     display: inline-block;
 
-    @include bp(max-width, $bp-medium) {
-        display: block;
-    }
-
     .minicart-message {
         display: block;
         padding: $box-spacing;
@@ -89,6 +85,12 @@
             font-weight: bold;
             text-align: left;
 
+            @include bp(max-width, $bp-small) {
+                display: inline-block;
+                width: 60%;
+                vertical-align: top;
+            }
+
             a {
                 color: $global-linkcolor;
             }
@@ -122,6 +124,10 @@
         position: relative;
         right: -70px;
         display: inline-block;
+
+        @include bp(max-width, $bp-small) {
+            right: 0;
+        }
 
         tr:first-child {
             line-height: 25px;
@@ -266,7 +272,16 @@ div.block-cart {
 
                 p.product-name {
                     padding: 0px;
+
+                    @include bp(max-width, $bp-small) {
+                        overflow: hidden;
+                    }
                 }
+            }
+
+            a {
+                background-image: none;
+                padding-left: 0;
             }
         }
     }
@@ -276,6 +291,21 @@ div.block-cart {
 .header-minicart.skip-active .block-cart,
 .block-cart.skip-active {
     display: block;
+    position: absolute;
+
+    @include bp(max-width, $bp-medium) {
+        top: 52px;
+    }
+
+    @include bp(max-width, $bp-small) {
+        left: 0;
+        top: $mobile-header-accountnav-top - 28px;
+        width: 100%
+    }
+
+    @include bp(max-width, $bp-xsmall) {
+        top: $mobile-header-accountnav-top - 8px;
+    }
 }
 
 @include bp(min-width, $bp-medium + 1) {
@@ -302,7 +332,7 @@ div.block-cart {
             z-index: 999;
 
             &:before {
-                background-color: #EDEDED;
+                background-color: $global-minicart-background;
             }
         }
 
@@ -320,6 +350,10 @@ div.block-cart {
 
         .minicart-actions {
             padding-bottom: 33px;
+
+            button {
+                width: 40%;
+            }
 
             .cart-link {
                 bottom: 0;
@@ -355,7 +389,7 @@ div.block-cart {
     }
 }
 
-@include bp(max-width, 740px) {
+@include bp(max-width, $bp-medium) {
     .header-minicart {
         .minicart-actions {
             .cart-link {

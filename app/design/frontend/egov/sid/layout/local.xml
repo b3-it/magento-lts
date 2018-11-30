@@ -2,15 +2,36 @@
 <!DOCTYPE layout>
 <layout>
     <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
+        </reference>
+
         <reference name="left">
             <remove name="left.newsletter" />
+            <remove name="catalog.leftnav" />
         </reference>
 
         <reference name="top.links">
             <action method="removeLinkByUrl"><url helper="customer/getRegisterUrl"/></action>
         </reference>
+        
+        <reference name="footer_links2">
+        	<action method="removeLinkBlock"><name>return_link</name></action>
+        </reference>
     </default>
-    
+
+    <catalog_category_default translate="label">
+        <reference name="left">
+            <block type="catalog/layer_view" name="catalog.leftnav.bottom" after="navbar" as="category_filter" template="catalog/layer/view.phtml">
+                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
+            </block>
+        </reference>
+    </catalog_category_default>
+
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="removeLinkByName"><name>newsletter</name></action>

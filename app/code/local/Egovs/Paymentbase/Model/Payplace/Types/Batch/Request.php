@@ -23,7 +23,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Batch_Request extends Egovs_Payment
      * The batchExtId
      * Meta informations extracted from the WSDL
      * - minLength : 1
-     * @var token
+     * @var int
      */
     public $batchExtId;
     /**
@@ -34,7 +34,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Batch_Request extends Egovs_Payment
     /**
      * Constructor method for batchRequest
      * @see parent::__construct()
-     * @param token $_batchExtId
+     * @param int $_batchExtId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_BatchActionEnum $_action
      * @return Egovs_Paymentbase_Model_Payplace_Types_Batch_Request
      */
@@ -44,7 +44,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Batch_Request extends Egovs_Payment
     }
     /**
      * Get batchExtId value
-     * @return token|null
+     * @return int|null
      */
     public function getBatchExtId()
     {
@@ -52,8 +52,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Batch_Request extends Egovs_Payment
     }
     /**
      * Set batchExtId value
-     * @param token $_batchExtId the batchExtId
-     * @return token
+     * @param int $_batchExtId the batchExtId
+     * @return bool
      */
     public function setBatchExtId($_batchExtId)
     {

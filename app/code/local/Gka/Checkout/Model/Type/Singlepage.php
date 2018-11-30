@@ -264,6 +264,27 @@ class Gka_Checkout_Model_Type_Singlepage extends Gka_Checkout_Model_Type_Abstrac
     	
     	$order = $service->getOrder();
         
+    	if ($order) {
+    		Mage::dispatchEvent('checkout_type_onepage_save_order_after',
+    				array('order'=>$order, 'quote'=>$this->getQuote()));
+    		 
+    		$redirectUrl = $this->getQuote()->getPayment()->getOrderPlaceRedirectUrl();
+    		
+    		 
+    		// add order information to the session
+    		$this->getCheckout()->setLastOrderId($order->getId())
+    		->setRedirectUrl($redirectUrl)
+    		->setLastRealOrderId($order->getIncrementId());
+    		 
+    		// as well a billing agreement can be created
+    		$agreement = $order->getPayment()->getBillingAgreement();
+    		if ($agreement) {
+    			$this->getCheckout()->setLastBillingAgreementId($agreement->getId());
+    		}
+    	}
+    	
+    	
+    	
     	$this->getQuote()->getItemsCollection()->clear();
     	$this->getQuote()->save();
     	

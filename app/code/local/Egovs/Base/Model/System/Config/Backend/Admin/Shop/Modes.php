@@ -31,8 +31,7 @@
  * @package    Mage_Adminhtml
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Egovs_Base_Model_System_Config_Backend_Admin_Shop_Modes
-    extends Mage_Core_Model_Config_Data
+class Egovs_Base_Model_System_Config_Backend_Admin_Shop_Modes extends Mage_Core_Model_Config_Data
 {
     /**
      * Validate expiration period value before saving
@@ -49,6 +48,7 @@ class Egovs_Base_Model_System_Config_Backend_Admin_Shop_Modes
         }
         Mage::getConfig()->saveConfig('admin/design/mode_default', 0);
         Mage::getConfig()->saveConfig('admin/design/mode_test', 0);
+        Mage::getConfig()->saveConfig('admin/design/mode_migration', 0);
         Mage::getConfig()->saveConfig('admin/design/mode_int', 0);
         Mage::getConfig()->saveConfig('admin/design/mode_prod', 0);
         switch ($mode) {
@@ -64,6 +64,10 @@ class Egovs_Base_Model_System_Config_Backend_Admin_Shop_Modes
         		//Prod
         		Mage::getConfig()->saveConfig('admin/design/mode_prod', 1);
         		break;
+        	case 4:
+        	    //Migration
+        	    Mage::getConfig()->saveConfig('admin/design/mode_migration', 1);
+        	    break;
         	case 0:
         	default:
         		//Not Specified

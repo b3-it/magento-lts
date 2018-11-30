@@ -83,11 +83,6 @@ class Slpb_Extstock_Adminhtml_Extstock_OrdersheetController extends Mage_Adminht
     }
     
     protected function _isAllowed() {
-    	$action = strtolower($this->getRequest()->getActionName());
-    	switch ($action) {
-    		default:
-    			return Mage::getSingleton('admin/session')->isAllowed('extstock/ordersheet');
-    			break;
-    	}
+    	return Mage::getSingleton('admin/session')->isAllowed('extstock/ordersheet');
     }
 }

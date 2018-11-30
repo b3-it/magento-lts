@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout>
 	<default>
         <reference name="notifications">
@@ -86,4 +87,17 @@
     <adminhtml_sales_order_creditmemo_view>
         <update handle="custom_order_info_template"/>
     </adminhtml_sales_order_creditmemo_view>
+
+    <adminhtml_paymentbase_sales_incomingpayments_view>
+        <reference name="head">
+        </reference>
+        <reference name="content">
+            <block type="paymentbase/adminhtml_sales_incomingPayments_view" name="sales_incomingpayments_view"></block>
+        </reference>
+        <reference name="left">
+            <block type="paymentbase/adminhtml_sales_incomingPayments_view_tabs" name="sales_incomingpayments_view_tabs">
+                <action method="addTab"><name>incomingpayments_transactions</name><block>paymentbase/adminhtml_sales_incomingPayments_view_tab_transactions</block></action>
+            </block>
+        </reference>
+    </adminhtml_paymentbase_sales_incomingpayments_view>
 </layout>

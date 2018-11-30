@@ -1,28 +1,57 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <default>
         <reference name="head">
             <action method="addCss"><stylesheet>css/egovs_default.css</stylesheet></action>
-            <action method="addCss" ifconfig="admin/design/mode_test"><stylesheet>css/shop-state-test.css</stylesheet> </action>
-            <action method="addCss" ifconfig="admin/design/mode_int"><stylesheet>css/shop-state-int.css</stylesheet> </action>
-            <action method="addCss" ifconfig="admin/design/mode_prod"><stylesheet>css/shop-state-prod.css</stylesheet> </action>
+            <action method="addCss" ifconfig="admin/design/mode_test"><stylesheet>css/shop-state-test.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_migration"><stylesheet>css/shop-state-migration.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_int"><stylesheet>css/shop-state-int.css</stylesheet></action>
+            <action method="addCss" ifconfig="admin/design/mode_prod"><stylesheet>css/shop-state-prod.css</stylesheet></action>
             <!-- Muss an letzter Stelle stehen um als DEFAULT zu gelten -->
-            <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet> </action>
+            <action method="addCss" ifconfig="admin/design/mode_default"><stylesheet>css/shop-state.css</stylesheet></action>
             <!-- Support für Native events und Aufrufe wie $(id).trigger('change') -->
-            <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action>
+            <!-- 2017-06-21 :: Deaktiviert, da jetzt mit jQuery umgesetzt -->
+            <!-- <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action> -->
+            <action method="addJs"><script>egovs/jquery.admin.js</script></action>
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>
         <reference name="content">
-            <block type="egovsbase/adminhtml_tools_analyse_sales_order_item" name="egovssbase" >
-            </block>
+            <block type="egovsbase/adminhtml_tools_analyse_sales_order_item" name="egovssbase" />
         </reference>
     </adminhtml_egovsbase_tools_analyse_sales_order_item_index>
 
 	<jquery_load_handle>
 		<reference name="head">
+		<!-- 
             <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+         -->
         </reference>
 	</jquery_load_handle>
+
+    <adminhtml_cms_wysiwyg_media_index>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="addJs"><script>egovs/adminhtml/browser.js</script></action>
+        </reference>
+        <reference name="left">
+            <block name="wysiwyg_images.js" type="adminhtml/cms_wysiwyg_images_content" template="cms/browser/js.phtml" />
+            <block name="wysiwyg_images.tree" type="adminhtml/cms_wysiwyg_images_tree" template="cms/browser/tree.phtml" />
+        </reference>
+        <reference name="content">
+            <block name="wysiwyg_images.content"  type="adminhtml/cms_wysiwyg_images_content" template="cms/browser/content.phtml">
+                <block name="wysiwyg_images.uploader" type="adminhtml/cms_wysiwyg_images_content_uploader" template="media/uploader.phtml">
+                    <block name="additional_scripts" type="core/template" template="cms/browser/content/uploader.phtml"/>
+                </block>
+                <block name="wysiwyg_images.newfolder" type="adminhtml/cms_wysiwyg_images_content_newfolder" template="cms/browser/content/newfolder.phtml" />
+            </block>
+        </reference>
+    </adminhtml_cms_wysiwyg_media_index>
+
+    <adminhtml_cms_wysiwyg_media_contents>
+        <block name="wysiwyg_images.files" type="adminhtml/cms_wysiwyg_images_content_files"
+               template="egovs/cms/browser/content/files.phtml" output="toHtml"/>
+    </adminhtml_cms_wysiwyg_media_contents>
 </layout>

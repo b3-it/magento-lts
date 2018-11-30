@@ -115,7 +115,6 @@ will be rendered on all checkout pages
         <!-- Mage_Checkout -->
         <remove name="right"/>
         <remove name="left"/>
-
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>

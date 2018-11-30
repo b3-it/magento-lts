@@ -21,7 +21,8 @@ class Sid_Haushalt_Model_Type extends Varien_Object
     
     /**
      * export model Anhand des Types erzeugen
-     * @param unknown $type
+     * 
+     * @param string  $type
      * @return Mage_Core_Model_Abstract|false|NULL
      */
     public static function factory($type){

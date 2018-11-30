@@ -45,7 +45,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 17
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $eventExtId;
     /**
@@ -106,7 +106,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 22
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $txReferenceExtId;
     /**
@@ -115,7 +115,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * - documentation : Amount in the smallest currency unit (Cent in the case of the Euro). Only has to be submitted if different from the amount of the referenced transaction.
      * - from schema : file:///etc/Callback.wsdl
      * - minInclusive : 1
-     * @var long
+     * @var float
      */
     public $changedAmount;
     /**
@@ -124,7 +124,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * - documentation : Amount in the smallest currency unit (Cent in the case of the Euro).
      * - from schema : file:///etc/Callback.wsdl
      * - minInclusive : 0
-     * @var long
+     * @var float
      */
     public $amount;
     /**
@@ -151,7 +151,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * The batchReferenceExtId
      * Meta informations extracted from the WSDL
      * - minLength : 1
-     * @var token
+     * @var int
      */
     public $batchReferenceExtId;
     /**
@@ -187,7 +187,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 20
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var string
      */
     public $txExtId;
     /**
@@ -207,7 +207,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     public $additionalData;
     /**
      * The compareResult
-     * @var Egovs_Paymentbase_Model_Payplace_Types_CompareResult
+     * @var Egovs_Paymentbase_Model_Payplace_Types_Compare_Result
      */
     public $compareResult;
     /**
@@ -228,7 +228,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * @see parent::__construct()
      * @param string $_merchantId
      * @param string $_timeStamp
-     * @param anyExtId $_eventExtId
+     * @param string $_eventExtId
      * @param string $_basketId
      * @param Egovs_Paymentbase_Model_Payplace_Enum_KindEnum $_kind
      * @param Egovs_Paymentbase_Model_Payplace_Enum_IndicatorEnum $_indicator
@@ -237,21 +237,21 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
      * @param Egovs_Paymentbase_Model_Payplace_Enum_DebitModeEnum $_debitMode
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Action $_action
      * @param string $_brand
-     * @param anyExtId $_txReferenceExtId
-     * @param long $_changedAmount
-     * @param long $_amount
+     * @param string $_txReferenceExtId
+     * @param float $_changedAmount
+     * @param float $_amount
      * @param string $_currency
      * @param Egovs_Paymentbase_Model_Payplace_Types_CreditCard $_creditCard
      * @param Egovs_Paymentbase_Model_Payplace_Types_BankAccount $_bankAccount
-     * @param token $_batchReferenceExtId
+     * @param int $_batchReferenceExtId
      * @param string $_rc
      * @param string $_message
      * @param string $_backRc
-     * @param anyExtId $_txExtId
+     * @param string $_txExtId
      * @param string $_backendTxId
      * @param string $_aid
      * @param string $_additionalData
-     * @param Egovs_Paymentbase_Model_Payplace_Types_CompareResult $_compareResult
+     * @param Egovs_Paymentbase_Model_Payplace_Types_Compare_Result $_compareResult
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Scoring_RcEnum $_scoringRc
      * @param string $_rcAvsAmex
      * @return Egovs_Paymentbase_Model_Payplace_Types_Payment_Response
@@ -296,7 +296,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get eventExtId value
-     * @return anyExtId|null
+     * @return string|null
      */
     public function getEventExtId()
     {
@@ -304,8 +304,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set eventExtId value
-     * @param anyExtId $_eventExtId the eventExtId
-     * @return anyExtId
+     * @param string $_eventExtId the eventExtId
+     * @return bool
      */
     public function setEventExtId($_eventExtId)
     {
@@ -474,7 +474,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get txReferenceExtId value
-     * @return anyExtId|null
+     * @return string|null
      */
     public function getTxReferenceExtId()
     {
@@ -482,8 +482,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set txReferenceExtId value
-     * @param anyExtId $_txReferenceExtId the txReferenceExtId
-     * @return anyExtId
+     * @param string $_txReferenceExtId the txReferenceExtId
+     * @return bool
      */
     public function setTxReferenceExtId($_txReferenceExtId)
     {
@@ -491,7 +491,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get changedAmount value
-     * @return long|null
+     * @return float|null
      */
     public function getChangedAmount()
     {
@@ -499,8 +499,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set changedAmount value
-     * @param long $_changedAmount the changedAmount
-     * @return long
+     * @param float $_changedAmount the changedAmount
+     * @return bool
      */
     public function setChangedAmount($_changedAmount)
     {
@@ -508,7 +508,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get amount value
-     * @return long|null
+     * @return float|null
      */
     public function getAmount()
     {
@@ -516,8 +516,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set amount value
-     * @param long $_amount the amount
-     * @return long
+     * @param float $_amount the amount
+     * @return bool
      */
     public function setAmount($_amount)
     {
@@ -576,7 +576,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get batchReferenceExtId value
-     * @return token|null
+     * @return int|null
      */
     public function getBatchReferenceExtId()
     {
@@ -584,8 +584,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set batchReferenceExtId value
-     * @param token $_batchReferenceExtId the batchReferenceExtId
-     * @return token
+     * @param int $_batchReferenceExtId the batchReferenceExtId
+     * @return bool
      */
     public function setBatchReferenceExtId($_batchReferenceExtId)
     {
@@ -644,7 +644,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get txExtId value
-     * @return anyExtId|null
+     * @return string|null
      */
     public function getTxExtId()
     {
@@ -652,8 +652,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set txExtId value
-     * @param anyExtId $_txExtId the txExtId
-     * @return anyExtId
+     * @param string $_txExtId the txExtId
+     * @return bool
      */
     public function setTxExtId($_txExtId)
     {
@@ -712,7 +712,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Get compareResult value
-     * @return Egovs_Paymentbase_Model_Payplace_Types_CompareResult|null
+     * @return Egovs_Paymentbase_Model_Payplace_Types_Compare_Result|null
      */
     public function getCompareResult()
     {
@@ -720,8 +720,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Response extends Egovs_Paym
     }
     /**
      * Set compareResult value
-     * @param Egovs_Paymentbase_Model_Payplace_Types_CompareResult $_compareResult the compareResult
-     * @return Egovs_Paymentbase_Model_Payplace_Types_CompareResult
+     * @param Egovs_Paymentbase_Model_Payplace_Types_Compare_Result $_compareResult the compareResult
+     * @return bool
      */
     public function setCompareResult($_compareResult)
     {

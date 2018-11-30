@@ -18,6 +18,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
       $this->setId('participantGrid');
       $this->setDefaultSort('participant_id');
       $this->setDefaultDir('ASC');
+      
       $this->setSaveParametersInSession(true);
       $this->setUseAjax(true);
   }
@@ -189,6 +190,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'header'    => Mage::helper('eventmanager')->__('Email'),
   			'align'     =>'left',
   			'index'     => 'email',
+  			'filter_index' => 'main_table.email'
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	
@@ -293,6 +295,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'align'     => 'left',
   			'width'     => '80px',
   			'index'     => 'status',
+  			'filter_index' => 'main_table.status',
   			'type'      => 'options',
   			'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
   	));
@@ -345,12 +348,43 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
                     'visibility' => array(
                          'name' => 'status',
                          'type' => 'select',
-                         'class' => 'required-entry',
+                         //'class' => 'required-entry',
                          'label' => Mage::helper('eventmanager')->__('Status'),
                          'values' => $statuses
                      )
              )
         ));
+
+        $events = array();
+        $collection = Mage::getSingleton('eventmanager/event')->getCollection();
+        $collection->getSelect()->where("event_from >= ?",date('Y-m-d'));
+        foreach($collection as $item)
+        {
+            $events[] = array('label'=>$item->getTitle(),'value'=>$item->getId());
+        }
+
+        $this->getMassactionBlock()->addItem('copy', array(
+            'label'=> Mage::helper('eventmanager')->__('Copy'),
+            'url'  => $this->getUrl('*/eventmanager_event/massStatusParticipantCopy', array('_current'=>true, 'event' => $this->getEvent()->getId())),
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'new_event',
+                    'type' => 'select',
+                    //'class' => 'required-entry',
+                    'label' => Mage::helper('eventmanager')->__('Events'),
+                    'values' => $events
+                )
+            )
+        ));
+
+
+        if(Mage::helper('eventmanager')->isModuleEnabled('Egovs_Infoletter'))
+        {
+            $url = $this->getUrl('adminhtml/eventmanager_event/massInfoletter',array('id'=>$this->getEvent()->getId()));
+            Mage::helper('infoletter')->addInfoLetter2Massaction($this->getMassactionBlock(), $url);
+        }
+
+
         return $this;
     }
 

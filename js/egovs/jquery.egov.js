@@ -3,6 +3,53 @@
            || 'onmsgesturechange' in window;  // works on ie10
 }
 
+function toggleLoadingMask()
+{
+    $j('#loading-mask').toggle();
+}
+
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+       // Edge (IE 12+) => return version number
+       return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
+}
+
+function addJsToHeader($scriptPath)
+{
+    if ( $scriptPath.length ) {
+        $j('<script />').attr('type', 'text/javascript')
+                        .attr('src', $scriptPath)
+                        .appendTo('head');
+    }
+}
+
+$j(document).ready(function () {
+    if ( detectIE() == false ) {
+        addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.min.js');
+        addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.init.js');
+    }
+});
+
 (function($j){
     $j.eGovMenu = function(element, options){
 
@@ -175,12 +222,12 @@
             }
         });
     }
-    
+
     $j(document).ready(function(){
     	//cloneNavigation();
-        
+
     	var setDefaultToggle = false;
-    	
+
     	// Prüfen, ob die Array-Variable gesetzt ist
     	if ( typeof toggleBlocks == 'undefined' ) {
     		setDefaultToggle = true;
@@ -200,16 +247,16 @@
 	        	});
         	}
         }
-    	
+
     });
-    
+
     function cloneNavigation()
     {
     	// Inhalt in Mobile Navigation kopieren
     	// Funktion der Navigation herstellen
     	$j('#header-nav').html( $j('#egov-nav').html() ).eGovMenu();
     }
-    
+
     function toggleBlockContent(classElement)
     {
     	$j('.' + classElement).on('click', function(){

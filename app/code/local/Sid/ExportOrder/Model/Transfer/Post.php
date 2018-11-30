@@ -25,9 +25,15 @@
  *  @method setPwd(string $value)
  *  @method string getField()
  *  @method setField(string $value)
+ *  @method string getClientCertificate()
+ *  @method string getClientCa()
+ *  @method bool getClientcertAuth()
+ *
  */
 class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 {
+    private $_filenameWithPath = null;
+
 	public function _construct()
 	{
 		parent::_construct();
@@ -38,51 +44,77 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 	 * (non-PHPdoc)
 	 * @see Sid_ExportOrder_Model_Transfer::send()
 	 */
-	public function send($content,$order = null, $data = array())
+	protected function _sendCurl($content,$order = null, $data = array(), $storeId = 0)
 	{
 		$output = "";
 		try
 		{
-			
-			$tmp = tmpfile();
-			$a = stream_get_meta_data($tmp);
-			$filename = $a['uri'];
+			$curl_opt = array();
+			//$tmp = tmpfile();
+			//$a = stream_get_meta_data($tmp);
+			$filename = tempnam (Mage::getBaseDir('tmp'), "ExportOrder".$order->getIncrementId() ); // $a['uri'];
 
 			$wantedFileName = "Order".$order->getIncrementId().'_'.date('d-m-Y_H-i-s').$this->getFileExtention();
-
-			fwrite($tmp, $content);
+			file_put_contents($filename, $content);
+			
 			$cfile = curl_file_create($filename,'application/xml', $wantedFileName);
 			$ch = curl_init();
 
 			// Follow any Location headers
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			$curl_opt[CURLOPT_FOLLOWLOCATION] = 1;
+			//curl_setopt($ch, CURLOPT_URL, $this->getAddress());
+			$curl_opt[CURLOPT_URL] = $this->getAddress();
+			//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$curl_opt[CURLOPT_RETURNTRANSFER] = 1;
+			//curl_setopt($ch, CURLOPT_POST, 1);
+			$curl_opt[CURLOPT_POST] = 1;
+			$curl_opt[CURLOPT_HEADER] = 0;
 
-			curl_setopt($ch, CURLOPT_URL, $this->getAddress());
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-
-			if(!empty($this->getUser())){
-				$this->setLog('setze Username: '. $this->getUser());
-				curl_setopt($ch,CURLOPT_PROXYUSERPWD,$this->getUser().':'.$this->getPwd());
+			
+			
+			if(!empty($this->getPort())){
+				
+				//curl_setopt($ch,CURLOPT_PORT,$this->getPort());
+				$curl_opt[CURLOPT_PORT] = $this->getPort();
+			}
+			
+			if(strpos($this->getAddress(),'https:') !== false)
+			{
+				//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				$curl_opt[CURLOPT_SSL_VERIFYPEER] = 0;
+				$curl_opt[CURLOPT_SSL_VERIFYHOST] = 0;
 			}
 
+			//$curl_opt[CURLOPT_PROXY] = '10.100.80.50:8080';
+			//$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
+			
 			$data = array('file' => $cfile);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-// 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true) {
-// 				$host = Mage::getStoreConfig('web/proxy/proxy_name');
-// 				$port = 8080;
-// 				if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
-// 					$port =  Mage::getStoreConfig('web/proxy/proxy_port');
-// 				}
-// 				curl_setopt($cs, CURLOPT_PROXY, $host . ":" . $port);
-// 				curl_setopt($cs, CURLOPT_HTTPPROXYTUNNEL, true);
-// 				//$this->useProxyAndHTTPS = true;
-// 				$user = Mage::getStoreConfig('web/proxy/proxy_user');
-// 				if (isset($user) && (strlen($user) > 0)) {
-// 					curl_setopt($cs, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('web/proxy/proxy_user_pwd'));
-// 				}
-// 			}
+			//curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			$curl_opt[CURLOPT_POSTFIELDS] = $data;
+ 			if (Mage::getStoreConfig('framecontract/proxy_exportorder/use_proxy') == true) {
+				$host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
+ 				$port = 8080;
+ 				if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')) > 0) {
+ 					$port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
+ 				}
+ 			
+ 				
+ 				$curl_opt[CURLOPT_PROXY] = $host . ":" . $port;
+ 				$curl_opt[CURLOPT_HTTPPROXYTUNNEL] = true;
+ 				
+ 				$user = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user');
+ 				if (isset($user) && (strlen($user) > 0)) {
+ 					curl_setopt($ch, CURLOPT_PROXYUSERPWD, $user . ':' . Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd'));
+ 				}
+ 			}
+			
+			foreach($curl_opt as $opt=>$value)
+			{
+				curl_setopt($ch, $opt, $value);
+				$this->setLog('Curl SetOpt: '.$opt."=". $value);
+			}
 			
 			$output = curl_exec($ch);
 			$this->setLog($output);
@@ -96,6 +128,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			
 			if (($http_status < 200) || ($http_status > 210))
 			{
+				Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
 				throw new Exception("HTTP Status: " . $http_status ." ".$output);
 			}
 			
@@ -108,6 +141,9 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 			
 			
 			curl_close($ch);
+			if(file_exists($filename)){
+				unlink($filename);
+			}
 		}
 		catch(Exception $ex)
 		{
@@ -121,4 +157,171 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
 
 		return trim($output);
 	}
+
+    /**
+     * Sendet Daten per POST
+     *
+     * @param       $content
+     * @param null  $order
+     * @param array $data
+     *
+     * @return string Bei Erfolg Body des Response
+     * @throws \Exception Im Fehlerfall
+     */
+	protected function _sendHttpful($content, $order = null, $data = array()) {
+	    require_once 'Httpful/Bootstrap.php';
+	    \Httpful\Bootstrap::init();
+
+	    $uri = $this->getAddress();
+	    $parsedUri = parse_url($uri);
+	    if (!isset($parsedUri['scheme'])) {
+	        $uri = 'http://'.ltrim($uri, ':/');
+        }
+
+	    $request = \Httpful\Request::post($uri)
+            ->followRedirects(true)
+        ;
+
+        if(!empty($this->getPort())) {
+            $request->addOnCurlOption(CURLOPT_PORT, $this->getPort());
+        }
+
+        if (Mage::getStoreConfigFlag('framecontract/proxy_exportorder/use_proxy') == true) {
+            $host = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_name');
+            $port = 8080;
+            if (strlen(Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port')) > 0) {
+                $port =  Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_port');
+            }
+
+            $user = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user');
+            $pwd = Mage::getStoreConfig('framecontract/proxy_exportorder/proxy_user_pwd');
+            $request->useProxy(
+                $host,
+                $port,
+                empty($user) ? null : CURLAUTH_BASIC,
+                empty($user) ? null : $user,
+                empty($user) || empty($pwd) ? null : $pwd
+            );
+            $request->addOnCurlOption(CURLOPT_HTTPPROXYTUNNEL, true);
+        }
+
+        if($order) {
+            $filename = "Order" . $order->getIncrementId() . '_' . date('d-m-Y_H-i-s') . $this->getFileExtention();
+            $filenameWithPath = Mage::getBaseDir('tmp') .DS . $filename;
+            $this->_filenameWithPath = $filenameWithPath;
+
+            try {
+                file_put_contents($filenameWithPath, $content);
+                $request->attach(array('file' => $filenameWithPath));
+            } catch(Exception $ex) {
+                Mage::logException($ex);
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), "Fehler: Die Datei wurde nicht übertragen");
+                throw new Exception('Dateianhang konnte nicht erstellt werden!');
+            }
+        } else {
+            $request->body('CHECK CONNECTION');
+        }
+
+        if ($this->getClientcertAuth()) {
+            if ($this->getClientCertificate()) {
+                $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
+                $request
+                    ->authenticateWithCert($cert, $key)
+                    ->withStrictSSL();
+            }
+            if ($this->getClientCa()) {
+                $request
+                    ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
+                    ->withStrictSSL();
+            }
+        } elseif (isset($parsedUri['scheme']) && strtolower($parsedUri['scheme']) == 'https') {
+            $request->withoutStrictSSL();
+        }
+
+        try {
+            $response = $request->send();
+        } catch (Exception $e) {
+            Mage::logException($e);
+            if ($order) {
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), $e->getMessage());
+            }
+            throw $e;
+        }
+
+        $httpStatus = $response->code;
+        $output = $response->raw_body;
+
+        if ($order) {
+            if (($httpStatus < 200) || ($httpStatus > 210)) {
+                Sid_ExportOrder_Model_History::createHistory($order->getId(), $output);
+                throw new Exception("HTTP Status/Output: " . $httpStatus . " / " . $output);
+            }
+        } elseif (!$httpStatus || empty($output)) {
+            throw new Exception("HTTP Status/Output: " . $httpStatus . " / " . $output);
+        }
+
+        if ($order) {
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), 'per Post übertragen');
+            Sid_ExportOrder_Model_History::createHistory($order->getId(), 'Antwort des Servers: ' . $output);
+        }
+
+        return $output;
+    }
+
+    protected function _removeFile($filenameWithPath = null) {
+	    if (is_null($filenameWithPath)) {
+	        $filenameWithPath = $this->_filenameWithPath;
+        }
+
+        if(!is_null($filenameWithPath) && file_exists($filenameWithPath)){
+            @unlink($filenameWithPath);
+        }
+
+        return $this;
+    }
+
+    public function send($content, $order = null, $data = array()) {
+        $this->_filenameWithPath = null;
+        $_result = false;
+        try {
+            $_result = $this->_sendHttpful($content, $order, $data);
+            //$_result = $this->_sendCurl($content, $order, $data);
+        } catch (Exception $e) {
+            $this->_removeFile();
+            throw $e;
+        }
+        if ($_result === true) {
+            $_result = "Die Bestellung wurde erfolgreich versendet.";
+        }
+        $this->_removeFile();
+        return $_result;
+    }
+
+    /**
+     * Check connection
+     *
+     * @return bool|string
+     */
+    public function checkConnection() {
+        $this->_filenameWithPath = null;
+        $_result = false;
+        try {
+            $_result = $this->_sendHttpful(null);
+        } catch (\Httpful\Exception\ConnectionErrorException $cee) {
+            Mage::logException($cee);
+            if ($cee->getCurlErrorNumber() == 35) {
+                $_result = Mage::helper('exportorder')->__("Wrong client certificate specified!");
+                $_result .= " " . $cee->getMessage();
+            } else {
+                $_result = $cee->getMessage();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $_result = $e->getMessage();
+        }
+        if (is_string($_result) && !isset($e) && !isset($cee)) {
+            $_result = true;
+        }
+        return $_result;
+    }
 }

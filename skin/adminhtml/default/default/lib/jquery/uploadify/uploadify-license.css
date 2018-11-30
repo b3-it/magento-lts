@@ -1,0 +1,16 @@
+#file-selector, #result {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#file-selector {
+    width: 40%;
+    margin-right: 20px;
+}
+#file-selector #file-upload-queue {
+    width: 100%;
+}
+
+#result {
+    width: 55%;
+}

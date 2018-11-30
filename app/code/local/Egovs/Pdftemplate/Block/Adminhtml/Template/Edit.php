@@ -15,6 +15,10 @@ class Egovs_Pdftemplate_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Blo
     {
         parent::__construct();
                  
+        
+        if (!$this->hasData('template')) {
+        	$this->setTemplate('egovs/pdftemplate/form/container.phtml');
+        }
         $this->_objectId = 'id';
         $this->_blockGroup = 'pdftemplate';
         $this->_controller = 'adminhtml_template';
@@ -24,13 +28,18 @@ class Egovs_Pdftemplate_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Blo
 		
         if( Mage::registry('template_data') && Mage::registry('template_data')->getId() ) 
         {
+        	
+        	
+        	
+        	/*
+        	
 	        $this->_addButton('preview', array(
 	            'label'     => Mage::helper('adminhtml')->__('Preview'),
 	            'onclick'   => 'setLocation(\'' . $this->getPreviewUrl() . '\')',
 	            //'class'     => 'back',
 	        	'popup' 	=> '1'
 	        ), -1);
-	        
+	        */
 	        $this->_addButton('duplicate', array(
 	            'label'     => Mage::helper('pdftemplate')->__('Duplicate'),
 	            'onclick'   => 'setLocation(\'' . $this->getDublicateUrl() . '\')',
@@ -90,5 +99,29 @@ class Egovs_Pdftemplate_Block_Adminhtml_Template_Edit extends Mage_Adminhtml_Blo
         }
     }
 	
-	
+    public function canPreview()
+    {
+    	return Mage::registry('template_data') && Mage::registry('template_data')->getId();
+    }
+    
+    public function getPreviewStoreHtml()
+    {
+    	$block = $this->getLayout()->createBlock('pdftemplate/adminhtml_template_edit_switcher');
+    	$html = $block->toHtml();;
+    	return $html;
+    }
+    
+    
+    /**
+     * Check whether it is single store mode
+     *
+     * @return bool
+     */
+    public function isSingleStoreMode()
+    {
+    	if (!Mage::app()->isSingleStoreMode()) {
+    		return false;
+    	}
+    	return true;
+    }
 }

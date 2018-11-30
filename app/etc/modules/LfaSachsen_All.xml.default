@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+   		<LfaSachsen_Base>
+			<active>false</active>
+			<codePool>local</codePool>
+		</LfaSachsen_Base>
+    </modules>
+</config>

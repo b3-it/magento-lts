@@ -16,6 +16,8 @@
 
 <?php //echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form id="quick_form" action="#" method="post" onsubmit="addCart();">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
 	<fieldset class="form-search">
 	    <legend>Search Site</legend>
 	    <label for="search"></label>

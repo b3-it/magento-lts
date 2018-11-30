@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config>
 	<modules>
@@ -69,7 +69,7 @@
 							<title>Cms Module</title>
 							<sort_order>10</sort_order>
 							<children>
-								<cms_navi module="pdftemplate">
+								<cms_navi module="cms">
 									<title>Manage Cms Navi</title>
 									<sort_order>0</sort_order>
 								</cms_navi>

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <adminhtml_ibewi_access_index>
         <reference name="content">
@@ -20,5 +21,21 @@
             	<block type="ibewi/adminhtml_order" as="grid" name="grid" />
             </block>
         </reference>
-    </adminhtml_ibewi_order_index>    
+    </adminhtml_ibewi_order_index>
+    
+   <adminhtml_ibewi_report_attribute_index>
+        <reference name="content">
+            <block type="ibewi/adminhtml_report_attribute" name="ibewi" >
+                 <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm"><params>0</params></action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_ibewi_report_attribute_index>
+    <adminhtml_ibewi_kostentraeger_attribute_index>
+        <reference name="content">
+            <block type="ibewi/adminhtml_kostentraeger_attribute" name="kostentraeger_attribute" />
+        </reference>
+    </adminhtml_ibewi_kostentraeger_attribute_index>
+ 
 </layout>

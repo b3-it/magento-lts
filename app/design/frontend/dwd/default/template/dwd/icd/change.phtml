@@ -33,7 +33,7 @@
     <h2 class="table-caption"><?php echo $this->__('Change Data Access Password') ?></h2>
 
   <form action="<?php echo $this->getUrl('dwd_icd/index/changepost', array('account' => $this->getAccount()->getId(), '_secure' => true))?>" method="post">
-    <?php echo $this->__('Change Passwort for Login') . '<br/><h3>'. $this->getAccount()->getLogin().'</h3>'?>
+    <?php echo $this->__('Change Password for Login') . '<br/><h3>'. $this->getAccount()->getLogin().'</h3>'?>
     <div id="icd_password_reset_block">
       <span class="icd_password_space"><?php echo $this->__('Enter New Password') ?></span> <input name="pwd" type="password" size="30" autocomplete="off"/>
       <br />

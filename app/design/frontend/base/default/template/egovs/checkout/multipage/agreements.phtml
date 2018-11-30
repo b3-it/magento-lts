@@ -36,20 +36,26 @@
 		<li class="agree">
 			<input type="checkbox" title="<?php echo Mage::helper('checkout')->__('Required. Please agree the following Text: ').$this->escapeHtml($_a->getCheckboxText()) ?>" id="agreement-<?php echo $_a->getId()?>" name="agreement[<?php echo $_a->getId()?>]" value="1" class="checkbox" />
 			<label for="agreement-<?php echo $_a->getId()?>">
-				<?php if ($_a->getIsHtml()):?>
-					<?php echo $_a->getCheckboxText()?>
-				<?php else:?>
-					$this->escapeHtml($_a->getCheckboxText();
-				<?php endif; ?>
+				<?php
+				if ( $_a->getIsHtml() ) {
+					echo $_a->getCheckboxText();
+				}
+				else {
+					echo $this->escapeHtml($_a->getCheckboxText());
+				}
+				?>
 				<span class="required">*</span>
 			</label>
 		</li>
 		<li class="agree-content">
-			<?php if ($_a->getIsHtml()):?>
-                <?php echo $_a->getContent() ?>
-            <?php else:?>
-                <?php echo nl2br($this->escapeHtml($_a->getContent())) ?>
-            <?php endif; ?>
+			<?php 
+			if ( $_a->getIsHtml() ) {
+				echo $_a->getContent();
+			}
+			else {
+				echo nl2br($_a->getContent());
+			}
+			?>
 		</li>  
 <?php endforeach ?>
 </ul>

@@ -1,19 +1,18 @@
 <?php
 error_reporting( E_ALL ^ E_NOTICE );
 
+$ds               = DIRECTORY_SEPARATOR;  // System-Seperator verwenden
 $script           = str_replace('\\', '/', $_SERVER['PHP_SELF']);
 $test_mode        = FALSE;                                     // Im Test-Modus werden _new-Dateien erzeugt, um die Originale nicht zu ver㭤ern
 $view_only        = ( isset($_GET['edit']) ? FALSE : TRUE );   // Alle Script-Aktionen abschalten
-$sub              = array('/lib/egovs', '\lib\egovs', '/lib/Egovs', '\lib\Egovs');
+$sub              = join($ds, array('lib', 'Egovs'));
 $base             = str_replace( $sub, '', dirname(__FILE__) );
-$base_modules_xml = $base . '/app/etc/modules/';
-$local_xml        = $base . '/app/etc/local.xml';
-$exclude_modules  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
-$exclude_options  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel');
+$base_modules_xml = $base . $ds . join($ds, array('app', 'etc', 'modules')) . $ds;
+$local_xml        = $base . $ds . join($ds, array('app', 'etc', 'local.xml'));
+$exclude_modules  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel', 'Cm');
+$exclude_options  = array('Mage', 'Symmetrics', 'Phoenix', 'Netzarbeiter', 'RicoNeitzel', 'Cm');
 $global_xml_file  = array();
 $neueliste        = array();
-
-
 
 
 ////////////////////////////////////////////////////////////
@@ -44,7 +43,7 @@ function set_header($title = 'Magento - Modulverwaltung')
             .result_fail  {color:#FF0000;}
             #mage         {cursor:pointer; width:1010px; height: 30px; background-color:#0000A0; color:#FFFFFF; padding:7px 0px 0px 10px; font-weight:bold;}
             #uploader     {display:none; left:100px; top:100px; z-index:1000; opacity:1; filter:Alpha(Opacity=100); position:absolute; border:2px solid #000000; background-color:#DCDCDC;}
-            #upload       {cursor:pointer; color:#0000FF;}
+            #upload       {cursor:pointer; color:#0000FF; display:inline-block; margin-left: 100px;}
             #start_upload {}
             #upload_title {background-color:#000000; color:#FFFFFF; font-weight:bold; padding:5px 0px 5px 10px;}
             #upload_hidde {float:right; padding:0px 10px 5px 0px; color:#FF0000; cursor:pointer;}
@@ -58,7 +57,7 @@ function set_header($title = 'Magento - Modulverwaltung')
             .min          {width:0%; height:0%;}
             .max          {width:100%; height:100%;}
         </style>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 ';
 }
 
@@ -75,7 +74,8 @@ function set_xml(&$output, $xml_array)
 {
     $spacer = '    ';
 
-    $output[] = '<?xml version="1.0"?>';
+    $output[] = '<?xml version="1.0" encoding="UTF-8"?>';
+    $output[] = '<!DOCTYPE config>';
     $output[] = '<config>';
     $output[] = str_repeat($spacer, 1) . '<modules>';
 
@@ -104,9 +104,9 @@ function set_xml(&$output, $xml_array)
     $output[] = '</config>';
 }
 
-/* Ließt den Inahtl einer XML-Datei ein un wandelt diesen in ein
+/* Ließt den Inhalt einer XML-Datei ein und wandelt diesen in ein
  * Mehrdimensiones Array um. Jeder Eintrag bekommt ein
- * Kex=>Value-Paar zugeordnet
+ * Key=>Value-Paar zugeordnet
  *
  * @param       string      Dateiname der XML
  *
@@ -114,6 +114,11 @@ function set_xml(&$output, $xml_array)
  */
 function get_xml_data($file)
 {
+    if ( !filesize($file) )
+    {
+        return;
+    }
+
     $fp   = fopen($file, "r");
     $data = fread($fp, filesize($file));
     fclose($fp);
@@ -223,8 +228,11 @@ function get_xml_file_modules(&$data_array, $file_list)
     foreach ( $file_list AS $file )
     {
         $xml = get_xml_data($file);
-
-        $data_array[basename($file)] = array_keys($xml['config']['modules']);
+        
+        if ( count($xml) )
+        {
+            $data_array[basename($file)] = array_keys($xml['config']['modules']);
+        }
     }
 }
 ////////////////////////////////////////////////////////////
@@ -338,11 +346,14 @@ if ( isset($_GET['download']) )
         {
             $xml = get_xml_data($filename);
 
-            foreach($xml['config']['modules'] AS $key => $val)
+            if ( count($xml) )
             {
-                if ( !in_array( get_prefix($key), $exclude_options) )
+                foreach($xml['config']['modules'] AS $key => $val)
                 {
-                    $settings[basename($filename)][$key] = $val['active'];
+                    if ( !in_array( get_prefix($key), $exclude_options) )
+                    {
+                        $settings[basename($filename)][$key] = $val['active'];
+                    }
                 }
             }
         }
@@ -512,13 +523,11 @@ echo '
 
             modul.removeClass(aktuell);
 
-            if ( aktuell == "aktiv")
-            {
+            if ( aktuell == "aktiv") {
                 modul.addClass("inaktiv");
                 status = "false";
             }
-            else
-            {
+            else {
                 modul.addClass("aktiv");
                 status = "true";
             }
@@ -581,7 +590,6 @@ echo '
 
     <p>
         <a id="download" href="' . $script . '?' . ( ($view_only === FALSE) ? 'edit&amp;' : '' ) . 'download">Einstellungen herunterladen</a>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <span id="upload">Einstellungen hochladen</span>
     </p>
     <div id="dummy" class="min"></div>
@@ -605,55 +613,58 @@ $core = FALSE;
 foreach ($neueliste AS $filename)
 {
     $xml = get_xml_data($filename);
-
-    foreach($xml['config']['modules'] AS $key => $val)
+    
+    if ( count($xml) )
     {
-        if ( in_array( get_prefix($key), $exclude_options) AND ($core === FALSE) )
+        foreach($xml['config']['modules'] AS $key => $val)
         {
-            echo "<div id=\"mage\"></div>\n" .
-                 "<div id=\"modules_mage\" style=\"display:none;\">\n";
-            $core = TRUE;
-        }
-
-        if ( $view_only === FALSE )
-        {
-            if ( in_array( get_prefix($key), $exclude_options) )
+            if ( in_array( get_prefix($key), $exclude_options) AND ($core === FALSE) )
             {
-                $click = ' onClick="alert(\'BASIS-Module k&ouml;nnen nicht ver&auml;ndert werden!\');"';
+                echo "<div id=\"mage\"></div>\n" .
+                    "<div id=\"modules_mage\" style=\"display:none;\">\n";
+                $core = TRUE;
+            }
+            
+            if ( $view_only === FALSE )
+            {
+                if ( in_array( get_prefix($key), $exclude_options) )
+                {
+                    $click = ' onClick="alert(\'BASIS-Module k&ouml;nnen nicht ver&auml;ndert werden!\');"';
+                }
+                else
+                {
+                    $click = ' onClick="change_module(\'' . $key . '\');"';
+                }
             }
             else
             {
-                $click = ' onClick="change_module(\'' . $key . '\');"';
+                $click = '';
             }
-        }
-        else
-        {
-            $click = '';
-        }
-
-        $aktiv = ( ($val['active'] === 'true') ? '<span class="aktiv"' : '<span class="inaktiv"' );
-        $class = ( ($i % 2 == 0) ? ' gerade' : '' );
-        echo '<div class="modul_zeile' . $class . '">' . $aktiv . ' id="' . $key . '"' . $click . '>' . $key . '</span>' .
-             '<span class="modul_result" id="' . $key . '_RESULT"></span>';
-
-        if ( isset($val['depends']) )
-        {
-            if ( is_array($val['depends']) )
+            
+            $aktiv = ( ($val['active'] === 'true') ? '<span class="aktiv"' : '<span class="inaktiv"' );
+            $class = ( ($i % 2 == 0) ? ' gerade' : '' );
+            echo '<div class="modul_zeile' . $class . '">' . $aktiv . ' id="' . $key . '"' . $click . '>' . $key . '</span>' .
+                '<span class="modul_result" id="' . $key . '_RESULT"></span>';
+            
+            if ( isset($val['depends']) )
             {
-                echo '<br />Abh&auml;ngigkeiten:<br /><div class="abhaengig">';
-
-                $sub = array();
-                foreach($val['depends'] AS $keys => $values)
+                if ( is_array($val['depends']) )
                 {
-                    $sub[] = '<a href="' . $script . '#' . $keys . '">' . $keys . '</a>';
+                    echo '<br />Abh&auml;ngigkeiten:<br /><div class="abhaengig">';
+                    
+                    $sub = array();
+                    foreach($val['depends'] AS $keys => $values)
+                    {
+                        $sub[] = '<a href="' . $script . '#' . $keys . '">' . $keys . '</a>';
+                    }
+                    
+                    echo implode(', ', $sub ) . '</div>';
                 }
-
-                echo implode(', ', $sub ) . '</div>';
             }
+            
+            echo "</div>\n";
+            $i++;
         }
-
-        echo "</div>\n";
-        $i++;
     }
 }
 
@@ -661,7 +672,7 @@ unset($neueliste);
 
 echo '</div>
 
-        <div class="copy">&copy; 2012 by EDV-Beratung-Hempel</div>
+        <div class="copy">&copy; 2017 by B3-IT Systeme GmbH</div>
     </body>
 </html>
 ';

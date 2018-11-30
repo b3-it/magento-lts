@@ -23,4 +23,6 @@ class Bkg_Viewer_Block_Composit extends Mage_Core_Model_Abstract
         return $this->getData('composit');
 
     }
+    
+   
 }

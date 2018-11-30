@@ -3,25 +3,50 @@
 <config>
     <modules>
         <Gka_Base>
-            <version>0.1.0</version>
+            <version>0.2.0.0</version>
         </Gka_Base>
     </modules>
-    <frontend>
-            <routers>
-                <customer>
-                    <args>
-                        <modules>
-                            <gka_base before="Mage_Customer">Gka_Base</gka_base>
-                        </modules>
-                    </args>
-                </customer>
-            </routers>
-    </frontend>
     <global>
+        <resources>
+            <gkabase_setup>
+                <setup>
+                    <module>Gka_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gkabase_setup>
+        </resources>
         <helpers>
             <gkabase>
                 <class>Gka_Base_Helper</class>
             </gkabase>
         </helpers>
+        <blocks>
+            <gkabase>
+                <class>Gka_Base_Block</class>
+            </gkabase>
+        </blocks>
     </global>
+    <frontend>
+        <translate>
+            <modules>
+              <Gka_Base>
+                  <files>
+                      <default>Gka_Base.csv</default>
+                  </files>
+              </Gka_Base>
+            </modules>
+        </translate>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <gka_base before="Mage_Customer">Gka_Base</gka_base>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+    </frontend>
 </config>

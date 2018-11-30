@@ -123,12 +123,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     public function notifyAction() {
     	//Dieser Teil muss in weniger als 10 Sekunden abgearbeitet sein,
     	//da sonst ein erneutes NOTIFY ausgelöst wird.
-    	//=======================================================================================================
-    	if (function_exists('microtime')) {
-    		$startTime = microtime(true);
-    	} else {
-    		$startTime = time();
-    	}
     	
     	$module = $this->_getModuleName();
     	
@@ -143,71 +137,6 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     	
     	// clear response
     	$this->getResponse()->clearAllHeaders()->clearBody();
-    	
-    	/*
-    	 * 20150122::Frank Rochlitzer
-    	 * Setzen des mutex via APC schlägt mit CGI fehl
-    	 */
-    	$cgiMode = false;
-    	$sapiType = php_sapi_name();
-    	if (strtolower(substr($sapiType, 0, 3)) == 'cgi') {
-    		Mage::log("$module::notify in CGI mode", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    		$cgiMode = true;
-    	}
-    	/*
-    	 * 20110804:Frank Rochlitzer
-    	 * Die mehrfache Ausführung dieser Funktion muss verhindert werden!
-    	 * Durch die BSI-Restriktionen kann die Session ID nicht an die NOTIFY URL angehängt werden,
-    	 * da der Saferpay-Aufruf eine andere IP besitzt als der Kunde der entsprechenden Bestellung.
-    	 * Jeder Aufruf der NOTIFY_ACTION wird als eigene Session behandelt, da in der URL keine
-    	 * SID enthalten ist.
-    	 * 
-    	 * Der einzige Parameter ist die REAL_ORDER_ID mit der die entsprechende Order identifiziert werden kann.
-    	 * Es kann also nur ein Flag an der Order zur Kontrolle verwendet werden!
-    	 * Diese Aktionen sind jedoch nicht atomar und bieten somit keine 100% Sicherheit.
-    	 * 
-    	 * Die konsequente Lösung wäre die Benutzung eines Semaphores, diese sind in PHP aber nur unter Linux/Unix
-    	 * verfügbar und sind standarmäßig deaktiviert.
-    	 */
-    	
-//    	Mage::log(sprintf("$module::Saferpay notify get order with ID %s!", $this->_getOrder()->getId()), Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-    	if (function_exists('apc_add') && function_exists('apc_fetch') && !$cgiMode) {
-    		$apcKey = 'roi_mutex'.$this->getRequest()->getParam('real_order_id');
-    		if (apc_fetch($apcKey)) {
-    			Mage::log("$module::NOTIFY_ACTION:APC_FETCH:Notify already called, omitting!", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-    			$this->getResponse()->setHttpResponseCode(200);
-        		$this->getResponse()->sendResponse();
-        		exit;
-    		}
-    		//dauert ca. 1msec
-    		//TTL = 180s = 3Min
-    		$apcAdded = apc_add($apcKey, true, 180);
-    	}
-    	//20150126::Frank Rochlitzer:Wir setzen den Status immer => falls APC fehlschlägt
-    	//Sobald der Status nicht mehr PENDING_PAYMENT ist, wurde die Order schon behandelt!
-    	//Der Status ist mit dem State identisch benannt.
-    	if ($this->_getOrder()->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
-    		Mage::log("$module::NOTIFY_ACTION:Notify already called, omitting! State was: {$this->_getOrder()->getState()}", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-    		$this->getResponse()->setHttpResponseCode(200);
-        	$this->getResponse()->sendResponse();
-        	exit;
-    	}
-    	//$this->_getOrder()->setData('status', 'notify');
-    	$resource = $this->_getOrder()->getResource();
-    	$resource->saveAttribute($this->_getOrder(), 'status');
-    	
-    	if (function_exists('microtime')) {
-    		$endTime = microtime(true);
-    	} else {
-    		$endTime = time();
-    	}
-    	$runTime = $endTime - $startTime;
-    	if ($runTime > 8) {
-    		Mage::log("$module::NOTIFY_ACTION:Server seems to be under heavy load, it's not possible to assure a second try to activate the Kassenzeichen!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-    	} else {
-    		Mage::log(sprintf("$module::NOTIFY_ACTION:Measured runtime for MUTEX was %s seconds.", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    	}
-		//=======================================================================================================
 		
     	//Order muss später unbedingt neu geladen werden!
     	$this->_order = null;    	
@@ -248,6 +177,7 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
 		
 		$this->getCheckout()->setDisplaySuccess(true);
         // check if the response is valid
+        sleep(1);
         $status = $this->_callCheckReturnedMessageImpl();
         
         $order = $this->_getOrder();
@@ -344,7 +274,8 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     		$notify->parseNotification($this->getRequest()->getParams());
     		
     		if (!$notify->paymentSuccessful()) {
-    			switch (intval($notify->getResponseParam("gcResultPayment"))) {
+                $iReturnCode = intval($notify->getResponseParam("gcResultPayment"));
+    			switch ($iReturnCode) {
     				/* Giropay
     				 * 4001 	giropay Bank offline
     				 * 4002 	Online Banking Zugang ungültig
@@ -395,9 +326,13 @@ abstract class Egovs_Paymentbase_Controller_Girosolution_Abstract extends Mage_C
     					$msg = Mage::helper("egovs_girosolution")->__("Transaction unsuccessful");
     					break;
     				default:
-    					$msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
+                        $msg = $notify->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
     			}
-    			
+
+    			if (!$msg) {
+                    $msg = Mage::helper("egovs_girosolution")->__("Can't validate Girosolution message or message was invalid!");
+                }
+
     			$data = var_export($notify->getResponseParams(), true);
     			Mage::log(sprintf("$module:: Girosolution payment unsuccessful : %s\r\n%s", $msg, $data), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
     			

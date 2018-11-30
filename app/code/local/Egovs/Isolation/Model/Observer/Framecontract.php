@@ -14,7 +14,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 {
   /**
    * für die Lieferanten des IT Warenhauses
-   * @param unknown $observer
+   * @param Varien_Event_Observer $observer Observer
    */
 	public function onVendorCollectionLoad($observer)
 	{
@@ -30,7 +30,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
     
 	/**
 	 * Für die Verträge des IT Warenhauses
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onContractCollectionLoad($observer)
 	{
@@ -46,7 +46,7 @@ class Egovs_Isolation_Model_Observer_Framecontract extends Egovs_Isolation_Model
 	
 	/**
 	 * Für die Lose des IT Warenhauses
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer Observer
 	 */
 	public function onLosCollectionLoad($observer)
 	{

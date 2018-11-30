@@ -11,6 +11,8 @@
  * @copyright  	Copyright (c) 2012 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
  * @copyright  	Copyright (c) 2012 TRW-NET - http://www.trw-net.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ *
+ * @method decimal setQtyGranted Setzt die freigegebene Anzahl
  */
 abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model_Abstract
 	implements Mage_Catalog_Model_Product_Configuration_Item_Interface
@@ -96,14 +98,39 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	/**
      * Prüft ob das Item das Produkt repräsentiert
      *
-     * @param Mage_Catalog_Model_Product &$product Produkt
+     * @param Mage_Catalog_Model_Product $product Produkt
      * 
      * @return bool
      */
-    public function representProduct(&$product) {
+    public function representProduct($product) {
     	if (!$this->_getSalesQuoteItem()) {
     		return false;
     	}
+
+        $itemProduct = $this->_getSalesQuoteItem()->getProduct();
+    	if (!($product instanceof Varien_Object)) {
+    	    Mage::log(
+    	        sprintf(
+    	            "representProduct: No product set!\nproduct:%s",
+                    var_export($product, true)
+                ),
+                 Zend_Log::ERR
+            );
+    	    return false;
+        }
+        if (!($itemProduct instanceof Varien_Object)) {
+            Mage::log(
+                sprintf(
+                    "representProduct: No product set!\nitemProduct:%s",
+                    var_export($itemProduct, true)
+                ),
+                Zend_Log::ERR
+            );
+            return false;
+        }
+        if (!$product || !$itemProduct || $itemProduct->getId() != $product->getId()) {
+            return false;
+        }
     	
     	return $this->_getSalesQuoteItem()->representProduct($product);
     }
@@ -418,6 +445,15 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	}
 	
 	/**
+	 * Liefert Parent Item ID
+	 *
+	 * @return int
+	 */
+	public function getParentItemId() {
+		return $this->getData('parent_item_id');
+	}
+	
+	/**
 	 * Liefert Child Items
 	 *
 	 * @return array
@@ -450,7 +486,7 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 		if (!is_numeric($qty)) {
 			Mage::throwException(Mage::helper('sidwishlist')->__('Quantity must be a numeric value'));
 		}
-		if ($this->getQtyGranted()*1 + $qty > $this->getQty()) {
+		if ($this->getQtyGranted()*1 + $this->getQtyOrdered()*1 + $qty > $this->getQty()) {
 			Mage::throwException(Mage::helper('sidwishlist')->__("Qty granted can't be greater than qty requested"));
 		}
 		$this->setQtyGranted($this->getQtyGranted()*1 + $qty);
@@ -501,10 +537,16 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	 */
 	public function getMessage($string = true)
 	{
+	    $_salesMessages = array();
+	    if ($this->_getSalesQuoteItem()) {
+	        $_salesMessages = $this->_getSalesQuoteItem()->getMessage(false);
+        }
+        $_messages = array_merge($_salesMessages, $this->_messages);
+
 		if ($string) {
-			return join("\n", $this->_messages);
+			return join("\n", $_messages);
 		}
-		return $this->_messages;
+		return $_messages;
 	}
 	
 	/**
@@ -544,4 +586,16 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
 	public function getStore() {
 		return $this->getQuote()->getStore();
 	}
+
+	public function getHasError() {
+	    if ($this->hasData('error')) {
+	        return true;
+        }
+
+        if ($this->_getSalesQuoteItem()) {
+	        return $this->_getSalesQuoteItem()->getHasError();
+        }
+
+        return false;
+    }
 }

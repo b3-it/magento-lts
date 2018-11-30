@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <!--
 /**
@@ -18,7 +18,7 @@
 <config>
     <modules>
         <B3it_Ids>
-            <version>0.0.1.0</version>
+            <version>0.0.2.0</version>
         </B3it_Ids>
     </modules>
     <adminhtml>
@@ -31,8 +31,42 @@
                 </B3it_Ids>
             </modules>
         </translate>
- 
+        <menu>
+            <system >
+                <children>
+                <b3ids>
+                <title>B3it Ids</title>
+                <sort_order>50</sort_order>
+                <children>
+                    <b3itids_dos_url module="b3it_ids">
+                        <title>Dos Url</title>
+                        <sort_order>10</sort_order>
+                        <action>adminhtml/ids_dos_url/index</action>
+                    </b3itids_dos_url>
+                </children>
+                </b3ids>
+                </children>
+            </system>
+        </menu>
+        <layout>
+            <updates>
+                <b3itids>
+                    <file>b3it/ids.xml</file>
+                </b3itids>
+            </updates>
+        </layout>
     </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <B3it_Ids_Adminhtml after="Mage_Adminhtml">B3it_Ids_Adminhtml</B3it_Ids_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <global>
            <events>
             <controller_front_init_before>
@@ -64,7 +98,13 @@
 					  </ids_events> 
 					  <ids_events_filters>
 					  	<table>ids_events_filters</table>
-					  </ids_events_filters> 
+					  </ids_events_filters>
+                     <dos_url>
+                         <table>b3it_ids_dos_url</table>
+                     </dos_url>
+                     <dos_visit>
+                         <table>b3it_ids_dos_visit</table>
+                     </dos_visit>
 				 </entities>
 			</b3it_ids_resource>
         </models>

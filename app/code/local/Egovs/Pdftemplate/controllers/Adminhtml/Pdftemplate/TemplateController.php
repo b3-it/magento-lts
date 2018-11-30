@@ -61,8 +61,9 @@ class Egovs_Pdftemplate_Adminhtml_Pdftemplate_TemplateController extends Mage_Ad
 		return;
 		*/
 		$id     = $this->getRequest()->getParam('id');
+		$store  = $this->getRequest()->getParam('store');
 		$pdf = Mage::getModel('pdftemplate/pdf_preview');
-		$pdf->load($id);
+		$pdf->load($id,$store);
 	}
 	
 	public function editAction() {
@@ -104,7 +105,9 @@ class Egovs_Pdftemplate_Adminhtml_Pdftemplate_TemplateController extends Mage_Ad
 
 			$this->_addContent($this->getLayout()->createBlock('pdftemplate/adminhtml_template_edit'))
 				->_addLeft($this->getLayout()->createBlock('pdftemplate/adminhtml_template_edit_tabs'));
-
+			
+			
+			
 			$this->renderLayout();
 		} else {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('pdftemplate')->__('Template does not exist'));

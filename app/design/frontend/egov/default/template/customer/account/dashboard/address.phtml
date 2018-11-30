@@ -5,6 +5,9 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+/**
+ * @var Egovs_Base_Block_Customer_Account_Dashboard_Address $this
+ */
 ?>
 <div class="col2-set">
     <div class="col-1">
@@ -12,8 +15,13 @@
             <div class="box-title">
                 <h3>
                     <?php echo $this->__('Default Billing Address') ?>
-                    <span class="spacer"> | </span>
-                    <a class="egov-pencile" href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>" title="<?php echo $this->__('Edit Address') ?>" alt="<?php echo $this->__('Edit Address') ?>"> </a>
+                    <?php if (!$this->rejectAddressEditing($this->getDefaultBilling())): ?>
+                        <span class="spacer"> | </span>
+                        <a class="egov-pencile"
+                           href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>"
+                           title="<?php echo $this->__('Edit Address') ?>">
+                        </a>
+                    <?php endif; ?>
                 </h3>
             </div>
             <div class="box-content">
@@ -28,8 +36,13 @@
             <div class="box-title">
                 <h3>
                     <?php echo $this->__('Default Shipping Address') ?>
-                    <span class="spacer"> | </span>
-                    <a class="egov-pencile" href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>" title="<?php echo $this->__('Edit Address') ?>" alt="<?php echo $this->__('Edit Address') ?>"> </a>
+                    <?php if (!$this->rejectAddressEditing($this->getDefaultShipping())): ?>
+                        <span class="spacer"> | </span>
+                        <a class="egov-pencile"
+                           href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>"
+                           title="<?php echo $this->__('Edit Address') ?>">
+                        </a>
+                    <?php endif; ?>
                 </h3>
             </div>
             <div class="box-content">

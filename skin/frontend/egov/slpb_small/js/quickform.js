@@ -94,5 +94,13 @@ function addCart() {
 	$j('#loading').toggle();
 	new Ajax.Updater('quick.card',addCartUrl,{parameters:{id: $('_quicksuggest_id').value}});
 	$('quicksearch').value = '';
+	
+	// 2 Sekunden warten
+	setTimeout(function(){
+		// Sterne im Warenkorb ausrechnen
+		calcStars();
+	}, 2000);
+	
+	
 	return false;
 }

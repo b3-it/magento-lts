@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Gitter_Base>
+            <version>0.0.0.3</version>
+        </Gitter_Base>
+    </modules>
+    <global>
+        <resources>
+            <gitterbase_setup>
+                <setup>
+                    <module>Gitter_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gitterbase_setup>
+        </resources>
+    </global>
+</config>

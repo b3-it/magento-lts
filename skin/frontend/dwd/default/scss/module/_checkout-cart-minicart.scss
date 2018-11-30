@@ -272,13 +272,8 @@
         
         button {
         	display: inline-block;
-        	padding: 14px;
-        	width: 45%;
-        	
-        	@include bp(max-width, $bp-mobil) {
-        	    width: 49%;
-        	    padding: 14px !important;
-        	}
+        	padding: 14px 8px;
+        	width: 49%;
         }
 
 	    .checkout-button {

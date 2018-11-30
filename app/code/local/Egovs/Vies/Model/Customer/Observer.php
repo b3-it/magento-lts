@@ -7,7 +7,7 @@
  * @category	Egovs
  * @package		Egovs_Vies
  * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
- * @copyright	Copyright (c) 2011 - 2015 B3 IT Systeme GmbH
+ * @copyright	Copyright (c) 2011 - 2018 B3 IT Systeme GmbH
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */
@@ -16,10 +16,18 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 	protected $_lastOrigAddress = null;
 	
 
-	protected function _isBaseAdress($address) {
+	protected function _isBaseAddress($address) {
 		return ($address->getId() && $address->getId() == $address->getCustomer()->getBaseAddress())
 			|| $address->getIsDefaultBaseAddress();
 	}
+
+	protected function _hasBaseAddress($address) {
+	    if (!$address) {
+	        return false;
+        }
+        $baseAddress = $address->getCustomer()->getBaseAddress();
+        return ($baseAddress > 0) || is_string($baseAddress) || $address->getIsDefaultBaseAddress();
+    }
 	
 	/**
 	 * Check whether specified address should be processed in after_save event handler
@@ -37,9 +45,9 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			return false;
 		}
 		
-		$isBaseAddress = $this->_isBaseAdress($address);
+		$isBaseAddress = $this->_isBaseAddress($address);
 		
-		if (!$isBaseAddress) {
+		if (!$isBaseAddress && !$this->_hasBaseAddress($address)) {
 			$configAddressType = Mage::helper('customer/address')->getTaxCalculationAddressType();
 			if ($configAddressType == Mage_Customer_Model_Address_Abstract::TYPE_SHIPPING) {
 				return $this->_isDefaultShipping($address);
@@ -68,7 +76,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			$configAddressType = Mage::helper('customer/address')->getTaxCalculationAddressType();
 	
 			$forceProcess = true;
-			if (!$this->_isBaseAdress($customerAddress)) {
+			if (!$this->_isBaseAddress($customerAddress)) {
 				$forceProcess = ($configAddressType == Mage_Customer_Model_Address_Abstract::TYPE_SHIPPING)
 					? $customerAddress->getIsDefaultShipping() : $customerAddress->getIsDefaultBilling();
 			}

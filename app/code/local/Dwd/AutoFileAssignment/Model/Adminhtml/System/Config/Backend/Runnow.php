@@ -14,7 +14,7 @@ class Dwd_AutoFileAssignment_Model_Adminhtml_System_Config_Backend_Runnow extend
 	/**
 	 * Führt den AFA bei true aus
 	 * 
-	 * @return Dwd_AutoFileAssignment_Adminhtml_Model_System_Config_Backend_Available
+	 * @return Dwd_AutoFileAssignment_Model_Adminhtml_System_Config_Backend_Runnow
 	 * 
 	 * @see Mage_Core_Model_Abstract::_beforeSave()
 	 */

@@ -18,13 +18,13 @@
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis 		        lesenKunde(Egovs_Paymentbase_Model_Webservice_Types_Kunde $customer)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BankverbindungErgebnis       pruefenKontonummer(Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung $bankverbindung)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_SepaMandatErgebnis           anlegenSEPAMandat(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_SepaMandatErgebnis           deaktiviernSEPAMandat(string eShopKundenNr, string $mandatReferenz)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_SepaMandatErgebnis           deaktiviernSEPAMandat(string $eShopKundenNr, string $mandatReferenz)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_SepaMandatErgebnis           leseSEPAMandat(string $mandatReferenz)
  * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_EinzugsermaechtigungErgebnis vervollstaendigenSEPAMandat(string $mandatReferenz, string $datumUnterschrift, string $ortUnterschrift)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatreferenzMitBLP(string $customerID, string $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, , Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, $lieferAdresse, string $buchungsText, $zahlverfahrenListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameter)
- * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis                     aktiviereTempKassenzeichen(string $wId, string $saferpayReferenzID, sring $typZahlung)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_SepaMandat $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    abbuchenMitSEPAMandatreferenzMitBLP(string $customerID, string $mandat, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, string $pin,Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet $buchungsListeParameterSet)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_BuchungsListeErgebnis 	    anlegenKassenzeichenMitZahlverfahrenlisteMitBLP(string $customerID, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe $buchungsListe, $lieferAdresse, string $buchungsText, $zahlverfahrenListe, Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet|array $buchungsListeParameter)
+ * @method SoapFault|Egovs_Paymentbase_Model_Webservice_Types_Response_Ergebnis                     aktiviereTempKassenzeichen(string $wId, string $saferpayReferenzID, string $typZahlung)
  *
  */
 class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
@@ -37,7 +37,14 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @var Zend_Soap_Client
 	 */
 	protected $_soapClient = null;
-	
+
+    /**
+     * Aktueller Store
+     *
+     * @var Mage_Core_Model_Store
+     */
+	private $__store = null;
+
 	/**
 	 * Flag für Reset SoapClient
 	 * 
@@ -45,7 +52,14 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * 
 	 * @var boolean
 	 */
-	protected static $_alwaysResetSoapClient = false; 
+	protected static $_alwaysResetSoapClient = false;
+
+    /**
+     * Zeigt an ob das Ergebnis aus dem Cache stammt.
+     *
+     * @var bool
+     */
+	protected $_isCachedResult = false;
 	
 	/**
 	 * Mapped die WSDL Klassen zu PHP-Klassen für ePayBL 2.x
@@ -126,11 +140,12 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return string
 	 */
 	protected function _getClientCertificate() {
-		if ($this->_clientCert == null) {
+		if ($this->_clientCert == null || $this->__store !== Mage::app()->getStore()) {
 			$this->_clientCert = Mage::getStoreConfig('payment_services/paymentbase/client_certificate');
 			if (empty($this->_clientCert)) {
 				throw new Zend_Soap_Client_Exception(Mage::helper('paymentbase')->__('No client certificate for ePayBL specified!'));
 			}
+            $this->__store = Mage::app()->getStore();
 			$this->_clientCert = Mage::getBaseDir().$this->_clientCert;
 		}
 		
@@ -143,11 +158,12 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return string
 	 */
 	protected function _getCaCertificate() {
-		if ($this->_caCert == null) {
+		if ($this->_caCert == null || $this->__store !== Mage::app()->getStore()) {
 			$this->_caCert = Mage::getStoreConfig('payment_services/paymentbase/ca_certificate');
 			if (empty($this->_caCert)) {
 				throw new Zend_Soap_Client_Exception(Mage::helper('paymentbase')->__('No CA certifacte for ePayBL specified!'));
 			}
+            $this->__store = Mage::app()->getStore();
 			$this->_caCert = Mage::getBaseDir().$this->_caCert;
 		}
 	
@@ -222,7 +238,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * @return Zend_Soap_Client
 	 */
 	protected function _getSoapClient() {
-		if (!$this->_soapClient) {
+		if (!$this->_soapClient || $this->__store !== Mage::app()->getStore()) {
 	
 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true
 				&& Mage::getStoreConfig('web/proxy/use_proxy_egovs_payments') == true
@@ -261,6 +277,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 						'stream_context' => $this->_getStreamContext(),
 				));			
 			}
+            $this->__store = Mage::app()->getStore();
+
 			//ePayBL unterstützt nur Soap < 1.2
 			$this->_soapClient->setSoapVersion(SOAP_1_1);
 			$_classmap = $this->_classmap;
@@ -323,6 +341,10 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     	if (self::$_alwaysResetSoapClient || version_compare(phpversion(), '5.3', '<')===true) {
     		$this->_soapClient = false;
     	}
+
+    	//Reset cache result flag
+        $this->_isCachedResult = false;
+
     	if (array_search(sprintf("_%s", $method), $this->_deniedMethods) === false && method_exists($this, sprintf("_%s", $method))) {
     		$paramA = isset($args[0]) && !is_object($args[0]) && !is_array($args[0])? $args[0] : '';
     		$this->_writeLog($method, "Mandant: {$this->getMandantNr()}, Param 0: $paramA");
@@ -378,23 +400,31 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
     			throw $e;
     		}
     		if (Mage::getStoreConfig('dev/log/log_level') == Zend_Log::DEBUG) {
-    			$lastRequest = $this->_getSoapClient()->getLastRequest();
-    			if (!empty($lastRequest)) {
-	    			//Format XML to save indented tree rather than one line
-	    			$dom = new DOMDocument('1.0');
-	    			$dom->preserveWhiteSpace = false;
-	    			$dom->formatOutput = true;
-	    			$dom->loadXML($lastRequest);
-	    			
-	    			Mage::log(
-		    			sprintf("soap::Request:\n%s\nResponse:\n%s",
-			    			$dom->saveXML(),
-			    			$this->_getSoapClient()->getLastResponse()
-	    				),
-	    				Zend_Log::DEBUG,
-	    				Egovs_Helper::LOG_FILE
-	    			);
-    			}
+    		    if ($this->_isCachedResult()) {
+                    Mage::log(
+                        sprintf("Returning cached value! This would only log an already logged result!"),
+                        Zend_Log::DEBUG,
+                        Egovs_Helper::LOG_FILE
+                    );
+                } else {
+                    $lastRequest = $this->_getSoapClient()->getLastRequest();
+                    if (!empty($lastRequest)) {
+                        //Format XML to save indented tree rather than one line
+                        $dom = new DOMDocument('1.0');
+                        $dom->preserveWhiteSpace = false;
+                        $dom->formatOutput = true;
+                        $dom->loadXML($lastRequest);
+
+                        Mage::log(
+                            sprintf("soap::Request:\n%s\nResponse:\n%s",
+                                $dom->saveXML(),
+                                $this->_getSoapClient()->getLastResponse()
+                            ),
+                            Zend_Log::DEBUG,
+                            Egovs_Helper::LOG_FILE
+                        );
+                    }
+                }
     		}
     		
     		if ($erg instanceof SoapFault) {
@@ -475,7 +505,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 				if ($this->_eCustomerResult[$kunde->EShopKundenNr] instanceof Exception) {
 					throw $this->_eCustomerResult[$kunde->EShopKundenNr];
 				} elseif ($this->_eCustomerResult[$kunde->EShopKundenNr] instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_KundenErgebnis) {
-					return $this->_eCustomerResult[$kunde->EShopKundenNr];
+					$this->_isCachedResult = true;
+				    return $this->_eCustomerResult[$kunde->EShopKundenNr];
 				}
 				
 				unset($this->_eCustomerResult[$kunde->EShopKundenNr]);
@@ -530,8 +561,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * Anlegen eines Temporären Kassenzeichens
 	 *
 	 * @param string        $eShopKundenNr    ePayBL Kunden ID
-	 * @param Buchungsliste $objBuchungsListe Buchungsliste
-	 * @param LieferAdresse $lieferAdresse	  Lieferadresse
+	 * @param object        $objBuchungsListe Buchungsliste
+	 * @param string        $lieferAdresse	  Lieferadresse
 	 * @param string        $buchungsText     Text für Buchung
 	 * @param string|array  $zahlverfahren    Vorgesehenes Zahlverfahren für diese Buchung (Feld kann durch Angabe von null leer gelassen werden). Mögliche Werte sind: 'UEBERWEISUNGVOR', 'UEBERWEISUNGNACH', 'LASTSCHRIFTMIT', 'LASTSCHRIFTOHNE', 'GIROPAY' und 'KREDITKARTE'.
 	 *
@@ -561,11 +592,11 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	 * Anlegen eines Temporären Kassenzeichens
 	 *
 	 * @param string                          $eShopKundenNr          ePayBL Kunden ID
-	 * @param Buchungsliste                   $objBuchungsListe       Buchungsliste
-	 * @param LieferAdresse                   $lieferAdresse		  Lieferadresse
+	 * @param object                          $objBuchungsListe       Buchungsliste
+	 * @param string                          $lieferAdresse		  Lieferadresse
 	 * @param string                          $buchungsText           Text für Buchung
 	 * @param string|array                    $zahlverfahrenListe     Liste der vorgesehenes Zahlverfahren für diese Buchung (Feld kann durch Angabe von null leer gelassen werden). Mögliche Werte sind: 'UEBERWEISUNGVOR', 'UEBERWEISUNGNACH', 'LASTSCHRIFTMIT', 'LASTSCHRIFTOHNE', 'GIROPAY' und 'KREDITKARTE'.
-	 * @param BuchungslisteParameterSet|array $buchungsListeParameter Zusätzliche Parameter für ePayBL
+	 * @param array                           $buchungsListeParameter Zusätzliche Parameter für ePayBL
 	 *
 	 * @return SoapFault|stdClass
 	 */
@@ -608,10 +639,10 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	}
 	/**
 	 * 
-	 * @param unknown $wId
-	 * @param unknown $mandantNr
-	 * @param unknown $saferpayReferenzID
-	 * @param unknown $kartenTyp
+	 * @param string $wId
+	 * @param string $mandantNr
+	 * @param string $saferpayReferenzID
+	 * @param string $kartenTyp
 	 * 
 	 * @return mixed
 	 * 
@@ -633,9 +664,9 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	
 	/**
 	 * 
-	 * @param unknown $wId
-	 * @param unknown $mandantNr
-	 * @param unknown $saferpayReferenzID
+	 * @param string $wId
+	 * @param string $mandantNr
+	 * @param string $saferpayReferenzID
 	 * 
 	 * @return mixed
 	 * 
@@ -1063,7 +1094,7 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 						'eShopKundenNr' => $customerId,
 						'mandat' => $mandat,
 						'buchungsListe' => $objBuchungsliste,
-						'buchungslisteParameterSet' => null,//$buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
+						'buchungslisteParameterSet' => $buchungsListeParameterSet->isEmpty() ? null : $buchungsListeParameterSet
 				)
 		);
 		
@@ -1399,4 +1430,8 @@ class Egovs_Paymentbase_Model_Webservice_PaymentServices extends Varien_Object
 	
 		return $erg;
 	}
+
+	protected function _isCachedResult() {
+	    return $this->_isCachedResult;
+    }
 }

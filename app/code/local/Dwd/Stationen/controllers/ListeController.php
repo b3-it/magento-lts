@@ -14,10 +14,30 @@ class Dwd_Stationen_ListeController extends Mage_Core_Controller_Front_Action
     
     public function jsonAction()
     {
-    	$block = $this->getLayout()->createBlock('stationen/catalog_product_view_json');
+        /**
+         * @var Dwd_Stationen_Helper_Data $helper
+         */
+        $helper = Mage::helper("stationen");
+
+        $data = $helper->getStationenGeoJson($this->getProduct());
+
     	$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
-    	$this->getResponse()->setBody($block->toHtml());
+    	$this->getResponse()->setBody(json_encode($data));
     	return;
     }
     
+    protected function getProduct()
+    {
+        $id = $this->getRequest()->getParam('product_id');
+        if($id)
+        {
+            return Mage::getModel('catalog/product')->load($id);
+        }
+    }
+
+    protected function getCategoryId()
+    {
+        return  $this->getRequest()->getParam('category_id');
+    }
+
 }

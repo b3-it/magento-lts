@@ -22,16 +22,20 @@ class Egovs_Isolation_Model_Observer_Customer extends Egovs_Isolation_Model_Obse
     		
     		$storeGroups = implode(',', $storeGroups);
 	    	$collection = $observer->getCollection();
-	    	$collection->getSelect()->where('e.store_id IN ( SELECT store_id from '.$collection->getTable('core/store'). ' WHERE group_id IN ('  . $storeGroups.'))');
+
 	    	
-	    	//hier Schalter einbauen falls der Kunde nur sichtbar sein soll wen im Store angelegt
+	    	//hier Schalter einbauen falls der Kunde nur sichtbar sein soll falls im Store angelegt
 	    	if(true){
-	    	$orderItem = new Zend_Db_Expr("(SELECT customer_id FROM ".$collection->getTable('sales/order_item')." as oi
+	    	$orderItem = new Zend_Db_Expr("((e.entity_id IN (SELECT customer_id FROM ".$collection->getTable('sales/order_item')." as oi
 									join ".$collection->getTable('sales/order')." as o on o.entity_id =  oi.order_id 
 									where store_group in (".$storeGroups.")
-									group by store_group, customer_id)");
-	    	$collection->getSelect()->orwhere("e.entity_id IN " . $orderItem);
-	    	}
+									group by store_group, customer_id))
+									OR (e.store_id IN ( SELECT store_id from ".$collection->getTable('core/store'). " WHERE group_id IN ("  . $storeGroups."))))");
+
+	    	$collection->getSelect()->where($orderItem);
+	    	}else{
+                $collection->getSelect()->where('e.store_id IN ( SELECT store_id from '.$collection->getTable('core/store'). ' WHERE group_id IN ('  . $storeGroups.'))');
+            }
 	    	
 	    
     	}

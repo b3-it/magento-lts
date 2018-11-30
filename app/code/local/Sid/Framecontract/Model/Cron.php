@@ -5,7 +5,8 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
    
 	/**
 	 * Abgelaufenen Verträge und zugehoerige Produkte deaktivieren
-	 * @param unknown $sceduler
+	 * 
+	 * @param Mage_Cron_Model_Schedule $sceduler Schedule
 	 */
 	public function disableExpiredContracts($sceduler)
 	{
@@ -40,7 +41,8 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
     
 	/**
 	 * Warnung versenden falls ein Schwellwert fürs Lager erreicht ist
-	 * @param unknown $sceduler
+	 * 
+	 * @param Mage_Cron_Model_Schedule $sceduler Schedule
 	 */
 	public function sendStockWarning($sceduler)
 	{

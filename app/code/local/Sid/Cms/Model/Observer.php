@@ -12,7 +12,11 @@
  */
 class Sid_Cms_Model_Observer extends Varien_Object
 {
-		public function onAdminhtmlCmsPageEditTabMainPrepareForm($observer)
+    /**
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function onAdminhtmlCmsPageEditTabMainPrepareForm($observer)
 		{
 			$form = $observer->getForm();
 			$fieldset = $form->getElement('base_fieldset');
@@ -66,7 +70,8 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		
 		/**
 		 * das Kundengruppen Array serialisieren 
-		 * @param unknown $observer
+		 * 
+		 * @param Varien_Event_Observer $observer
 		 */
 		public function onCmsPageSaveBefore($observer)
 		{
@@ -81,6 +86,10 @@ class Sid_Cms_Model_Observer extends Varien_Object
 			
 		}
 		
+		/**
+		 * 
+		 * @param Varien_Event_Observer $observer
+		 */
 		public function onCmsPageSaveAfter($observer)
 		{
 			$page = $observer->getDataObject();
@@ -134,7 +143,8 @@ class Sid_Cms_Model_Observer extends Varien_Object
 		
 		/**
 		 * das Kundengruppen Array deserialisieren
-		 * @param unknown $observer
+		 * 
+		 * @param Varien_Event_Observer $observer
 		 */
 		public function onCmsPageLoadAfter($observer)
 		{

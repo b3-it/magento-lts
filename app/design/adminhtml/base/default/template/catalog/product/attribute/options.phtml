@@ -48,10 +48,10 @@
     </div>
     <div class="box">
             <div class="hor-scroll">
-            <table class="dynamic-grid" cellspacing="0" id="attribute-labels-table">
+            <table class="dynamic-grid" id="attribute-labels-table">
                 <tr>
                 <?php foreach ($this->getStores() as $_store): ?>
-                    <th><?php echo $_store->getName() ?></th>
+                    <th><?php echo $this->escapeHtml($_store->getName()); ?></th>
                 <?php endforeach; ?>
                 </tr>
                 <tr>
@@ -73,10 +73,10 @@
     </div>
     <div class="box">
         <div class="hor-scroll">
-            <table class="dynamic-grid" cellspacing="0"  cellpadding="0">
+            <table class="dynamic-grid">
                 <tr id="attribute-options-table">
                     <?php foreach ($this->getStores() as $_store): ?>
-                        <th><?php echo $_store->getName() ?></th>
+                        <th><?php echo $this->escapeHtml($_store->getName()); ?></th>
                     <?php endforeach; ?>
                         <th><?php echo Mage::helper('catalog')->__('Position') ?></th>
                         <th class="nobr a-center"><?php echo Mage::helper('catalog')->__('Is Default') ?></th>

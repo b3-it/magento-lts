@@ -14,6 +14,7 @@ class B3it_Admin_Model_System_Config_Runnow extends Mage_Core_Model_Config_Data
 	/**
 	 * Entsperrt Accounts bei true
 	 * 
+	 * @return B3it_Admin_Model_System_Config_Runnow
 	 */
     protected function _beforeSave() {
         $value = $this->getValue();

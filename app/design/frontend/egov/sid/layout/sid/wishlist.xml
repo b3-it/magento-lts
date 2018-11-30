@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <default>
     </default>
-    
+
     <customer_account>
         <!-- Sid_Wishlist -->
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="sidwishlist" ifconfig="sidwishlist/general/active"><name>sidwishlist</name><path>sidwishlist/</path><label>My Collector Lists</label></action>
+            <action method="addLink" translate="label" module="sidwishlist" ifconfig="sidwishlist/general/active">
+                <name>sidwishlist</name>
+                <path>sidwishlist/</path>
+                <label>My Collector Lists</label>
+            </action>
         </reference>
     </customer_account>
-    
+
     <sidwishlist_index_index>
         <!-- Sid_Wishlist -->
         <update handle="customer_account"/>
@@ -17,7 +22,7 @@
             <block type="sidwishlist/overview" name="collector_list_overview" template="sid/wishlist/overview.phtml" />
         </reference>
     </sidwishlist_index_index>
-    
+
     <sidwishlist_index_view>
         <!-- Sid_Wishlist -->
         <update handle="customer_account"/>
@@ -27,7 +32,7 @@
             </block>
         </reference>
     </sidwishlist_index_view>
-    
+
     <sidwishlist_index_share>
         <!-- Sid_Wishlist -->
         <update handle="customer_account"/>
@@ -35,42 +40,42 @@
             <block type="sidwishlist/share_sharing" name="collector_list_share" template="sid/wishlist/sharing.phtml" />
         </reference>
     </sidwishlist_index_share>
-    
+
     <sidwishlist_index_updatepost>
         <update handle="sidwishlist_index_view" />
     </sidwishlist_index_updatepost>
-    
+
     <catalog_product_view>
         <reference name="product.info.addto">
             <action method="setTemplate"><template>sid/wishlist/catalog/product/view/addto.phtml</template></action>
         </reference>
     </catalog_product_view>
-    
+
     <catalog_category_default>
         <reference name="product_list">
             <action method="setTemplate"><template>sid/wishlist/catalog/product/list.phtml</template></action>
         </reference>
     </catalog_category_default>
-        
+
     <catalog_category_layered>
         <reference name="product_list">
             <action method="setTemplate"><template>sid/wishlist/catalog/product/list.phtml</template></action>
         </reference>
     </catalog_category_layered>
-    
+
     <sidwishlist_index_add>
         <reference name="content">
             <block type="sidwishlist/wishlists" name="collector_list_select" template="sid/wishlist/wishlists.phtml" />
         </reference>
     </sidwishlist_index_add>
-    
+
     <sidwishlist_index_addpost>
         <update handle="sidwishlist_index_view" />
     </sidwishlist_index_addpost>
-    
+
     <sidwishlist_index_newwishlist>
         <reference name="content">
             <block type="sidwishlist/wishlist_new" name="collector_list_new" template="sid/wishlist/newwishlist.phtml" />
         </reference>
     </sidwishlist_index_newwishlist>
-</layout> 
+</layout>

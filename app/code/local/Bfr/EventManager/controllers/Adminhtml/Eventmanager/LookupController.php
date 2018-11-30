@@ -195,4 +195,7 @@ class Bfr_EventManager_Adminhtml_EventManager_LookupController extends Mage_Admi
         $response->sendResponse();
         die;
     }
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_lookup');
+    }
 }

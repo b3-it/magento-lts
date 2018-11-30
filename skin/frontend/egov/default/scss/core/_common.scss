@@ -70,15 +70,21 @@ input[type="password"]:active, input[type="tel"]:active, select:active {
     border-color: $global-lightcolor;
 }
 
+li select {
+    display: block;
+    width: 95%;
+}
+
 input[type="checkbox"], input[type="radio"] {
     position: relative;
-    top: 1px;
+    top: -1px;
     left: 2px;
     margin-right: $global-radio-checkback-spacing;
 }
 
 input[type="radio"] {
     margin-right: $global-radio-checkback-spacing - 3;
+    vertical-align: top;
 }
 
 a {
@@ -122,6 +128,7 @@ input[type="checkbox"]:focus, input[type="radio"]:focus {
     outline-color: $global-active-color !important;
 }
 
+
 /* ============================================ *
  * Typography
  * ============================================ */
@@ -146,12 +153,16 @@ h6, .h6 { @include h6; }
     margin-bottom: 1em;
 }
 
-.availability {
+#availability {
     font-size: $global-fontsize-big;
     margin-bottom: 0;
 
     .label {
          font-size: $global-fontsize;
+    }
+
+    p {
+        display: inline-block;
     }
 
     .in-stock {
@@ -207,12 +218,16 @@ p.note-msg {
 // On account pages, don't remove the top border in order to create separation between block and .block-account
 body:not(.customer-account) .block:first-child .block-title {
     border-top: none;
-    padding-top: 0;
+    //padding-top: 0;
 }
 
 .block-subtitle {
     font-weight: bold;
     margin-bottom: $element-spacing;
+}
+
+.block-compared {
+	margin-bottom: $element-spacing / 2  !important;
 }
 
 /* -------------------------------------------- *
@@ -223,15 +238,6 @@ body:not(.customer-account) .block:first-child .block-title {
     position: relative;
     top: -20px;
 }
-
-/* ============================================ *
- * Reorder-Box Styles
- * ============================================ */
-
-div.block-reorder {
-    margin-top: $global-boxmargin;
-}
-
 
 .block-account,
 .block-cms-menu {
@@ -443,6 +449,14 @@ div.block-reorder {
 .block-layered-nav .currently,
 .mini-products-list,
 #compare-items {
+    a, p {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    p {
+        width: 85%;
+    }
 
     .btn-remove,
     .btn-previous {
@@ -603,7 +617,7 @@ div.block-reorder {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
-            
+
             @include bp(max-width, 490px) {
             	display: none;
             }
@@ -620,7 +634,7 @@ div.block-reorder {
             padding-left: $global-content-leftpadding-percent;
             padding-top: $global-content-paddingtop;
             padding-right: $global-rightcol-rightmargin-percent;
-            
+
             @include bp(max-width, 490px) {
             	width: 100% !important;
             }
@@ -756,7 +770,7 @@ div.block-reorder {
 
     .col-1,
     .col-2 {
-        width: 50%;
+        width: 45%;
         padding: $box-spacing-large;
 
         @include bp(max-width, $bp-medium) {
@@ -828,9 +842,10 @@ div.block-reorder {
         min-height: 40px;
         padding-top: (40px - $f-size-xxs) / 2;
         padding-bottom: (40px - $f-size-xxs) / 2;
-        background-image: url('../images/demo-logo.png');
-        background-position: left;
-        background-repeat: no-repeat;
+        
+        @include bp(max-width, $bp-medium + 1) {
+        	padding-left: 0;
+        }
     }
 
     p {
@@ -1150,9 +1165,9 @@ span.weee {
     &:after {
         @include clearfix;
     }
-    
+
     dt, dd {
-        display: table-cell;
+        //display: table-cell;
     }
 
     dt {
@@ -1286,7 +1301,8 @@ span.weee {
 .no-touch .product-img-box .product-image:not(.zoom-available):hover {
     position: relative;
     display: block;
-    border: 1px solid $global-border-color-light;
+    //top: -15px;
+    //border: 1px solid $global-border-color-light;
 }
 
 @include bp (max-width, $bp-medium) {

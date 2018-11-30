@@ -1,11 +1,33 @@
 <?php
 /**
  * @category    design
- * @package     egov_default
+ * @package     bfr_default
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * 
+ * @var $this Egovs_Checkout_Block_Multipage_Login
  */
 ?>
+<?php
+$_use_ssl_logo  = Mage::getStoreConfig('design/login/ssl_logo_use', Mage::app()->getStore());
+$_ssl_image     = Mage::getStoreConfig('design/login/ssl_logo', Mage::app()->getStore());
+$_ssl_image_css = Mage::getStoreConfig('design/login/ssl_logo_style', Mage::app()->getStore());
+$_ssl_alt       = $this->__( Mage::getStoreConfig('design/login/ssl_logo_alt', Mage::app()->getStore()) );
+$_ssl_title     = $this->__( Mage::getStoreConfig('design/login/ssl_logo_title', Mage::app()->getStore()) );
+
+$_is_https   = Mage::app()->getFrontController()->getRequest()->isSecure();
+$_show_image = ( strlen($_ssl_image) ? Mage::getBaseUrl('media') . 'ssl_logo/' . $_ssl_image : $this->getSkinUrl('images/litessl_tl_trans.gif') );
+
+$_show_ssl = false;
+if ( ($_use_ssl_logo == 0) || ($_use_ssl_logo == 2 && $_is_https) ) {
+    $_show_ssl = true;
+}
+$show_css = '';
+if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
+    $show_css = ' style="' . $this->htmlEscape($_ssl_image_css) . '"';
+}
+?>
+
 <div class="col2-set egov-account-login">
     <div class="page-title">
         <h1><?php echo $this->__('Login or Create an Account') ?></h1>
@@ -22,44 +44,41 @@
                <?php echo $this->__('New Customers') ?>
             <?php endif; ?>
             </h2>
-	          <div class="content">
-				        <fieldset>
-		    		    <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-		        		    <p><?php echo $this->__('Register to Create an Account or Checkout as a Guest:') ?></p>
-		    		    <?php else: ?>
-		          	    <p>
-		          		      <strong><?php echo $this->__('Register and save time!') ?></strong><br />
-		          		      <?php echo $this->__('Register with us for future convenience:') ?>
-					          </p>
-		                <ul class="info">
-		                    <li><?php echo $this->__('Fast and easy check out') ?></li>
-		                    <li><?php echo $this->__('Easy access to your order history and status') ?></li>
-		                </ul>
-		    		    <?php endif; ?>
-		            <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-		          	    <ul class="form-list">
-		                <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-		                    <li>
-		                        <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" />
-		                        <label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
-		                    </li>
-		                <?php endif; ?>
-		                    <li>
-		                        <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
-		                        <label for="login:register"><?php echo $this->__('Register') ?></label>
-		                    </li>
-		                </ul>
-		                <p>
-		                    <?php echo $this->__('Registration is free and easy!'); ?>
-		                </p>
-		            <?php else: ?>
-		                <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
-		            <?php endif; ?>
-		    		        <br />
+	        <div class="content">
+			    <fieldset>
+		    	  <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
+		        	<p><?php echo $this->__('Register to Create an Account or Checkout as a Guest:') ?></p>
+		    	  <?php else: ?>
+		          	<p>
+		          		<strong><?php echo $this->__('Register and save time!') ?></strong><br />
+		          		<?php echo $this->__('Register with us for future convenience:') ?>
+					</p>
+		            <ul class="info">
+		                <li><?php echo $this->__('Fast and easy check out') ?></li>
+		                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
+		            </ul>
+		          <?php endif; ?>
+		          <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
+		          	<ul class="form-list">
+		              <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
+		                <li>
+		                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" />
+		                    <label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
+		                </li>
+		              <?php endif; ?>
+		                <li>
+		                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
+		                    <label for="login:register"><?php echo $this->__('Register') ?></label>
+		                </li>
+		            </ul>
+		            <p><?php echo $this->__('Registration is free and easy!'); ?></p>
+		          <?php else: ?>
+		            <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
+		          <?php endif; ?>
                     <p class="secureInfo">
-		    			          <?php echo $this->getDatenschutztext()?>
-				            </p>
-			          </fieldset>
+		    			<?php echo $this->getDatenschutztext()?>
+				    </p>
+			    </fieldset>
 		        </div>
 		 	      <div class="buttons-set">
 		            <button type="submit" class="button" >
@@ -77,14 +96,14 @@
 		    <?php $_secure = Mage::app()->getFrontController()->getRequest()->isSecure(); ?>
 		        <h2><?php echo $this->__('Login') ?></h2>
 		        <div class="content">
-		            <div class="securityLabel">
+		            <div class="securityLabel"<?php echo $show_css; ?>>
 			              <span>
 				                <strong><?php echo $this->__('Already registered?') ?></strong><br />
 				                <?php echo $this->__('If you have an account with us, please log in.') ?>
 			              </span>
-			            <?php if( $_secure ): ?>
-			              <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-		              <?php endif; ?>
+    		            <?php if ($_show_ssl): ?>
+                            <img src="<?php echo $_show_image; ?>" alt="<?php echo $this->__($_ssl_alt); ?>" title="<?php echo $this->__($_ssl_title); ?>" />
+                        <?php endif; ?>
 		            </div>
 			          <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
 				            <ul class="form-list">

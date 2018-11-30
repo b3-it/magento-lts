@@ -1,0 +1,133 @@
+/*!
+ *  Font Awesome 4.4.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ *  Anpassung an eGov-Design (C)2016
+ */
+
+// Variables
+// --------------------------
+
+$fa-font-path:        "../../default/font" !default;
+$fa-font-size-base:   14px !default;
+$fa-line-height-base: 1 !default;
+$fa-css-prefix:       fa !default;
+$fa-version:          "4.4.0" !default;
+$fa-border-color:     #eee !default;
+$fa-inverse:          #fff !default;
+$fa-li-width:         (30em / 14) !default;
+
+$fa-var-spinner      : "\f110";
+$fa-var-search       : "\f002";
+$fa-var-times        : "\f00d";
+$fa-var-pencil       : "\f040";
+$fa-var-trash-o      : "\f014";
+$fa-var-lock         : "\f023";
+$fa-var-envelope     : "\f0e0";
+$fa-var-phone        : "\f095";
+$fa-var-mobile       : "\f10b";
+$fa-var-fax          : "\f1ac";
+$fa-var-th-large     : "\f009";
+$fa-var-bars         : "\f0c9";
+$fa-var-home         : "\f015";
+$fa-var-user         : "\f007";
+$fa-var-shopping-cart: "\f07a";
+$fa-var-star         : "\f005";
+$fa-var-arrow-down   : "\f063";
+$fa-var-arrow-up     : "\f062";
+$fa-var-repeat       : "\f01e";
+$fa-var-print        : "\f02f";
+$fa-var-eye          : "\f06e";
+$fa-var-files-o      : "\f0c5";
+$fa-var-balance-scale: "\f24e";
+$fa-var-rss-square   : "\f143";
+$fa-var-credit-card  : "\f09d";
+$fa-var-eur          : "\f153";
+$fa-var-refresh      : "\f021";
+
+/* FONT PATH
+ * -------------------------- */
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('#{$fa-font-path}/fontawesome-webfont.eot?v=#{$fa-version}');
+  src: url('#{$fa-font-path}/fontawesome-webfont.eot?#iefix&v=#{$fa-version}') format('embedded-opentype'),
+       url('#{$fa-font-path}/fontawesome-webfont.woff2?v=#{$fa-version}') format('woff2'),
+       url('#{$fa-font-path}/fontawesome-webfont.woff?v=#{$fa-version}') format('woff'),
+       url('#{$fa-font-path}/fontawesome-webfont.ttf?v=#{$fa-version}') format('truetype'),
+       url('#{$fa-font-path}/fontawesome-webfont.svg?v=#{$fa-version}#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Base Class Definition
+// -------------------------
+
+.#{$fa-css-prefix} {
+  display: inline-block;
+  font: normal normal normal #{$fa-font-size-base}/#{$fa-line-height-base} FontAwesome; // shortening font declaration
+  font-size: inherit;   // can't have font-size inherit on line above, so need to override
+  text-rendering: auto; // optimizelegibility throws things off #1094
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.#{$fa-css-prefix}-spinner:before       { content: $fa-var-spinner; }
+.#{$fa-css-prefix}-search:before        { content: $fa-var-search; }
+.#{$fa-css-prefix}-pencil:before        { content: $fa-var-pencil; }
+.#{$fa-css-prefix}-trash-o:before       { content: $fa-var-trash-o; }
+.#{$fa-css-prefix}-lock:before          { content: $fa-var-lock; }
+.#{$fa-css-prefix}-envelope:before      { content: $fa-var-envelope; }
+.#{$fa-css-prefix}-phone:before         { content: $fa-var-phone; }
+.#{$fa-css-prefix}-mobile:before        { content: $fa-var-mobile; }
+.#{$fa-css-prefix}-fax:before           { content: $fa-var-fax; }
+.#{$fa-css-prefix}-th-large:before      { content: $fa-var-th-large; }
+.#{$fa-css-prefix}-bars:before          { content: $fa-var-bars; }
+.#{$fa-css-prefix}-home:before          { content: $fa-var-home; }
+.#{$fa-css-prefix}-user:before          { content: $fa-var-user; }
+.#{$fa-css-prefix}-shopping-cart:before { content: $fa-var-shopping-cart; }
+.#{$fa-css-prefix}-star:before          { content: $fa-var-star; }
+.#{$fa-css-prefix}-arrow-up:before      { content: $fa-var-arrow-up; }
+.#{$fa-css-prefix}-arrow-down:before    { content: $fa-var-arrow-down; }
+.#{$fa-css-prefix}-repeat:before        { content: $fa-var-repeat; }
+.#{$fa-css-prefix}-print:before         { content: $fa-var-print; }
+.#{$fa-css-prefix}-eye:before           { content: $fa-var-eye; }
+.#{$fa-css-prefix}-files-o:before       { content: $fa-var-files-o; }
+.#{$fa-css-prefix}-balance-scale:before { content: $fa-var-balance-scale; }
+.#{$fa-css-prefix}-rss-square:before    { content: $fa-var-rss-square; }
+.#{$fa-css-prefix}-times:before         { content: $fa-var-times; }
+.#{$fa-css-prefix}-credit-card:before   { content: $fa-var-credit-card; }
+.#{$fa-css-prefix}-eur:before           { content: $fa-var-eur; }
+.#{$fa-css-prefix}-refresh:before       { content: $fa-var-refresh; }
+
+// Spinning Icons
+// --------------------------
+
+.#{$fa-css-prefix}-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear;
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_regionallocation_koenigsteinerschluessel_kst_index>
+        <reference name="content">
+            <block type="regionallocation/adminhtml_koenigsteinerschluessel_kst" name="koenigsteinerschluessel_kst" />
+        </reference>
+    </adminhtml_regionallocation_koenigsteinerschluessel_kst_index>
+
+	<adminhtml_catalog_product_regionallocation>
+		<reference name="product_tabs">
+			<action method="removeTab"><name>upsell</name></action>
+			<action method="removeTab"><name>crosssell</name></action>
+			<action method="removeTab"><name>reviews</name></action>
+			<action method="removeTab"><name>options</name></action>
+			<action method="removeTab"><name>related</name></action>
+			<action method="removeTab"><name>tags</name></action>
+			<action method="removeTab"><name>customers_tags</name></action>
+		</reference>
+	</adminhtml_catalog_product_regionallocation>
+</layout>

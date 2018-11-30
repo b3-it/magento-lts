@@ -19,7 +19,7 @@ class B3it_ConfigCompare_Model_CmsBlocks extends B3it_ConfigCompare_Model_Compar
 	{
 		$collection = Mage::getModel('cms/block')->getCollection();
 		
-		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' GROUP BY block_id ORDER BY store_id)');
+		$stores = new Zend_Db_Expr('(SELECT block_id, group_concat(store_id) AS stores FROM '.$collection->getTable('cms/block_store'). ' WHERE  store_id IN (0,'.$this->getStoreId().') GROUP BY block_id ORDER BY store_id)');
 		$collection->getSelect()
 		->joinleft(array('store'=>$stores),'store.block_id = main_table.block_id',array('stores'));
 		return $collection;

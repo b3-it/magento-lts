@@ -113,7 +113,7 @@
           <input id="allow_zero" name="creditmemo[allow_zero_grand_total]" value="1" type="hidden" />
           <?php if (Mage::helper('core')->isModuleEnabled('Slpb_Product')): ?> 
           <p>
-              <label class="normal" for="special_cancel"><?php echo Mage::helper('specialordercancel')->__('Unlock customer') ?></label>
+              <label class="normal" for="special_cancel"><?php echo Mage::helper('extsalesorder')->__('Unlock customer') ?></label>
               <input id="special_cancel" name="creditmemo[special_cancel]" value="1" type="checkbox" <?php if ($this->getCreditmemo()->getSpecialCancel() > 0): ?>checked="checked" <?php endif;?>/>
           </p>
           <?php endif; ?>

@@ -1,0 +1,117 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Search - Skip Link
+ * ============================================ */
+
+.skip-search {
+	top: 5px;
+
+    @include bp(min-width, 911px) {
+    	display: none;
+    }
+}
+
+
+/* ============================================ *
+ * Search - Skip Content
+ * ============================================ */
+
+// ---------------------------------------------
+
+#header-search {
+    position: absolute;
+    right: 0;
+  	top: 50px;
+   	width: 260px;
+    height: 50px;
+    padding: 10px;
+    z-index: 99;
+    
+    button {
+        padding: 5px;
+    }
+    
+    &.skip-active {
+    	@include menu;
+    	opacity: 0.9;
+    	
+    	@include bp(max-width, 785px) {
+    		top: 155px + $global-logo-height;
+    	}
+    }
+
+    @include bp(max-width, 785px) {
+    	top: 150px + $global-logo-height;
+    }
+    
+    @include bp(min-width, 900px) {
+    	display: block; // Force visibility
+    	top: 0;
+    	right: -15px;
+    }
+}
+
+/* ============================================ *
+ * Search Input
+ * ============================================ */
+
+#search_mini_form .input-box {
+    position: relative;
+    padding-top: 0;
+}
+
+#search_mini_form label {
+    display: none;
+}
+
+#search {
+    width: 70%;
+    float: left;
+    font-family: $base-font-family;
+    height: 28px;
+    border-top: $global-box-border solid $global-input-bordercolor;
+    border-right: none;
+    border-bottom: $global-box-border solid $global-input-bordercolor;
+    border-left: $global-box-border solid $global-input-bordercolor;
+    border-radius: $global-radius 0 0 $global-radius;
+
+}
+
+#search_mini_form .search-button {
+    @include image-replacement;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: none;
+}
+
+#search_mini_form .search-button:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -15px;
+    @extend .icon-sprite;
+    background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
+}
+
+#search_mini_form .search-button:hover:before {
+    opacity: 0.8;
+}
+
+#search_mini_form .search-button:active:before {
+    margin-top: -15px + 2px;
+    margin-left: -15px + 2px;
+}

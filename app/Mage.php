@@ -811,7 +811,12 @@ final class Mage
         static $loggers = array();
 
         $level  = is_null($level) ? Zend_Log::NOTICE : $level;
-        $file = empty($file) ? 'system.log' : $file;
+        $file = empty($file) ? 'system.log' : basename($file);
+
+        // Validate file extension before save. Allowed file extensions: log, txt, html, csv
+        if (!self::helper('log')->isLogFileExtensionValid($file)) {
+            return;
+        }
 
         try {
             if (!isset($loggers[$file])) {
@@ -820,12 +825,12 @@ final class Mage
 
                 if (!is_dir($logDir)) {
                     mkdir($logDir);
-                    chmod($logDir, 0750);
+                    chmod($logDir, 0770);
                 }
 
                 if (!file_exists($logFile)) {
                     file_put_contents($logFile, '');
-                    chmod($logFile, 0640);
+                    chmod($logFile, 0660);
                 }
 
                 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
@@ -845,6 +850,7 @@ final class Mage
                 $message = print_r($message, true);
             }
 
+            $message = preg_replace("/(\<)(\?)(?!=|xml)/m", "/$1/$2", $message);
             $loggers[$file]->log($message, $level);
         }
         catch (Exception $e) {

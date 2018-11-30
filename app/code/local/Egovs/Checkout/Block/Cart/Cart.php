@@ -20,7 +20,8 @@
  *
  * @category   Egovs
  * @package    Egovs_Checkout
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @author 	   Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  Copyright (c) 2016 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -34,19 +35,21 @@ class Egovs_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
 {
     public function getDeleteAllUrl()
     {
-    	$url = $this->getUrl('egovs_checkout/cart/deleteall', array(
+    	$url = $this->getUrl(
+    	    'egovs_checkout/cart/deleteall',
+            array(
                 'id'=>'0',
     			'form_key' => Mage::getSingleton('core/session')->getFormKey(),
-                Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl()
+                Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->helper('core/url')->getEncodedUrl(),
+                '_secure' => $this->_isSecure()
             ));
-        $img = $this->getSkinUrl('images/btn_trash.gif');
-        $text = Mage::helper('mpcheckout')->__('Delete All Items');
-        return $url;//"<a title=\"$text\" href=\"#\" onclick=\"deleteAll(\'$url\')\" ><img height=\"16\" width=\"16\" alt=\"$text\" src=\"$img\"/></a>";
+
+        return $url;
     }
-    
+
     public function getCheckoutUrl()
     {
     	return Mage::helper('mpcheckout/url')->getCheckoutUrl();
     }
-    
+
 }

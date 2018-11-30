@@ -42,7 +42,12 @@ class Sid_Checkout_Model_Type_Multishipping_State extends Mage_Checkout_Model_Ty
             self::STEP_SELECT_ADDRESSES => new Varien_Object(array(
                 'label' => Mage::helper('checkout')->__('Select Addresses')
             )),
-           
+        	self::STEP_SHIPPING => new Varien_Object(array(
+        		'label' => Mage::helper('checkout')->__('Shipping Information')
+        	)),
+        	self::STEP_BILLING => new Varien_Object(array(
+        		'label' => Mage::helper('checkout')->__('Billing Information')
+        	)),
             self::STEP_OVERVIEW => new Varien_Object(array(
                 'label' => Mage::helper('checkout')->__('Place Order')
             )),

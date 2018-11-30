@@ -35,7 +35,7 @@ class B3it_Modelhistory_Helper_Data extends Mage_Core_Helper_Data
         $collection = $model->getCollection();
         $maxRevCollection = $model->getCollection();
         $maxRevCollection->addFieldToSelect('model_id');
-        $maxRevCollection->addExpressionFieldToSelect('maxrev', 'MAX(main_table.rev)');
+        $maxRevCollection->addExpressionFieldToSelect('maxrev', 'MAX({{rev}})', array('rev' => 'main_table.rev'));
         $maxRevCollection->getSelect()->group('main_table.model_id');
 
         $collection->getSelect()->join(array('e' => $maxRevCollection->getSelect()), 'main_table.model_id=e.model_id && main_table.rev != e.maxrev', '');
@@ -71,7 +71,7 @@ class B3it_Modelhistory_Helper_Data extends Mage_Core_Helper_Data
         $maxRevCollection = $model->getCollection();
         $maxRevCollection->addFieldToSelect('model');
         $maxRevCollection->addFieldToSelect('model_id');
-        $maxRevCollection->addExpressionFieldToSelect('maxrev', 'MAX(main_table.rev)');
+        $maxRevCollection->addExpressionFieldToSelect('maxrev', 'MAX({{rev}})', array('rev' => 'main_table.rev'));
         $maxRevCollection->getSelect()->group('main_table.model');
         $maxRevCollection->getSelect()->group('main_table.model_id');
 

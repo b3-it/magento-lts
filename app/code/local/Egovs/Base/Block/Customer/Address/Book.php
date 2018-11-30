@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Magento
  *
@@ -27,62 +28,41 @@
 /**
  * Customer address book block
  *
- * @category   Egovs
- * @package    Egovs_Base
- * @author     
+ * @category Egovs
+ * @package Egovs_Base
+ * @author
  */
 class Egovs_Base_Block_Customer_Address_Book extends Mage_Customer_Block_Address_Book
 {
-	public $AddressEditingIsDenied = false;
-	
-	public function rejectAddressEditing($address_id)
-	{
-		 $data = array('block'=> $this,"address_id"=>$address_id);
-		 Mage::dispatchEvent('egovs_base_customer_reject_address_editing',$data);
-		 $res = $this->AddressEditingIsDenied;
-		 $this->AddressEditingIsDenied = false;
-		 
-		 //für stammadresse
-		 if(!$res) {
-		 	 
-		 	$customer = Mage::getSingleton('customer/session')->getCustomer();
-		 	$baseAddress = $customer->getBaseAddress();
-		 	if ($address_id != $baseAddress) {
-		 		return false;
-		 	} else {
-		 		if (! Mage::helper('egovsbase')->isModuleEnabled('Egovs_Vies')) {
-                    return true;
+
+    public function rejectAddressEditing($address)
+    {
+        if (false === $address) {
+            $address = null;
+        } elseif (is_string($address)) {
+            $address = Mage::getModel('customer/address')->load($address);
+        }
+        return Mage::helper('egovsbase/customer_address')->rejectAddressEditing($address, $this);
+    }
+
+    public function getLockedAddressText()
+    {
+        return $this->__('This address is used by additional service. For changeing contact our customer service please!');
+    }
+
+    public function getAdditionalAddresses()
+    {
+        $addresses = $this->getCustomer()->getAdditionalAddresses();
+        $base = $this->getCustomer()->getBaseAddress();
+        if ($base) {
+            foreach ($addresses as $key => $adr) {
+                if ($base == $adr->getId()) {
+                    unset($addresses[$key]);
+                    break;
                 }
-                if ($customer->getData('disable_auto_group_change') == 1) {
-                    return true;
-                }
-		 	}
-		 	
-		 }
-		 
-		 return $res;
-	}
-	
-	public function getLockedAddressText()
-	{
-		return $this->__('This address is used by additional service. For changeing contact our customer service please!');
-	}
-	
-	
-	public function getAdditionalAddresses()
-	{
-		$addresses = $this->getCustomer()->getAdditionalAddresses();
-		$base = $this->getCustomer()->getBaseAddress();
-		if ($base) {
-			foreach($addresses as $key => $adr) {
-				if($base == $adr->getId()) {
-					unset($addresses[$key]);
-					break;
-				}
-			}
-		}
-		
-		return empty($addresses) ? false : $addresses;
-	}
-	
+            }
+        }
+
+        return empty($addresses) ? false : $addresses;
+    }
 }

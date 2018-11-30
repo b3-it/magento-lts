@@ -59,7 +59,7 @@ $j(document).ready(function(){
 function selectMapStation(id)
 {
 	setSelectBox(id);
-	overlayClose();
+	$j("#map").geomap().overlayClose();
 }
 
 /**

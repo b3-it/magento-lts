@@ -21,17 +21,18 @@
 //    Variablen werden in "_framework.scss" eingebunden
 @import "../../default/scss/egov/bitv";
 @import "../../default/scss/egov/video";
-@import "../../default/scss/egov/egov-base";
+@import "egov/egov-base";
 @import "../../default/scss/egov/fa-icons";
 @import "../../default/scss/egov/mp-checkout";
 @import "../../default/scss/egov/checkiban";
 @import "../../default/scss/egov/silver-track";
 @import "../../default/scss/egov/credit-cards";
+@import "../../default/scss/egov/mobile-switch";
 
 
 // ----------------------------------------------
 // Core
-@import "../../default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -41,14 +42,14 @@
 // ----------------------------------------------
 // Layout
 @import "../../default/scss/layout/button-set";
-@import "../../default/scss/layout/buttons";
+@import "layout/buttons";
 @import "../../default/scss/layout/global";
 @import "layout/header";
 @import "../../default/scss/layout/header-nav";
 @import "layout/header-search";
-@import "../../default/scss/layout/header-account";
-@import "../../default/scss/layout/header-cart";
-@import "../../default/scss/layout/marginal-blocks";
+@import "layout/header-account";
+@import "layout/header-cart";
+@import "layout/marginal-blocks";
 @import "../../default/scss/layout/footer";
 
 
@@ -60,14 +61,14 @@
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
 @import "../../default/scss/module/select-language";
-@import "../../default/scss/module/product-list";
+@import "module/product-list";
 @import "module/catalog-product";
 @import "../../default/scss/module/catalog-msrp";
-@import "../../default/scss/module/catalog-seo-sitemap-category";
+@import "module/catalog-seo-sitemap-category";
 @import "../../default/scss/module/catalog-compare";
 @import "../../default/scss/module/catalogsearch-advanced-result";
 @import "../../default/scss/module/catalogsearch-term-popular";
-@import "../../default/scss/module/checkout-cart";
+@import "module/checkout-cart";
 @import "../../default/scss/module/checkout-onepage";
 @import "../../default/scss/module/checkout-success";
 @import "../../default/scss/module/configurableswatches";
@@ -80,10 +81,10 @@
 @import "../../default/scss/module/sales-order-print";
 @import "../../default/scss/module/slideshow";
 @import "../../default/scss/module/wishlist";
-@import "../../default/scss/module/checkout-cart-minicart";
-@import "../../default/scss/module/search";
+@import "module/checkout-cart-minicart";
+@import "module/search";
 @import "../../default/scss/module/account-reviews";
-@import "../../default/scss/module/account-login";
+@import "module/account-login";
 @import "../../default/scss/module/cms";
 @import "../../default/scss/module/pricing_conditions";
 @import "../../default/scss/module/cookies";
@@ -96,8 +97,10 @@
 @import "../../default/scss/module/popular-terms";
 @import "../../default/scss/module/widget";
 @import "../../default/scss/module/checkout-multi-address";
-@import "../../default/scss/module/my-account";
+@import "module/my-account";
 @import "../../default/scss/module/my-recent-tags";
+@import "../../default/scss/module/grid-table";
+@import "../../default/scss/module/sales-order-printshipment";
 
 
 // ----------------------------------------------

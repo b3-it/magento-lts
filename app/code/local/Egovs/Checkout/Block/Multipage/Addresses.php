@@ -35,7 +35,7 @@ class Egovs_Checkout_Block_Multipage_Addresses extends Egovs_Checkout_Block_Mult
     /**
      * Retrieve multipage checkout model
      *
-     * @return Mage_Checkout_Model_Type_Multipage
+     * @return Egovs_Checkout_Model_Multipage
      */
     public function getCheckout()
     {

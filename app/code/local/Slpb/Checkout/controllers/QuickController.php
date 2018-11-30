@@ -65,6 +65,8 @@ class Slpb_Checkout_QuickController extends Mage_Core_Controller_Front_Action//M
 		$this->loadLayout('checkout_cart_index');
         try {
         	if ($product) {
+        		Mage::dispatchEvent('checkout_cart_add_product_before',
+        				array('product' => $product, 'request' => new Varien_Object(array('qty'=>1)), 'cart' => $cart));
         		$params['product'] = $id;
 	            $cart->addProduct($product, $params);
 	            $cart->save();
@@ -80,15 +82,17 @@ class Slpb_Checkout_QuickController extends Mage_Core_Controller_Front_Action//M
     	catch (Exception $e) 
         {
             	Mage::getSingleton('checkout/session')->addError($e->getMessage());
+            	//die($e->getMessage());
+            	//$this->getMessagesBlock()->
         }
        $out = "";
        $this->_initLayoutMessages('customer/session');
-       //$this->_initLayoutMessages('checkout/session');
+       $this->_initLayoutMessages('checkout/session');
        $block = $this->getLayout()->getBlock('checkout.cart') ;
        $block->chooseTemplate();
        $out .= $block->toHtml();
        
-        die($out);
+       die($out);
     }
     
     public function xsuggestAction()

@@ -1,0 +1,112 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ====================================================
+// Mixin - eGov-Login-Foms
+// ====================================================
+$col-box-height: 25em;
+
+@mixin egov_loginform {
+    .col2-set {
+        width: 100%;
+        border-bottom: 0px;
+
+        .col-1, .col-2 {
+            width: 48%;
+            min-height: $col-box-height;
+            padding: 0;
+            margin: 0;
+            border: $global-box-border solid $global-box-bordercolor;
+            
+            @include bp(max-width, $bp-medium) {
+                width: 100%;
+                display: block;
+            }
+
+	        .content {
+	            padding: $global-boxpadding-large;
+	            height: $col-box-height - 8em;
+	
+	            .securityLabel {
+	                display: inline-block;
+	                position: absolute;
+                    right: -5%;
+                    top: 40%;
+                    width: 20%;
+	            }
+	        }
+
+	        .buttons-set {
+	            width: 93%;
+	            position: relative;
+	            bottom: $global-boxpadding-large;
+	            margin-left: $global-boxpadding-large;
+	            margin-right: $global-boxpadding-large;
+	
+		        .button {
+		            min-width: 46%;
+		            padding-left: 0;
+		            padding-right: 0;
+		            
+		            @include bp(max-width, $bp-medium) {
+					    min-width: 100%;
+					    margin-bottom: $box-spacing;
+					}
+		            
+		            &:only-child {
+		            	width: 46%;
+		            	float: none;
+		            	
+		            	@include bp(max-width, $bp-medium) {
+					    	min-width: 100%;
+						}
+					}
+		        }
+	        }
+        }
+
+		form input {
+	        max-width: 90%;
+	        width: 70% !important;
+	    }
+	    
+        ul li {
+            input[type="radio"], label {
+                width: auto;
+            }
+
+            input[type="text"], input[type="password"] {
+                width: 90%;
+                max-width: 90%;
+            }
+        }
+
+	    h2 {
+	        font-family: $base-font-family;
+	        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
+	        padding-top: $global-box-title-padding-top;
+	        padding-right: $global-box-title-padding-right;
+	        padding-bottom: $global-box-title-padding-bottom;
+	        padding-left: $global-box-title-padding-left;
+	        font-size: $global-fontsize-big;
+	        font-weight: bold;
+	        background-color: $global-lightcolor;
+	        color: $global-fontcolor-dark;
+	        margin: 0;
+	    }
+
+        .registered-users {
+            fieldset {
+                width: 60%;
+            }
+            
+            fieldset.width {
+                width: 95%;
+            }
+        }
+    }
+}

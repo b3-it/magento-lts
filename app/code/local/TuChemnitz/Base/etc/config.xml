@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <TuChemnitz_Base>
+            <version>0.0.0.4</version>
+        </TuChemnitz_Base>
+    </modules>
+    <global>
+        <resources>
+            <tuchemnitzbase_setup>
+                <setup>
+                    <module>TuChemnitz_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tuchemnitzbase_setup>
+        </resources>
+    </global>
+</config>

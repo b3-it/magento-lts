@@ -45,9 +45,9 @@ class Dwd_Stationen_Adminhtml_Stationen_StationenController extends Mage_Adminht
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
 			
-			//$left = $this->getLayout()->createBlock('stationen/adminhtml_stationen_edit_tabs'); 
-			//$this->_addContent($this->getLayout()->createBlock('stationen/adminhtml_stationen_edit'))
-			//$this->_addLeft($left);
+			$left = $this->getLayout()->createBlock('stationen/adminhtml_stationen_edit_tabs'); 
+			$this->_addContent($this->getLayout()->createBlock('stationen/adminhtml_stationen_edit'));
+			$this->_addLeft($left);
 
 			$this->renderLayout();
 		} else {

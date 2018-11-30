@@ -25,15 +25,15 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
-            <col width="50" />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col width="20" />
+            <col class="product-cart-image" width="50" />
+            <col class="roduct-cart-info" />
+            <col class="product-cart-price" />
+            <col class="product-cart-price" />
+            <col class="product-cart-total" />
+            <col class="product-cart-remove" width="20" />
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col />
-            <col />
+            <col class="" />
+            <col class="" />
         <?php endif; ?>
             <thead>
                 <tr>
@@ -50,7 +50,7 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                     <th class="a-center cart-total-head" colspan="<?php echo $mergedCells; ?>">
                         <?php echo $this->__('Subtotal') ?>
                     </th>
-                    <th class="a-center" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+                    <th class="a-center cart-remove-head" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
                 </tr>
             <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
                 <tr>
@@ -126,11 +126,11 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <button class="button btn-proceed-checkout btn-checkout"
                     onclick="window.location='<?php echo $this->helper('mpcheckout/url')->getCheckoutUrl();?>';"
                     title="<?php echo $this->__('Proceed to checkout'); ?>"
-                    type="button">
-                <div id="proceed-button-first">
+                    type="button" style="font-weight:bold;">
+                <div id="proceed-button-first" style="display:none;">
                     <?php echo $this->__('Order now'); ?>
                 </div>
-                (<?php echo $this->__('Checkout'); ?>)
+                <?php echo $this->__('Checkout'); ?>
             </button>
             <?php echo $this->getChildHtml('cartinfo') ?>
             <?php endif; ?>

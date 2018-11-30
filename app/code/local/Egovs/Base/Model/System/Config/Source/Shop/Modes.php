@@ -9,6 +9,7 @@ class Egovs_Base_Model_System_Config_Source_Shop_Modes
             array('value'=>1, 'label'=>Mage::helper('egovsbase')->__('Test')),
             array('value'=>2, 'label'=>Mage::helper('egovsbase')->__('Integration')),
             array('value'=>3, 'label'=>Mage::helper('egovsbase')->__('Production')),
+            array('value'=>4, 'label'=>Mage::helper('egovsbase')->__('Migration')),
         );
     }
 

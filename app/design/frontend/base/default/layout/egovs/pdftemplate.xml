@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+   	<pdftemplate_pdf_item_renderer>
+        <reference name="content">
+            <block type="pdftemplate/sales_item_renderer" name="pdftemplate_pdf_item_renderer" >
+                
+            </block>
+        </reference>
+    </pdftemplate_pdf_item_renderer>
+</layout>

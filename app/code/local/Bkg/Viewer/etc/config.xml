@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
 	<modules>
 		<Bkg_Viewer>
-			<version>0.1.0.0</version>
+			<version>0.1.3.0</version>
 		</Bkg_Viewer>
 	</modules>
 	<global>
@@ -51,32 +51,35 @@
 					<service_crs>
 						<table>bkg_viewer_service_crs</table>
 					</service_crs>
-					<service_tile_system>
-						<table>bkg_viewer_service_tile_system</table>
-					</service_tile_system>
 					<service_tile>
 						<table>bkg_viewer_service_tile</table>
 					</service_tile>
-					<service_vg_group>
-						<table>bkg_viewer_service_vg_group</table>
-					</service_vg_group>
+					<service_tile_system>
+						<table>bkg_viewer_service_tile_system</table>
+					</service_tile_system>
 					<service_vg>
 						<table>bkg_viewer_service_vg</table>
 					</service_vg>
+					<service_vg_group>
+						<table>bkg_viewer_service_vg_group</table>
+					</service_vg_group>
+					<composit_selectiontools>
+						<table>bkg_viewer_composit_selectiontools</table>
+					</composit_selectiontools>
 				</entities>
 			</bkgviewer_resource>
 		</models>
+		<wms>
+		  <versions>
+		      <!-- TOOD find better way when versions does colide! -->
+		      <v100 type="WMTS">1.0.0</v100><!-- WMTS -->
+		      <v110 type="WFS">1.1.0</v110><!-- WFS -->
+		      <v130 type="WMS">1.3.0</v130><!-- WMS -->
+		      <v200 type="WFS">2.0.0</v200><!-- WFS -->
+		  </versions>
+		</wms>
 	</global>
 	<frontend>
-		<routers>
-			<bkg_view_frontend>
-				<use>standard</use>
-				<args>
-					<module>Bkg_Viewer</module>
-					<frontName>bkg_viewer</frontName>
-				</args>
-			</bkg_view_frontend>
-		</routers>
 	</frontend>
 	<admin>
 		<routers>
@@ -100,26 +103,18 @@
 						<sort_order>10</sort_order>
 						<action>adminhtml/viewer_service_service/index</action>
 					</bkgviewer_service_service>
+					<!-- 
 					<bkgviewer_service_layer module="bkgviewer">
-						<title>Layer</title>
+						<title>Service Layer</title>
 						<sort_order>20</sort_order>
 						<action>adminhtml/viewer_service_layer/index</action>
 					</bkgviewer_service_layer>
+					 -->
 					<bkgviewer_composit_composit module="bkgviewer">
 						<title>Composit</title>
 						<sort_order>30</sort_order>
 						<action>adminhtml/viewer_composit_composit/index</action>
-					</bkgviewer_composit_composit>			
-					<bkgviewer_service_tilesystem module="bkgviewer">
-						<title>Tile System</title>
-						<sort_order>40</sort_order>
-						<action>adminhtml/viewer_service_tilesystem/index</action>
-					</bkgviewer_service_tilesystem>			
-					<bkgviewer_service_vggroup module="bkgviewer">
-                        <title>Vg Group</title>
-                        <sort_order>50</sort_order>
-                        <action>adminhtml/viewer_service_vggroup/index</action>
-                    </bkgviewer_service_vggroup>         
+					</bkgviewer_composit_composit>					
 				</children>
 			</bkgviewer>
 		</menu>

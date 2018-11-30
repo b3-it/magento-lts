@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" ?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -141,27 +141,27 @@
 								<extstocklist translate="title" module="extstock">
 									<title>Stock</title>
 								</extstocklist>
-							<journal module="extstock">
-								<title>Stock Movement</title>
-							</journal>
-							<ordersheet module="extstock">
-								<title>Order Sheet</title>
-							</ordersheet>
-							<detail translate="title" module="extstock">
-								<title>Inventory Per Stock</title>
-							</detail>
-					<warning translate="title" module="extstock">
-						<title>Warnings Per Stock</title>
-							<extstockorder translate="title" module="">
-								<title>New Stock Order</title>
-								<sort_order>10</sort_order>
-							</extstockorder>
-							<extstockmove translate="title" module="">
-								<title>New Stock Movement</title>
-								<sort_order>10</sort_order>
-							</extstockmove>			
-					</warning>
-						</children>	
+								<journal module="extstock">
+									<title>Stock Movement</title>
+								</journal>
+								<ordersheet module="extstock">
+									<title>Order Sheet</title>
+								</ordersheet>
+								<detail translate="title" module="extstock">
+									<title>Inventory Per Stock</title>
+								</detail>
+								<warning translate="title" module="extstock">
+									<title>Warnings Per Stock</title>
+									<extstockorder translate="title" module="">
+										<title>New Stock Order</title>
+										<sort_order>10</sort_order>
+									</extstockorder>
+									<extstockmove translate="title" module="">
+										<title>New Stock Movement</title>
+										<sort_order>10</sort_order>
+									</extstockmove>
+								</warning>
+							</children>
 						</extstock>
 						<report>
 							<children>

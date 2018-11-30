@@ -10,7 +10,10 @@
  */
 /* @var $this Egovs_SepaDebitBund_Block_Form */
 ?>
-<?php if($this->hasMandate()):?>
+<?php if( is_null($mandateRef) ): ?>
+    <h4><?php echo $this->__("Create your SEPA Mandate during checkout please."); ?></h4>
+<?php else: ?>
+    <?php if($this->hasMandate()):?>
 		<div class="box-content">
             <div class="col-1">
                 <h4><?php echo $this->__('Existing SEPA Mandate') ?></h4>
@@ -18,8 +21,8 @@
                 </div>
             </div>
             <br/>
-<?php endif;?>
-<form id="multishipping-billing-form" methode="post" action="<?php echo $this->getActionUrl() ?>">      
+    <?php endif;?>
+    <form id="multishipping-billing-form" method="post" action="<?php echo $this->getActionUrl() ?>">      
          <div class="box-content">
             <div class="col-1">
                 <h4><?php echo $this->__('Change SEPA Mandate') ?></h4>
@@ -27,10 +30,10 @@
                 </div>
             </div>
 
-<div class="buttons-set">
-    <a class="button" href="<?php echo $this->getUrl('customer/account/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
-    <button type="submit" class="button"><span><span><?php echo $this->__('Save Mandate') ?></span></span></button>
-</div>
-</form>   
-
+		<div class="buttons-set">
+		    <a class="button" href="<?php echo $this->getUrl('customer/account/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
+		    <button type="submit" class="button"><span><span><?php echo $this->__('Save Mandate') ?></span></span></button>
+		</div>
+	</form>   
+<?php endif; ?>
 

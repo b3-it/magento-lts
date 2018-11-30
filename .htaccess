@@ -41,9 +41,14 @@
 
 <IfModule mod_php5.c>
 ############################################
+# !!!Funktioniert nur falls Apache mit mod_php läuft!!
+# Unter Windows läuft PHP meist als CGI/FPM usw.
+
+############################################
 ## adjust memory limit
 
-    php_value memory_limit 256M
+    #php_value memory_limit 256M
+    php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M

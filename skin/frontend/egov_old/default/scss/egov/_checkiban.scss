@@ -1,0 +1,70 @@
+﻿#documentoverlay {
+	background-color:transparent;
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	padding-top:50px;
+	z-index:10000;
+	background-image:url('../images/checkiban/empt.png');
+}
+
+#alertbox {
+	position:absolute;
+	width:300px;
+	min-height:70px;
+	margin-top:0;
+	border:2px outset ActiveBorder;
+	background-color:ThreeDFace;
+	background-image:url('../images/checkiban/alertsign.png');
+	background-repeat:no-repeat;
+	background-position:20px 37px;
+}
+
+#documentoverlay > #alertbox {
+	position:fixed;
+}
+
+#alertbox h1 {
+	margin:1 0 14px 0;
+	font:bold 11px verdana,arial;
+	background-color:ActiveCaption;
+	color:CaptionText;
+	padding:2px 0 2px 5px;
+}
+
+#alertbox p {
+	font:11px verdana,arial;
+	padding-left:5px;
+	margin-left:55px;
+}
+
+#alertbox b {
+	color:red;
+}
+
+#alertbox strong {
+	background-color:#ff4040;
+}
+
+#alertbox #closebutton {
+	position:relative;
+	left:110px;
+	margin:16px auto;
+	padding:1px;
+	width:80px;
+	font:11px verdana,arial;
+}
+
+#alertbox #cancelbutton {
+	position:absolute;
+	top:3px;
+	right:2px;
+	padding:0;
+	width:13px;
+	height:13px;
+	background-image:url('../images/checkiban/close.png');
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}

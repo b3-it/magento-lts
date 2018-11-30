@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config> 
     <sections>
          <sid_checkout translate="label" module="sidcheckout">
          	<label>SID Checkout</label>
-            <tab>general</tab>
+            <tab>sid</tab>
             <frontend_type>text</frontend_type>
             <sort_order>510</sort_order>
             <show_in_default>1</show_in_default>
@@ -39,7 +39,7 @@
                         </invoice_shippingmethod>
                 	</fields>
                 </invoice>             
-         </groups>
+            </groups>
         </sid_checkout>
          <dev>
             <groups>

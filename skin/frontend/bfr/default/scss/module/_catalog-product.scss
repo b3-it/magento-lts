@@ -5,6 +5,11 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.category-veranstaltungen-archiv div.category-title {
+    // Im Veranstaltungs-Archiv darf kein Titel angezeigt werden
+    display: none !important;
+}
+
 .catalog-product-view,
 .catalog-category-view {
     .main-container {
@@ -14,12 +19,7 @@
     .add-to-cart-buttons {
         button {
             @include default-button;
-        }
-    }
-
-    @include bp(max-width, 785px) {
-        .main-container {
-            top: 0;
+            height: 40px;
         }
     }
 }
@@ -77,7 +77,7 @@ div#details-block {
 .col2-right-layout {
     .category-products, .category-title, .product-view {
         width: 100%;
-	  }
+	}
 }
 
 .col3-layout {
@@ -180,8 +180,8 @@ div#details-block {
             position: absolute;
             top: $global-1-product-height - $gobal-cart-block-height - 140px;
             left: $global-product-image-1-width + 2%;
-
-            .add-to-cart-buttons {
+            
+           .add-to-cart-buttons {
                 display: inline-block;
             }
         }
@@ -195,6 +195,10 @@ div#details-block {
         #product-base-block {
             min-height: $global-2L-product-height;
             margin-top: 16px;
+            
+            @include bp(max-width, $bp-small) {
+                min-height: auto;
+            }
         }
 
         #additional-product-images {
@@ -217,6 +221,10 @@ div#details-block {
                 height: 250px;
                 overflow: auto;
                 font-size: 0.9em;
+                
+                @include bp(max-width, $bp-small) {
+                    height: auto;
+                }
             }
 
             .price-box {
@@ -235,9 +243,21 @@ div#details-block {
                 position: absolute;
                 top: 0px;
 
-                .qty-wrapper {
+	            @include bp(max-width, $bp-small) {
+	                position: relative;
+	                top: auto;
+	                left: auto;
+	                width: 100%;
+	                display: block;
+	            }
+
+                 .qty-wrapper {
                     float: none;
                     margin: 0;
+                    
+                    @include bp(max-width, $bp-small) {
+                        width: 48%;
+                    }
                 }
 
                 .add-to-cart-buttons {
@@ -613,46 +633,12 @@ div#details-block {
 }
 
 
-@include bp(max-width, 850px) {
-//    .product-view {
-//        .product-shop {
-//            .price-box {
-//                .price-excluding-tax,
-//                .price-including-tax {
-//                    .label {
-//                        font-size: $global-fontsize;
-//                    }
-//
-//                    .price {
-//                        font-size: $global-fontsize-big;
-//                    }
-//                }
-//            }
-//        }
-//    }
-}
-
 @include bp(max-width, $bp-medium) {
     .product-view {
         .add-to-cart-wrapper {
             float: none;
             width: 100%;
         }
-
-//        .product-shop {
-//            .price-box {
-//                .price-excluding-tax,
-//                .price-including-tax {
-//                    .label {
-//                        font-size: $global-fontsize;
-//                    }
-//
-//                    .price {
-//                        font-size: $global-fontsize-big;
-//                    }
-//                }
-//            }
-//        }
     }
 }
 
@@ -699,6 +685,7 @@ div#details-block {
 // On smaller devices, we want to further limit the height of the image, to prevent cropping
 @include bp(max-width, $bp-xsmall) {
     .product-img-box .product-image img {
+        height: auto;
         max-height: 450px;
     }
 }
@@ -759,11 +746,20 @@ div#details-block {
         @include clearfix;
     }
 
-    .add-to-cart:after {
+    .add-to-cart {
         display: inline-block;
+        width: 60%;
+        
+        @include bp(max-width, $bp-small) {
+            width: auto;
+        }
     }
 
     .add-to-cart-buttons {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+    
         button {
             margin: 0;
             padding: 5px;
@@ -790,6 +786,10 @@ div#details-block {
         margin-right: 7px;
         float: left;
         display: inline-block;
+        
+        @include bp(max-width, $bp-small) {
+            width: 35%;
+        }
     }
 
     .add-to-cart .qty-wrapper label {
@@ -800,6 +800,10 @@ div#details-block {
         float: left;
         height: 40px;
         width: 107px;
+        
+        @include bp(max-width, $bp-small) {
+            width: 50%;
+        }
     }
 
     .add-to-cart .qty-wrapper #qtd {
@@ -883,7 +887,9 @@ div#details-block {
 }
 
 .product-view .add-to-links {
-    margin: 0px;
+    display: none;
+/*
+	margin: 0px;
     display: inline-block;
     width: 100%;
     padding-top: $global-boxpadding-large;
@@ -912,10 +918,13 @@ div#details-block {
     li:last-child a {
         border-right: 0px;
     }
+*/
 }
 
 .product-view .sharing-links {
-    float: left;
+    display: none;
+/*
+	float: left;
 
     &:after {
         @include clearfix;
@@ -951,15 +960,22 @@ div#details-block {
     a.link-twitter {
         background-position: 0px (-375px + 3px);
     }
+*/
 }
 
 .product-view .product-options-bottom .sharing-links {
-    float: right;
+/*
+	float: right;
     position: relative;
     top: -10px;
+    
+    @include bp(max-width, $bp-xsmall) {
+        top: 10px;
+    }
+*/
 }
 
-@include bp(max-width, 599px) {
+@include bp(max-width, $bp-small) {
     .add-to-box .add-to-links {
         a {
             float: none;

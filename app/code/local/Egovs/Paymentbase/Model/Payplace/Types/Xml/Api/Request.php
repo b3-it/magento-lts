@@ -74,12 +74,12 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
      * The id
      * Meta informations extracted from the WSDL
      * - documentation : This id makes it easier to assign a response to a request. This attribute will be copied to the "ref" attribute of the response, if it is provided.
-     * @var ID
+     * @var int
      */
     public $id;
     /**
      * The version
-     * @var anonymous15
+     * @var string
      */
     public $version;
     /**
@@ -95,8 +95,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
      * @param Egovs_Paymentbase_Model_Payplace_Types_Batch_Request $_batchRequest
      * @param Egovs_Paymentbase_Model_Payplace_Types_PanAlias_Request $_panAliasRequest
      * @param Egovs_Paymentbase_Model_Payplace_Types_Register_Pan_Request $_registerPanRequest
-     * @param ID $_id
-     * @param anonymous15 $_version
+     * @param int $_id
+     * @param string $_version
      * @return Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request
      */
     public function __construct($_paymentRequest = NULL,$_txDiagnosisRequest = NULL,$_riskCheckRequest = NULL,$_formServiceRequest = NULL,$_giropayBankCheckRequest = NULL,$_tdsInitialRequest = NULL,$_tdsFinalRequest = NULL,$_batchRequest = NULL,$_panAliasRequest = NULL,$_registerPanRequest = NULL,$_id = NULL,$_version = NULL)
@@ -275,7 +275,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
     }
     /**
      * Get id value
-     * @return ID|null
+     * @return int|null
      */
     public function getId()
     {
@@ -283,8 +283,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
     }
     /**
      * Set id value
-     * @param ID $_id the id
-     * @return ID
+     * @param int $_id the id
+     * @return bool
      */
     public function setId($_id)
     {
@@ -292,7 +292,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
     }
     /**
      * Get version value
-     * @return anonymous15|null
+     * @return string|null
      */
     public function getVersion()
     {
@@ -300,8 +300,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Xml_Api_Request extends Egovs_Payme
     }
     /**
      * Set version value
-     * @param anonymous15 $_version the version
-     * @return anonymous15
+     * @param string $_version the version
+     * @return bool
      */
     public function setVersion($_version)
     {

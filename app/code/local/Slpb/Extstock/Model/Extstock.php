@@ -37,7 +37,7 @@ class Slpb_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
      * Speichert das Model persistent in der Datenbank.
      * 
      * Sollte nur noch im Fall einer gelieferten Bestellung gerufen werden
-     * @param $isCancel Unterbindet bei Stornierungen die Überprüfung der Datumsangaben
+     * @param bool $isCancel Unterbindet bei Stornierungen die Überprüfung der Datumsangaben
      * 
      * (non-PHPdoc)
      * @see downloader/pearlib/download/Mage_Core_Modules-1.3.2.4/Mage/Core/Model/Mage_Core_Model_Abstract#save()
@@ -221,9 +221,9 @@ class Slpb_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
     /**
      * Bucht von dem entsprechenden Produkt in der erwweiterten Lagerverwaltung die entsprechende Menge ab.
      * 
-     * @param integer_type $product_id Produkt ID
+     * @param integer $product_id Produkt ID
      * @param integer $qty Menge die abgebucht werden soll
-     * @param integer_type $order_id Order ID der Bestellung
+     * @param integer $order_id Order ID der Bestellung
      * @return $this
      */
     public function decreaseQuantity($product_id, $qty, $order_id, $stock_id) {
@@ -302,8 +302,8 @@ class Slpb_Extstock_Model_Extstock extends Mage_Core_Model_Abstract
     
     /**
      * Falls Status auf geliefert: menge = bestellmenge
-     * @param unknown_type $data
-     * @return unknown
+     * @param array $data
+     * @return array
      */
     public function setQuantity($data)
     {

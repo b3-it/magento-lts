@@ -82,9 +82,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
 		
 		$col = null;
 		$coalesce = array();
-		
+
+		$i = 0;
       foreach($this->getSelections() as $product){
-      	$col = 'col_'.$product->getId();
+          $i++;
+      	$col = 'col_'.$i.'_'.$product->getId();
       	$coalesce[] = $col.'.product_id';
       	$collection->getSelect()
       	->joinleft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = order.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
@@ -100,7 +102,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
-      	$collection->getSelect()->where('entity_id=0');
+      	$collection->getSelect()->where('order.entity_id=0');
       }
       
   
@@ -153,13 +155,17 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
       
 
       $columns = array();
+      $i = 0;
 		foreach($this->getSelections() as $col)
 		{
+            $i++;
+            $colname = 'col_'.$i.'_'.$col->getId();
 			$columns[] = 'op_col_'.$col->getId();
-			$this->addColumn('op_col_'.$col->getId(), array(
+			$this->addColumn('op_col_'.$i.'_'.$col->getId(), array(
 					'header'    => $col->getName(),
 					'align'     =>'left',
-					'index'     => 'col_'.$col->getId(),
+					'index'     => $colname,
+					'filter_index'     => $colname.".qty_ordered",
 					'total'		=> 'sum',
 					'type'      => 'number',
 					//'total_label'=> 'xxx',
@@ -224,17 +230,40 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   
 
  /**
-  * die Filterbedingungen für die dynymischen Spalten 
-  * @param unknown $collection
-  * @param unknown $column
-  */
+   * die Filterbedingungen für die dynymischen Spalten
+   * 
+   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
+   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
+   *
+   * @return void
+   */
   protected function _filterDynamicCondition($collection, $column) {
   	if (!$value = $column->getFilter()->getValue()) {
   		return;
   	}
-  
+
+  	if($column->getType() == 'number'){
+
+
+        $filter = $column->getFilter()->getValue();
+        $select = $this->getCollection()->getSelect();
+        $index = $column->getFilterIndex();
+        if(isset($filter['from']) && isset($filter['to'])){
+            $select->where("{$index} >=".$filter['from']." AND {$index}<=".$filter['to'] );
+        }elseif (isset($filter['from'])){
+            $select->where("{$index} >=".$filter['from']);
+        }elseif (isset($filter['to'])){
+            $select->where("{$index}<=".$filter['to'] );
+        }
+
+
+        return;
+    }
+
+
   	$condition = $column->getIndex().'.name like ?';
   	$collection->getSelect()->where($condition, "%$value%");
+  	//die($collection->getSelect()->__toString());
   }
   
   

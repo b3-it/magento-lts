@@ -1,10 +1,11 @@
 <?php
 class B3it_ConfigCompare_Block_Adminhtml_Import_Data extends Mage_Adminhtml_Block_Widget_Form_Container 
 {
-
+    /**
+     * 
+     */
 	public function __construct()
 	{
-		//	die('cc');
 		parent::__construct();
 		 
 		$this->_objectId = 'id';
@@ -16,11 +17,11 @@ class B3it_ConfigCompare_Block_Adminhtml_Import_Data extends Mage_Adminhtml_Bloc
 		$this->removeButton('delete');
 	}
   
-    
-   protected function _toHtml()
+    /**
+     * @return string
+     */
+    protected function _toHtml()
     {
-    	
-    	//$grid = $this->getLayout()->createBlock('configcompare/adminhtml_import_data_grid');
     	$form = $this->getLayout()->createBlock('configcompare/adminhtml_import_data_form');
     	$url = $this->getUrl("adminhtml/configcompare_import",array('_current'=>true));
     	$html =  '<form enctype="multipart/form-data" method="POST" action="'.$url.'" > <div><input name="form_key" type="hidden" value="'.

@@ -1,9 +1,9 @@
 <?php
 /**
- * @category   design_blank
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 <div class="page-title">
@@ -35,11 +35,11 @@
 				<h3>
 					<?php echo $this->__('Tax Information') ?>
 				</h3>
-				<div class="col-1">	
+				<div class="col-1">
 					<h4>
 						<?php echo $this->__('Base Address') ?>
 					</h4>
-					<address>
+					<address id="baseAddress">
 						<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 					</address>
 				</div>
@@ -57,10 +57,9 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 					   href="<?php echo $this->getAddressesEditUrl() ?>"
-					   alt="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"
 					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="invoiceAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 			</div>
@@ -70,7 +69,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditBillingUrl() ?>"
-						 alt="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<input type="hidden" name="payment[cc_number]"
@@ -94,10 +92,9 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditShippingUrl() ?>"
-						 alt="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="shippingAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 				<?php endif;?>
@@ -110,7 +107,6 @@
 					<span class="spacer"> | </span>
 					<a class="egov-pencile"
 						 href="<?php echo $this->getEditShippingmethodUrl() ?>"
-						 alt="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"
 						 title="<?php echo $this->__('Shipping Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<?php if($_rate=$this->getShippingAddressRate($_address)): ?>
@@ -182,10 +178,7 @@
 				<?php echo $this->getChildHtml('totals'); ?>
 			</table>
 		</div>
-		<p class="grand-total">
-			<big><?php echo $this->__('Grand Total:') ?> </big>
-			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
-		</p>
+
 		<div class="buttons-set" id="review-buttons-container">
 			<a href="<?php echo $this->getBackUrl() ?>"class="button"><?php echo $this->__('Back') ?> </a>
 			<a class="button" href="<?php echo $this->getUrl() ?>">
@@ -202,4 +195,3 @@
 		</span>
 	</fieldset>
 </form>
-

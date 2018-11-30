@@ -115,6 +115,14 @@ ul {
     padding: 0;
 }
 
+.showmobile {
+	display: none;
+
+	@include bp(max-width, $bp-small) {
+	    display: inline-block;
+	}
+}
+
 /* ============================================ *
  * Default-Active marking
  * ============================================ */
@@ -204,7 +212,7 @@ p.note-msg {
  */
 
 .col-left-first {
-    margin-top: $global-boxmargin;
+    margin-top: 20px;
 }
 
 .block-viewed, .block-poll {
@@ -219,8 +227,12 @@ p.note-msg {
     border-bottom-width: $global-checkout-borderwidth;
     border-bottom-style: dotted;
     border-bottom-color: $global-box-bottomcolor;
-    
+
     margin-bottom: $global-boxmargin;
+
+    @include bp(max-width, $bp-large) {
+        border: 0;
+    }
 
     .block-title {
         border-bottom-width: $global-box-border-bottom;
@@ -232,21 +244,20 @@ p.note-msg {
         background: linear-gradient(to bottom,  $gobal-header-rgba-1 0%,$gobal-header-rgba-2 $gobal-header-gradient);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6d7dbdc', endColorstr='#00000000',GradientType=0 );
 
-        padding-top: $global-box-title-padding-top !important;
-        padding-right: $global-box-title-padding-right !important;
-        padding-bottom: $global-box-title-padding-bottom !important;
-        padding-left: $global-box-title-padding-left !important;
+        padding-top: $global-box-title-padding-top;
+        padding-right: $global-box-title-padding-right;
+        padding-bottom: $global-box-title-padding-bottom;
+        padding-left: $global-box-title-padding-left;
 
         font-weight: normal;
         font-size: $global-fontsize-big;
 
+        @include bp(max-width, $bp-large) {
+            background: none;
+        }
+
         span {
             color: $global-h4-color;
-        }
-    }
-
-    a {
-        &:active, &:hover {
         }
     }
 }
@@ -291,11 +302,28 @@ body:not(.customer-account) .block:first-child .block-title {
     margin-left: $blobal-blockcontent-marginleft;
     margin-right: $blobal-blockcontent-marginright;
 
-    input {
+    @include bp(max-width, $bp-large) {
+        padding: $box-spacing;
+        margin: 0;
+        border-width: 0  0 $global-box-border 0;
+        border-style: dotted;
+        border-color: $global-box-bottomcolor;
     }
 
     input[type="text"], input[type="email"] {
         width: 100%;
+    }
+
+    li {
+        a:not(.no-pre-image) {
+            @extend .image-link;
+
+            @include bp(max-width, $bp-large) {
+                display: block;
+                padding: 8px 0 8px 8px !important;
+                background-position: 0 10px !important;
+            }
+        }
     }
 }
 
@@ -318,29 +346,31 @@ body:not(.customer-account) .block:first-child .block-title {
         @include clearfix;
     }
 
-    a {
-        float: left;
-    }
     .button {
-        float: right;
+        float: none;
+        max-width: 100%;
+        padding-top: 14px;
     }
 }
 
 .col-left,
 .col-right {
+    position: relative;
     // Align the vertical height of the anchor to line up with the button
     .block .actions .button ~ a {
         line-height: 33px;
         margin-right: 5px;
+        
+        padding: 8px 0;
+        font-size: 0.9rem;
     }
 }
 
-@include bp(max-width, $bp-medium) {
+@include bp(max-width, $bp-large) {
 
     .sidebar {
         // Don't apply to layered nav, since it gets special treatment
         .block:not(.block-layered-nav) {
-            margin-bottom: 0;
 
             .block-title {
                 padding: 0;
@@ -363,19 +393,6 @@ body:not(.customer-account) .block:first-child .block-title {
                     }
                 }
             }
-
-            .block-content {
-                padding: $box-spacing;
-                margin-top: 0;
-                border-width: 0 $global-box-border;
-                border-style: solid;
-                border-color: $global-border-color;
-            }
-        }
-        // This selector is highly fickle, because if a div gets added beneath the last normal block in a sidebar,
-        // it will break. However it is the simplest solution to applying this trivial style.
-        .block:last-of-type {
-            border-bottom: $global-box-border solid $global-border-color;
         }
     }
 }
@@ -457,30 +474,6 @@ div.block-reorder {
     }
 }
 
-/* ============================================ *
- * Buttons
- * ============================================ */
-
-/* Secondary Buttons */
-.cart .buttons-set .button,
-.cart-table .button,
-.sidebar .actions .button,
-.button.button-secondary {
-
-    &:hover {
-    }
-
-    &:active {
-    }
-
-    &:focus {
-    }
-}
-
-.sidebar .actions button.button {
-    white-space: normal;
-}
-
 /* -------------------------------------------- *
  * Paypal Button
  */
@@ -528,49 +521,6 @@ div.block-reorder {
 }
 
 /* -------------------------------------------- *
- * Button Sets
- */
-
-.buttons-set {
-    clear: both;
-    margin: $box-spacing 0 0;
-    padding-top: $box-spacing;
-    border-top: 1px solid $c-module-border-light;
-    text-align: right;
-
-    p.required {
-        margin: 0;
-        margin-left: $gap;
-        line-height: 33px;
-        float: right;
-    }
-    .back-link {
-        float: left;
-        margin: 0;
-        line-height: 33px;
-    }
-    a:not(.button) {
-        line-height: 20px;
-        display: inline-block;
-        padding: 5px;
-    }
-    button.button {
-        float: right;
-        margin-left: 5px;
-        min-width: 140px;
-
-        &:active, &:hover {
-            background: $global-button-hovercolor $global-repeat-scroll;
-            color: $global-button-font-hover-color;
-        }
-    }
-
-    &:after {
-        @include clearfix;
-    }
-}
-
-/* -------------------------------------------- *
  * Icons
  */
 
@@ -603,6 +553,14 @@ div.block-reorder {
     margin: 0 0 15px;
     padding: 10px 0 8px 10px;
 
+    @include bp(max-width, $bp-large) {
+        margin: 0;
+    }
+
+    @include bp(max-width, $bp-small) {
+        display: none;
+    }
+
     span {
         display: inline-block;
         color: #000000;
@@ -612,6 +570,10 @@ div.block-reorder {
     ul {
         display: inline-block;
         width: 91%;
+
+        @include bp(max-width, $bp-large) {
+            width: auto;
+        }
 
         li {
             display: inline-block;
@@ -654,13 +616,6 @@ div.block-reorder {
 
 }
 
-@include bp(max-width, $bp-medium) {
-
-    .breadcrumbs {
-        display: none;
-    }
-
-}
 
 /* -------------------------------------------- *
  * Button - Remove / Previous
@@ -741,6 +696,12 @@ div.block-reorder {
         float: right;
         margin-left: 6px;
     }
+}
+
+.block-layered-nav {
+	position: absolute;
+	left: -1000px;
+	top: -1000px;
 }
 
 /* -------------------------------------------- *
@@ -836,7 +797,7 @@ div.block-reorder {
     .std {
         max-width: $maximum-content-width;
         width: 100%;
-        
+
         img {
             max-width: 100%;
             height: auto;
@@ -877,6 +838,15 @@ div.block-reorder {
         .col-left {
             margin-right: $global-2L-leftcol-marginright;
             width: $global-2L-leftcol-width;
+
+            @include bp(max-width, $bp-large) {
+                width: 30%;
+                margin-top: 30px;
+            }
+
+            @include bp(max-width, $bp-small) {
+                display: none;
+            }
         }
 
         .col-main {
@@ -885,6 +855,15 @@ div.block-reorder {
             margin-right: $global-2L-content-marginright;
             position: relative;
             top: -9px;
+
+            @include bp(max-width, $bp-large) {
+                width: 68%;
+                top: 0;
+            }
+
+            @include bp(max-width, $bp-small) {
+                width: 100%;
+            }
         }
 
         p.note-msg {
@@ -1092,9 +1071,10 @@ div.block-reorder {
         min-height: 40px;
         padding-top: (40px - $f-size-xxs) / 2;
         padding-bottom: (40px - $f-size-xxs) / 2;
-        background-image: url('../images/demo-logo.png');
-        background-position: left;
-        background-repeat: no-repeat;
+        
+        @include bp(max-width, $bp-medium + 1) {
+        	padding-left: 0;
+        }
     }
 
     p {
@@ -1416,8 +1396,7 @@ span.weee {
     }
 
     dt {
-        float: left;
-        clear: left;
+        display: block;
         font-weight: 600;
         padding-right: 5px;
         font-style: italic;
@@ -1428,7 +1407,7 @@ span.weee {
     }
 
     dd {
-        float: left;
+        display: inline-block;
         padding-left: 10px;
         margin: 0 0 6px;
     }
@@ -1437,6 +1416,12 @@ span.weee {
 .truncated,
 .truncated a.dots {
     cursor: help;
+
+    @include bp(max-width, $bp-small) {
+        vertical-align: top;
+        width: 60%;
+        text-align: left;
+    }
 }
 
 .truncated a.details {
@@ -1460,14 +1445,18 @@ span.weee {
     z-index: 300;
     width: 200px;
     padding: 8px;
-    border: 1px solid $c-action;
-    background-color: #F6F6F6;
+    border: 1px solid $global-linkcolor;
+    background-color: $global-navigation-color;
     top: 21px;
-    left: -100px;
+
+    dd, dt {
+        display: inline-block;
+        float: none;
+        line-height: 1em;
+    }
 
     &:after {
-        @include triangle(up, 7px, $c-action);
-        left: (100px + -3px);
+        @include triangle(up, 7px, $global-linkcolor);
         top: -7px;
     }
 }
@@ -1613,7 +1602,7 @@ span.weee {
     margin-bottom: $b-margin-bottom;
 }
 
-.std ol li {
+.std ol:not(.products-list) li {
     margin-left: 2em;
 }
 
@@ -1622,7 +1611,7 @@ span.weee {
     margin-bottom: $b-margin-bottom;
 }
 
-.std ul li {
+.std ul:not(.products-grid) li {
     margin-left: 2em;
 }
 
@@ -1665,6 +1654,7 @@ span.weee {
 // This will apply to the bottom toolbar
 .pager-no-toolbar ~ .pager-no-toolbar {
     margin-top: $box-spacing;
+    padding-top: $box-spacing;
 }
 
 .toolbar,
@@ -1737,6 +1727,10 @@ $toolbar-icon-padding-offset: 8px;
     & > .count-container {
         float: left;
         font-size: $global-fontsize;
+
+        select {
+            width: auto !important;
+        }
     }
 
     .amount {
@@ -1854,10 +1848,6 @@ $toolbar-icon-padding-offset: 8px;
         display: none;
     }
 
-    .pages {
-        float: left;
-    }
-
     // When there are 5+ pages, it is important to hide this label in order to not break to three lines
     .limiter label {
         display: none;
@@ -1876,7 +1866,6 @@ $toolbar-icon-padding-offset: 8px;
             float: left;
 
             .pages {
-                float: left;
                 margin-left: 0;
             }
 
@@ -1900,7 +1889,6 @@ $toolbar-icon-padding-offset: 8px;
             float: left;
 
             .pages {
-                float: left;
                 margin-left: 0;
             }
 

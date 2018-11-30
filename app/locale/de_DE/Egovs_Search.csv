@@ -9,3 +9,6 @@
 "Customer #%s","KundenId: %s"
 "You have to specify at least one search term","Sie müssen mindestens einen Suchbegriff eingeben."
 "Category","Kategorie"
+"Advanced Catalog Search","Erweiterte Katalogsuche"
+"Show Category","zeige Kategorie"
+"Show in Stock","zeige Verfügbarkeit"

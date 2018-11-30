@@ -27,8 +27,8 @@ class Egovs_Extreport_Model_Mysql4_Sales_Pbc_Collection extends Mage_Sales_Model
 	/**
 	 * Add invoiced items with state PAID
 	 * 
-	 * @param date $from Von Datum
-	 * @param date $to   Bis Datum
+	 * @param Varien_Date $from Von Datum
+	 * @param Varien_Date $to   Bis Datum
 	 * 
 	 * @return Egovs_Extreport_Model_Mysql4_Sales_Pbc_Collection
 	 */

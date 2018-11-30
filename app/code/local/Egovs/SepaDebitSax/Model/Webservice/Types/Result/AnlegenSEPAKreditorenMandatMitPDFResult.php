@@ -32,7 +32,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMand
     public $Mandatsdaten;
     /**
      * The MandatPdf
-     * @var base64Binary
+     * @var Varien_File_Object base64Binary
      */
     public $MandatPdf;
     /**
@@ -40,7 +40,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMand
      * @see parent::__construct()
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_Result $_result
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_Mandatsdaten $_mandatsdaten
-     * @param base64Binary $_mandatPdf
+     * @param Varien_File_Object base64Binary $_mandatPdf
      * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMandatMitPDFResult
      */
     public function __construct($_result = NULL,$_mandatsdaten = NULL,$_mandatPdf = NULL)
@@ -93,7 +93,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMand
     }
     /**
      * Get MandatPdf value
-     * @return base64Binary|null
+     * @return Varien_File_Object base64Binary|null
      */
     public function getMandatPdf()
     {
@@ -101,8 +101,8 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMand
     }
     /**
      * Set MandatPdf value
-     * @param base64Binary $_mandatPdf the MandatPdf
-     * @return base64Binary
+     * @param Varien_File_Object base64Binary $_mandatPdf the MandatPdf
+     * @return Varien_File_Object base64Binary
      */
     public function setMandatPdf($_mandatPdf)
     {

@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
 	<modules>
 		<Egovs_Informationservice>
@@ -23,7 +24,7 @@
 			</updates>
 		</layout>
 		<events>
-			<egovs_base_customer_reject_address_editing>
+			<egovs_base_frontend_customer_reject_address_editing>
 				<observers>
 					<egovs_informationservice_customer_reject_address_editing>
 						<type>singleton</type>
@@ -31,7 +32,7 @@
 						<method>rejectAddressEditing</method>
 					</egovs_informationservice_customer_reject_address_editing>
 				</observers>
-			</egovs_base_customer_reject_address_editing>
+			</egovs_base_frontend_customer_reject_address_editing>
 		</events>
 	</frontend>
 	<admin>
@@ -204,8 +205,8 @@
 	<default>
 		<trans_email>
 			<ident_informationsystem>
-				<email>custom1@example.com</email>
-				<name>Custom 1</name>
+				<email>auskunft@testshop.org</email>
+				<name>eGov-Mustershop Auskunft</name>
 			</ident_informationsystem>
 		</trans_email>
 		<informationservice>

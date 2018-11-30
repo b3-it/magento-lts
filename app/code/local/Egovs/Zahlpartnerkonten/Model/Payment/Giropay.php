@@ -114,7 +114,7 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Giropay extends Egovs_Giropay_Model_
      * @param string												 $soapFunction     Name der Soap-Funktion
      * @param bool													 $keepCustomer     Kunden löschen?
      * 
-     * @return true|throws Exception
+     * @return Mage_Core_Exception|bool true|throws Exception
      * 
      * @throws Exception
      * 

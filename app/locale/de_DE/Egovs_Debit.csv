@@ -16,7 +16,7 @@
 "Bank name","Kreditinstitut"
 "You have to accept the automatic debit transfer.","Sie müssen dem Bankeinzug zustimmen."
 
-"ERROR_DEBIT_ENTRY_BIC_INVALID","Der angegebene BIC ist zu kurz oder zu lang (gültig ist eine Länge zwischen 8 und 11)."
+"ERROR_DEBIT_ENTRY_BIC_INVALID","Die angegebene BIC ist zu kurz oder zu lang (gültig ist eine Länge zwischen 8 und 11)."
 "ERROR_DEBIT_ENTRY_SOAP","Es ist ein Fehler aufgetreten! Bitte probieren Sie es in wenigen Minuten nocheinmal!"
 "ERROR_DEBIT_ENTRY_SOAP_TITLE","System Fehler"
 "ERROR_DEBIT_ENTRY_IBAN_INVALID","Die angegebene IBAN ist zu kurz oder zu lang (gültig ist eine Länge zwischen 15 und 34)."

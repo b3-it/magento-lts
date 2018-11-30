@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <TuLeipzig_Base>
+            <version>0.0.0.3</version>
+        </TuLeipzig_Base>
+    </modules>
+    <global>
+        <resources>
+            <tuleipzigbase_setup>
+                <setup>
+                    <module>TuLeipzig_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tuleipzigbase_setup>
+        </resources>
+    </global>
+</config>

@@ -1,0 +1,121 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Footer
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Footer
+ */
+
+#footer-wrapper {
+    clear: both;
+    margin: 0px auto;
+    max-width: $global-fullpage-width;
+}
+
+.footer,
+.footer button {
+    font-family: $base-font-family;
+}
+
+.footer {
+    margin-left: $global-footer-horizontal-margin;
+    margin-right: $global-footer-horizontal-margin;
+
+    a {
+        border-bottom: 1px dotted $global-footer-fontcolor;
+        color: $global-footer-fontcolor;
+        font-size: $global-footer-fontsize;
+        line-height: $global-footer-lineheight;
+    }
+
+    .block-title {
+        margin: 0 2em 0 0;
+        padding-top: 0px;
+        border-top: 0px;
+    }
+
+    .block-title strong {
+        font-weight: bold;
+        font-size: 100%;
+    }
+
+    .block-title,
+    address {
+        color: $global-footer-fontcolor;
+    }
+
+    .copyright {
+        width: auto;
+        position: relative;
+        top: -5px;
+    }
+
+    .links {
+        display: inline-block;
+        vertical-align: top;
+        font-size: $global-footer-fontsize;
+        overflow: hidden;
+        line-height: $global-footer-lineheight;
+        width: $global-footer-links-width;
+        text-align: left;
+        padding-top: $global-footer-links-top;
+
+        li {
+            line-height: $global-footer-lineheight;
+        }
+
+        a {
+            color: $global-footer-fontcolor;
+            border-bottom-width: $global-box-border;
+            border-bottom-style: dotted;
+            border-bottom-color: $global-footer-fontcolor;
+
+            &:hover {
+                border-bottom-style: solid;
+            }
+        }
+        
+        @include bp(max-width, $bp-medium) {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .form-language,
+    .currency-switcher,
+    .store-switcher {
+        clear: both;
+        margin-bottom: $gap;
+    }
+
+    .form-language,
+    .currency-switcher {
+        display: none;
+    }
+
+    address {
+        text-align: left;
+        font-size: $global-fontsize-small;
+        margin-top: 20px;
+    }
+
+    @include bp(max-width, $bp-medium) {
+        .form-language,
+        .currency-switcher {
+            display: block;
+        }
+    }
+}
+
+@include bp(max-width, 770px) {
+    .footer-container {
+        top: 50px;
+    }
+}

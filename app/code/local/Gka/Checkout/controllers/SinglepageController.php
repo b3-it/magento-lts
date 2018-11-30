@@ -25,7 +25,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     /**
      * Retrieve checkout state model
      *
-     * @return Mage_Checkout_Model_Type_Singlepage_State
+     * @return Gka_Checkout_Model_Type_Singlepage_State
      */
     protected function _getState()
     {
@@ -93,7 +93,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         }
         
         if ($this->_getCheckoutSession()->getCartWasUpdated(true) &&
-            !in_array($action, array('index', 'login', 'register', 'addresses', 'success'))
+            !in_array($action, array('index', 'login', 'register', 'addresses', 'success','overview','start'))
         ) {
             $this->_redirectUrl($this->_getHelper()->getCartUrl());
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
@@ -103,6 +103,9 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
+        //nur zum testen der success view, später entfernen
+        //return $this;
+        
         $quote = $this->_getCheckout()->getQuote();
         $a = $quote->hasItems();
         $b = $quote->getHasError();
@@ -124,7 +127,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
     public function indexAction()
     {
         $this->_getCheckoutSession()->setCartWasUpdated(false);
-        $this->_redirect('*/*/start', array('_secure'=>true));
+        $this->_redirect('*/*/overview', array('_secure'=>true));
     }
 
     /**
@@ -156,71 +159,12 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
      */
     public function startAction()
     {
-    	//$this->_getCheckout()->resetAssigned();
-    	
-    	if($this->_getState()->getActiveStep() == Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW)
-    	{
-    		$this->_redirect('*/cart', array('_secure'=>true));
+    	//die('ccc');
+    		$this->_redirect('*/singlepage/overview', array('_secure'=>true));
             return;
-    	}
-
-    	$this->_getState()->resetState();
     	
-        if (!$this->_getCheckout()->validateMinimumAmount()) {
-            $message = $this->_getCheckout()->getMinimumAmountDescription();
-            $this->_getCheckout()->getCheckoutSession()->addNotice($message);
-        }
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->_initLayoutMessages('checkout/session');
-        $this->renderLayout();
     }
 
-    /**
-     * Singlepage checkout process posted
-     * save overview Form, invoke next Step
-     * @return Gka_Checkout_SinglepageController
-     */
-    public function startPostAction()
-    {
-    	
-    	$billing = $this->getRequest()->getPost('billing', array());
-    	$payment = $this->getRequest()->getPost('payment', array());;
-    	
-    	if(!isset($payment['method'])){
-    		//Mage::getSingleton('core/session')->addError('Payment Method not set!');
-    		Mage::getSingleton('core/session')->addError($this->__("Payment Method not set!"));
-    		$this->_redirect('*/*/start', array('_secure'=>true));
-    		return;
-    	}
-    	$quote = $this->_getCheckout()->getQuote();
-    	
-    	
-    	try{
-    		$this->_getCheckout()->setBillingAddress($billing);
-    		$this->_getCheckout()->setPaymentMethod($payment['method']);
-    		$this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
-    		$this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
-    	}
-    	catch(Exception $e) {
-            $this->_getCheckoutSession()->addException(
-                $e,
-                Mage::helper('checkout')->__('Data saving problem')
-            );
-            $this->_redirect('*/*/start', array('_secure'=>true));
-            return $this;
-        }
-    	
-        //$this->_getCheckout()->resetAssigned();
-        $this->_redirect('*/*/overview', array('_secure'=>true));
-    	return $this;
-       
-    }
-
- 
-   
-
- 
 
     protected function _validateMinimumAmount()
     {
@@ -247,16 +191,13 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
-        if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START)) {
-        	$this->_redirect('*/*/start', array('_secure'=>true));
-        	return $this;
-        }
-        
         
         $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
         $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START);
         
         try {
+        	//$quote = $this->_getCheckout()->getQuote();
+        	//$quote->removeAllAddresses();
          	$this->_getCheckout()->setShippingMethod();
             $this->loadLayout();
             $this->_initLayoutMessages('checkout/session');
@@ -270,7 +211,7 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         catch (Exception $e) {
             Mage::logException($e);
             $this->_getCheckoutSession()->addException($e, $this->__('Cannot open the overview page'));
-            $this->_redirect('*/*/card', array('_secure'=>true));
+            $this->_redirect('*/cart', array('_secure'=>true));
         }
     }
 
@@ -285,8 +226,23 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             return;
         }
 
+        
+        $billing = $this->getRequest()->getPost('billing', array());
+        $payment = $this->getRequest()->getPost('payment', array());;
+        
+        
         try {
             
+        	
+        	
+        	if(!isset($payment['method'])){
+        		//Mage::getSingleton('core/session')->addError('Payment Method not set!');
+        		Mage::getSingleton('core/session')->addError($this->__("Payment Method not set!"));
+        		$this->_redirect('*/*/overview', array('_secure'=>true));
+        		return;
+        	}
+        	
+        	
           
         	if (!$this->_getState()->getCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_START)) {
         		$this->_redirect('*/*/overview', array('_secure'=>true));
@@ -294,20 +250,28 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
         	}
 
         	$this->_getCheckout()->setShippingMethod();
-            //$this->_getCheckout()->setPaymentMethod();
-            
-           
+        	$this->_getCheckout()->setBillingAddress($billing);
+        	$this->_getCheckout()->setShippingAddress($billing);
+        	$this->_getCheckout()->setPaymentMethod($payment['method']);
             $givenamount = $this->getRequest()->getParam('givenamount', false);
             $this->_getCheckout()->createOrder($givenamount);
             
             $this->_getCheckout()->getCheckoutSession()->clear();
             $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
-            
+            $redirectUrl = $this->_getCheckout()->getCheckout()->getRedirectUrl();
             $this->_getState()->setActiveStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_SUCCESS);
             $this->_getState()->setCompleteStep(Gka_Checkout_Model_Type_Singlepage_State::STEP_OVERVIEW);
             
             
-            $this->_redirect('*/*/success', array('_secure'=>true));
+            if (isset($redirectUrl)) {
+            	$this->_redirectUrl($redirectUrl);
+            } else {
+            	$this->_redirect('*/*/success', array('_secure'=>true));
+            }
+            
+            
+            
+          
         } catch (Mage_Payment_Model_Info_Exception $e) {
             $message = $e->getMessage();
             if (!empty($message) ) {
@@ -347,13 +311,41 @@ class Gka_Checkout_SinglepageController extends Mage_Checkout_Controller_Action
             $this->_redirect('*/*/addresses', array('_secure'=>true));
             return $this;
         }
-
+        
+       
+        $id = Mage::getSingleton('checkout/session')->getLastOrderId();
+        if($id){
+        	$order = Mage::getModel('sales/order')->load($id);
+        }else{
+        	$order = new Varien_Object();
+        }
+        Mage::register('current_order', $order);
         $this->loadLayout();
         $this->_initLayoutMessages('checkout/session');
         $ids = $this->_getCheckout()->getOrderIds();
         Mage::dispatchEvent('checkout_multishipping_controller_success_action', array('order_ids' => $ids));
         $this->renderLayout();
     }
+    
+    
+    public function paymentAdditionalFormAction()
+    {
+    	$method = $this->getRequest()->getParam('method');
+    	$out = "";
+    	if($method == 'epaybl_cashpayment')
+    	{
+	    	$block = $this->getLayout()->createBlock(
+	    			'Gka_Checkout_Block_Singlepage_Givenamount',
+	    			'add_payment',
+	    			array('template' => 'checkout/singlepage/givenamount.phtml')
+	    			);
+	       $out = $block->toHtml();
+    	}
+    	$this->getResponse()->setBody($out);
+    }
+    
+    
+    
 
     /**
      * Redirect to login page

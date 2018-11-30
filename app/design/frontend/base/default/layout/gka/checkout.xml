@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -100,7 +101,7 @@ Default layout, loads most of the pages
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
  -->
-                <block type="gkacheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
 				<action method="setData"><key>accesskey</key><value>b</value></action>
                	<action method="setData"><key>jumptitle</key><value>Bestellung aufgeben</value></action>				
 				</block>
@@ -108,16 +109,7 @@ Default layout, loads most of the pages
         </reference>
     </checkout_cart_index>
 
-	<checkout_singlepage_start>
-        <update handle="checkout_singlepage"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="gkacheckout/singlepage_start" name="checkout_start" template="checkout/singlepage/start.phtml">
-            	<block type="gkacheckout/singlepage_start_billing" name="singlepage_billing" template="checkout/singlepage/start/billing.phtml"/>
-            	<block type="gkacheckout/singlepage_start_payment" name="singlepage_payment" template="checkout/singlepage/start/payment.phtml"/>
-            </block>
-        </reference>
-    </checkout_singlepage_start>
+
 
 
 
@@ -135,154 +127,38 @@ will be rendered on all checkout pages
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
-        <reference name="content">
-            <block type="gkacheckout/singlepage_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
-        </reference>
+ 
     </checkout_singlepage>
 
-    <checkout_multishipping_login>
-        <update handle="customer_account_login"/>
-    </checkout_multishipping_login>
-
-    <checkout_multishipping_register>
-        <update handle="customer_account_create"/>
-    </checkout_multishipping_register>
-
-<!--
-Multi address shipping checkout selection of address per item page
--->
-
-    <checkout_multishipping_address_select>
-        <update handle="checkout_multishipping"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/select.phtml"/>
-        </reference>
-    </checkout_multishipping_address_select>
-
-    <checkout_multishipping_address_selectbilling>
-        <update handle="checkout_multishipping"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/select.phtml"/>
-        </reference>
-    </checkout_multishipping_address_selectbilling>
+ 
 
 
-    <checkout_multishipping_address_newshipping>
-        <update handle="checkout_multishipping"/>
-        <update handle="checkout_multishipping_customer_address"/>
-    </checkout_multishipping_address_newshipping>
-
-    <checkout_multishipping_address_newbilling>
-        <update handle="checkout_multishipping"/>
-        <update handle="checkout_multishipping_customer_address"/>
-    </checkout_multishipping_address_newbilling>
-
-    <checkout_multishipping_address_editshipping>
-        <update handle="checkout_multishipping"/>
-        <update handle="checkout_multishipping_customer_address"/>
-    </checkout_multishipping_address_editshipping>
-
-    <checkout_multishipping_address_editaddress>
-        <update handle="checkout_multishipping"/>
-        <update handle="checkout_multishipping_customer_address"/>
-    </checkout_multishipping_address_editaddress>
-
-    <checkout_multishipping_address_editbilling>
-        <update handle="checkout_multishipping"/>
-        <update handle="checkout_multishipping_customer_address"/>
-    </checkout_multishipping_address_editbilling>
-
-    <checkout_multishipping_customer_address>
-        <reference name="content">
-            <block type="customer/address_edit" name="customer_address_edit" template="customer/address/edit.phtml"/>
-        </reference>
-    </checkout_multishipping_customer_address>
-
-<!--
-Multi address shipping checkout address page
--->
-
-    <checkout_multishipping_addresses>
-        <update handle="checkout_multishipping"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="gkacheckout/multishipping_addresses" name="checkout_addresses" template="sid/checkout/multishipping/addresses.phtml">
-                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
-            </block>
-        </reference>
-    </checkout_multishipping_addresses>
-
-<!--
-Multi address shipping checkout shipping information
--->
-
-    <checkout_multishipping_shipping>
-        <update handle="checkout_multishipping"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="checkout/multishipping_shipping" name="checkout_shipping" template="checkout/multishipping/shipping.phtml">
-                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
-
-                <block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
-                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
-                </block>
-            </block>
-        </reference>
-    </checkout_multishipping_shipping>
-
-<!--
-Multi address shipping checkout billing information
--->
-
-    <checkout_multishipping_billing>
-        <update handle="checkout_multishipping"/>
-        <!-- Mage_Checkout -->
-        <reference name="content">
-            <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">
-                <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
-
-                <!--<block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
-                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
-                </block>-->
-
-            </block>
-        </reference>
-    </checkout_multishipping_billing>
-
-<!--
-Multi address shipping checkout overview
--->
 
     <checkout_singlepage_overview>
-        <update handle="checkout_multishipping"/>
+        <update handle="checkout_singlepage"/>
         <!-- Mage_Checkout -->
+        
+          <reference name="root">
+            <action method="addBodyClass"><classname>mp-checkout</classname></action>
+        </reference>
+        
+        <reference name="head">
+    		<action method="addJs"><script>lib/jquery/jquery-ui-1.12.1.js</script></action>
+    		<action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name></action>
+    		<action method="addItem"><type>skin_js</type><name>js/overview.js</name></action>
+    		<action method="addItem"><type>skin_js</type><name>js/barkasse.js</name></action>
+    		<action method="setTitle"><value>Gebührenkasse</value></action>
+    	</reference>
         <reference name="content">
             <block type="gkacheckout/singlepage_overview" name="checkout_overview" template="checkout/singlepage/overview.phtml">
                 <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
-<!--
-                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
--->
                 <action method="addItemRender"><type>virtualpayid</type><block>virtualpayid/checkout_cart_item_renderer</block><template>gka/virtualpayid/checkout/onepage/review/item.phtml</template></action>
-                <block type="checkout/multishipping_payment_info" name="payment_info">
-                    <action method="setInfoTemplate"><method></method><template></template></action>
-                </block>
-                
-                <block type="gkacheckout/cart_totals" name="totals" />
+                <block type="gkacheckout/singlepage_payment" name="singlepage_payment" template="checkout/singlepage/payment.phtml"/>
+                <block type="gkacheckout/singlepage_shipping" name="singlepage_shipping" template="checkout/singlepage/shipping.phtml"/>
+                <block type="gkacheckout/singlepage_billing" name="singlepage_billing" template="checkout/singlepage/billing.phtml"/>
             </block>
         </reference>
     </checkout_singlepage_overview>
@@ -292,10 +168,26 @@ Multi address shipping checkout success
 -->
 
     <checkout_singlepage_success>
-        <update handle="checkout_multishipping"/>
+     
+        <update handle="checkout_singlepage"/>
         <!-- Mage_Checkout -->
+        <reference name="head">
+    		<action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
+    		<action method="setTitle"><value>Gebührenkasse</value></action>
+    	</reference>
         <reference name="content">
-            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml"/>
+            <block type="gkacheckout/singlepage_success" name="checkout_success" template="checkout/singlepage/success.phtml">
+                    <block type="sales/order_items" name="order_items" template="checkout/singlepage/success/items.phtml">
+                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>checkout/singlepage/success/renderer/default.phtml</template></action>
+                    <block type="gkacheckout/singlepage_success_totals" name="order_totals" template="checkout/singlepage/success/totals.phtml">
+                        <action method="setLabelProperties"><value>colspan="3" class="a-right"</value></action>
+                        <action method="setValueProperties"><value>class="last a-right"</value></action>
+                        <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml" />
+                    </block>
+                </block>
+            
+            </block>
         </reference>
     </checkout_singlepage_success>
 

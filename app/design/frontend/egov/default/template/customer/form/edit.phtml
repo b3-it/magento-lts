@@ -24,7 +24,7 @@
                     <?php echo $this->__('Email Address') ?>
                 </label>
                 <div class="input-box">
-                    <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email" value="<?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="input-text required-entry validate-email" />
+                    <input type="email" spellcheck="false" name="email" id="email" value="<?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="input-text required-entry validate-email" />
                 </div>
             </li>
         <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>

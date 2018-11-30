@@ -26,7 +26,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExpiryDate extends Egovs_Paymentbas
      * - from schema : file:///etc/Callback.wsdl
      * - maxInclusive : 12
      * - minInclusive : 1
-     * @var byte
+     * @var int
      */
     public $month;
     /**
@@ -41,7 +41,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExpiryDate extends Egovs_Paymentbas
     /**
      * Constructor method for expiryDate
      * @see parent::__construct()
-     * @param byte $_month
+     * @param int $_month
      * @param int $_year
      * @return Egovs_Paymentbase_Model_Payplace_Types_ExpiryDate
      */
@@ -51,7 +51,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExpiryDate extends Egovs_Paymentbas
     }
     /**
      * Get month value
-     * @return byte|null
+     * @return int|null
      */
     public function getMonth()
     {
@@ -59,8 +59,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExpiryDate extends Egovs_Paymentbas
     }
     /**
      * Set month value
-     * @param byte $_month the month
-     * @return byte
+     * @param int $_month the month
+     * @return bool
      */
     public function setMonth($_month)
     {

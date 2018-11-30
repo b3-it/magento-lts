@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <!-- 
 /**
  * Magento
@@ -74,6 +75,7 @@ Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, 
 Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen. Ich bin damit einverstanden, dass zur Erleichterung des Zahlungsverkehrs,
 die grundsätzlich 14-tägige Frist für die Information vor Einzug einer fälligen Zahlung bis auf einen Tag vor Belastung verkürzt werden kann.
                 </customtext>
+                <sepa_version>20</sepa_version>
             </sepadebitbund>
          </payment>
     </default>

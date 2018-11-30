@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -27,7 +28,8 @@
 
 -->
 <layout version="0.1.0">
-
+    <default>
+    </default>
     
     <customer_account>
         <reference name="customer_account_navigation">
@@ -35,8 +37,6 @@
         </reference>
     </customer_account>
     
-    <default>
-    </default>
     <dwd_icd_index_view translate="label">
         <label>My Credentials</label>
         <update handle="customer_account"/>
@@ -50,6 +50,32 @@
         <reference name="root">
             <action method="setHeaderTitle" translate="title" module="dwd_icd"><title>My Credentials</title></action>
         </reference>
+
+		<reference name="breadcrumbs">
+		   <action method="addCrumb">
+		      <crumbname>Home</crumbname>
+		      <crumbinfo>
+		         <label>Home</label>
+		         <title>Home</title>
+		         <url>/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Account</crumbname>
+		      <crumbinfo>
+		         <label>My Account</label>
+		         <title>My Account</title>
+		         <url>customer/account/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Credentials</crumbname>
+		      <crumbinfo>
+		         <label>My Credentials</label>
+		         <title>My Credentials</title>
+		      </crumbinfo>
+		   </action>
+		</reference>
     </dwd_icd_index_view>
     
     <dwd_icd_index_change>

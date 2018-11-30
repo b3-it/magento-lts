@@ -5,7 +5,7 @@ class Egovs_Downloadupdate_Model_Observer extends Mage_Core_Model_Abstract {
 	/**
 	 * 
 	 * @param Varien_Event_Observer $observer
-	 * @return unknown
+	 * @return Egovs_Downloadupdate_Model_Observer
 	 */
 	public function onModelSaveAfter($observer) {
 		//Mage::log("downloadupdate::model_save_after raised", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);

@@ -24,13 +24,13 @@ class Egovs_Paymentbase_Model_Payplace_Types_Option extends Egovs_Paymentbase_Mo
      * The name
      * Meta informations extracted from the WSDL
      * - use : required
-     * @var NCName
+     * @var string
      */
     public $name;
     /**
      * Constructor method for option
      * @see parent::__construct()
-     * @param NCName $_name
+     * @param string $_name
      * @return Egovs_Paymentbase_Model_Payplace_Types_Option
      */
     public function __construct($_name)
@@ -39,7 +39,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Option extends Egovs_Paymentbase_Mo
     }
     /**
      * Get name value
-     * @return NCName
+     * @return Egovs_Paymentbase_Model_Payplace_Types_Option
      */
     public function getName()
     {
@@ -47,8 +47,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Option extends Egovs_Paymentbase_Mo
     }
     /**
      * Set name value
-     * @param NCName $_name the name
-     * @return NCName
+     * @param string $_name the name
+     * @return bool
      */
     public function setName($_name)
     {

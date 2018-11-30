@@ -59,7 +59,7 @@ function changeDeploymentType (element)
                 <li><strong>Alpha</strong> means the extension is still in development.</li>
             </ul>
             <p><strong>Please note: extensions are provided as is. Make sure to backup your data before installing new extensions.</strong></p>
-            <table cellspacing="0" class="form-list">
+            <table class="form-list">
                 <tr>
                     <td class="label">Magento Connect Channel Protocol:</td>
                     <td class="value">
@@ -88,7 +88,7 @@ function changeDeploymentType (element)
                 -->
             </table>
             <p><strong>Permission to create new files and folders.</strong></p>
-            <table cellspacing="0" class="form-list">
+            <table class="form-list">
                 <tr>
                     <td class="label">Use custom permissions:</td>
                     <td class="value">
@@ -99,7 +99,7 @@ function changeDeploymentType (element)
                     </td>
                 </tr>
             </table>
-            <table cellspacing="0" class="form-list" id="use_custom_permissions_mode_panel" <?php if ($this->get('use_custom_permissions_mode')=='0'):?>style="display:none;"<?php endif ?>>
+            <table class="form-list" id="use_custom_permissions_mode_panel" <?php if ($this->get('use_custom_permissions_mode')=='0'):?>style="display:none;"<?php endif ?>>
                 <tr>
                     <td class="label">Folders:</td>
                     <td class="value">
@@ -115,7 +115,7 @@ function changeDeploymentType (element)
             </table>
 
             <p><strong>Deployment.</strong></p>
-            <table cellspacing="0" class="form-list">
+            <table class="form-list">
                 <tr>
                     <td class="label">Deployment Type:</td>
                     <td class="value">
@@ -131,7 +131,7 @@ function changeDeploymentType (element)
                     </td>
                 </tr>
             </table>
-            <table cellspacing="0" class="form-list" id="deployment_type_panel" <?php if ($this->get('deployment_type')!='ftp'):?>style="display:none;"<?php endif ?>>
+            <table class="form-list" id="deployment_type_panel" <?php if ($this->get('deployment_type')!='ftp'):?>style="display:none;"<?php endif ?>>
                 <tr>
                     <td class="label">FTP Host:</td>
                     <td class="value">

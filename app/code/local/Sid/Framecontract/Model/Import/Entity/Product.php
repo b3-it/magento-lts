@@ -1145,171 +1145,169 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
         $productsQty    = null;
 
      
-       // while ($bunch = $this->_dataSourceModel->getNextBunch()) 
-        {
-            $entityRowsIn = array();
-            $entityRowsUp = array();
-            $attributes   = array();
-            $websites     = array();
-            $categories   = array();
-            $tierPrices   = array();
-            $mediaGallery = array();
-            $uploadedGalleryFiles = array();
-            $previousType = null;
-            $previousAttributeSet = null;
+        $entityRowsIn = array();
+        $entityRowsUp = array();
+        $attributes   = array();
+        $websites     = array();
+        $categories   = array();
+        $tierPrices   = array();
+        $mediaGallery = array();
+        $uploadedGalleryFiles = array();
+        $previousType = null;
+        $previousAttributeSet = null;
 
-           //foreach ($bunch as $rowNum => $rowData) {
-                if (!$this->validateRow($rowData, $rowNum)) {
-                 //   continue;
-                }
-                $rowScope = $this->getRowScope($rowData);
-
-                if (self::SCOPE_DEFAULT == $rowScope) {
-                    $rowSku = $rowData[self::COL_SKU];
-
-                    // 1. Entity phase
-                    if (isset($this->_oldSku[$rowSku])) { // existing row
-                        $entityRowsUp[] = array(
-                            'updated_at' => now(),
-                            'entity_id'  => $this->_oldSku[$rowSku]['entity_id']
-                        );
-                    } else { // new row
-                        if (!$productLimit || $productsQty < $productLimit) {
-                            $entityRowsIn[$rowSku] = array(
-                                'entity_type_id'   => $this->_entityTypeId,
-                                'attribute_set_id' => $this->_newSku[$rowSku]['attr_set_id'],
-                                'type_id'          => $this->_newSku[$rowSku]['type_id'],
-                                'sku'              => $rowSku,
-                                'created_at'       => now(),
-                                'updated_at'       => now(),
-                            	'store_group' 	 => $rowData['store_group'] //für Isolation BE Nutzer
-                            );
-                            $productsQty++;
-                        } else {
-                            $rowSku = null; // sign for child rows to be skipped
-                            $this->_rowsToSkip[$rowNum] = true;
-                            continue;
-                        }
-                    }
-                } elseif (null === $rowSku) {
-                    $this->_rowsToSkip[$rowNum] = true;
-                    continue; // skip rows when SKU is NULL
-                } elseif (self::SCOPE_STORE == $rowScope) { // set necessary data from SCOPE_DEFAULT row
-                    $rowData[self::COL_TYPE]     = $this->_newSku[$rowSku]['type_id'];
-                    $rowData['attribute_set_id'] = $this->_newSku[$rowSku]['attr_set_id'];
-                    $rowData[self::COL_ATTR_SET] = $this->_newSku[$rowSku]['attr_set_code'];
-                }
-                if (!empty($rowData['_product_websites'])) { // 2. Product-to-Website phase
-                    $websites[$rowSku][$this->_websiteCodeToId[$rowData['_product_websites']]] = true;
-                }
-                if (!empty($rowData[self::COL_CATEGORY])) { // 3. Categories phase
-                    $categories[$rowSku][$this->_categories[$rowData[self::COL_CATEGORY]]] = true;
-                }
-                if (!empty($rowData['_tier_price_website'])) { // 4. Tier prices phase
-                    $tierPrices[$rowSku][] = array(
-                        'all_groups'        => $rowData['_tier_price_customer_group'] == self::VALUE_ALL,
-                        'customer_group_id' => $rowData['_tier_price_customer_group'] == self::VALUE_ALL ?
-                                               0 : $rowData['_tier_price_customer_group'],
-                        'qty'               => $rowData['_tier_price_qty'],
-                        'value'             => $rowData['_tier_price_price'],
-                        'website_id'        => self::VALUE_ALL == $rowData['_tier_price_website'] || $priceIsGlobal ?
-                                               0 : $this->_websiteCodeToId[$rowData['_tier_price_website']]
-                    );
-                }
-                foreach ($this->_imagesArrayKeys as $imageCol) {
-                    if (!empty($rowData[$imageCol])) { // 5. Media gallery phase
-                        if (!array_key_exists($rowData[$imageCol], $uploadedGalleryFiles)) {
-                            $uploadedGalleryFiles[$rowData[$imageCol]] = $this->_uploadMediaFilesSID($rowData['image_upload_token'],$rowData[$imageCol]);
-                        }
-                        $rowData[$imageCol] = $uploadedGalleryFiles[$rowData[$imageCol]];
-                    }
-                }
-                if (!empty($rowData['_media_image'])) {
-                    $mediaGallery[$rowSku][] = array(
-                        'attribute_id'      => $rowData['_media_attribute_id'],
-                        'label'             => $rowData['_media_lable'],
-                        'position'          => $rowData['_media_position'],
-                        'disabled'          => $rowData['_media_is_disabled'],
-                        'value'             => $rowData['_media_image']
-                    );
-                }
-                // 6. Attributes phase
-                $rowStore     = self::SCOPE_STORE == $rowScope ? $this->_storeCodeToId[$rowData[self::COL_STORE]] : 0;
-                $productType  = $rowData[self::COL_TYPE];
-                if(!is_null($rowData[self::COL_TYPE])) {
-                    $previousType = $rowData[self::COL_TYPE];
-                }
-                if(!is_null($rowData[self::COL_ATTR_SET])) {
-                    $previousAttributeSet = $rowData[Mage_ImportExport_Model_Import_Entity_Product::COL_ATTR_SET];
-                }
-                if (self::SCOPE_NULL == $rowScope) {
-                    // for multiselect attributes only
-                    if(!is_null($previousAttributeSet)) {
-                        $rowData[Mage_ImportExport_Model_Import_Entity_Product::COL_ATTR_SET] = $previousAttributeSet;
-                    }
-                    if(is_null($productType) && !is_null($previousType)) {
-                        $productType = $previousType;
-                    }
-                    if(is_null($productType)) {
-                        continue;
-                    }
-                }
-                $save = $rowData;
-                $rowData      = $this->_productTypeModels[$productType]->prepareAttributesForSave($rowData);
-                $rowData['groupscatalog2_groups'] = '-2';
-               
-                $product      = Mage::getModel('importexport/import_proxy_product', $rowData);
-              
-                foreach ($rowData as $attrCode => $attrValue) {
-                    $attribute = $resource->getAttribute($attrCode);
-                    if('multiselect' != $attribute->getFrontendInput()
-                        && self::SCOPE_NULL == $rowScope) {
-                        continue; // skip attribute processing for SCOPE_NULL rows
-                    }
-                    $attrId    = $attribute->getId();
-                    $backModel = $attribute->getBackendModel();
-                    $attrTable = $attribute->getBackend()->getTable();
-                    $storeIds  = array(0);
-
-                    if ('datetime' == $attribute->getBackendType()) {
-                        $attrValue = gmstrftime($strftimeFormat, strtotime($attrValue));
-                    } elseif ($backModel) {
-                        $attribute->getBackend()->beforeSave($product);
-                        $attrValue = $product->getData($attribute->getAttributeCode());
-                    }
-                    if (self::SCOPE_STORE == $rowScope) {
-                        if (self::SCOPE_WEBSITE == $attribute->getIsGlobal()) {
-                            // check website defaults already set
-                            if (!isset($attributes[$attrTable][$rowSku][$attrId][$rowStore])) {
-                                $storeIds = $this->_storeIdToWebsiteStoreIds[$rowStore];
-                            }
-                        } elseif (self::SCOPE_STORE == $attribute->getIsGlobal()) {
-                            $storeIds = array($rowStore);
-                        }
-                    }
-                    foreach ($storeIds as $storeId) {
-                        if('multiselect' == $attribute->getFrontendInput()) {
-                            if(!isset($attributes[$attrTable][$rowSku][$attrId][$storeId])) {
-                                $attributes[$attrTable][$rowSku][$attrId][$storeId] = '';
-                            } else {
-                                $attributes[$attrTable][$rowSku][$attrId][$storeId] .= ',';
-                            }
-                            $attributes[$attrTable][$rowSku][$attrId][$storeId] .= $attrValue;
-                        } else {
-                            $attributes[$attrTable][$rowSku][$attrId][$storeId] = $attrValue;
-                        }
-                    }
-                    $attribute->setBackendModel($backModel); // restore 'backend_model' to avoid 'default' setting
-                }
-
-            $this->_saveProductEntity($entityRowsIn, $entityRowsUp)
-                ->_saveProductWebsites($websites)
-                ->_saveProductCategories($categories)
-                ->_saveProductTierPrices($tierPrices)
-                ->_saveMediaGallery($mediaGallery)
-                ->_saveProductAttributes($attributes)
-                ->_logImportedProducts();
+        if (!$this->validateRow($rowData, $rowNum)) {
+         //   continue;
         }
+        $rowScope = $this->getRowScope($rowData);
+        $rowSku = null;
+
+        if (self::SCOPE_DEFAULT == $rowScope) {
+            $rowSku = $rowData[self::COL_SKU];
+
+            // 1. Entity phase
+            if (isset($this->_oldSku[$rowSku])) { // existing row
+                $entityRowsUp[] = array(
+                    'updated_at' => now(),
+                    'entity_id'  => $this->_oldSku[$rowSku]['entity_id']
+                );
+            } else { // new row
+                if (!$productLimit || $productsQty < $productLimit) {
+                    $entityRowsIn[$rowSku] = array(
+                        'entity_type_id'   => $this->_entityTypeId,
+                        'attribute_set_id' => $this->_newSku[$rowSku]['attr_set_id'],
+                        'type_id'          => $this->_newSku[$rowSku]['type_id'],
+                        'sku'              => $rowSku,
+                        'created_at'       => now(),
+                        'updated_at'       => now(),
+                        'store_group' 	 => $rowData['store_group'] //für Isolation BE Nutzer
+                    );
+                    $productsQty++;
+                } else {
+                    $rowSku = null; // sign for child rows to be skipped
+                    $this->_rowsToSkip[$rowNum] = true;
+                    return $this;
+                }
+            }
+        } elseif (null === $rowSku) {
+            $this->_rowsToSkip[$rowNum] = true;
+            return $this; // skip rows when SKU is NULL
+        } elseif (self::SCOPE_STORE == $rowScope) { // set necessary data from SCOPE_DEFAULT row
+            $rowData[self::COL_TYPE]     = $this->_newSku[$rowSku]['type_id'];
+            $rowData['attribute_set_id'] = $this->_newSku[$rowSku]['attr_set_id'];
+            $rowData[self::COL_ATTR_SET] = $this->_newSku[$rowSku]['attr_set_code'];
+        }
+        if (!empty($rowData['_product_websites'])) { // 2. Product-to-Website phase
+            $websites[$rowSku][$this->_websiteCodeToId[$rowData['_product_websites']]] = true;
+        }
+        if (!empty($rowData[self::COL_CATEGORY])) { // 3. Categories phase
+            $categories[$rowSku][$this->_categories[$rowData[self::COL_CATEGORY]]] = true;
+        }
+        if (!empty($rowData['_tier_price_website'])) { // 4. Tier prices phase
+            $tierPrices[$rowSku][] = array(
+                'all_groups'        => $rowData['_tier_price_customer_group'] == self::VALUE_ALL,
+                'customer_group_id' => $rowData['_tier_price_customer_group'] == self::VALUE_ALL ?
+                                       0 : $rowData['_tier_price_customer_group'],
+                'qty'               => $rowData['_tier_price_qty'],
+                'value'             => $rowData['_tier_price_price'],
+                'website_id'        => self::VALUE_ALL == $rowData['_tier_price_website'] || $priceIsGlobal ?
+                                       0 : $this->_websiteCodeToId[$rowData['_tier_price_website']]
+            );
+        }
+        foreach ($this->_imagesArrayKeys as $imageCol) {
+            if (!empty($rowData[$imageCol])) { // 5. Media gallery phase
+                if (!array_key_exists($rowData[$imageCol], $uploadedGalleryFiles)) {
+                    $uploadedGalleryFiles[$rowData[$imageCol]] = $this->_uploadMediaFilesSID($rowData['image_upload_token'],$rowData[$imageCol]);
+                }
+                $rowData[$imageCol] = $uploadedGalleryFiles[$rowData[$imageCol]];
+            }
+        }
+        if (!empty($rowData['_media_image'])) {
+            $mediaGallery[$rowSku][] = array(
+                'attribute_id'      => $rowData['_media_attribute_id'],
+                'label'             => $rowData['_media_lable'],
+                'position'          => $rowData['_media_position'],
+                'disabled'          => $rowData['_media_is_disabled'],
+                'value'             => $rowData['_media_image']
+            );
+        }
+        // 6. Attributes phase
+        $rowStore     = self::SCOPE_STORE == $rowScope ? $this->_storeCodeToId[$rowData[self::COL_STORE]] : 0;
+        $productType  = $rowData[self::COL_TYPE];
+        if(!is_null($rowData[self::COL_TYPE])) {
+            $previousType = $rowData[self::COL_TYPE];
+        }
+        if(!is_null($rowData[self::COL_ATTR_SET])) {
+            $previousAttributeSet = $rowData[Mage_ImportExport_Model_Import_Entity_Product::COL_ATTR_SET];
+        }
+        if (self::SCOPE_NULL == $rowScope) {
+            // for multiselect attributes only
+            if(!is_null($previousAttributeSet)) {
+                $rowData[Mage_ImportExport_Model_Import_Entity_Product::COL_ATTR_SET] = $previousAttributeSet;
+            }
+            if(is_null($productType) && !is_null($previousType)) {
+                $productType = $previousType;
+            }
+            if(is_null($productType)) {
+                return $this;
+            }
+        }
+        $save = $rowData;
+        $rowData      = $this->_productTypeModels[$productType]->prepareAttributesForSave($rowData);
+        $rowData['groupscatalog2_groups'] = '-2';
+
+        $product      = Mage::getModel('importexport/import_proxy_product', $rowData);
+
+        foreach ($rowData as $attrCode => $attrValue) {
+            $attribute = $resource->getAttribute($attrCode);
+            if('multiselect' != $attribute->getFrontendInput()
+                && self::SCOPE_NULL == $rowScope) {
+                continue; // skip attribute processing for SCOPE_NULL rows
+            }
+            $attrId    = $attribute->getId();
+            $backModel = $attribute->getBackendModel();
+            $attrTable = $attribute->getBackend()->getTable();
+            $storeIds  = array(0);
+
+            if ('datetime' == $attribute->getBackendType()) {
+                $attrValue = gmstrftime($strftimeFormat, strtotime($attrValue));
+            } elseif ($backModel) {
+                $attribute->getBackend()->beforeSave($product);
+                $attrValue = $product->getData($attribute->getAttributeCode());
+            }
+            if (self::SCOPE_STORE == $rowScope) {
+                if (self::SCOPE_WEBSITE == $attribute->getIsGlobal()) {
+                    // check website defaults already set
+                    if (!isset($attributes[$attrTable][$rowSku][$attrId][$rowStore])) {
+                        $storeIds = $this->_storeIdToWebsiteStoreIds[$rowStore];
+                    }
+                } elseif (self::SCOPE_STORE == $attribute->getIsGlobal()) {
+                    $storeIds = array($rowStore);
+                }
+            }
+            foreach ($storeIds as $storeId) {
+                if('multiselect' == $attribute->getFrontendInput()) {
+                    if(!isset($attributes[$attrTable][$rowSku][$attrId][$storeId])) {
+                        $attributes[$attrTable][$rowSku][$attrId][$storeId] = '';
+                    } else {
+                        $attributes[$attrTable][$rowSku][$attrId][$storeId] .= ',';
+                    }
+                    $attributes[$attrTable][$rowSku][$attrId][$storeId] .= $attrValue;
+                } else {
+                    $attributes[$attrTable][$rowSku][$attrId][$storeId] = $attrValue;
+                }
+            }
+            $attribute->setBackendModel($backModel); // restore 'backend_model' to avoid 'default' setting
+        }
+
+        $this->_saveProductEntity($entityRowsIn, $entityRowsUp)
+            ->_saveProductWebsites($websites)
+            ->_saveProductCategories($categories)
+            ->_saveProductTierPrices($tierPrices)
+            ->_saveMediaGallery($mediaGallery)
+            ->_saveProductAttributes($attributes)
+            ->_logImportedProducts();
+
         return $this;
     }
 
@@ -1585,59 +1583,55 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
 
       
         
-        //while ($bunch = $this->_dataSourceModel->getNextBunch()) 
-        {
-            $stockData = array();
 
-            // Format bunch to stock data rows
-            //foreach ($bunch as $rowNum => $rowData) 
-            {
-                if (!$this->isRowAllowedToImport($rowData, $rowNum)) {
-                    return $this;
-                }
-                // only SCOPE_DEFAULT can contain stock data
-                if (self::SCOPE_DEFAULT != $this->getRowScope($rowData)) {
-                    continue;
-                }
+        $stockData = array();
 
-                $row = array_merge(
-                    $defaultStockData,
-                    array_intersect_key($rowData, $defaultStockData)
-                );
-                $row['product_id'] = $this->_newSku[$rowData[self::COL_SKU]]['entity_id'];
-                $row['stock_id'] = 1;
-                /** @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
-                $stockItem = Mage::getModel('cataloginventory/stock_item', $row);
 
-                if($stockItem->getQty() == 0)
-                {
-                	$stockItem->setData('manage_stock',false);
-                	$stockItem->setData('use_config_manage_stock',false);
-                	$stockItem->setData('is_in_stock',true);
-                }
-                
-                if ($helper->isQty($this->_newSku[$rowData[self::COL_SKU]]['type_id'])) {
-                    if ($stockItem->verifyNotification()) {
-                        $stockItem->setLowStockDate(Mage::app()->getLocale()
-                            ->date(null, null, null, false)
-                            ->toString(Varien_Date::DATETIME_INTERNAL_FORMAT)
-                        );
-                    }
-                    $stockItem->setStockStatusChangedAutomatically((int) !$stockItem->verifyStock());
-                } else {
-                    $stockItem->setQty(0);
-                }
-                
-              	$stockItem->setData('is_in_stock',$stockItem->getQty() != 0);
-                
-                $stockData[] = $stockItem->unsetOldData()->getData();
-            }
-
-            // Insert rows
-            if ($stockData) {
-                $this->_connection->insertOnDuplicate($entityTable, $stockData);
-            }
+        if (!$this->isRowAllowedToImport($rowData, $rowNum)) {
+            return $this;
         }
+        // only SCOPE_DEFAULT can contain stock data
+        if (self::SCOPE_DEFAULT != $this->getRowScope($rowData)) {
+            return $this;
+        }
+
+        $row = array_merge(
+            $defaultStockData,
+            array_intersect_key($rowData, $defaultStockData)
+        );
+        $row['product_id'] = $this->_newSku[$rowData[self::COL_SKU]]['entity_id'];
+        $row['stock_id'] = 1;
+        /** @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
+        $stockItem = Mage::getModel('cataloginventory/stock_item', $row);
+
+        if($stockItem->getQty() == 0)
+        {
+            $stockItem->setData('manage_stock',false);
+            $stockItem->setData('use_config_manage_stock',false);
+            $stockItem->setData('is_in_stock',true);
+        }
+
+        if ($helper->isQty($this->_newSku[$rowData[self::COL_SKU]]['type_id'])) {
+            if ($stockItem->verifyNotification()) {
+                $stockItem->setLowStockDate(Mage::app()->getLocale()
+                    ->date(null, null, null, false)
+                    ->toString(Varien_Date::DATETIME_INTERNAL_FORMAT)
+                );
+            }
+            $stockItem->setStockStatusChangedAutomatically((int) !$stockItem->verifyStock());
+        } else {
+            $stockItem->setQty(0);
+        }
+
+        $stockItem->setData('is_in_stock',$stockItem->getQty() != 0);
+
+        $stockData[] = $stockItem->unsetOldData()->getData();
+
+        // Insert rows
+        if ($stockData) {
+            $this->_connection->insertOnDuplicate($entityTable, $stockData);
+        }
+
         return $this;
     }
     

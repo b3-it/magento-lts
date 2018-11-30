@@ -22,7 +22,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_LabelledText extends Egovs_Paymentb
 {
     /**
      * The label
-     * @var PayplaceStructLabel
+     * @var string
      */
     public $label;
     /**
@@ -37,9 +37,9 @@ class Egovs_Paymentbase_Model_Payplace_Types_LabelledText extends Egovs_Paymentb
     /**
      * Constructor method for labelledText
      * @see parent::__construct()
-     * @param PayplaceStructLabel $_label
+     * @param string $_label
      * @param string $_text
-     * @return PayplaceStructLabelledText
+     * @return Egovs_Paymentbase_Model_Payplace_Types_LabelledText
      */
     public function __construct($_label = NULL,$_text = NULL)
     {
@@ -47,7 +47,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_LabelledText extends Egovs_Paymentb
     }
     /**
      * Get label value
-     * @return PayplaceStructLabel|null
+     * @return Egovs_Paymentbase_Model_Payplace_Types_LabelledText
      */
     public function getLabel()
     {
@@ -55,8 +55,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_LabelledText extends Egovs_Paymentb
     }
     /**
      * Set label value
-     * @param PayplaceStructLabel $_label the label
-     * @return PayplaceStructLabel
+     * @param string $_label the label
+     * @return Egovs_Paymentbase_Model_Payplace_Types_LabelledText
      */
     public function setLabel($_label)
     {
@@ -85,7 +85,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_LabelledText extends Egovs_Paymentb
      * @see Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @uses Egovs_Paymentbase_Model_Payplace_WsdlClass::__set_state()
      * @param array $_array the exported values
-     * @return PayplaceStructLabelledText
+     * @return Egovs_Paymentbase_Model_Payplace_Types_LabelledText
      */
     public static function __set_state(array $_array,$_className = __CLASS__)
     {

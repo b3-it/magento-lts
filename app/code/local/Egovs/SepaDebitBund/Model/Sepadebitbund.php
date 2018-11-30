@@ -217,6 +217,9 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 				return $objResult->sepaMandat;
 			}
 			$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+            $sMailText .= "IbanOnly: {$this->getIbanOnly()}\n";
+			$sMailText .= "BIC {$this->getBic()}\n\n";
+
 			$result = $objResult->ergebnis->getCodeAsInt();
 		} elseif ($objResult instanceof SoapFault) {
 			$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
@@ -266,7 +269,7 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 		if ($mandate) {
 			$args['mandate'] = $mandate;
 		}
-		return Mage::getModel('paymentbase/sepa_mandate', $args);
+		return Mage::getModel('sepadebitbund/sepa_mandate', $args);
 	}
 	
 	public function validate() {
@@ -369,5 +372,4 @@ class Egovs_SepaDebitBund_Model_Sepadebitbund extends Egovs_Paymentbase_Model_Se
 		}
 		return null;
 	}
-	
 }

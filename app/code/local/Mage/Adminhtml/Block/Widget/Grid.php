@@ -87,14 +87,14 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
     /**
      * Empty grid text
      *
-     * @var sting|null
+     * @var string|null
      */
     protected $_emptyText;
 
      /**
      * Empty grid text CSS class
      *
-     * @var sting|null
+     * @var string|null
      */
     protected $_emptyTextCss    = 'a-center';
 
@@ -608,7 +608,7 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
     /**
      * Prepare grid massaction column
      *
-     * @return unknown
+     * @return Mage_Adminhtml_Block_Widget_Grid_Column
      */
     protected function _prepareMassactionColumn()
     {
@@ -1573,7 +1573,7 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
     /**
      * Retrieve columns to render
      *
-     * @return unknown
+     * @return Mage_Adminhtml_Block_Widget_Grid_Column
      */
     public function getSubTotalColumns() {
         return $this->getColumns();
@@ -1712,6 +1712,11 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
     {
         $res = parent::getRowUrl($item);
         return ($res ? $res : '#');
+    }
+    
+    public function getIsExport()
+    {
+    	return $this->_isExport;
     }
 
 }

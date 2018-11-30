@@ -167,9 +167,12 @@ class Egovs_Girosolution_Model_Payment_Giropay extends Egovs_Paymentbase_Model_G
 				throw new Egovs_Paymentbase_Exception_Validation($msg);
 			}
 		
-		} catch (Exception $e) {
+		} catch (Egovs_Paymentbase_Exception_Validation $e) {
+            Mage::logException($e);
+            throw new Egovs_Paymentbase_Exception_Validation($this->__($e->getMessage(), $this->_getHelper()->getCustomerSupportMail()));
+        } catch (Exception $e) {
 			Mage::logException($e);
-			throw new Egovs_Paymentbase_Exception_Validation($this->__('TEXT_PROCESS_ERROR_STANDARD'));
+			throw new Egovs_Paymentbase_Exception_Validation($this->__('TEXT_PROCESS_ERROR_STANDARD', $this->_getHelper()->getCustomerSupportMail()));
 		}
 		
 	}

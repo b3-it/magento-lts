@@ -1,0 +1,34 @@
+<?php
+/** @var Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content_Renderer_Node $this */
+/** @var Varien_Object $_node */
+$_node = $this->getNodeData();
+
+if (!$_node) {
+    return '';
+}
+?>
+<li>
+    <div>
+        <input
+                type="checkbox"
+                class="checkbox"
+                <?php echo $_node->getIsChecked() ? 'checked="checked"' : ''; ?>
+                <?php echo $_node->getReadonly() ? 'disabled="disabled"' : ''; ?>
+                name="options[<?php echo $_node->getComponentType(); ?>]"
+                value="<?php echo $_node->getId(); ?>"
+                data-id="<?php echo $this->getRenderedBlock()->getHtmlID(); ?>"
+                data-code="<?php echo $this->escapeHtml($_node->getCode()); ?>"
+                data-shortname="<?php echo $this->escapeHtml($_node->getShortname()); ?>"
+                data-name="<?php echo $this->escapeHtml($_node->getName());?>"
+        />
+        <?php echo $this->escapeHtml($_node->getName());?>
+        <?php echo $this->escapeHtml($_node->getDescription());?>
+    </div>
+    <?php if ($_node->getChildren()): ?>
+    <ul style="margin-left:20px;">
+        <?php foreach ($_node->getChildren() as $childNode): ?>
+            <?php echo $this->setNodeData($childNode)->toHtml(); ?>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+</li>

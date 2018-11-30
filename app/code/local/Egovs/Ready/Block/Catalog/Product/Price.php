@@ -105,10 +105,30 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 	
 		return $this->getData('is_including_shipping_costs');
 	}
+
+    /**
+     * Gibt den Text für Ohne Versandkosten zurück
+     *
+     * Der String wird bereits Escaped
+     *
+     * @return bool|string
+     */
+	public function getWithoutShippingCostsText() {
+        $text = Mage::getStoreConfig('catalog/price/without_shipping_costs_text');
+        if (empty($text) || strlen($text) < 1) {
+            return false;
+        }
+
+        return $this->escapeHtml($text);
+    }
 	
 	public function showShippingLink() {
 		return !$this->getProduct()->isVirtual();
 	}
+
+	public function isVirtual() {
+        return $this->getProduct()->isVirtual();
+    }
 	
 	public function getDisplayProductWeight() {
 		return Mage::getStoreConfigFlag('catalog/price/display_product_weight');
@@ -137,6 +157,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 			
 			$_htmlTemplate = $_infoBlock
 				->setIsIncludingShippingCosts($this->isIncludingShippingCosts())
+                ->setWithoutShippingCostsText($this->getWithoutShippingCostsText())
 				->setShowShippingLink($this->showShippingLink())
 				->setPriceDisplayType(Mage::helper('tax')->getPriceDisplayType())
 				->setDisplayProductWeight($this->getDisplayProductWeight())

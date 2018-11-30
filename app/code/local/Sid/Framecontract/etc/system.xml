@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config>
     <sections>
          <framecontract translate="label" module="framecontract">
          	<label>Framework Contract</label>
-            <tab>general</tab>
+            <tab>sid</tab>
             <frontend_type>text</frontend_type>
             <sort_order>50</sort_order>
             <show_in_default>1</show_in_default>
@@ -73,9 +73,8 @@
                         </stock_warning>
                         -->
                       </fields>
-                </email>  
-                
-                
+                </email>
+
         		<contract_qty>
                     <label>Warning Contract Qty</label>
                     <sort_order>1100</sort_order>
@@ -111,7 +110,7 @@
                         
                       </fields>
                 </contract_qty>   
-         </groups>
+            </groups>
         </framecontract>
         <dev>
             <groups>

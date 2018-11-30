@@ -1,0 +1,571 @@
+//
+// @category    design
+// @package     egov_slpb_small
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ================================================= *
+ * General Product List Styles (not module-specific)
+ * ================================================= */
+
+/* -------------------------------------------- *
+ * Product List General
+ */
+
+.category-image {
+    margin-bottom: $global-boxpadding;
+}
+
+// Prevent button overlapping when buttons have long text, such as non-English translations
+.products-grid .actions .button {
+    width: 100%;
+    
+    &.egov-cart {
+        font-size: 1.0rem;
+    }
+    
+    span {
+        font-family: $base-font-family;
+        font-size: 1.0rem;
+    }
+}
+
+/* -------------------------------------------- *
+ * Product Name
+ */
+
+h2.product-name,
+h3.product-name,
+h4.product-name,
+h5.product-name,
+p.product-name {
+    @include h2;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
+    font-weight: bold;
+    line-height: $global-lineheight;
+    height: auto;
+
+    a {
+        color: $global-linkcolor;
+
+        &:hover {
+            color: $global-linkcolor-hover;
+            background-color: $global-linkcolor;
+        }
+    }
+}
+
+.products-grid .product-name,
+.products-list .product-name {
+    margin-bottom: 5px;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
+
+    a {
+    }
+}
+
+.products-grid .product-name {
+    height: $global-lineheight * $catalog-product-name-max-lines;
+}
+.products-list .product-name {
+    max-height: $global-lineheight * $catalog-product-name-max-lines;
+}
+
+/* ============================================ *
+ * Product Grid
+ * ============================================ */
+.products-grid {
+    position: relative;
+
+    > li {
+        position: relative;
+        margin-bottom: $global-product-spacing;
+        text-align: center;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    .product_sku {
+        display: block;
+        margin: $blobal-blockcontent-margintop 0px;
+    }
+
+    .product-image {
+        width: 100%;
+        margin-bottom: 15px;
+
+        img {
+            width: 100%;
+            height: auto;
+
+            &:hidden {
+                display: none;
+            }
+        }
+    }
+
+    .product-info {
+        position: relative;
+        padding-bottom: $global-product-grid-action-height + 10px;
+    }
+
+    .actions {
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .ratings {
+        .rating-box {
+            margin: 0 auto;
+        }
+
+        .amount {
+            display: none;
+        }
+    }
+
+    .price-box {
+        color: $global-fontcolor-dark;
+        font-size: $global-fontsize;
+        margin: 0 0 5px;
+    }
+
+    .add-to-links {
+        margin-bottom: 0;
+    }
+}
+
+.widget-new-products {
+    .products-grid .product-image {
+        width: 75%;
+        margin-bottom: 15px;
+        margin-left: 10%;
+    }
+}
+
+// ---------------------------------------------
+
+/* Config: Two columns + flexible gutter */
+
+// Container: 480 - (2 * 20 trim) = 440
+// Math: (440 - (20 gutter)) / 2 items = 210
+
+.products-grid > li {
+    float: left;
+    width: percentage(210 / 440);
+    margin-right: percentage(20 / 440);
+}
+
+.products-grid > li:nth-child(odd) {
+    clear: left;
+}
+
+.products-grid > li:nth-child(even) {
+    margin-right: 0;
+}
+
+.products-grid .product-image {
+    margin-bottom: 5px;
+
+    @include loadingOverlay();
+}
+
+.products-grid {
+    .actions {
+        button.button {
+            width: 90%;
+        }
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-xsmall + 1) {
+    /* Config: Three columns + flexible gutter */
+    // Container: 600 - (2 * 30 trim wide) = 540
+    $column-count: 3;
+    $column-gutters: 2;
+    $container: 600 - (2 * $trim);
+
+    // Math: (540 - (2 * 30 gutter)) / 3 items = 160
+    $column-width: ($container - ($column-gutters * $global-product-spacing)) / $column-count;
+
+    .products-grid {
+        /* Undo two-column config */
+        > li:nth-child(odd) {
+            clear: none;
+        }
+        > li:nth-child(even) {
+            margin-right: percentage($global-product-spacing / $container);
+        }
+
+        /* Set three-column config */
+        > li {
+            width: percentage($column-width / $container);
+            margin-right: percentage($global-product-spacing / $container);
+        }
+        > li:nth-child(#{$column-count}n+1) {
+            clear: left;
+        }
+        > li:nth-child(#{$column-count}n) {
+            margin-right: 0;
+        }
+    }
+}
+
+// This mixin outputs the styles to allow for grids with more than 3 columns
+@mixin product-grid($column-count, $container-width, $class-append:"") {
+
+    // Allow this mixin to be used for more specific purposes, such as grids contained within widgets
+    @if $class-append != "" {
+        $class-append: -#{$class-append};
+    }
+
+    /* Config: Columns + flexible gutter */
+    $column-gutters: ($column-count) - 1;
+    $container: $container-width - (2 * $trim);
+    $column-width: ($container - ($column-gutters * $global-product-spacing)) / $column-count;
+
+    /* Undo three-column config */
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(odd) {
+        clear: none;
+    }
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(3n+1) {
+        clear: none;
+    }
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(even),
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(3n) {
+        margin-right: percentage($global-product-spacing / $container);
+    }
+
+    /* Set column config */
+    .products-grid--max-#{$column-count}-col#{$class-append} > li {
+        margin-right: percentage($global-product-spacing / $container);
+    }
+    .products-grid--max-#{$column-count}-col#{$class-append} > li {
+        width: percentage($column-width / $container);
+        margin-right: percentage($global-product-spacing / $container);
+    }
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(#{$column-count}n+1) {
+        clear: left;
+    }
+    .products-grid--max-#{$column-count}-col#{$class-append} > li:nth-child(#{$column-count}n) {
+        margin-right: 0;
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 960px) {
+    @include product-grid(4, 960);
+    @include product-grid(5, 960);
+    @include product-grid(6, 960);
+}
+
+/* ============================================ *
+ * Product List
+ * ============================================ */
+
+.products-list {
+    margin-top: $global-boxmargin;
+    margin-bottom: $global-boxmargin;
+
+    & > li {
+        padding-bottom: $global-boxpadding;
+        margin-bottom: $global-boxmargin;
+        border-bottom: $global-box-border solid $global-border-color;
+
+        height: auto;
+        display: flex;
+        flex-flow: row column;
+
+        &:after {
+            @include clearfix;
+        }
+
+        .product-list-left-col {
+            width: $global-product-list-imagesize;
+
+            .product-image {
+                img {
+                    width: 100%;
+                    max-width: 100%;
+                }
+            }
+
+            .product-add-links {
+            }
+
+            a.link-learn {
+                display: block;
+                padding: $global-boxpadding 0px;
+            }
+        }
+
+    }
+
+    & > li:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .product-action {
+        text-align: right;
+    }
+
+    .product-shop {
+        width: 100 - $global-product-list-imagesize;
+        padding-left: $global-boxmargin;
+        height: 100%;
+        flex: 1 1 100%;
+
+        button.button, a.button {
+            font-size: $global-fontsize;
+            width: 25%;
+
+            span {
+                font-family: $base-font-family;
+            }
+        }
+
+        .product-name {
+            margin-bottom: $blobal-blockcontent-marginbottom;
+            height: 1em;
+
+            a {
+                font-size: $global-fontsize;
+            }
+        }
+
+        .ratings {
+            margin: 0;
+
+            .rating-box,
+            .rating-links {
+                float: left;
+                margin-right: $element-spacing;
+            }
+            .rating-links {
+                margin-top: 4px;
+            }
+        }
+
+        .product-price {
+            .price-box {
+                margin-top: 0;
+
+                span.price-excluding-tax, span.price-including-tax {
+                    width: $global-product-list-price-width;
+                    display: inline-block;
+                }
+
+                .price {
+                    font-size: $global-fontsize;
+                }
+            }
+        }
+
+        .desc {
+            margin-top: $element-spacing;
+            max-height: 40px;
+        }
+
+        .product-primary {
+            height: $global-product-list-desc_height;
+        }
+
+        .product-primary, .desc {
+            width: 100% !important;
+            overflow: hidden;
+        }
+    }
+}
+
+.col1-layout {
+    .products-list {
+        .product-primary {
+            height: $global-product-list-desc_height + 14 !important;
+        }
+
+        .full {
+            display: block;
+        }
+        .short {
+            display: none;
+        }
+    }
+}
+
+.col2-left-layout, .col2-right-layout {
+    .products-list {
+        .product-shop {
+            height: auto;
+        }
+        .product-primary {
+            height: 45%;
+        }
+        .product-price {
+            height: 27%;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .full {
+            display: block;
+        }
+        .short {
+            display: none;
+        }
+    }
+}
+
+.col3-layout {
+    .products-list {
+        .full {
+            display: none;
+        }
+        .short {
+            display: block;
+        }
+    }
+}
+
+@include bp(min-width, $bp-xsmall + 1) {
+    .products-list .product-name a {
+        font-size: $f-size-xxl;
+    }
+}
+
+@include bp(max-width, 1279px) {
+    .products-list .product-shop {
+        .product-primary,
+        .desc {
+            float: left;
+            width: 60%;
+            padding-right: 20px;
+        }
+        .product-secondary {
+            float: right;
+            width: 40%;
+        }
+    }
+}
+
+@include bp(max-width, 600px) {
+    .products-list .product-shop .price-box .special-price {
+        padding-left: 0;
+    }
+    .products-list .product-shop {
+        .product-primary,
+        .product-secondary,
+        .desc {
+            float: none;
+            width: 100%;
+            padding-right: 0;
+            text-align: left;
+        }
+    }
+}
+
+.product-essential > form > div.block-related {
+	padding: 0;
+	display: inline-block;
+}
+
+/* ============================================ *
+ * Mini Product List
+ * ============================================ */
+
+.mini-products-list {
+
+    .product-image {
+        float: left;
+        min-width: 50px;
+    }
+    .product-details {
+        margin-left: 60px;
+    }
+
+    // Vertically center product name
+    .product-details .product-name {
+        padding-top: 10px;
+    }
+
+    li {
+        margin-bottom: $gap;
+        clear: both;
+
+        &:after {
+            @include clearfix();
+        }
+    }
+    
+    .product {
+        padding-left: 22px;
+        
+        .product-image {
+            margin-right: 5px;
+        }
+        .product-details {
+            margin-left: 85px;
+            
+            .product-name {
+                padding: 0;
+            }
+        }
+    }
+}
+
+.mini-products-images-list {
+
+    &:after {
+        @include clearfix;
+    }
+
+    li.item {
+        float: left;
+        width: 50%;
+        margin: 0;
+        padding: 0 5px 10px 0;
+
+        &:nth-child(even) {
+            padding-right: 0;
+            padding-left: 5px;
+        }
+
+        .product-image {
+            display: block;
+
+            img {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+}
+
+
+
+/* ============================================ *
+ * Catalog - List
+ * ============================================ */
+
+.category-image {
+    border: $global-box-border solid $global-border-color-light;
+    padding: 10px;
+
+    img {
+        width: 100%;
+        max-width: 100%;
+
+        &:hidden {
+            display: none;
+        }
+    }
+}

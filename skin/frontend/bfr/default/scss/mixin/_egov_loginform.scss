@@ -20,7 +20,7 @@
                     width: auto;
                 }
 
-                input[type="text"], input[type="password"] {
+                input[type="text"], input[type="password"], input[type="email"] {
                     width: 90%;
                     max-width: 90%;
                 }
@@ -29,13 +29,22 @@
 
         div.col-1, div.col-2 {
             width: 48%;
-            height: 32em;
+            height: 35em;
             padding: 0px !important;
+            
+            @include bp(max-width, $bp-large) {
+                height: auto;
+                width: 100%;
+            }
         }
 
         .content {
             padding: 5px;
             height: 25em;
+            
+            @include bp(max-width, $bp-large) {
+                height: auto;
+            }
 
             p {
                 margin: 10px 0px;
@@ -60,41 +69,6 @@
             fieldset {
                 width: 60%;
             }
-        }
-
-        .button {
-            padding: 6px;
-        }
-
-        .buttons-set, .button-recovery {
-            display: inline-block;
-        }
-
-        .buttons-set {
-            position: relative;
-            float: none;
-            width: 100%;
-            bottom: 0px;
-            border-top: 0px;
-            right: 0px;
-
-            .button {
-                float: none;
-                margin: 0px 5px;
-            }
-
-            a.button {
-                @include default-button;
-                float: left;
-                padding: 6px 8px;
-                position: relative;
-                left: 5px;
-            }
-        }
-
-        button.button {
-            min-width: auto;
-            width: 120px;
         }
     }
 }

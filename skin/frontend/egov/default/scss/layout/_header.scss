@@ -36,7 +36,7 @@
     }
 }
 
-@include bp(max-width, 785px) {
+@include bp(max-width, $bp-medium) {
     .page-header-container {
         height: 110px + $global-logo-height;
     }
@@ -52,17 +52,11 @@
     }
 
     .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
+        top: $global-welcome-header-top + $global-logo-height;
     }
 
     #egov-nav{
     	top: $mobile-header-mainnav-top !important;
-    }
-}
-
-@include bp(min-width, 800px) {
-	.col-left {
-        margin-top: 0;
     }
 }
 
@@ -71,7 +65,7 @@
     #egov-nav {
         display: none;
     }
-    
+
     #egov-nav.skip-active {
     	display: block;
     }
@@ -135,8 +129,8 @@
             top: 40px;
         }
         @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
+            left: 5px;
+            top: 65px;
         }
     }
 }
@@ -172,7 +166,7 @@
     position: relative;
     right: 6px;
     top: 70px;
-    z-index: 999;
+    z-index: 800;
 
     label {
         display: none;
@@ -190,7 +184,7 @@
     @include bp(max-width, $bp-xsmall) {
         padding-top: 8px;
     }
-    
+
     @include bp(max-width, 800px) {
         top: 100px;
     }
@@ -317,19 +311,18 @@
         .skip-egov {
             display: none;
         }
-        
+
         .skip-cart {
         	width: 100%;
         }
 
         .welcome-header {
-            left: 150px;
             z-index: 99;
         }
     }
 
     .main-container, .footer-container {
-        top: 35px !important;
+        top: 55px !important;
     }
 }
 
@@ -346,7 +339,7 @@
     color: $global-linkcolor;
     line-height: 100%;
     text-align: center;
-    
+
     @include bp(max-width, $bp-medium) {
     	padding-top: 5px;
     }
@@ -379,9 +372,8 @@ a.skip-link {
 
     .skip-link {
         border-right: 1px solid #EDEDED;
-        width: 30%;
     }
-    
+
     .skip-account, .skip-cart {
     	margin: 0;
     }
@@ -445,17 +437,12 @@ a.skip-link {
 
 .skip-link .label {
     display: none;
-}
 
-// ---------------------------------------------
-
-@include bp(min-width, 500px) {
-
-    .skip-link .label {
+    @include bp(min-width, $bp-small) {
         display: inline;
     }
-
 }
+
 
 /* ============================================ *
  * Skip Content
@@ -481,27 +468,29 @@ a.skip-link {
     width: 80%;
     text-align: right;
 
+    .skip-link {
+        @include bp(max-width, $bp-medium) {
+            width: 33%;
+        }
+    }
+
     @include bp(max-width, $bp-medium) {
         position: static;
         display: inline-block;
         right: 0;
-    }
-
-    @include bp(max-width, 800px) {
         width: 75%;
-        right: 10px;
-    }
-    
-    @include bp(max-width, 500px) {
-        width: 60%;
     }
 }
 
-.skip-egov{
+.skip-egov, .skip-help{
     display: inline-block;
     float: none !important;
     padding: 0 10px;
     text-transform: uppercase;
     vertical-align: top;
     width: auto;
+}
+
+.skip-help {
+    display: none;
 }

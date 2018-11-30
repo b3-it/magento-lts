@@ -32,13 +32,13 @@
 ?>
 <?php $_product = $this->getProduct() ?>
 
-<?php if($_product->isSaleable() && $_product->getStockItem()->getManageStock()): ?>
+<?php if( $_product->isSaleable() ): ?>
     <p class="availability"><?php echo $this->__('Availability') ?>: <span class="in-stock"><?php echo $this->__('In stock') ?></span></p>
 <?php else: ?>
     <p class="availability"><?php echo $this->__('Availability') ?>: <span class="out-of-stock"><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 
-<?php $_selectBox = $this->getChildHtml('list'); ?>
+<?php $_selectBox = trim( $this->getChildHtml('list') ); ?>
 
 <?php if(strlen($_selectBox)): ?>
 <div id="map-block">

@@ -38,10 +38,10 @@ class Egovs_Checkout_Helper_Url extends Mage_Core_Helper_Url
      */
     public function getCartUrl()
     {
-        return $this->_getUrl('checkout/cart');
+        return $this->_getUrl('checkout/cart', array('_secure' => $this->_getRequest()->isSecure()));
     }
 
-    
+
     /**
      * Multi Shipping (MS) checkout urls
      */
@@ -83,21 +83,21 @@ class Egovs_Checkout_Helper_Url extends Mage_Core_Helper_Url
     {
         return $this->_getUrl('checkout/onepage');
     }
-    
-    
+
+
     public function getCheckoutAddress()
     {
     	if(Mage::getStoreConfig('checkout/options/checkout_type') == Egovs_Checkout_Model_Checkouttype::TYPE_ONEPAGE)
     	{
     		return 'checkout/onepage';
     	}
-    	
+
     	return 'egovs_checkout/multipage';
     }
-    
+
     public function getCheckoutUrl()
     {
     	return $this->_getUrl($this->getCheckoutAddress(), array('_secure'=>true, '_current'=>true));
     }
-    
+
 }

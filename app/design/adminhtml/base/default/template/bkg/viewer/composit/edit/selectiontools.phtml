@@ -1,0 +1,79 @@
+<div class="entry-edit">
+<div class="entry-edit-head">
+     <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('virtualgeo')->__('Selection Tools') ?></h4>
+</div>
+<div class="fieldset">
+<table id="tools-table">
+    <thead>
+    <tr>
+        <th style="width:200px;">Layer</th>
+        <th>Label</th>
+        <th>Pos</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+
+    var anz = 1;
+
+    function addToolLayer()
+    {
+        var layers = $j('#service_layers');
+        var selected = layers.find('option:selected');
+        selected.each(function(){
+            addToolRow(0, $j(this).val(), $j(this).text(), $j(this).text());
+        });
+    }
+
+
+    function addToolRow(id, layer_id ,label, layername)
+    {
+        // Anzahl der Spalten in der Tabelle
+        var cntTable = $j('#tools-table th').length;
+        // neue Zeile erzeugen
+        var tableRow = $j('<tr />', {
+            'class': 'row-class',
+            'id'   : 'row-id-' + anz
+        });
+
+       var tableCell = '<td style="width:200px;">';
+        tableCell += '<input type="hidden" name="sectiontools['+anz+'][id]" value="' + id + '"/>';
+        tableCell += '<input type="hidden" name="sectiontools['+anz+'][layer_id]" value="' + layer_id + '"/>';
+        tableCell += '<input type="hidden" name="sectiontools['+anz+'][deleted]" value="0" id="selectiontool-deleted-'+anz+'"/>';
+        tableCell +=  layername + '</td>';
+        tableCell += '<td><input type="text" name="sectiontools['+anz+'][label]" value="' + label + '"/></td>';
+        tableCell += '<td><input type="text" name="sectiontools['+anz+'][pos]" value="' + anz * 100 + '"/></td>';
+        tableCell += '<td><button onclick="removeToolRow(' + anz + ');return false;">X</button></td>';
+
+        tableRow.append(tableCell);
+        // Zeile an die Tabelle anhängen
+        $j('#tools-table').append(tableRow);
+
+        anz++;
+
+    }
+
+    function removeToolRow(position)
+    {
+    	$j('#selectiontool-deleted-' + position).val(1);
+        $j('#row-id-' + position).hide();
+    }
+
+
+
+
+
+<?php
+//function addToolRow(id, layer_id ,label, layername)
+foreach ($this->getTools() AS $node){
+
+	echo "addToolRow({$node->getId()}, {$node->getLayerId()} ,'{$node->getLabel()}', '{$node->getTitle()}')\n";
+}
+?>
+
+
+</script>

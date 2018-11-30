@@ -21,17 +21,18 @@
 //    Variablen werden in "_framework.scss" eingebunden
 @import "../../default/scss/egov/bitv";
 @import "../../default/scss/egov/video";
-@import "../../default/scss/egov/egov-base";
+@import "egov/egov-base";
 @import "../../default/scss/egov/fa-icons";
 @import "egov/mp-checkout";
 @import "../../default/scss/egov/checkiban";
 @import "../../default/scss/egov/silver-track";
 @import "../../default/scss/egov/credit-cards";
+@import "../../default/scss/egov/mobile-switch";
 
 
 // ----------------------------------------------
 // Core
-@import "../../default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -41,7 +42,7 @@
 // ----------------------------------------------
 // Layout
 @import "../../default/scss/layout/button-set";
-@import "../../default/scss/layout/buttons";
+@import "layout/buttons";
 @import "../../default/scss/layout/global";
 @import "layout/header";
 @import "../../default/scss/layout/header-nav";
@@ -60,8 +61,8 @@
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
 @import "../../default/scss/module/select-language";
-@import "../../default/scss/module/product-list";
-@import "../../default/scss/module/catalog-product";
+@import "module/product-list";
+@import "module/catalog-product";
 @import "../../default/scss/module/catalog-msrp";
 @import "../../default/scss/module/catalog-seo-sitemap-category";
 @import "../../default/scss/module/catalog-compare";

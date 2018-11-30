@@ -56,8 +56,7 @@
             <td class="number">
                 <a class=""
                    href="<?php echo $this->getViewUrl($_order) ?>"
-                   title="<?php echo $this->__('View Order') ?>"
-                   alt="<?php echo $this->__('View Order') ?>"><?php echo $_order->getRealOrderId() ?></a>
+                   title="<?php echo $this->__('View Order') ?>"><?php echo $_order->getRealOrderId() ?></a>
             </td>
             <td class="date"><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
             <td class="ship"><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
@@ -68,7 +67,6 @@
                 <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
                     <a href="<?php echo $this->getReorderUrl($_order) ?>"
                        class="link-reorder egov-reorder"
-                       alt="<?php echo $this->__('Reorder') ?>"
                        title="<?php echo $this->__('Reorder') ?>"> </a>
                 <?php endif ?>
                 </span>

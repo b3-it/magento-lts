@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -50,13 +50,13 @@
     </adminhtml>
     <admin>
         <routers>
-			<sidwishlist>
-				<use>admin</use>
-				<args>
-					<module>Sid_Wishlist</module>
-					<frontName>sidwishlist</frontName>
-				</args>
-			</sidwishlist>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Sid_Wishlist_Adminhtml after="Mage_Adminhtml">Sid_Wishlist_Adminhtml</Sid_Wishlist_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>  
     <global>

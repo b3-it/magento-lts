@@ -1,0 +1,1768 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@charset "UTF-8";
+
+/* ============================================ *
+ * Base Styles
+ * ============================================ */
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@-o-viewport {
+    width: device-width;
+}
+
+@viewport {
+    width: device-width;
+}
+
+// Prevent 300ms delay in IE on touch devices
+a, button {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+// Add Multi-Column
+.block-two-columns, .multi-two-columns {
+	@include multi-two-columns;
+}
+.block-tree-columns, .multi-tree-columns {
+	@include multi-tree-columns;
+}
+
+body,
+button,
+input,
+select,
+table,
+textarea {
+    font-family: $base-font-family;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
+    line-height: $global-lineheight;
+}
+
+button {
+    color: $global-button-font-color;
+}
+
+textarea, input[type="text"], input[type="email"],
+input[type="password"], input[type="tel"], select {
+    border: 1px solid $global-wrapper-color;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+    margin-bottom: $global-element-magrin-bottom;
+    outline: medium none;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus,
+input[type="password"]:focus, input[type="tel"]:focus, select:focus,
+textarea:active, input[type="text"]:active, input[type="email"]:active,
+input[type="password"]:active, input[type="tel"]:active, select:active {
+    background-color: $global-lightcolor-hover;
+    border-color: $global-lightcolor;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+    left: 2px;
+    margin-right: $global-radio-checkback-spacing;
+}
+
+input[type="radio"] {
+    margin-right: $global-radio-checkback-spacing - 3;
+}
+
+a {
+    color: $global-linkcolor;
+    text-decoration: none;
+    border: $global-active-border solid transparent;
+
+    &:hover {
+	    color: $global-linkcolor-hover;
+	    background-color: $global-linkcolor;
+	    text-decoration: none;
+	}
+
+	&:focus {
+	    outline-color: $global-linkcolor-active;
+	    color: darken($global-linkcolor-active, 30%);
+	}
+}
+
+ol,
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================ *
+ * Default-Active marking
+ * ============================================ */
+a, input, button, select, textarea {
+    /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
+    &:focus {
+        border-width: $global-active-border;
+        border-style: solid !important;
+        border-color: $global-active-color;
+    }
+}
+input[type="checkbox"]:focus, input[type="radio"]:focus {
+    /* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
+    outline-width: $global-active-border !important;
+    outline-style: solid !important;
+    outline-color: $global-active-color !important;
+}
+
+/* ============================================ *
+ * Typography
+ * ============================================ */
+
+h1, .h1 { @include h1; }
+
+h2, .h2 { @include h2; }
+
+h3, .h3 { @include h3; }
+
+h4, .h4 { @include h4; }
+
+h5, .h5 { @include h5; }
+
+h6, .h6 { @include h6; }
+
+/* ============================================ *
+ * Shared Classes
+ * ============================================ */
+
+.address-list address {
+    margin-bottom: 1em;
+}
+
+.availability {
+    font-size: $global-fontsize-big;
+    margin-bottom: 0;
+
+    .label {
+         font-size: $global-fontsize;
+    }
+
+    .in-stock {
+        font-size: 12px;
+    }
+
+    .available-soon, .out-of-stock {
+        color: $global-available-color;
+    }
+}
+
+.availability-only {
+    color: $global-available-color;
+    margin-bottom: $global-boxmargin;
+}
+
+p.note-msg {
+    display: block;
+    border-width: $global-box-border;
+    border-style: solid;
+    border-color: $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-border-color-light;
+}
+
+/* --------------------------------------------- *
+ * Page Titles
+ */
+.col3-layout .page-title {
+	width: $global-maincol-title-percent;
+}
+
+.page-title h1,
+.page-title h2,
+.product-name h1,
+.product-name .h1 {
+    @include pageTitle;
+}
+
+.page-title h1,
+.page-title h2 {
+    border-bottom: $global-box-border solid $global-box-bordercolor;
+}
+
+/* -------------------------------------------- *
+ * Block Module
+ */
+
+.col-left-first {
+    margin-top: $global-boxmargin;
+}
+
+// On account pages, don't remove the top border in order to create separation between block and .block-account
+body:not(.customer-account) .block:first-child .block-title {
+    border-top: none;
+    padding-top: 0;
+}
+
+.block-subtitle {
+    font-weight: bold;
+    margin-bottom: $element-spacing;
+}
+
+/* -------------------------------------------- *
+ * Secondary Navigation
+ */
+
+.block-account {
+    position: relative;
+    top: -20px;
+}
+
+/* ============================================ *
+ * Reorder-Box Styles
+ * ============================================ */
+
+div.block-reorder {
+    margin-top: $global-boxmargin;
+}
+
+
+.block-account,
+.block-cms-menu {
+    .block-title {
+        padding-top: 0;
+        border-top: none;
+    }
+
+    li {
+        font-family: $base-font-family;
+        margin: 7px 0;
+
+        strong {
+            font-weight: 400;
+            color: $global-linkcolor;
+        }
+
+        a {
+            color: $global-fontcolor-dark;
+
+            &:hover {
+                color: $global-linkcolor;
+            }
+        }
+    }
+}
+
+/* ============================================ *
+ * Buttons
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Paypal Button
+ */
+
+.paypal-logo.paypal-after {
+    float: left;
+}
+
+.paypal-after .paypal-or {
+    float: left;
+}
+
+.paypal-or {
+    line-height: 34px;
+    margin: 0px 10px 5px;
+}
+
+.paypal-after .paypal-button {
+    float: left;
+}
+
+.paypal-button {
+    line-height: 0px;
+}
+
+.paypal-button img {
+    display: inline;
+}
+
+@include bp(max-width, 740px) {
+    .paypal-or {
+        line-height: 20px;
+    }
+
+    .paypal-logo,
+    .paypal-or,
+    .paypal-button {
+        text-align: center;
+        width: 100%;
+        display: block;
+        margin-right: 0;
+        margin-left: 0;
+        float: none;
+    }
+}
+
+/* -------------------------------------------- *
+ * Icons
+ */
+
+.icon-sprite {
+    background-image: url(../images/icon_sprite.png);
+    background-repeat: no-repeat;
+    @include image-replacement;
+}
+
+@include if-min-resolution(2) {
+    .icon-sprite {
+        background-image: url(../images/icon_sprite@2x.png);
+        background-size: 100px 1000px;
+    }
+}
+
+/* -------------------------------------------- *
+ * Breadcrumbs
+ */
+
+.breadcrumbs {
+    overflow: hidden;
+    margin: 0px;
+    color: $global-fontcolor-light;
+}
+
+.breadcrumbs li {
+    float: left;
+    font-family: $base-font-family;
+}
+
+.breadcrumbs a {
+    color: $global-fontcolor-light;
+    border-width: $global-active-border;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.breadcrumbs a:hover {
+    color: $global-fontcolor-light;
+    text-decoration: underline;
+}
+
+.breadcrumbs strong {
+    color: $global-fontcolor-light;
+    font-weight: normal;
+}
+
+.breadcrumbs span {
+    padding: 0 7px;
+}
+
+@include bp(max-width, $bp-medium) {
+
+    .breadcrumbs {
+        display: none;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Button - Remove / Previous
+ */
+
+.btn-remove,
+.btn-previous {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: $global-box-border solid $global-border-color;
+    text-align: center;
+    /* Hide text */
+    font: 0/0 a;
+    text-shadow: none;
+    color: transparent;
+    position: relative;
+
+    &:hover {
+        background-color: $global-button-color;
+        border-color: $global-border-color;
+    }
+}
+
+.btn-remove {
+    &:after {
+        content: 'X';
+        color: $global-linkcolor;
+        height: 20px;
+        line-height: 20px;
+        width: 100%;
+        font-size: 10px;
+        font-family: $base-font-family;
+        font-weight: bold;
+    }
+    &:hover:after {
+        color: $global-linkcolor;
+        text-decoration: none;
+    }
+}
+
+.btn-remove2 {
+    @extend .icon-sprite;
+    $icon-padding: 3px;
+    background-position: 4px -650px+2px;
+    border: none;
+    vertical-align: top; // Adding this so that the button will show at the top of the cart rows, rather than at the baseline
+
+    &:after {
+        display: none;
+    }
+    &:hover {
+        background-color: transparent;
+        @include opacity(0.8);
+    }
+}
+
+.btn-previous {
+    &:after {
+        @include triangle(left, 4px, $c-action);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -2px;
+        margin-top: -4px;
+    }
+    &:hover:after {
+        @include triangle(left, 4px, #FFFFFF);
+    }
+}
+
+.block-layered-nav .currently,
+.mini-products-list,
+#compare-items {
+
+    .btn-remove,
+    .btn-previous {
+        float: right;
+        margin-left: 6px;
+    }
+}
+
+/* -------------------------------------------- *
+ * Checkout Agreements
+ */
+
+.checkout-agreements li {
+    margin-bottom: 20px;
+}
+
+.checkout-agreements .agreement-content {
+    overflow-y: auto;
+    max-width: 670px;
+    max-height: 125px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid $c-module-border;
+    background: $c-module-background;
+}
+
+/* -------------------------------------------- *
+ * CVV Security Code
+ */
+
+.cvv-what-is-this {
+    margin-left: 10px;
+    font-size: $f-size-s;
+    line-height: 24px;
+}
+
+/* -------------------------------------------- *
+ * Container
+ */
+
+.main-container {
+    max-width: $global-fullpage-width;
+    position: relative;
+    top: $global-cms-top-position;
+}
+
+.footer-container {
+    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
+    min-height: $global-footer-height;
+    line-height: $global-footer-lineheight;
+    background-color: $global-footer-backgroundcolor;
+    width: 100%;
+    padding-top: 0px;
+}
+
+.main-container,
+.footer-container {
+    position: relative;
+    margin: 0 auto;
+
+    /* Zeilenhöhe auf Normal setzen (_global.scss [15]) */
+    line-height: $global-lineheight;
+
+    &:after {
+        @include clearfix;
+    }
+}
+
+/* -------------------------------------------- *
+ * Column Layouts
+ */
+
+.main:after,
+.col-wrapper:after {
+    @include clearfix;
+}
+
+.col-left,
+.col-right,
+.col-main {
+}
+
+.col-left {
+    float: left;
+    padding-left: 0; /* Remove the 15px padding */
+    clear: left;
+
+    img {
+        max-width: 100%;
+    }
+}
+
+.col-right {
+    float: right;
+
+    img {
+        max-width: 100%;
+    }
+}
+
+.col-main {
+    width: 100%;
+    min-height: 500px;
+
+    .std {
+        margin: 0px;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.col1-layout {
+    .col-main {
+        padding-left: 0;
+        background-image: url($global-content-top-image);
+        background-repeat: no-repeat;
+        background-color: $global-content-background;
+        background-position: 0px -3px;
+        background-size: 100% auto;
+        overflow: hidden;
+        padding-left: $global-content-paddingleft;
+        padding-top: $global-content-paddingtop;
+        padding-right: $global-rightcol-marginright;
+        float: none;
+        width: auto;
+        margin-top: 4px !important;
+
+        .std /*, .page-title*/ {
+            width: $global-content-1col-percent;
+        }
+
+        table {
+            @extend .egov-base-table;
+            border-collapse: collapse;
+
+            tbody th, tbody td, thead th {
+                padding: 5px;
+            }
+        }
+    }
+
+    p.note-msg {
+        width: 100%;
+    }
+}
+
+.col2-left-layout {
+    .col-wrapper {
+        width: $global-wrapper-width;
+        position: relative;
+        top: $global-wrapper-top;
+
+        .col-left {
+            margin-right: $global-leftcol-rightmargin-percent;
+            float: left;
+            position: relative;
+            width: $global-leftcol-percent;
+
+            @include bp(max-width, 490px) {
+            	display: none;
+            }
+        }
+
+        .col-main {
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: $global-content-2col-left-percent;
+            padding-left: $global-content-leftpadding-percent;
+            padding-top: $global-content-paddingtop;
+            padding-right: $global-rightcol-rightmargin-percent;
+
+            @include bp(max-width, 490px) {
+            	width: 100% !important;
+            }
+        }
+
+        p.note-msg {
+            width: $global-content-2col-left-percent;
+        }
+    }
+}
+
+.col2-right-layout {
+    .main {
+        width: $global-wrapper-width;
+        position: relative;
+        top: $global-wrapper-top;
+
+    	.col-right {
+            right: $global-rightcol-rightmargin-percent;
+            position: relative;
+            width: $global-rightcol-percent;
+            top: $global-rightcol-margintop;
+            margin-bottom: $global-rightcol-margintop;
+        }
+
+	    .col-main {
+            padding-left: 0; /* Remove the 15px padding */
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: 100%;
+            padding-left: $global-content-leftpadding-percent;
+            padding-top: $global-content-paddingtop;
+
+            .std {
+                width: $global-content-2col-right-percent;
+            }
+        }
+
+        p.note-msg {
+            width: 100%;
+        }
+    }
+}
+
+.col3-layout {
+    .col-wrapper {
+        width: $global-wrapper-width;
+        position: relative;
+        top: $global-wrapper-top;
+
+        .col-left {
+            margin-right: $global-leftcol-rightmargin-percent;
+            float: left;
+            width: $global-leftcol-percent;
+        }
+
+        .col-main {
+            background-image: url($global-content-top-image);
+            background-repeat: no-repeat;
+            background-color: $global-content-background;
+            background-position: 0px -3px;
+            background-size: 100% auto;
+            overflow: hidden;
+            width: $global-content-2col-left-percent;
+            padding-top: $global-content-paddingtop;
+            padding-left: $global-content-leftpadding-percent;
+            padding-right: 5px;
+
+            .std {
+                width: $global-content-3col-percent;
+            }
+        }
+
+        .col-right {
+            width: $global-rightcol-3col-percent;
+            right: $global-rightcol-rightmargin-percent;
+            padding: 0px;
+            position: relative;
+            top: $global-rightcol-margintop;
+            margin-bottom: $global-rightcol-margintop;
+        }
+
+        p.note-msg {
+            width: $global-content-3col-percent;
+        }
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .col-left,
+    .col-right,
+    .col-main,
+    .col1-layout .col-left,
+    .col1-layout .col-right,
+    .col1-layout .col-main,
+    .col2-left-layout .col-left,
+    .col2-left-layout .col-right,
+    .col2-left-layout .col-main,
+    .col2-right-layout .col-left,
+    .col2-right-layout .col-right,
+    .col2-right-layout .col-main,
+    .col3-layout .col-wrapper .col-left,
+    .col3-layout .col-right,
+    .col3-layout .col-wrapper .col-main {
+        margin-bottom: 10px; // Since columns are stacked, we want there to be vertical spacing
+        float: none;
+        width: auto;
+    }
+
+    .col3-layout .col-wrapper {
+        float: none;
+        width: auto;
+    }
+
+    .col-main {
+        float: none;
+        width: auto;
+    }
+
+    .col-main .col-left {
+        padding: 0; /* On product listing pages, the left column gets moved inside col-main on small viewports */
+    }
+}
+
+/* Content Columns */
+
+.col2-set {
+    width: 100%;
+
+    .col-1,
+    .col-2 {
+        width: 50%;
+        padding: $box-spacing-large;
+
+        @include bp(max-width, $bp-medium) {
+            padding: $box-spacing;
+        }
+    }
+
+    .col-1 {
+        float: left;
+        padding-left: 0;
+    }
+
+    .col-2 {
+        float: right;
+        padding-right: 0;
+    }
+
+    @include bp(max-width, $bp-xsmall) {
+        .col-1,
+        .col-2 {
+            float: none;
+            width: auto;
+            border: 0;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+
+    .narrow {
+        width: 33%;
+    }
+
+    .wide {
+        width: 65%;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+}
+
+/* -------------------------------------------- *
+ * Top Container
+ */
+@include bp(min-width, $bp-medium + 1) {
+    .top-container {
+        max-width: $max-container-width;
+        margin: 0 auto;
+        padding: 0 $trim;
+    }
+}
+
+/* -------------------------------------------- *
+ * Global Site Notice
+ */
+
+.global-site-notice {
+    background: $c-dark;
+    color: $c-text-white;
+    font-size: $f-size-xxs;
+
+    .notice-inner {
+        padding-left: 120px;
+        width: 100%;
+        max-width: $max-content-width;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: $f-size-xxs;
+        min-height: 40px;
+        padding-top: (40px - $f-size-xxs) / 2;
+        padding-bottom: (40px - $f-size-xxs) / 2;
+        
+        @include bp(max-width, $bp-medium + 1) {
+        	padding-left: 0;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+/* -------------------------------------------- *
+ * Promotional Message Banner
+ */
+
+.promo-msg {
+    color: $global-footer-fontcolor;
+    text-align: center;
+    margin: $box-spacing;
+    text-transform: uppercase;
+    font-family: $base-font-family;
+}
+
+/* -------------------------------------------- *
+ * Grid
+ */
+
+.grid:after {
+    @include clearfix;
+}
+
+/* -------------------------------------------- *
+ * Messages
+ */
+.success {
+    color: $c-success;
+}
+
+.error {
+    color: $c-danger;
+    font-weight: bold;
+}
+
+.notice {
+    color: $c-warn;
+    font-weight: bold;
+}
+
+/* -------------------------------------------- *
+ * Messages
+ */
+
+.messages {
+    margin-top: $global-message-margintop;
+    margin-bottom: $global-message-marginbottom;
+}
+
+.messages li li {
+    position: relative;
+    margin-bottom: 5px;
+    padding: 7px 10px 7px 20px;
+    background: $c-module-background;
+    font-size: $f-size-l;
+}
+
+.messages li li:before {
+    top: 50%;
+    left: 0;
+    margin-top: -6px;
+}
+
+.messages .error-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-danger;
+    background-color: $c-danger-background;
+}
+
+.messages .error-msg li:before {
+    @include triangle(right, 6px, $c-danger);
+}
+
+.messages .notice-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-warn;
+    background-color: $c-warn-background;
+}
+
+.messages .notice-msg li:before {
+    @include triangle(right, 6px, $c-warn);
+}
+
+.messages .success-msg li {
+    color: $c-black;
+    border-left: 5px solid $c-success;
+    background-color: $c-success-background;
+}
+
+.messages .success-msg li:before {
+    @include triangle(right, 6px, $c-success);
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 915px) {
+
+    .order-list-grid .col-1 {
+        width: 30%;
+    }
+
+    .order-list-grid .col-2 {
+        width: 50%;
+        padding-right: 20px;
+    }
+
+    .order-list-grid .col-3 {
+        clear: none;
+        width: 20%;
+        padding-top: 0;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Page Popup
+ */
+
+.page-popup {
+    padding: 20px;
+    background: #FFFFFF;
+    height: auto;
+}
+
+.page-popup h1 {
+    margin: 0 0 0.5em;
+    font-size: 36px;
+}
+
+/* -------------------------------------------- *
+ * Payment Methods
+ */
+
+.payment-methods {
+    margin-bottom: 20px;
+}
+
+.payment-methods dt {
+    padding: 5px 0;
+}
+
+.payment-methods dd {
+    padding-top: 10px;
+}
+
+.payment-methods .form-list {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    margin: 5px 15px 15px;
+    padding: 15px;
+    border: 1px solid $c-module-border;
+    background: $c-module-background;
+}
+
+.payment-methods .form-list:before {
+    @include triangle(up, 10px, $c-module-border);
+    top: -11px;
+    left: 30px;
+}
+
+.payment-methods .form-list:after {
+    @include triangle(up, 10px, $c-module-background);
+    top: -10px;
+    left: 30px;
+}
+
+.payment-methods .form-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* -------------------------------------------- *
+ * Please Wait (Loading Indicator)
+ */
+
+.please-wait {
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 5px;
+    line-height: 24px;
+    height: 24px;
+    white-space: nowrap; /* Prevent the linebreak in the HTML from causing layout issues */
+
+    img {
+        float: left;
+        margin-right: 5px;
+        width: 24px; // Actual image is 48px, thereby supporting hi-res screens
+    }
+}
+
+/* -------------------------------------------- *
+ * Price Box - Standard
+ */
+
+.price-box {
+    margin: $element-spacing 0;
+    font-family: $base-font-family;
+}
+
+.price-box p {
+    margin-bottom: 0;
+}
+
+.price-notice {
+    color: $c-text-gray;
+}
+
+.price-box .price {
+    color: $global-price-normal-color;
+    font-size: $global-fontsize;
+}
+
+.price-box .price,
+.price {
+    font-family: $base-font-family;
+    color: $global-price-normal-color;
+}
+
+.price-box .price-label {
+    color: $global-fontcolor-dark;
+    white-space: nowrap;
+    font-family: $base-font-family;
+}
+
+.price-box .minimal-price-link {
+    padding-left: 1em;
+    color: $global-footer-fontcolor;
+    display: block; /* We want this to show on its own line, otherwise the layout looks funky */
+
+    .label {
+        color: $c-text-gray;
+    }
+}
+
+/* -------------------------------------------- *
+ * Price Box - Special
+ */
+
+.price-box .old-price,
+.price-box .special-price {
+    display: inline-block;
+
+    .price-label {
+        display: none;
+    }
+
+    .price {
+        display: inline-block;
+    }
+}
+
+.price-box .old-price {
+    .price {
+        color: $c-text-gray;
+        text-decoration: line-through;
+    }
+}
+
+.price-box .special-price {
+    color: $global-price-special-color;
+    padding-left: 1em;
+
+    .price-label {
+        color: $global-price-special-color;
+    }
+}
+
+/* -------------------------------------------- *
+ * Price Box - Taxes
+ */
+
+.price-box .price-excluding-tax,
+.price-box .price-including-tax {
+    display: block;
+}
+
+span.weee {
+    display: block;
+}
+
+/* -------------------------------------------- *
+ * Tier Prices
+ */
+
+.product-pricing,
+.tier-prices,
+.tier-prices-grouped {
+    display: inline-block;
+    padding: 4px 8px;
+    background: #FBF4DE;
+    border: $global-box-border solid $global-border-color;
+    margin-top: $global-boxmargin;
+
+    li {
+        font-size: $global-fontsize-small;
+    }
+    .benefit {
+        font-style: italic;
+    }
+    .price {
+        font-weight: bold;
+    }
+}
+
+/* ============================================ *
+ * Item Options
+ * ============================================ */
+
+.item-options {
+    font-size: $f-size;
+    font-family: $base-font-family;
+
+    &:after {
+        @include clearfix;
+    }
+
+    dt, dd {
+        display: table-cell;
+    }
+
+    dt {
+        font-weight: 600;
+        padding-right: 5px;
+        font-style: italic;
+
+        &:after {
+            content: ': ';
+        }
+    }
+
+    dd {
+        padding-left: 10px;
+        margin: 0 0 6px;
+    }
+}
+
+.truncated,
+.truncated a.dots {
+    cursor: help;
+}
+
+.truncated a.details {
+    cursor: help;
+    height: 16px;
+    line-height: 16px;
+    float: left;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.truncated .truncated_full_value {
+    position: relative;
+    z-index: 300;
+}
+
+.truncated .truncated_full_value .item-options {
+    display: none;
+    position: absolute;
+    z-index: 300;
+    width: 200px;
+    padding: 8px;
+    border: $global-active-border solid $global-border-color;
+    background-color: #F6F6F6;
+    top: 21px;
+    left: -100px;
+
+    &:after {
+        @include triangle(up, 7px, $global-border-color);
+        left: (100px + -3px);
+        top: -7px;
+    }
+}
+
+.truncated .truncated_full_value .item-options > p {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.truncated .show .item-options {
+    display: block;
+}
+
+@include bp(max-width, $bp-xsmall) {
+
+    .truncated {
+        cursor: inherit;
+
+        a.details {
+            display: none;
+        }
+
+        .truncated_full_value {
+            .item-options {
+                display: block;
+                position: static;
+                z-index: 1;
+                width: 100%;
+                border: none;
+                background-color: transparent;
+
+                p {
+                    float: none;
+                }
+
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Printer Friendly Page
+ */
+
+.page-print {
+    width: 6.5in;
+    margin: 20px;
+    background: #FFFFFF;
+}
+
+/* -------------------------------------------- *
+ * Add to links
+ */
+
+.add-to-links {
+    margin: $element-spacing 0;
+
+    a {
+        display: inline-block;
+        padding: 0px 3px 3px;
+    }
+}
+
+.add-to-links .separator {
+    display: none;
+}
+
+/* -------------------------------------------- *
+ * Product Image
+ */
+
+.product-image,
+.no-touch .product-img-box .product-image:not(.zoom-available):hover {
+    position: relative;
+    display: block;
+    border: 1px solid $global-border-color-light;
+}
+
+@include bp (max-width, $bp-medium) {
+    body .product-img-box .product-image:hover {
+        border-color: $global-border-color-light;
+    }
+}
+
+.no-touch .product-image:hover {
+    border-color: $global-border-color-light;
+}
+
+/* -------------------------------------------- *
+ * Ratings
+ */
+
+.ratings {
+    margin: 7px 0;
+
+    .rating-box,
+    .rating-links {
+        margin: 5px 0;
+    }
+
+    .rating-box {
+        @extend .icon-sprite;
+        width: 65px;
+        height: 13px;
+        background-repeat: repeat-x;
+        background-position: 0 -615px;
+        overflow: hidden;
+    }
+    .rating-box .rating {
+        @extend .icon-sprite;
+        float: left;
+        height: 13px;
+        background-repeat: repeat-x;
+        background-position: 0 -600px;
+    }
+    .amount {
+        display: block;
+        margin: 5px auto;
+    }
+
+    .rating-links {
+        .separator {
+            margin: 0 3px;
+        }
+    }
+}
+
+/* -------------------------------------------- *
+ * Standard Formatted Text Block
+ */
+
+.std p {
+    margin: 0 0 $b-margin-bottom;
+}
+
+.std ol {
+    list-style: decimal outside;
+    margin-bottom: $b-margin-bottom;
+}
+
+.std ol li {
+    margin-left: 2em;
+}
+
+.std ul {
+    list-style: disc outside;
+    margin-bottom: $b-margin-bottom;
+}
+
+.std ul li {
+    margin-left: 2em;
+}
+
+.std .note {
+    color: $c-text-gray;
+    font-size: $f-size-s;
+}
+
+/* -------------------------------------------- *
+ * Tabs
+ */
+
+.tabs {
+    margin-bottom: $gap;
+    background: #FFFFFF;
+}
+
+/* -------------------------------------------- *
+ * Toolbar
+ */
+
+.toolbar {
+    margin-bottom: 15px;
+    border-bottom: 1px solid $global-lightcolor;
+    border-top: 1px solid $global-lightcolor;
+    background: $global-lightcolor-hover;
+    padding: 5px 10px 0px 10px;
+    font-size: $global-fontsize-small;
+    max-height: 40px;
+
+    &:after {
+        @include clearfix;
+    }
+}
+
+.pager-no-toolbar {
+    margin-bottom: $box-spacing;
+}
+
+// This will apply to the bottom toolbar
+.pager-no-toolbar ~ .pager-no-toolbar {
+    margin-top: $box-spacing;
+}
+
+.toolbar,
+.pager {
+    font-family: $base-font-family;
+    color: $global-category-font-color;
+    line-height: 30px;
+}
+
+.toolbar label,
+.pager-no-toolbar label {
+    font-weight: normal;
+}
+
+$toolbar-icon-padding-offset: 8px;
+
+.sorter {
+    margin-bottom: 5px;
+    width: 100%;
+
+    label {
+        float: left;
+        margin-right: 5px;
+
+        &:after {
+            content: ':';
+        }
+    }
+}
+
+.sorter > .sort-by {
+    float: right;
+    height: 30px;
+
+    .sort-by-switcher {
+        display: inline-block;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $global-sorter-bordercolor;
+
+        margin: 0px -2px 0px 5px;
+        padding: 2px;
+    }
+    .sort-by-switcher--asc {
+        @extend .egov-arrow-down;
+    }
+    .sort-by-switcher--desc {
+        @extend .egov-arrow-up;
+    }
+}
+
+.sorter > .view-mode {
+    float: left;
+
+    .grid,
+    .list {
+        float: left;
+        width: 30px;
+        height: 30px;
+    }
+    .grid {
+        margin-right: 5px;
+    }
+}
+
+.pager {
+    overflow: hidden;
+    width: 100%;
+
+    & > .count-container {
+        float: left;
+        font-size: $global-fontsize;
+    }
+
+    .amount {
+        float: right;
+        font-family: $base-font-family;
+        white-space: nowrap;
+        margin: 0 15px 0 0;
+    }
+
+    .limiter {
+        float: right;
+        height: 30px;
+        line-height: 30px;
+
+        & > label {
+            padding-right: 5px;
+
+            &:after {
+                content: ':';
+            }
+        }
+    }
+
+    .amount,
+    .limiter,
+    .pages {
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+}
+
+.pages {
+    float: right;
+    overflow: hidden;
+    margin-left: 5px;
+
+    strong {
+        display: none;
+    }
+}
+
+.pages li {
+    float: left;
+}
+
+.pages a:hover {
+    color: $global-linkcolor-hover;
+    background-color: $global-active-color;
+}
+
+.pages a,
+.pages .current {
+    display: inline-block;
+    border: 0;
+    font-size: $global-fontsize-big;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    line-height: 30px;
+    width: 25px;
+    height: 30px;
+    padding: 0;
+    color: $global-active-color;
+    font-family: $base-font-family;
+}
+
+.pages .current,
+.pages .current:hover {
+    border: 1px solid $global-active-color;
+    width: 30px;
+    color: $global-linkcolor-hover;
+    background-color: $global-active-color;
+    cursor: default;
+}
+
+.pages {
+	.next, .previous {
+	    // New HP5BP technique: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757c9e03dda4e463fb0d4db5a5f82d7
+	    font: 0/0 a;
+	    text-shadow: none;
+	    color: transparent;
+	    background-color: transparent;
+	    position: relative;
+        top: 50%;
+        left: 50%;
+        padding-top: 12px;
+        margin-left: -2px;
+
+        &:hover {
+        	border: 1px solid $global-active-color;
+    	}
+	}
+
+	.next:before {
+	    @include triangle(right, 4px, $global-active-color);
+	}
+	.next:hover:before {
+	    @include triangle(right, 4px, $global-linkcolor-hover);
+	}
+
+	.previous:before {
+	    @include triangle(left, 4px, $global-active-color);
+	}
+	.previous:hover:before {
+	    @include triangle(left, 4px, $global-linkcolor-hover);
+	}
+}
+
+@include bp(max-width, $bp-xsmall) {
+    // Only hide the "amount" element if page has pagination AND is inside of toolbar (since we only want it hiding on product listing)
+    // Otherwise show the amount since there is plenty of space
+    .pager .amount--has-pages {
+        display: none;
+    }
+
+    .pages {
+        float: left;
+    }
+
+    // When there are 5+ pages, it is important to hide this label in order to not break to three lines
+    .limiter label {
+        display: none;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    // One one column layouts, the toolbar doesn't have to break until a smaller viewport
+    .col1-layout {
+        .sorter,
+        .pager {
+            width: 100%;
+        }
+
+        .pager {
+            float: left;
+
+            .pages {
+                float: left;
+                margin-left: 0;
+            }
+
+            .count-container {
+            }
+        }
+    }
+}
+
+@include bp(max-width, $bp-large) {
+
+    .col2-left-layout,
+    .col2-right-layout,
+    .col3-layout {
+        .sorter,
+        .pager {
+            width: 100%;
+        }
+
+        .pager {
+            float: left;
+
+            .pages {
+                float: left;
+                margin-left: 0;
+            }
+
+            .count-container {
+            }
+        }
+    }
+}
+
+@include bp(max-width, 1279px) {
+
+    .toolbar .view-mode > label {
+        display: none;
+    }
+}
+
+/* ============================================ *
+ * Tax - Full Tax Summary
+ * ============================================ */
+
+#checkout-review-table,
+#shopping-cart-totals-table,
+body.customer-account .data-table {
+    .summary-collapse {
+        position: relative;
+        cursor: pointer;
+
+        &:before {
+            @include triangle(down, 7px, $c-blue);
+            position: static;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        &:hover:before {
+            @include triangle(down, 7px, $c-stimulus);
+            position: static;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+
+    .show-details {
+        .summary-collapse {
+            &:before {
+                @include triangle(up, 7px, $c-blue);
+                position: static;
+                display: inline-block;
+                margin-right: 5px;
+            }
+            &:hover:before {
+                @include triangle(up, 7px, $c-stimulus);
+                position: static;
+                display: inline-block;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+#checkout-review-table {
+	.product-details {
+	    display: inline-block;
+	    width: 80%;
+	    vertical-align: top;
+	}
+	.product-name {
+	    height: auto;
+	    width: 90%;
+	}
+}
+
+// Center the arrow, as the font is larger in tfoot
+#shopping-cart-totals-table tfoot td .summary-collapse {
+    &:before,
+    &:hover:before {
+        margin-bottom: 5px;
+    }
+}
+
+/* ============================================ *
+ * Magento Helpers
+ * ============================================ */
+
+.a-center {
+    text-align: center;
+}
+
+.a-right,
+.align-right {
+    text-align: right;
+}
+
+.no-display {
+    display: none !important;
+}
+
+.nobr,
+.nowrap {
+    white-space: nowrap;
+}
+
+.width-full {
+    width: 100%;
+}
+
+/* ============================================ *
+ * Custom Helpers
+ * ============================================ */
+
+.hidden {
+    display: none;
+}
+
+/* ============================================ *
+ * Print Styles
+ * ============================================ */
+
+.page-print .print-head {
+    margin: 0 0 15px;
+}
+
+.page-print .print-head .logo {
+    float: none;
+    max-height: 50px;
+    width: auto;
+}

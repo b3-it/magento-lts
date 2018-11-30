@@ -20,7 +20,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * Deliver id setzen
-	 * @param unknown $deliverIds
+	 * @param Dwd_Abo_Model_Order_Order $deliverIds
 	 * @return Dwd_Abo_Model_Order_Order
 	 */
 	public function setDeliverIds($deliverIds)
@@ -33,7 +33,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * Bestellung für einen Liste von Abo Items erstellen
-	 * @param unknown $items
+	 * @param array $items
 	 * @return Dwd_Abo_Model_Order_Order
 	 */
 	public function createOrders($items)
@@ -50,6 +50,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 		}
 		unset($oldOrder);
 		
+		//add Items to Quote
 		foreach ($items as $item)
 		{
 			$this->addItem($abo_quote,$item);
@@ -66,20 +67,12 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 		$AllowedPaymentMethod = $this->getAllowedPaymentMethod($abo_quote, $lastmethod);
 		if($AllowedPaymentMethod)
 		{
-			
 			//falls die letzte Bezahlmethode nicht mehr zur Verfügung steht
 			//$AllowedPaymentMethod =  array_shift($AllowedPaymentMethods);
 			
 			if(($AllowedPaymentMethod->getCode() == 'sepadebitbund') && ($lastmethod->getMethod() == 'sepadebitbund'))
 			{
-				//$AllowedPaymentMethod->setCcNumber($payment->getCcNumber());
-				
-				//$AllowedPaymentMethod->setAdditionalInformation('agreement',true);
-				
-				///$this->copySepaDebitValues($lastmethod, $AllowedPaymentMethod);
 				$AllowedPaymentMethod->setLastSepaMethod($lastmethod);
-				
-				
 			}
 			
 			if(!$AllowedPaymentMethod)
@@ -108,9 +101,9 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	/**
 	 * Ermitteln der gültigen Zahlmethode, die zuletzt benutzte hat Vorrang
 	 * debit ist nur erlaubt wenn die initiale Methode debit war
-	 * @param unknown $abo_quote
-	 * @param unknown $lastmethod
-	 * @return unknown|NULL
+	 * @param Mage_Sales_Model_Quote $abo_quote
+	 * @param Mage_Payment_Model_Method_Abstract $lastmethod
+	 * @return Mage_Payment_Model_Method_Abstract|NULL
 	 */
 	protected function getAllowedPaymentMethod($abo_quote, $lastmethod)
 	{
@@ -151,10 +144,10 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * ermitteln ob die Zahlmethode zu verfügung steht, berücksichtigen und priorisieren der ersten Zahlmethode
-	 * @param unknown $method
-	 * @param unknown $abo_quote
-	 * @param unknown $allowed
-	 * @param unknown $lastmethod
+	 * @param Mage_Payment_Model_Method_Abstract $method
+	 * @param Mage_Sales_Model_Quote $abo_quote
+	 * @param Mage_Payment_Model_Method_Abstract $allowed
+	 * @param Mage_Payment_Model_Method_Abstract $lastmethod
 	 * @return boolean
 	 */
 	protected function _canUseMethod($method,$abo_quote, $allowed, $lastmethod)
@@ -211,8 +204,8 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * Zahlmethode setzen
-	 * @param unknown $method
-	 * @param unknown $abo_quote
+	 * @param Mage_Payment_Model_Method_Abstract $method
+	 * @param Mage_Sales_Model_Quote $abo_quote
 	 * @return Dwd_Abo_Model_Order_Order
 	 */
 	protected function _assignMethod($method, $abo_quote)
@@ -223,8 +216,8 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * Email an Kunden zur Erneuerung des Abos senden
-	 * @param unknown $customer
-	 * @param unknown $aboitems
+	 * @param Mage_Customer_Model_Customer $customer
+	 * @param Dwd_Abo_Model_Order_Order $aboitems
 	 */
 	protected function sendAboRefreshEMail($customer, $aboitems)
 	{
@@ -244,8 +237,8 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * letzte Zahlmethode ermitteln
-	 * @param unknown $lastOrderId
-	 * @return Ambigous <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|string
+	 * @param integer $lastOrderId
+	 * @return <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|string
 	 */
 	protected function getLastOrderPaymentMethod($lastOrderId)
 	{

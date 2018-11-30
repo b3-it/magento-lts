@@ -1,0 +1,92 @@
+<?php $_itemID = $this->getElement()->getId(); ?>
+<tr class='grid'>
+	<td class="label">
+		<?php echo $this->__($this->getElement()->getLabel())?>
+	</td>
+	<td class="value">
+		<script type="text/javascript">
+			var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
+			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>' +
+			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>';
+			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>';
+		</script>
+		<table class="massaction">
+			<tbody style="background:none;">
+				<tr>
+					<td>
+						<div class="right select-button-container">
+							<div class="entry-edit">
+								<select id="table-<?php echo $_itemID; ?>-select">
+									<?php foreach($this->getElement()->getValues() as $opt):?>
+										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+									<?php endforeach;?>
+								</select>
+								<button class="scalable add" onclick="ComponentParts_<?php echo $this->getElement()->getId();?>.addRow();" type="button" title="<?php echo Mage::helper('egovsbase')->__('Add')?>">
+									<span>
+										<?php echo Mage::helper('egovsbase')->__('Add')?>
+									</span>
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>_grid">
+			<colgroup>
+				<col />
+                <col style="width: 80px;"/>
+                <col style="width: 100px;" />
+				<col style="width: 110px;" />
+			</colgroup>
+			<thead>
+				<tr class="headings">
+					<th><?php echo $this->__('Name')?></th>
+					<th><?php echo $this->__('Default')?></th>
+					<th><?php echo $this->__('Admin Only')?></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody data-up-down="<?php if($this->getElement()->getShowUpDown() !== false) { echo 0; } else { echo 1; } ?>">
+				<template id="<?php echo $this->getElement()->getId(); ?>_template">
+                <tr id="row-{{elementId}}-{{my_id}}" data-id="{{my_id}}">
+						<td>
+							{{label}}
+                            <input type="hidden" id="id-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][id]" value="{{id}}" />
+                            <input type="hidden" id="id-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][my_id]" value="{{my_id}}" />
+							<input type="hidden" id="entityid-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][entity_id]" value="{{entity_id}}" />
+							<input type="hidden" id="pos-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][position]" value="{{pos}}" class="position" />
+							<input type="hidden" id="deleted-{{elementId}}-{{my_id}}" name="{{inputname}}[{{my_id}}][deleted]" value="0" />
+						</td>
+                        <td>
+                            <input type="radio" id="default-{{elementId}}-{{my_id}}" {{default_is_checked}} name="{{inputname}}[is_default]" value="{{my_id}}" />
+                        </td>
+                        <td>
+                            <input type="checkbox" id="admin-only-{{elementId}}-{{my_id}}" {{admin_is_checked}} name="{{inputname}}[{{my_id}}][admin_only]" />
+                        </td>
+						<td class="position-sorting">
+						<?php if($this->getElement()->getShowUpDown() !== false):?>
+							<button class="scalable add-widget position-up" type="button" onclick="ComponentParts_<?php echo $this->getElement()->getId();?>.moveUp({{my_id}})"  title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>
+							<button class="scalable add-widget position-down" type="button" onclick="ComponentParts_<?php echo $this->getElement()->getId();?>.moveDown({{my_id}})" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>
+						<?php endif;?>
+							<button class="scalable delete add-widget position-delete" type="button" onclick="ComponentParts_<?php echo $this->getElement()->getId();?>.removeRow({{my_id}})" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>
+						</td>
+					</tr>
+                  </template>
+			</tbody>
+		</table>
+		
+		
+		<script type="text/javascript" >
+		ComponentParts_<?php echo $this->getElement()->getId();?> = new ComponentParts('<?php echo $this->getElement()->getId();?>','<?php echo $this->getElement()->getName()?>');
+
+		<?php if($this->getElement()->getElements()):?>
+		<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
+		<?php ?>
+			ComponentParts_<?php echo $this->getElement()->getId();?>.appendRow(<?php echo json_encode($_item->getData())?> );
+		<?php endforeach;?>
+        <?php endif;?>
+		</script>
+		
+	</td>
+</tr>

@@ -13,11 +13,11 @@
 .idea/
 .tern-project
 
+# Debug-Files
+lib/Egovs/.localhost
+
 # Magento-Config
 app/etc/local.xml
-
-#Debug-Toolbar
-app/etc/modules/Magento_Debug.xml
 
 # Media-Content
 media
@@ -47,3 +47,4 @@ lib/ePayment
 /info.php
 /var/importexport/*
 *.exe
+/.externalToolBuilders/

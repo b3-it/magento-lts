@@ -1,0 +1,55 @@
+{{template config_path="design/email/header"}}
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+<table style="width:98%; margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+	<tr>
+		<td align="center" valign="top">
+        
+			<table style="width:650px;">
+				<tr>
+					<td valign="top">
+						<a href="{{store url=''}}">
+							    <img width="{{if logo_width}}{{var logo_width}}{{else}}165{{/if}}"
+								     height="{{if logo_height}}{{var logo_height}}{{else}}48{{/if}}"
+								     src="{{var logo_url}}"
+								     alt="{{var logo_alt}}"
+								     border="0"/>
+						</a>
+					</td>
+				</tr>
+			</table>
+
+        
+			<table style="width:650px;">
+				<tr>
+					<td valign="top">
+						<p>
+							<strong>Dear {{htmlescape var=$order.getCustomerName()}}</strong>,<br/>
+							Your order # {{var order.increment_id}} has been <br/>
+							<strong>{{var order.getStatusLabel()}}</strong>.
+						</p>
+						<p>You can check the status of your order by <a href="{{store url='customer/account/'}}" style="color:#1E7EC8;">logging into your account</a>.</p>
+						<p>{{var comment}}</p>
+						<p>
+							If you have any questions, please feel free to contact us at
+							<a href="mailto:{{block type='imprint/field' value='email'}}" style="color:#1E7EC8;">{{block type="imprint/field" value="email"}}</a>.
+						</p>
+						<p>Thank you again,<br/><strong>{{var order.getStoreGroupName()}}</strong></p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{{template config_path="design/email/support"}}
+					</td>
+				</tr>
+				<tr><td style="border-bottom:2px solid #eee;"> </td></tr>
+				<tr>
+					<td>
+						{{block type="cms/block" block_id="sym_agb"}}
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</div>
+{{template config_path="design/email/footer"}}

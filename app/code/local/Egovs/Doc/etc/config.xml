@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Egovs_Doc>
@@ -22,11 +23,11 @@
 		    	    <title>Documentation</title>
 		    		<sort_order>10000</sort_order>
 		    		<children>
-		    		    <egovs_doc_view module="egovs_doc">
+		    		    <egovs_doc_manager module="egovs_doc">
 		    				<title>View Documentation</title>
 		    				<sort_order>0</sort_order>
 		    				<action>adminhtml/doc_doc</action>
-		    		    </egovs_doc_view>
+		    		    </egovs_doc_manager>
 		    		</children>
 		        </egovs_doc>
 		    </menu>
@@ -147,6 +148,12 @@
                 <PolarionTesttool>
                     <label>Polarion-Testtool</label>
                 </PolarionTesttool>
+                <Preislisten>
+                    <label>Preislisten</label>
+                </Preislisten>
+                <SpezielleUebersichten>
+                    <label>Spezielle Übersichten</label>
+                </SpezielleUebersichten>
             </categories>
         </egovs_doc>
     </global>

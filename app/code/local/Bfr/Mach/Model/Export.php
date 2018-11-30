@@ -19,7 +19,7 @@ class Bfr_Mach_Model_Export extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Daten für die Bestellungen abrufen und in ein temp Verzeichniss speichern
-	 * @param unknown $orderIds
+	 * @param array $orderIds
 	 */
     public function saveData($orderIds)
     {
@@ -56,8 +56,8 @@ class Bfr_Mach_Model_Export extends Mage_Core_Model_Abstract
     
     /**
      * Die Daten anhand des Laufes von der Platte laden
-     * @param unknown $lauf
-     * @param unknown $exportType
+     * @param string $lauf
+     * @param Bfr_Mach_Model_ExportType $exportType
      */
     public function loadData($lauf, $exportType)
     {

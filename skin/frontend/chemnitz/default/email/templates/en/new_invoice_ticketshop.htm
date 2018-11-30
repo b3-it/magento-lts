@@ -1,0 +1,60 @@
+{{template config_path="design/email/header"}}
+
+<div style="background:#F6F6F6; font-family:Arial, Helvetica, Verdana, sans-serif; font-size:12px; margin:0; padding:0;">
+<table style="width:100%;">
+<tr>
+    <td align="center" valign="top" style="padding:20px 0 20px 0">
+
+        <table bgcolor="#FFFFFF" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #E0E0E0;">
+            <tr>
+            </tr>
+
+            <tr>
+                <td valign="top">
+                    <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;"">Hello, {{htmlescape var=$order.getCustomerName()}}</h1>
+                    <p style="font-size:12px; line-height:16px; margin:0;">
+                        Thank you for your order from {{var store.getFrontendName()}}.
+                        You can check the status of your order by <a href="{{store url='customer/account/'}}" style="color:#1E7EC8;">logging into your account</a>.
+                        If you have any questions about your order please contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}" style="color:#1E7EC8;">{{config path='trans_email/ident_support/email'}}</a> or call us at <span class="nobr">{{config path='general/store_information/phone'}}</span> Monday - Thursday, 8am - 4pm PST.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2 style="font-size:18px; font-weight:normal; margin:0;">Your Invoice #{{var invoice.increment_id}} for  Order #{{var order.increment_id}}</h2>
+                    <h2 style="font-size:18px; font-weight:normal; margin:0;">Payment Reference Code (BKZ): {{var order.payment.kassenzeichen}}</h2>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2 style="font-size:18px; font-weight:normal; margin:0;">Please check the attached Invoice!</h2>
+                </td>
+            </tr>
+					<tr>
+						<td>
+							{{block type="cms/block" block_id="ticketshop_mail_signature_en"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							<h3 style="font-size:12px; font-weight:normal; margin:0;"><strong>Widerrufsbelehrung</strong></h3>
+							{{block type="cms/block" block_id="ticketshop_widerruf_block_en"}}
+						</td>
+					</tr>
+					<tr><td style="border-bottom:2px solid #eee;">&nbsp;</td></tr>
+					<tr>
+						<td>
+							<h3 style="font-size:12px; font-weight:normal; margin:0;"><strong>Allgemeine Geschäftsbedingungen und Verbraucherinformationen</strong></h3>
+							{{block type="cms/block" block_id="ticketshop_agb_block_en"}}
+						</td>
+					</tr>
+        </table>
+    </td>
+</tr>
+</table>
+</div>
+
+
+{{template config_path="design/email/footer"}}

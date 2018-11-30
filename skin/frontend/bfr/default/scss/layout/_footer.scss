@@ -5,6 +5,17 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.footer-before-container {
+	.block-external-links {
+	    display: none;
+	    
+	    @include bp(max-width, $bp-small) {
+	        display: block;
+	        margin: 10px;
+	    }
+	}
+}
+
 /* ============================================ *
  * Footer
  * ============================================ */
@@ -15,18 +26,39 @@
     width: 94%;
     margin: 0 auto;
     padding-top: 10px;
+    
+    @include bp(max-width, $bp-small) {
+        width: 100%;
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 80%;
+        background-size: 130% auto;
+        transform: scaleY(-1);
+        height: auto;
+    }
+    
+    > div {
+        @include bp(max-width, $bp-small) {
+            height: 170px;
+            transform: scaleY(-1);
+            position: relative;
+            top: -50px;
+        }
+    }
 
     .links li a {
+        @extend .image-link;
+    }
+    
+    @include bp(max-width, $bp-medium) {
+        width: 100%;
+        background-color: $global-wrapper-color;
+        border-top: 5px solid #d7dbdc;
+    }
+    
+    @include bp(max-width, $bp-small) {
         border: none;
-        color: $global-footer-linkcolor;
-        text-decoration: none;
-        padding-left: 10px;
-        background: transparent url($global-footer-link-image) no-repeat scroll 0 5px;
-
-        &:hover, &:active {
-            text-decoration: underline;
-            border: none;
-        }
+        background-color: transparent;
     }
 }
 
@@ -48,6 +80,10 @@
 .footer {
     margin-left: $global-footer-horizontal-margin;
     margin-right: $global-footer-horizontal-margin;
+    
+    @include bp(max-width, $bp-small) {
+        height: 100%;
+    }
 
     a {
         border-bottom: 1px dotted $global-footer-fontcolor;
@@ -68,6 +104,16 @@
         width: auto;
         position: relative;
         top: -5px;
+        
+        @include bp(max-width, $bp-small) {
+            position: relative;
+            top: 50%;
+            margin: 0;
+        }
+        
+        @include bp(max-width, $bp-small) {
+            top: 30%;
+        }
     }
 
     .links {
@@ -80,6 +126,11 @@
         line-height: $global-footer-lineheight;
         text-align: center;
         padding-top: $global-footer-links-top;
+        
+        @include bp(max-width, $bp-small) {
+            padding: 0;
+            margin-top: -20px;
+        }
 
         li {
             line-height: $global-footer-lineheight;
@@ -122,11 +173,5 @@
         .currency-switcher {
             display: block;
         }
-    }
-}
-
-@include bp(max-width, 770px) {
-    .footer-container {
-        top: 50px;
     }
 }

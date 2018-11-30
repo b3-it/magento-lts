@@ -233,4 +233,42 @@ class Egovs_Infoletter_Model_Queue extends Mage_Core_Model_Abstract
     {
     	return mb_strlen($this->getMessageBody()) > 1;
     }
+
+    /**
+     * @param $emails Array $data['email'] = array('prefix'=>,'firstname'=> ,'lastname'=>,'company'=>);
+     * @return int Anzahl der eingefügten Adressen
+     * @throws Exception
+     */
+    public function addEmailToQueue($emails)
+    {
+        $res = 0;
+
+        if($this && ($this->getStatus() ==  Egovs_Infoletter_Model_Status::STATUS_NEW))
+        {
+            $collection = Mage::getModel('infoletter/recipient')->getCollection();
+            $collection->getSelect()->where("message_id=?", intval($this->getId()));
+            $exiting = array();
+            foreach ($collection->getItems() as $recipient)
+            {
+                $exiting[] = $recipient->getEmail();
+            }
+
+            foreach ($emails as $email => $data)
+            {
+                if(!in_array($email, $exiting))
+                {
+                    $recipient =  Mage::getModel('infoletter/recipient');
+                    $recipient->setData($data);
+                    $recipient->setEmail($email);
+                    $recipient->setStatus(Egovs_Infoletter_Model_Recipientstatus::STATUS_UNSEND);
+                    $recipient->setMessageId($this->getId());
+                    $recipient->save();
+                    $res++;
+                }
+            }
+
+        }
+
+        return $res;
+    }
 }

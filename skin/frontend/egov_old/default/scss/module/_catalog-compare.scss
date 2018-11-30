@@ -1,0 +1,92 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Catalog - Compare
+ * ============================================ */
+/*
+.block-compare, .block-compared {
+	margin-bottom: $global-boxmargin;
+}
+*/
+.catalog-product-compare-index {
+	h1 {
+		display: block;
+		position: relative;
+	}
+
+	.link-print {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		font-size: 0.4em;
+	}
+
+    .compare-table {
+    	th, td {
+    		padding-right: $global-boxpadding * 2;
+    		vertical-align: top;
+    	}
+    	
+    	th {
+    	    font-weight: bold;
+    	}
+    
+        td {
+        	padding-bottom: $global-boxpadding * 2;
+        }
+        
+        .egov-cart {
+        	font-size: 1em;
+        	
+        	span {
+        	    font-family: $base-font-family;
+            }
+        }
+    	
+        .remove-list-item {
+        	padding-bottom: $global-boxpadding * 2;
+        }
+
+    	.product-image, .product-compare-base-details {
+            display: block;
+            vertical-align: top;
+            padding: 0 3px;
+            border: none;
+        }
+
+	    .product-shop-row {
+	    	.product-action, .add-to-links {
+	    		display: inline-block;
+	    		margin: 5px 0;
+	    	}
+
+	        .add-to-links {
+	        	display: block;
+	        	padding-bottom: $global-boxpadding;
+	        }
+	    
+	        button {
+	        	margin: 0;
+	        }
+	    
+	        .add-to-links .egov-star {
+	        	text-align: right;
+	        	font-size: 2em !important;
+	        }
+	    	
+            &.top td {
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+
+            &.bottom td {
+                padding-top: 0;
+            }
+        }
+    }
+}

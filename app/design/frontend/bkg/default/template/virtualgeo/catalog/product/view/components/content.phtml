@@ -1,0 +1,15 @@
+<?php
+/** @var Bkg_VirtualGeo_Block_Catalog_Product_View_Components_Content $this */
+?>
+<h3>
+    <?php echo $this->escapeHtml($this->getTitle()); ?>
+    <span class="select-options" id="title-<?php echo $this->getHtmlID(); ?>"></span>
+</h3>
+
+<div class="option-row">
+    <ul>
+        <?php foreach($this->getOptions() as $_node): ?>
+            <?php echo $this->getNodeHtml($_node) ?>
+        <?php endforeach ?>
+    </ul>
+</div>

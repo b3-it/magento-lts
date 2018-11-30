@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <!--
 /**
@@ -33,7 +33,7 @@
                 <cart translate="label"> 
                     <fields>
                         <slpb_count translate="label">
-                            <label>Max. Anzahl der Publikationen</label>
+                            <label>Max. Number of publications</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
@@ -41,7 +41,7 @@
                             <show_in_store>0</show_in_store>
                         </slpb_count>
                         <slpb_stars translate="label">
-                            <label>Max. Anzahl der Sternchen</label>
+                            <label>Max. Number of stars</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>110</sort_order>
                             <show_in_default>1</show_in_default>
@@ -49,21 +49,30 @@
                             <show_in_store>0</show_in_store>
                         </slpb_stars>
                         <orders_per_period translate="label">
-                            <label>Max. Anzahl der Bestellungen pro Periode</label>
+                            <label>Max. Number of orders per period</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>110</sort_order>
+                            <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </orders_per_period>
                         <slpb_max_qty translate="label">
-                            <label>Max. Anzahl pro Produkt</label>
+                            <label>Max. Number per product</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>110</sort_order>
+                            <sort_order>130</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </slpb_max_qty>
+                        <slpb_use_data_src_to_check_postcode translate="label">
+                            <label>Use data source to check postcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </slpb_use_data_src_to_check_postcode>
                     </fields>
                 </cart>
             </groups>
@@ -79,7 +88,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <period_start translate="label">
-                            <label>Perioden Anfang</label>
+                            <label>Periods beginning</label>
                             <comment>yyyy-mm-dd</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>100</sort_order>
@@ -88,7 +97,7 @@
                             <show_in_store>0</show_in_store>
                         </period_start>
                         <period_stop translate="label">
-                            <label>Perioden Ende</label>
+                            <label>Periods end</label>
                             <comment>yyyy-mm-dd</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>110</sort_order>

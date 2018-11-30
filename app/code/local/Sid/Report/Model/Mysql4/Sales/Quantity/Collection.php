@@ -183,7 +183,7 @@ class Sid_Report_Model_Mysql4_Sales_Quantity_Collection extends Mage_Sales_Model
     /**
      * Setzt den Filter für Kategorien
      * 
-     * @param unknown_type $filter Filter
+     * @param Mage_Core_Model_Input_Filter $filter Filter
      * 
      * @return void
      */

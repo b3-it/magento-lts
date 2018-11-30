@@ -172,7 +172,7 @@
 
 // ----------------------------------------------
 // Widgets
-
+/*
 .col1-layout {
     .widget-new-products {
         width: $global-content-1col-percent;
@@ -194,4 +194,14 @@
     .widget-new-products {
         width: $global-content-3col-percent;
     }
+}
+*/
+
+// ----------------------------------------------
+// special Head-Line
+.head-line {
+    font-size: 1.2em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
 }

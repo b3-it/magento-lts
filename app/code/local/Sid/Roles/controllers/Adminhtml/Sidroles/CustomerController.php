@@ -219,6 +219,7 @@ class Sid_Roles_Adminhtml_Sidroles_CustomerController extends Mage_Adminhtml_Cus
 					// force new customer active
 					if ($isNewCustomer) {
 						$customer->setPassword($data['account']['password']);
+                        $customer->setPasswordCreatedAt(time());
 						$customer->setForceConfirmed(true);
 						if ($customer->getPassword() == 'auto') {
 							$sendPassToEmail = true;

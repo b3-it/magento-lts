@@ -1,0 +1,197 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * CMS Pages
+ * ============================================ */
+
+// ----------------------------------------------
+// Content for static pages
+
+.cms-page-view,
+.cms-no-route {
+    .page-title,
+    .page-head {
+        h1,
+        h3 {
+        }
+    }
+
+    table {
+        tbody td {
+            text-align: left !important;
+        }
+    }
+
+    .data-table {
+        @extend .egov-base-table;
+
+        thead th, tbody td {
+            text-align: left !important;
+            padding: $global-tdpadding;
+        }
+
+        tbody td {
+            background-color: $global-checkout-tdbackground;
+        }
+
+        td.last {
+            text-align: right !important;
+        }
+    }
+
+    .std {
+
+        img {
+            max-width: 100%;
+        }
+
+        p {
+            color: $global-fontcolor-dark;
+            font-family: $base-font-family;
+            font-size: $global-fontsize;
+            line-height: $global-lineheight;
+        }
+
+        h1 {
+            color: $global-h1-color;
+        }
+
+        h2 {
+            color: $global-h2-color;
+        }
+
+        h3 {
+            color: $global-h3-color;
+        }
+
+        h4 {
+            color: $global-h4-color;
+        }
+
+        h5 {
+            color: $global-h5-color;
+        }
+
+        ul {
+            padding: 0px;
+
+            li {
+                color: $global-fontcolor-dark;
+                font-family: $base-font-family;
+                font-size: $global-fontsize;
+                text-indent: $global-indent;
+                list-style-image: url($global-category-arrow-full-right);
+                list-style-type: none;
+
+                a {
+                    color: $global-linkcolor;
+                }
+            }
+        }
+
+    }
+
+    .col-left {
+        &:after {
+            @include clearfix;
+        }
+    }
+}
+
+.cms-no-route {
+    .std {
+
+        img {
+            width: 100%;
+        }
+    }
+}
+
+.cms-page-view .std,
+.cms-home .std,
+.cms-no-route .std {
+    .messages {
+        margin-bottom: $box-spacing;
+
+        ul {
+            margin-bottom: 0;
+        }
+
+        li {
+            list-style: none;
+            margin-left: 0;
+            font-style: normal;
+            font-family: $f-stack-sans;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Accordition
+
+#accordion {
+    @include accordion;
+
+    li {
+        position: relative;
+        overflow: hidden;
+
+        .plusimage h2 {
+            margin-right: $gap;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Sitemap
+
+.page-sitemap {
+    .links {
+        display: block;
+        text-align: right;
+        margin: 0 20px 0 0;
+
+        a { position: relative; }
+    }
+
+    .sitemap {
+        padding: 0 20px;
+        margin: 15px 0;
+        font-size: $f-size-xs;
+
+        li {
+            margin: 3px 0;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Widgets
+
+.col1-layout {
+    .widget-new-products {
+        width: $global-content-1col-percent;
+    }
+}
+
+.col2-left-layout {
+    .widget-new-products {
+        width: $global-content-2col-left-percent;
+    }
+}
+.col2-right-layout {
+    .widget-new-products {
+        width: $global-content-2col-right-percent;
+    }
+}
+
+.col3-layout {
+    .widget-new-products {
+        width: $global-content-3col-percent;
+    }
+}

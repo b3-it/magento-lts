@@ -5,6 +5,14 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.mp-checkout, .checkout-cart-index {
+    p.required,
+    span.required {
+        margin-right: 5px;
+        color: $global-warning-color;
+    }
+}
+
 .mp-checkout {
     text-align: left;
 
@@ -12,13 +20,13 @@
         overflow: hidden;
         max-width: 90vw;
     }
- 
+
     .col-left {
         @include bp(max-width, $bp-medium) {
             display: none;
         }
     }
-    
+
     .col-main {
         @include bp(max-width, $bp-medium) {
             width: 100% !important;
@@ -135,27 +143,30 @@
             font-weight: bold;
             font-size: $global-checkout-success-order-number;
         }
-        
+
         @include bp(max-width, $bp-medium) {
         	background-image: none !important;
         }
     }
 
     .col2-set {
+        table {
+            @extend .egov-base-table;
+        }
 
         div.col-1 {
             padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
         }
-        
+
         div.col-2 {
             padding: $global-boxpadding $global-boxmargin 0px $global-boxmargin;
-            width: 45%;
+            width: 47%;
         }
-        
+
         .wide {
             width: 50%;
         }
-        
+
         .full-wide {
             width: 100%;
             margin: 0px 0px 10px 0px;
@@ -193,12 +204,6 @@
                 width: 100%;
                 display: inline;
             }
-        }
-
-        p.required,
-        span.required {
-            margin-right: 5px;
-            color: $global-warning-color;
         }
 
         div.validation-advice {
@@ -324,7 +329,7 @@
     ul.checkout-progress {
         display:none;
     }
-    
+
     .buttons-set .button {
         width: 25% !important;
     }
@@ -335,7 +340,7 @@
         .checkout-progress li {
             width: 13% !important;
         }
-        
+
         label {
             width: auto !important;
         }

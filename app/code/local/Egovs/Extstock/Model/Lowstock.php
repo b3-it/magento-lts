@@ -21,7 +21,7 @@ class Egovs_Extstock_Model_Lowstock extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Alle Produkte mit geringen Lagerbestand finden
-	 * @return LowStock Collection
+	 * @return Egovs_Extstock_Model_Lowstock Collection
 	 */
 	private function getLowStockCollection()
 	{
@@ -48,9 +48,7 @@ class Egovs_Extstock_Model_Lowstock extends Mage_Core_Model_Abstract
 	
 	/**
 	 *
-	 * @param unknown $EmailAddress
-	 * @param unknown $data e.g.
-	 * @param unknown $template e.g "dwd_abo/email/renewal_abo_template"
+	 * @param Mage_Sales_Model_Resource_Order_Item
 	 * @return Egovs_Extstock_Model_Lowstock
 	 */
 	public function sendEmail($lowstock)
@@ -59,13 +57,12 @@ class Egovs_Extstock_Model_Lowstock extends Mage_Core_Model_Abstract
 		{
 			$storeid = 0;
 			 
-			$translate = Mage::getSingleton('core/translate');
 			/* @var $translate Mage_Core_Model_Translate */
+			$translate = Mage::getSingleton('core/translate');
 			$translate->setTranslateInline(false);
 				
-			$mailTemplate = Mage::getModel('core/email_template');
 			/* @var $mailTemplate Mage_Core_Model_Email_Template */
-				
+			$mailTemplate = Mage::getModel('core/email_template');
 				
 			$template = Mage::getStoreConfig('cataloginventory/lowstock_email/lowstock_template', $storeid);
 				

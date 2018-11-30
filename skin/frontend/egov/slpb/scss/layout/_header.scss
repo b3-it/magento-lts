@@ -55,7 +55,7 @@
     }
 
     .welcome-header {
-        top: $global-welcome-header-top + $global-logo-height !important;
+        top: $global-welcome-header-top + $global-logo-height;
     }
 
     #egov-nav{
@@ -74,7 +74,7 @@
     #egov-nav {
         display: none;
     }
-    
+
     #egov-nav.skip-active {
     	display: block;
     }
@@ -139,8 +139,8 @@
             top: 40px;
         }
         @include bp(max-width, 550px) {
-            left: 35px;
-            top: 40px;
+            left: 15px;
+            top: 60px;
         }
     }
 }
@@ -176,7 +176,7 @@
     position: relative;
     right: 6px;
     top: 70px;
-    z-index: 999;
+    z-index: 800;
 
     label {
         display: none;
@@ -194,7 +194,7 @@
     @include bp(max-width, $bp-xsmall) {
         padding-top: 8px;
     }
-    
+
     @include bp(max-width, 800px) {
         top: 100px;
     }
@@ -312,7 +312,7 @@
         }
 
         .logo {
-            top: 10px;
+            top: 0;
             left: 10px;
         }
     }
@@ -321,14 +321,15 @@
         .skip-egov {
             display: none;
         }
-        
+
         .skip-cart {
         	width: 100%;
         }
 
         .welcome-header {
-            left: 150px;
+            left: 10px;
             z-index: 99;
+			top: -95px;
         }
     }
 
@@ -347,10 +348,14 @@
     float: right;
     width: 15%;
     background-color: $global-wrapper-color;
-    color: $global-linkcolor;
+    color: $global-active-color;
     line-height: 100%;
     text-align: center;
-    
+
+    &:hover {
+        background-color: $global-active-color;
+    }
+
     @include bp(max-width, $bp-medium) {
     	padding-top: 5px;
     }
@@ -383,9 +388,9 @@ a.skip-link {
 
     .skip-link {
         border-right: 1px solid #EDEDED;
-        width: 30%;
+        width: 20%;
     }
-    
+
     .skip-account, .skip-cart {
     	margin: 0;
     }
@@ -495,9 +500,11 @@ a.skip-link {
         width: 75%;
         right: 10px;
     }
-    
+
     @include bp(max-width, 500px) {
-        width: 60%;
+		> * {
+			width: 30%;
+		}
     }
 }
 

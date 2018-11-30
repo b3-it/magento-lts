@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+		<Bkg_Base>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Base>
+		<Bkg_Geometry>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Geometry>
+        <Bkg_License>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+            	<B3it_Subscription />
+            </depends>
+        </Bkg_License>
+        <Bkg_MapSeries>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+      	        <Bkg_VirtualGeo /> <!-- need epsg stuff from there -->
+            </depends>
+        </Bkg_MapSeries>
+         <Bkg_Orgunit>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+        		<Egovs_Base />
+      		</depends>
+        </Bkg_Orgunit>
+        <Bkg_Shapefile>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+            	<Bkg_Viewer />
+        		<Bkg_VirtualGeo />
+      		</depends>
+        </Bkg_Shapefile>
+        <Bkg_RegionAllocation>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_RegionAllocation>
+        <Bkg_Tollpolicy>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Tollpolicy>
+        <Bkg_Viewer>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Viewer>
+        <Bkg_VirtualGeo>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Bkg_Viewer /> <!-- need viewer components -->
+                <Bkg_Tollpolicy /> <!-- needed because of the toll block -->
+                <Bkg_RegionAllocation />
+            </depends>
+        </Bkg_VirtualGeo>
+    </modules>
+</config>

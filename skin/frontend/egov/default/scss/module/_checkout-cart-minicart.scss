@@ -24,7 +24,13 @@
 
     @include bp(max-width, $bp-medium) {
         display: inline-block;
-        width: auto;
+        width: 33%;
+    }
+    
+    .skip-link {
+        @include bp(max-width, $bp-medium) {
+            width: 90%;
+        }
     }
 
     .minicart-message {
@@ -80,6 +86,7 @@
             padding: 8px 5px 8px 11px;
             border-bottom: 1px solid #DDDDDD;
             min-height: 100px;
+            position: relative;
 
             &.last {
                 border: none;
@@ -108,6 +115,10 @@
 
         .mini-cart-secound {
             text-align: right;
+
+            input {
+                margin: 0;
+            }
         }
 
         .mini-cart-third {
@@ -148,6 +159,7 @@
 
         .quantity-button {
             opacity: 0;
+            display: none;
 
             @include transition-property(opacity);
             @include transition-duration(100ms);
@@ -260,6 +272,8 @@ div.block-cart {
 
                 p.product-name {
                     padding: 0px;
+                    overflow: hidden;
+                    max-height: 2rem;
                 }
             }
         }

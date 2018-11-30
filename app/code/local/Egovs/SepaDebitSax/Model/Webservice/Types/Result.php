@@ -22,7 +22,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result extends Egovs_SepaDebitSa
 {
     /**
      * The ResultState
-     * @var SepaMvEnumWSResultState
+     * @var Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState
      */
     public $ResultState;
     /**
@@ -36,7 +36,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result extends Egovs_SepaDebitSa
     /**
      * Constructor method for WSResult
      * @see parent::__construct()
-     * @param Egovs_SepaDebitSax_Model_Webservice_Types_Enum_ResultState $_resultState
+     * @param Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState $_resultState
      * @param Egovs_SepaDebitSax_Model_Webservice_Types_ResultCode $_resultCode
      * @return Egovs_SepaDebitSax_Model_Webservice_Types_Result
      */
@@ -46,7 +46,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result extends Egovs_SepaDebitSa
     }
     /**
      * Get ResultState value
-     * @return Egovs_SepaDebitSax_Model_Webservice_Types_Enum_ResultState|null
+     * @return Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState|null
      */
     public function getResultState()
     {
@@ -55,12 +55,12 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result extends Egovs_SepaDebitSa
     /**
      * Set ResultState value
      * @uses Egovs_SepaDebitSax_Model_Webservice_Types_Enum_ResultState::valueIsValid()
-     * @param Egovs_SepaDebitSax_Model_Webservice_Types_Enum_ResultState $_resultState the ResultState
-     * @return Egovs_SepaDebitSax_Model_Webservice_Types_Enum_ResultState
+     * @param Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState $_resultState the ResultState
+     * @return Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState
      */
     public function setResultState($_resultState)
     {
-        if(!SepaMvEnumWSResultState::valueIsValid($_resultState))
+        if(!Egovs_SepaDebitSax_Model_Webservice_Enum_ResultState::valueIsValid($_resultState))
         {
             return false;
         }

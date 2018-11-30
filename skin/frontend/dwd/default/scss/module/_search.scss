@@ -16,7 +16,7 @@
     top: 0px !important;
     width: 100% !important;
     z-index: 200;
-    
+
     ul {
         background-color: $grundfarbe-weiss;
         border: $global-active-border solid $grundfarbe-blau;
@@ -31,12 +31,17 @@
             cursor: pointer;
             padding: 4px 6px;
             text-align: left;
-            display: block;
             line-height: $global-lineheight;
+            height: auto !important;
+            width: 100%;
+
+            color: $grundfarbe-blau !important;
+            background-color: $grundfarbe-weiss !important;
 
             .amount {
                 float: right;
                 font-weight: bold;
+                display: inline-block;
             }
         }
     }
@@ -60,7 +65,7 @@
     .page-title {
         width: $global-content-2col-right-percent;
     }
-    
+
     .buttons-set {
     	clear: none;
     }

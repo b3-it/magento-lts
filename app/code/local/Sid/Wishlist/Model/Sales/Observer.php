@@ -18,6 +18,9 @@ class Sid_Wishlist_Model_Sales_Observer
 		
 		foreach ($_order->getItemsCollection() as $orderItem) {
 			/** @var $orderItem Mage_Sales_Model_Order_Item */
+			if ($orderItem->getParentItem()) {
+				continue;
+			}
 			$qtyOrdered = $orderItem->getQtyOrdered();
 			$_wishlistItem = Mage::getModel('sidwishlist/quote_item')->load($orderItem->getSidwishlistItemId());
 			if (!$_wishlistItem->getId()) {
@@ -30,7 +33,7 @@ class Sid_Wishlist_Model_Sales_Observer
 				$_wishlistItem->setQtyOrdered($qtyOrdered);
 			}
 			//Anzahl der im Warenkorb enthaltenen Elemente um bestellte Menge reduzieren
-			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted, 0)-$qtyOrdered, 0));
+			$_wishlistItem->setQtyGranted(max(max($_wishlistItem->getQtyGranted(), 0)-$qtyOrdered, 0));
 			$_wishlistItem->save();
 		}
 	}
@@ -90,10 +93,18 @@ class Sid_Wishlist_Model_Sales_Observer
 		if ($_sidWishlistItem->isEmpty()) {
 			return;
 		}
-		
-		$_sidWishlistItem->setQtyGranted(0)
-			->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE)
-			->save();
+
+        $_diffQty = $salesQuoteItem->getQty();
+
+        $_sidWishlistItem->setQtyGranted(max($_sidWishlistItem->getQtyGranted() - $_diffQty, 0));
+        if ($_sidWishlistItem->getStatus() == Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_ACCEPTED) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_BACKORDER);
+        }
+
+        if ($_sidWishlistItem->getQtyGranted() < 1 && $_sidWishlistItem->getQtyOrdered() < 1) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE);
+        }
+        $_sidWishlistItem->save();
 	
 		$this->_lastItemId = $salesQuoteItem->getId();
 	}
@@ -126,6 +137,10 @@ class Sid_Wishlist_Model_Sales_Observer
 		if ($_sidWishlistItem->getStatus() == Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_ACCEPTED) {
 			$_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_BACKORDER);
 		}
+
+		if ($_sidWishlistItem->getQtyGranted() < 1 && $_sidWishlistItem->getQtyOrdered() < 1) {
+            $_sidWishlistItem->setStatus(Sid_Wishlist_Model_Quote_Item_Abstract::STATUS_EDITABLE);
+        }
 		$_sidWishlistItem->save();
 	}
 }

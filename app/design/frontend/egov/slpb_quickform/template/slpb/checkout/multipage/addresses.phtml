@@ -41,16 +41,16 @@ function changeIdent() {
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" autocomplete="off">
     <div id="slpb-change-adress">
-        <div><input type="radio" name="billing[customerident]" id="customeridentNumber" value="0" checked="checked" onclick="changeIdent()"><?php echo $this->__('Customernumber'); ?></div>
-        <div><input type="radio" name="billing[customerident]" id="customeridentAddress" value="1" onclick="changeIdent()"><?php echo $this->__('Address'); ?></div>
+        <div><input type="radio" name="billing[customerident]" id="customeridentNumber" value="0" onclick="changeIdent()"><?php echo $this->__('Customernumber'); ?></div>
+        <div><input type="radio" name="billing[customerident]" id="customeridentAddress" value="1" checked="checked" onclick="changeIdent()"><?php echo $this->__('Address'); ?></div>
     </div>
-    <fieldset id="numberident">
+    <fieldset id="numberident" style="display:none;">
         <div class="input-box name-lastname">
 	        <label for="billing:customernumber"><?php echo $this->__('Customernumber'); ?></label>
 	        <input type="text" id="billing:customernumber" name="billing[customernumber]" value="" class="input-text" />
         </div>
     </fieldset>
-    <fieldset id="addressident" class="fieldset wide no-space" style="display:none;">
+    <fieldset id="addressident" class="fieldset wide no-space">
         <input type="hidden" name="billing[address_id]" value="new" id="billing:address_id" />
         <ul class="form-list group-select">
 	        <li class="fields fullwide">

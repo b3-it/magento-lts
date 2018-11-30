@@ -16,7 +16,7 @@
   	  $collection->getSelect()->where("type='cms_page'");
   	  
   	  
-      $collection = Mage::getModel('configcompare/cmsPages')->getCollectionDiff($collection->getItems());
+      $collection = Mage::getModel('configcompare/cmsPages')->setStoreId($this->_getStoreId())->getCollectionDiff($collection->getItems());
 
       $this->setCollection($collection);
       parent::_prepareCollection();
@@ -24,6 +24,10 @@
       return $collection->filter();
   }
 
+  protected function _getStoreId()
+  {
+  	return intval($this->getRequest()->getParam('store_id',0));
+  }
   
   protected function _setFilterValues($data)
   {

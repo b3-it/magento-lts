@@ -52,7 +52,6 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 
         <div class="product-cart-sku">
             <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
-            <br />
             <?php echo $this->helper('slpbproduct')->getStars($_item->getProduct()); ?>
         </div>
 
@@ -304,8 +303,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <a class="remove egov-delete"
            href="<?php echo $this->getDeleteUrl() ?>"
            onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
-           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"> </a>
     </td>
 </tr>
 

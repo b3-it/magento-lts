@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -26,17 +27,16 @@
  */
 
 -->
-<layout version="0.1.0">
+<layout version="0.1.0">    
+    <default>
+    </default>
 
-    
     <customer_account>
         <reference name="customer_account_navigation">
             <action method="addLink" translate="label" module="dwd_abo"><name>abo_account</name><path>dwd_abo/index/view</path><label>My Weather Subscription</label></action>
         </reference>
     </customer_account>
     
-    <default>
-    </default>
     <dwd_abo_index_view translate="label">
         <label>My Weather Subscription</label>
         <update handle="customer_account"/>
@@ -50,8 +50,31 @@
         <reference name="root">
             <action method="setHeaderTitle" translate="title" module="dwd_abo"><title>My Weather Subscription</title></action>
         </reference>
-    </dwd_abo_index_view>
-    
-   
-    
+
+		<reference name="breadcrumbs">
+		   <action method="addCrumb">
+		      <crumbname>Home</crumbname>
+		      <crumbinfo>
+		         <label>Home</label>
+		         <title>Home</title>
+		         <url>/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Account</crumbname>
+		      <crumbinfo>
+		         <label>My Account</label>
+		         <title>My Account</title>
+		         <url>customer/account/</url>
+		      </crumbinfo>
+		   </action>
+		   <action method="addCrumb">
+		      <crumbname>My Weather Subscription</crumbname>
+		      <crumbinfo>
+		         <label>My Weather Subscription</label>
+		         <title>My Weather Subscription</title>
+		      </crumbinfo>
+		   </action>
+		</reference>
+    </dwd_abo_index_view> 
 </layout>

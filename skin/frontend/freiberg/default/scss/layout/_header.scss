@@ -1,0 +1,492 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+
+/* ============================================ *
+ * Header
+ * ============================================ */
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .page-header {
+        clear: both;
+        z-index: 99;
+        height: $global-header-height;
+
+        background: $global-header-gradientcolor-2 url($global-header-background-image) no-repeat center 4px;
+        background: url($global-header-background-image) no-repeat center 4px, url($global-category-image);
+        background: url($global-header-background-image) no-repeat center 4px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-header-gradientcolor-1), color-stop(100%, $global-header-gradientcolor-2)) repeat scroll 0 0;
+        background: url($global-header-background-image) no-repeat center 4px, -webkit-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%) repeat scroll 0 0;
+        background: url($global-header-background-image) no-repeat center 4px, -moz-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%) repeat scroll 0 0;
+        background: url($global-header-background-image) no-repeat center 4px, -o-linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%) repeat scroll 0 0;
+        background: url($global-header-background-image) no-repeat center 4px, linear-gradient(top, $global-header-gradientcolor-1 0%, $global-header-gradientcolor-2 100%) repeat scroll 0 0;
+    }
+
+    .page-header-container {
+        max-width: $global-fullpage-width;
+        min-width: $global-min-width;
+        position: relative;
+        margin: 0px auto;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .page-header-container {
+        height: 110px + $global-logo-height;
+    }
+
+    .skip-links {
+        position: absolute;
+        top: 110px + $global-logo-height;
+        width:100%;
+    }
+
+    .store-language-container {
+        top: -20px !important;
+    }
+
+    .welcome-header {
+        top: $global-welcome-header-top + $global-logo-height;
+    }
+
+    #egov-nav{
+    	top: $mobile-header-mainnav-top !important;
+    }
+}
+
+@include bp(max-width, 799px) {
+
+    #egov-nav {
+        display: none;
+    }
+
+    #egov-nav.skip-active {
+    	display: block;
+    }
+
+   	.col-main, .col-left, .col-right {
+       	display: block;
+   		float: none;
+   		width: 100%;
+   		margin: 0 0 $global-boxmargin 0;
+   	}
+
+    .col-left {
+        margin-top: $global-boxmargin;
+    }
+
+    #header-nav {
+    	position: relative;
+    	top: 70px;
+    }
+}
+
+.header-language-container,
+.page-header {
+    font-family: $base-font-family;
+
+    .welcome-header {
+        height: $global-welcome-header;
+        width: 69%;
+        position: absolute;
+        top: $global-welcome-top;
+        left: $global-welcome-left;
+        padding-top: 7px;
+
+        h1 {
+            color: $global-fontcolor-light;
+            display: block;
+            line-height: 0.9;
+    	  }
+
+        .welcome-msg {
+            color: $global-fontcolor-light;
+            display: block;
+            height: 1em;
+            margin-top: 12px;
+        }
+
+        @include bp(max-width, 910px) {
+            left: $global-welcome-left - 50;
+        }
+        @include bp(max-width, 790px) {
+            left: $global-welcome-left - 90;
+            top: 70px;
+        }
+        @include bp(max-width, 770px) {
+            left: $global-welcome-left - 120;
+            top: 30px;
+            width: auto;
+        }
+        @include bp(max-width, 630px) {
+            left: 100px;
+            top: 40px;
+        }
+        @include bp(max-width, 550px) {
+            left: 5px;
+            top: 65px;
+        }
+    }
+}
+
+/* ============================================ *
+ * Language switcher + welcome message
+ * ============================================ */
+
+.header-language-background {
+
+    .header-language-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    .form-language,
+    .currency-switcher {
+        float: left;
+        margin-right: $gap;
+    }
+
+    .welcome-msg {
+        float: right;
+    }
+}
+
+.store-language-container {
+    float: right;
+    position: relative;
+    right: 14px;
+    top: 7px;
+    z-index: 999;
+
+    label {
+        display: none;
+    }
+    select {
+        max-width: 100%;
+
+        @include bp(max-width, $bp-xsmall) {
+            // Setting this font-size will causing zooming on iOs devices,
+            // but it keeps header more tidy
+            font-size: $global-fontsize-small;
+        }
+    }
+
+    @include bp(max-width, $bp-xsmall) {
+        padding-top: 8px;
+    }
+
+    @include bp(max-width, 800px) {
+        top: 100px;
+    }
+}
+
+.header-language-background,
+.header-language-background a {
+    color: $global-fontcolor-light;
+}
+
+@include bp(max-width, $bp-medium) {
+
+    .header-language-background {
+        display: none;
+    }
+
+}
+
+/* ============================================ *
+ * Logo
+ * ============================================ */
+
+.logo {
+    display: block;
+    width: $global-logo-width;
+    max-width: $global-logo-width;
+    text-align: center;
+    position: relative;
+    top: $global-logo-top;
+    left: $global-logo-left;
+
+    img {
+        max-width: 100%;
+    }
+
+    .small {
+        display: block;
+    }
+    .large {
+        display: none;
+    }
+
+    @include bp(max-width, 800px) {
+    	max-width: 150px;
+    }
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .logo {
+        max-height: auto;
+
+        .small {
+            display: none;
+        }
+        .large {
+            display: block;
+        }
+    }
+}
+@include bp(max-width, 910px) {
+    .logo {
+        position: relative;
+        top: 20px;
+    }
+}
+
+/* ============================================ *
+ * Skip Links
+ * ============================================ */
+
+.skip-links {
+    clear: both;
+    //overflow: hidden;
+    border-top:$global-active-border solid $global-navigation-border-color;
+    border-bottom: $global-active-border solid $global-navigation-border-color;
+    background-color: $global-navigation-color;
+
+    @include bp(max-width, 800px) {
+    	background-color: transparent;
+    	//overflow: none;
+
+    	h1 {
+    		font-size: 2em;
+    	}
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .skip-links {
+        border: 0;
+    }
+
+}
+
+@include bp(max-width, 785px) {
+    .page-header-container {
+        background-color: $global-header-gradientcolor-2;
+        background-image: url($global-header-background-image);
+        background-repeat: no-repeat;
+        background-position: center 0px;
+
+        .store-language-container {
+            top: 45px;
+            right: 5px;
+        }
+
+        .logo {
+            top: 10px;
+            left: 10px;
+        }
+    }
+
+    .skip-links {
+        .skip-egov {
+            display: none;
+        }
+
+        .skip-cart {
+        	width: 100%;
+        }
+
+        .welcome-header {
+            z-index: 99;
+        }
+    }
+
+    .main-container, .footer-container {
+        top: 55px !important;
+    }
+}
+
+
+/* -------------------------------------------- *
+ * Skip - Link
+ */
+
+.skip-link {
+    position: relative;
+    float: right;
+    width: 15%;
+    background-color: $global-wrapper-color;
+    color: $global-linkcolor;
+    line-height: 100%;
+    text-align: center;
+
+    @include bp(max-width, $bp-medium) {
+    	padding-top: 5px;
+    }
+}
+
+a.skip-link {
+    text-decoration: none;
+}
+
+.skip-egov:hover,
+.skip-link:not(.skip-active):hover {
+    opacity: 0.8;
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-medium) {
+
+    .skip-nav, .skip-account, .skip-cart {
+        float: left;
+        display: inline-block;
+    }
+
+    .skip-search {
+        display: inline-block;
+        right: 0;
+        position: relative;
+        //top: -5px;
+    }
+
+    .skip-link {
+        border-right: 1px solid #EDEDED;
+    }
+
+    .skip-account, .skip-cart {
+    	margin: 0;
+    }
+
+    .skip-link:last-child {
+        border-right: 0;
+    }
+}
+
+// ---------------------------------------------
+
+@include bp(max-width, 500px) {
+    .skip-search {
+    	top: 0;
+    }
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Active
+ */
+@include bp(max-width, $bp-medium) {
+
+    .skip-link.skip-active {
+        background: #EDEDED;
+        color: inherit;
+    }
+
+    .skip-link.skip-active span {
+        color: inherit;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Icon
+ */
+
+.skip-link .icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.skip-link.skip-nav .icon,
+.skip-link.skip-cart:not(.no-count) .icon {
+    margin-right: 3px;
+}
+
+@include bp(min-width, 500px) {
+
+    .skip-link .icon {
+        margin-right: 3px;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Label
+ */
+
+.skip-link .label {
+    display: none;
+
+    @include bp(min-width, $bp-small) {
+        display: inline;
+    }
+}
+
+
+/* ============================================ *
+ * Skip Content
+ * ============================================ */
+
+.skip-content {
+    display: none;
+    z-index: 999;
+}
+
+.skip-content.skip-active {
+    display: block;
+    background-color: $global-navigation-color;
+}
+
+/* ============================================ *
+ * Global Header Navigation
+ * ============================================ */
+.account-cart-wrapper {
+    position: absolute;
+    top:5px;
+    right:25%;
+    width: 80%;
+    text-align: right;
+
+    .skip-link {
+        @include bp(max-width, $bp-medium) {
+            width: 33%;
+        }
+    }
+
+    @include bp(max-width, $bp-medium) {
+        position: static;
+        display: inline-block;
+        right: 0;
+        width: 75%;
+    }
+}
+
+.skip-egov{
+    display: inline-block;
+    float: none !important;
+    padding: 0 10px;
+    text-transform: uppercase;
+    vertical-align: top;
+    width: auto;
+}

@@ -19,7 +19,7 @@
         $_shortProductName = $_longProductName;
     }
 ?>
-<li class="item" xmlns="http://www.w3.org/1999/html">
+<li class="item">
     <?php if ($this->hasProductUrl()): ?>
         <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></a>
     <?php else: ?>
@@ -122,13 +122,13 @@
                     </td>
                     <td class="mini-cart-third" rowspan="2">
                         <?php if ($isVisibleProduct): ?>
-                        <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" class="btn-edit egov-pencile" title="<?php echo $this->__('Edit item')?>" alt="<?php echo $this->__('Edit item')?>"> </a>
+                        <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" class="btn-edit egov-pencile"> </a>
                           <?php if (!$this->isOnCheckoutPage()): ?>
                         <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>"
                            data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
-                           class="remove egov-delete" alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+                           class="remove egov-delete"> </a>
                         <?php else: ?>
-                        <span class="egov-delete" alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </span>
+                        <span class="egov-delete" title="<?php echo $this->__('Remove Item') ?>"> </span>
                         <?php endif; ?>
                         <?php endif ?>
                     </td>

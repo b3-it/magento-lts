@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Beschreibungsdatei für Produktinformationen
  *
@@ -72,7 +72,7 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
     /**
      * Ermittelt die Daten des aktuellen Produktes
      *
-     * @return Varien Product
+     * @return Mage_Catalog_Model_Product
      */
     private function __getProduct() {
         return Mage::registry('current_product');

@@ -97,7 +97,7 @@ function installFailure()
         <p><?php echo $this->__("If you are a developer and would like to have the latest public updates, choose this option.") ?><br/><?php echo $this->__("Please note that it is much less stable than beta.") ?></p>
         <p><button class="form-button" type="button" onclick="startInstall('alpha')"><span><?php echo $this->__('Proceed With Automatic Download (%s)', $this->__('Alpha')) ?></span></button></p>
 <br/>
-    <iframe id="install_iframe" src="<?php echo $this->getUrl('*/*/install') ?>" style="display:none" frameborder="no"></iframe>
+    <iframe id="install_iframe" src="<?php echo $this->getUrl('*/*/install') ?>" style="display:none"></iframe>
 </fieldset>
 
 <fieldset class="group-select">

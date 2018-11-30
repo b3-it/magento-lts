@@ -1,31 +1,5 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category   design_default
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-
--->
+<!DOCTYPE layout>
 <layout version="0.1.0">
 
 <!--
@@ -66,10 +40,18 @@ Default layout, loads most of the pages
         </reference>
     </default>
 
-    <checkout_cart_index>
+    <checkout_cart_configure translate="label">
+        <label>Configure Cart Item</label>
+        <update handle="catalog_product_view"/>
+        <reference name="product.info">
+            <block type="checkout/cart_item_configure" name="checkout.cart.item.configure.block"></block>
+        </reference>
+    </checkout_cart_configure>
+
+    <checkout_cart_index translate="label">
         <remove name="right"/>
-		<remove name="breadcrumbs"/>		
-  
+		<remove name="breadcrumbs"/>
+
         <!-- Mage_Checkout -->
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
@@ -91,16 +73,16 @@ Default layout, loads most of the pages
                 </block>
 
                 <block type="core/text_list" name="checkout.cart.methods" as="methods" />
-             
-<!--				
+
+<!--
                 <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
-				 
+
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
  -->
                 <block type="sidcheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
 				<action method="setData"><key>accesskey</key><value>b</value></action>
-               	<action method="setData"><key>jumptitle</key><value>Bestellung aufgeben</value></action>				
+               	<action method="setData"><key>jumptitle</key><value>Bestellung aufgeben</value></action>
 				</block>
             </block>
         </reference>
@@ -250,7 +232,7 @@ Multi address shipping checkout billing information
 Multi address shipping checkout overview
 -->
 
-    <checkout_multishipping_overview>
+    <checkout_multishipping_overview translate="label">
         <update handle="checkout_multishipping"/>
 
         <reference name="root">
@@ -276,7 +258,7 @@ Multi address shipping checkout overview
 Multi address shipping checkout success
 -->
 
-    <checkout_multishipping_success>
+    <checkout_multishipping_success translate="label">
         <update handle="checkout_multishipping"/>
 
         <reference name="root">
@@ -289,7 +271,5 @@ Multi address shipping checkout success
             <block type="sidcheckout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>
         </reference>
     </checkout_multishipping_success>
-
-
 
 </layout>

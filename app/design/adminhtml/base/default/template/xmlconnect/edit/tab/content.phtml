@@ -32,10 +32,10 @@
         <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Pages') ?></h4>
     </div>
     <fieldset id="content_fields">
-        <table cellspacing="0" class="data border" id="tiers_table">
+        <table class="data border" id="tiers_table">
             <col width="200" />
             <col width="300" />
-            <col width/>
+            <col width="auto"/>
             <thead>
                 <tr class="headings">
                     <th><?php echo $this->__('Label') ?></th>
@@ -107,7 +107,7 @@
         init : function() {
             $('content_pages').update('');
             <?php foreach($this->getPages() as $page): ?>
-                this.pageOptions += '<option value="<?php echo $helper->jsQuoteEscape($page['value']) ?>"><?php echo $helper->jsQuoteEscape($page['label']) ?></option>';
+                this.pageOptions += '<option value="<?php echo $helper->jsQuoteEscape($page['value']) ?>"><?php echo $helper->quoteEscape($page['label']) ?></option>';
             <?php endforeach; ?>
         },
         showPage : function(node, label, idValue) {

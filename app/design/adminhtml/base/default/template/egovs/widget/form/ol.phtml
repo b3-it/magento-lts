@@ -1,0 +1,47 @@
+<?php $_itemID = $this->getElement()->getId(); ?>
+<tr class='grid'>
+	<td class="label">
+		<?php echo $this->__($this->getElement()->getLabel())?>
+	</td>
+	<td class="value">
+		<script type="text/javascript">
+			var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
+			var templateUpDownButtons = '<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>' +
+			                            '<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>';
+			var templateDelButton = '<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>';
+		</script>
+		<?php echo $this->getElement()->getAddPane()->toHtml()?>
+		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
+			<colgroup>
+				<col />
+				<col style="width: 110px;" />
+			</colgroup>
+			<thead>
+				<tr class="headings">
+					<th><?php echo $this->__($this->getElement()->getLabel())?></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody data-up-down="<?php if($this->getElement()->getShowUpDown() !== false) { echo 0; } else { echo 1; } ?>">
+				<?php foreach($this->getElement()->getElements() AS $key => $_item):?>
+					<tr id="row-<?php echo $_itemID . '-' . $key; ?>" data-id="<?php echo $key; ?>" data-table="<?php echo $_itemID; ?>">
+						<td>
+							<?php echo $_item['label']; ?>
+							<input type="hidden" id="value-<?php echo  $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName()?>" value="<?php echo $_item['value']?>" />
+							<input type="hidden" id="pos-<?php echo    $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('pos')?>" value="<?php echo $_item['pos']?>" class="position" />
+							<input type="hidden" id="delete-<?php echo $_itemID . '-' . $key; ?>" name="<?php echo $this->getElement()->getName('delete')?>" value="0" />
+						</td>
+						<td class="position-sorting">
+						<?php if($this->getElement()->getShowUpDown() !== false):?>
+							<button class="scalable add-widget position-up" type="button" title="<?php echo Mage::helper('egovsbase')->__('Up')?>"><span></span></button>
+							<button class="scalable add-widget position-down" type="button" title="<?php echo Mage::helper('egovsbase')->__('Down')?>"><span></span></button>
+						<?php endif;?>
+							<button class="scalable delete add-widget position-delete" type="button" title="<?php echo Mage::helper('egovsbase')->__('Remove')?>"><span></span></button>
+						</td>
+					</tr>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+		<script type="text/javascript" src="<?php echo $this->getJsUrl('egovs/table-position-move.js'); ?>"></script>
+	</td>
+</tr>

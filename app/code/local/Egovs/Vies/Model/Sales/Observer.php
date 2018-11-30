@@ -73,13 +73,17 @@ class Egovs_Vies_Model_Sales_Observer extends Mage_Sales_Model_Observer
 		if ((empty($customerVatNumber) || !Mage::helper('core')->isCountryInEU($customerCountryCode))
 				&& !$isDisableAutoGroupChange
 		) {
-			$data = array('country_id' => $customerCountryCode, 'company' => $quoteAddress->getCompany());
-			$groupId = Mage::helper('egovsvies')->getGroupIdByCustomerGroupRules($data);
-			//Falls nichts gematched hat!!!
-			if (is_null($groupId)) {
-				$groupId = Mage::helper('customer')->getDefaultCustomerGroupId($storeId);
-			}
-			$groupId = ($customerInstance->getId()) ? $groupId : Mage_Customer_Model_Group::NOT_LOGGED_IN_ID;
+		    if (strlen($customerCountryCode) > 0) {
+                $data = array('country_id' => $customerCountryCode, 'company' => $quoteAddress->getCompany());
+                $groupId = Mage::helper('egovsvies')->getGroupIdByCustomerGroupRules($data);
+                //Falls nichts gematched hat!!!
+                if (is_null($groupId)) {
+                    $groupId = Mage::helper('customer')->getDefaultCustomerGroupId($storeId);
+                }
+                $groupId = ($customerInstance->getId()) ? $groupId : Mage_Customer_Model_Group::NOT_LOGGED_IN_ID;
+            } else {
+		        $groupId = ($customerInstance->getId()) ? $customerInstance->getGroupId() : Mage_Customer_Model_Group::NOT_LOGGED_IN_ID;
+            }
 	
 			$quoteAddress->setPrevQuoteCustomerGroupId($quoteInstance->getCustomerGroupId());
 			$customerInstance->setGroupId($groupId);

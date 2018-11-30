@@ -9,7 +9,7 @@
  * @author     Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
  *
  */
-class Egovs_EventBundle_Model_Ressource_Report_Options_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class Egovs_EventBundle_Model_Resource_Report_Options_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
 	private $_categoryfilter = null;
 	private $_categorynames = null;
@@ -68,16 +68,18 @@ class Egovs_EventBundle_Model_Ressource_Report_Options_Collection extends Mage_C
 		parent::_initSelect();
 
 		$this->getSelect()
-			->where("main_table.product_type='eventbundle'")
+			->where("p.type_id='eventbundle'")
+            ->join(array('p'=>$this->getTable('catalog/product')),'main_table.product_id = p.entity_id')
 			->join(array('order'=>$this->getTable('sales/order')),'order.entity_id=main_table.order_id',
 						array('order_increment_id'=>'increment_id',
 							   'order_entity_id'=>'entity_id',
 							   
 								
 						))
-			->where("product_options like '%\"options%'")
+			->where("product_options like '%options%'")
 			//->where('item_id = 95')
 			;
+		//die($this->getSelect()->__toString());
 		return $this;
 
 	}

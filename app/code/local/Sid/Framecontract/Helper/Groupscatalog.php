@@ -200,7 +200,7 @@ class Sid_Framecontract_Helper_Groupscatalog extends Mage_Core_Helper_Abstract
 	/**
 	 * Remove hidden products from a product collection
 	 *
-	 * @param Mage_Eav_Model_Entity_Collection_Abstrac $collection
+	 * @param Mage_Eav_Model_Entity_Collection_Abstract $collection
 	 */
 	public function removeHiddenProducts(Mage_Eav_Model_Entity_Collection_Abstract $collection)
 	{
@@ -510,7 +510,7 @@ class Sid_Framecontract_Helper_Groupscatalog extends Mage_Core_Helper_Abstract
                 $tableCondition, 'value'
             );
 
-            $default = Netzarbeiter_GroupsCatalog_Helper_Data::USE_DEFAULT;
+            $default = Netzarbeiter_GroupsCatalog2_Helper_Data::USE_DEFAULT;
 
             $commonConditionsSql = sprintf(
                     $attributeValueCol . " != '%1\$s' AND " .

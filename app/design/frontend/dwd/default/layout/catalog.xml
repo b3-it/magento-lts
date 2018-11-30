@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
 <!--
 /**
  * @category    design
@@ -372,16 +373,9 @@ SEO Site Map
         </reference>
         <reference name="content">
             <block type="page/template_container" name="seo.sitemap.container" template="catalog/seo/sitemap/container.phtml">
-                <!-- egovs custom code begin -->
-                <block type="egovssitemap/cms" name="seo.sitemap.cms" as="cms" template="egovs/sitemap/cms.phtml"/>
-                <action method="setTitleSiteMap" translate="title" module="catalog"><title>Site Map</title></action>
-                <action method="setTitleSiteCms" translate="title" module="catalog"><title>General</title></action>
-        		    <!-- egovs custom code end -->
-                <!--
                 <block type="page/template_links" name="seo.sitemap.links" as="links" template="page/template/links.phtml"/>
                 <block type="page/html_pager" name="seo.sitemap.pager.top" as="pager_top" template="page/html/pager.phtml"/>
                 <block type="page/html_pager" name="seo.sitemap.pager.bottom" as="pager_bottom" template="page/html/pager.phtml"/>
-                -->
             </block>
         </reference>
     </catalog_seo_sitemap>

@@ -29,7 +29,7 @@
 									<configcompare_export_configdata module="configcompare">
 										<title>Export Config</title>
 										<sort_order>20</sort_order>
-										<action>adminhtml/configcompare_export_coreconfigdata</action>
+										<action>adminhtml/configcompare_export</action>
 									</configcompare_export_configdata>
 									<configcompare_import_configdata module="configcompare">
 										<title>Import Config</title>

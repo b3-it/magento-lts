@@ -10,21 +10,6 @@ $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both
 $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 ?>
 
-<script type="text/javascript">
-//<![CDATA[
-function deleteAll(url)
-{
-	q = confirm("<?php echo Mage::helper('sidwishlist')->__('Delete All Items'); ?>?");
-	if(q == true)
-	{
-		window.location.href = url;
-	}
-}
-//]]>
-
-</script>
-
-
 <!--Sprungziel Tastatursteuerung -->
 <div class="cart <?php echo $_priceDisplay; ?>" id="jumptarget<?php echo $this->getNameInLayout();?>">
     <div class="page-title title-buttons">
@@ -36,77 +21,78 @@ function deleteAll(url)
     <form id="collection-list-view-form" action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="collection-list-table" class="cart-table data-table">
-            <col width="50" />
-            <col />
-            <col width="50" /> <?php //Beschreibung/Kommentare ?>
-            <col width="70" />
-            <col width="70" />
-            <col width="1" /> <?php //Angefragt ?>
-        <?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
-			<col width="1" /> <?php //bestellt ?>
+            <colgroup>
+                <col width="25%" /> <?php //Bild & Produktname ?>
+                <col width="" /> <?php //Preis ?>
+                <col width="" /> <?php //Angefragt ?>
+        <?php if ($this->isAuthorizedOrderer() || $this->hasQtyOrdered()): ?>
+			    <col width="" /> <?php //bestellt ?>
 		<?php endif; ?>
 		<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
-			<col width="1" /> <?php //Genehmigt ?>
+		    	<col width="" /> <?php //Genehmigt ?>
 		<?php endif; ?>
-            <col width="10" />
-            <col width="20" />
-        <?php if ($this->isAuthorizedOrderer()): ?>
-			<col width="20" />
-		<?php endif ?>	
+                <col width="" /> <?php //Zwischensumme ?>
+                <col width="" /> <?php //Status ?>
+                <col width="10" /> <?php //Aktionen ?>
+                <col width="" /> <?php //Option ?>
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col width="70" />
-            <col width="20" />
+                <col width="" />
+                <col width="" />
         <?php endif; ?>
+            </colgroup>
             <thead>
 				<tr>
-					<th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
 					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
-					<th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Description') ?></th>
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
-					<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Requested') ?>	</th>
-					<?php if ($this->isAuthorizedOrderer() || $this->getQtyOrdered() > 0): ?>
-						<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty Ordered') ?></th>
+					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Qty Requested') ?>	</th>
+					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyOrdered()): ?>
+						<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Qty Ordered') ?></th>
 					<?php endif; ?>
 					<?php if ($this->isAuthorizedOrderer() || $this->hasQtyGranted()): ?>
-						<th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty In Carts') ?></th>
+						<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Qty In Carts') ?></th>
 					<?php endif; ?>
 					<th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Status') ?></th>
 					<th class="a-center" rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Actions') ?></th>
 				</tr>
-				<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-	                <tr>
-	                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
-	                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
-	                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
-	                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
-	                </tr>
-	            <?php endif; ?>
+			  <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+	            <tr>
+	                <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+	                <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+	                <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+	                <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+	            </tr>
+	          <?php endif; ?>
 			</thead>
 			<tfoot>
                 <tr>
                     <td colspan="50" class="a-right cart-footer-actions">
-                    	<?php if($this->getContinueShoppingUrl()): ?>
-							<a href="<?php echo $this->getContinueShoppingUrl() ?>" class="button egov-float-left">
-								<span><?php echo $this->__('Continue Collecting') ?> </span>
-							</a>
-						<?php endif; ?>
-						
+                      <?php if($this->getContinueShoppingUrl()): ?>
+						<a href="<?php echo $this->getContinueShoppingUrl() ?>" class="button egov-float-left">
+							<span><?php echo $this->__('Continue Collecting') ?> </span>
+						</a>
+					  <?php endif; ?>
                     	<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button btn-empty egov-float-left">
 							<span><?php echo $this->__('Delete All Items') ?> </span>
 						</a>
-						
-						<button type="submit" onclick="this.name='save_and_share'" title="<?php echo $this->__('Share Collection List') ?>" class="button btn-share">
-							<span><span><?php echo $this->__('Share Collection List') ?></span></span>
+
+						<button type="submit" onclick="this.name='save_and_share'" title="<?php echo $this->__('Share Collection List') ?>" class="button">
+							<span><?php echo $this->__('Share Collection List') ?></span>
 						</button>
-				
-						<button class="button btn-update" type="submit">
-							<span><?php echo $this->__('Update Collection List') ?> </span>
+
+						<button class="button" type="submit">
+							<span><?php echo $this->__('Update Collection List') ?></span>
 						</button>
-						
+
+                    </td>
+                </tr>
+                 <tr>
+                    <td colspan="50" class="a-right cart-footer-actions">
+                      
+
 						<?php if($this->getAddAllToCartUrl() && $this->hasSaleableItems()): ?>
 							<a href="<?php echo $this->getAddAllToCartUrl() ?>" class="button btn-update">
-								<span><?php echo $this->__('Add All to Cart') ?> </span>
+								<span><?php echo $this->__('Add All to Cart') ?></span>
 							</a>
 						<?php endif; ?>
                     </td>
@@ -118,22 +104,24 @@ function deleteAll(url)
 				<?php endforeach ?>
 			</tbody>
 		</table>
-	
+
 		<script type="text/javascript">
-			//<![CDATA[
+    		var urlAddCart       = "<?php echo $this->getItemAddToCartUrl('%item%') ?>";
+			var strDefComment    = "<?php echo $this->helper('sidwishlist')->defaultCommentString() ?>";
+			var strConfirmDelete = "<?php echo Mage::helper('sidwishlist')->__('Delete All Items?'); ?>";
+
 			decorateTable('collection-list-table');
-			
+
 			function focusComment(obj) {
-		        if( obj.value == '<?php echo $this->helper('sidwishlist')->defaultCommentString() ?>' ) {
+		        if( obj.value == strDefComment ) {
 		            obj.value = '';
 		        } else if( obj.value == '' ) {
-		            obj.value = '<?php echo $this->helper('sidwishlist')->defaultCommentString() ?>';
+		            obj.value = strDefComment;
 		        }
 		    }
 
 			function addWItemToCart(itemId) {
-		        var url = '<?php echo $this->getItemAddToCartUrl('%item%') ?>';
-		        url = url.gsub('%item%', itemId);
+		        url = urlAddCart.gsub('%item%', itemId);
 		        var form = $('collection-list-view-form');
 		        if (form) {
 		            var input = form['qty[' + itemId + ']'];
@@ -144,11 +132,17 @@ function deleteAll(url)
 		        }
 		        setLocation(url);
 		    }
-			//]]>
+
+			function deleteAll(url) {
+				var q = confirm(strConfirmDelete);
+				if( q == true ) {
+					window.location.href = url;
+				}
+			}
 		</script>
-	
+
 	</form>
-	
+
 	<div class="cart-totals-wrapper">
         <!--Sprungziel Tastatursteuerung -->
         <div class="cart-totals" id="jumptarget<?php echo $this->getNameInLayout();?>">

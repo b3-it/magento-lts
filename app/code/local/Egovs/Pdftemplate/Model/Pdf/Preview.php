@@ -12,6 +12,8 @@
 class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Abstract
 {
 
+	protected $_storeId = 0;
+	
 	public function preparePdf($invoices = array()) {
 		if (is_array($invoices) && !empty($invoices)) {
 			$invoices = $invoices[0];
@@ -34,9 +36,9 @@ class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Ab
 		$mandate = $invoices;
 
 
-		$mandate->setConfig($this->getConfig(0));
-		$mandate->setImprint($this->getImprint(0));
-		$mandate->setEPayblConfig($this->getEPayblConfig(0));
+		$mandate->setConfig($this->getConfig($this->_storeId));
+		$mandate->setImprint($this->getImprint($this->_storeId));
+		$mandate->setEPayblConfig($this->getEPayblConfig($this->_storeId));
 		$this->LoadTemplate($mandate);
 
 		$this->_Pdf->addPage();
@@ -49,9 +51,9 @@ class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Ab
 		return $this;
 	}
 
-	public function load($id)
+	public function load($id,$storeId = null)
 	{
-
+		$this->_storeId = intval($storeId);
 		$this->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW;
 		$pdf = parent::getPdf($this->generateData($id));
 
@@ -63,6 +65,7 @@ class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Ab
 	private function generateData($templateId)
 	{
 		$order = Mage::getModel('sales/order');
+		$order->setStoreId($this->_storeId);
 		//$order->setCustomerId(1);
 		//$order->setPaymentInfo("Zahlunsdetails");
 
@@ -76,7 +79,7 @@ class Egovs_Pdftemplate_Model_Pdf_Preview extends Egovs_Pdftemplate_Model_Pdf_Ab
 		$order->setShippingMethod('freeshipping_freeshipping');
 		$invoice = new Varien_Object();
 		$invoice->setTemplateId($templateId);
-		$invoice->setConfig($this->getConfig(0));
+		$invoice->setConfig($this->getConfig($this->_storeId));
 		$invoice->setImprint($this->getImprint($order->getStoreId()));
 		$invoice->setOrder($order);
 

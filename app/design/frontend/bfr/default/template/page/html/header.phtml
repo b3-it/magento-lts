@@ -32,7 +32,7 @@
 
             <div id="header-function-block">
                 <div class="header-function-row">
-                    <div class="header-function-cell-half">
+                    <div id="normal-header-minicart" class="header-function-cell-half">
                         <!-- Cart -->
                         <div class="header-minicart">
                             <?php echo $this->getChildHtml('minicart_head'); ?>
@@ -44,16 +44,46 @@
                             <?php echo $this->getChildHtml('store_language') ?>
                         </div>
                         <?php echo $this->getChildHtml('currency_switcher') ?>
-                        <div id="small-view-switcher" class="store-language-container"></div>
                     </div>
                 </div>
                 <div class="header-function-row">
-                    <div class="header-function-cell-full">
+                    <div id="full-search" class="header-function-cell-full">
                         <!-- Search -->
                         <div id="header-search" class="skip-content">
                             <?php echo $this->getChildHtml('topSearch') ?>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="showmobile mobile-top-header">
+                <h1><?php echo Mage::getStoreConfig('general/store_information/name'); ?></h1>
+                <div id="small-view-switcher" class="store-language-container"></div>
+            </div>
+
+            <div class="showmobile mobile-top-store">
+                <div id="mobile-header-search"></div>
+            </div>
+        </div>
+
+        <div class="showmobile mobile-welcome">
+            <span class="welcome-msg">
+                <?php echo $this->getChildHtml('welcome') ?>
+            </span>
+        </div>
+
+        <div class="showmobile mobile-navigation">
+            <div id="jumptargetheader" class="account-cart-wrapper">
+	            <a href="#header-nav" class="skip-link skip-nav" data-target-element="#mobile-nav">
+	                <span class="icon"></span>
+	                <span class="label"><?php echo $this->__('Menu'); ?></span>
+	            </a>
+	            <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
+                    <span class="icon egov-user"></span>
+                    <span class="label"><?php echo $this->__('Account'); ?></span>
+                </a>
+                <div id="mobile-header-minicart" class="header-minicart">
+                    <?php echo $this->getChildHtml('minicart_head'); ?>
                 </div>
             </div>
         </div>
@@ -72,26 +102,6 @@
                 <span class="icon"></span>
                 <span class="label"><?php echo $this->__('Search'); ?></span>
             </a>
-            <div id="jumptargetheader" class="account-cart-wrapper">
-<!--
-                <a href="<?php echo Mage::getBaseUrl(); ?>" id="home-link" class="skip-link skip-egov" onclick="window.location.href='<?php echo Mage::getBaseUrl(); ?>';">
-                    <span class="icon egov-home"> </span>
-                    <span class="label"><?php echo $this->__('Startup Page'); ?></span>
-                </a>
--->
-<!--
-                <a href="javascript:void(0);" data-target-element="#egov-menu" class="skip-link skip-egov">
-                    <span class="icon egov-home"> </span>
-                    <span class="label">eGov-Menu</span>
-                </a>
--->
-<!--
-                <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" id="egov-account-menu" data-target-element="#header-account" class="skip-link skip-account">
-                    <span class="icon egov-user"></span>
-                    <span class="label"><?php echo $this->__('Account'); ?></span>
-                </a>
--->
-            </div>
             <div class="welcome-header">
                 <h1 class="header-position"><?php echo Mage::getStoreConfig('general/store_information/name'); ?></h1>
                 <span class="welcome-msg">
@@ -102,25 +112,21 @@
         </div>
 
         <!-- Navigation -->
-<!--
         <div id="header-nav" class="skip-content">
             <?php echo $this->getChildHtml('topMenu') ?>
         </div>
--->
 
         <!-- Account -->
-<!--
         <div id="header-account" class="skip-content">
             <?php echo $this->getChildHtml('topLinks') ?>
         </div>
--->
+
 
         <!-- eGov-Menu -->
-        <!--
         <div id="egov-menu" class="skip-content">
             <?php echo $this->getChildHtml('topEgovmenu') ?>
         </div>
-        -->
+
     </div>
 </header>
 

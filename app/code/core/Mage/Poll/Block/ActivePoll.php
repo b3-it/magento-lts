@@ -197,6 +197,18 @@ class Mage_Poll_Block_ActivePoll extends Mage_Core_Block_Template
         return $this;
     }
 
+    public function setTemplatePoll($template)
+    {
+        $this->_templates['poll'] = $template;
+        return $this;
+    }
+
+    public function setTemplateResults($template)
+    {
+        $this->_templates['results'] = $template;
+        return $this;
+    }
+
     /**
      * Render block HTML
      *

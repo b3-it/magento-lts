@@ -11,21 +11,21 @@
 
 // ----------------------------------------------
 // Browser Resets
-@import "../../../egov/default/scss/vendor/normalize";
-@import "../../../egov/default/scss/core/reset";
+@import "../../../egov_old/default/scss/vendor/normalize";
+@import "../../../egov_old/default/scss/core/reset";
 
 
 // ----------------------------------------------
 // EGOV-Definitionen
 //    ACHTUNG!!!
 //    Variablen werden in "_framework.scss" eingebunden
-@import "../../../egov/default/scss/egov/bitv";
-@import "../../../egov/default/scss/egov/video";
+@import "../../../egov_old/default/scss/egov/bitv";
+@import "../../../egov_old/default/scss/egov/video";
 @import "egov/egov-base";
-@import "../../../egov/default/scss/egov/fa-icons";
+@import "../../../egov_old/default/scss/egov/fa-icons";
 @import "egov/mp-checkout";
-@import "../../../egov/default/scss/egov/checkiban";
-@import "../../../egov/default/scss/egov/silver-track";
+@import "../../../egov_old/default/scss/egov/checkiban";
+@import "../../../egov_old/default/scss/egov/silver-track";
 @import "egov/credit-cards";
 
 
@@ -42,7 +42,7 @@
 // Layout
 @import "layout/button-set";
 @import "layout/buttons";
-@import "../../../egov/default/scss/layout/global";
+@import "layout/global";
 @import "layout/header";
 @import "layout/header-nav";
 @import "layout/header-search";
@@ -59,47 +59,46 @@
 //  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
-@import "../../../egov/default/scss/module/select-language";
+@import "../../../egov_old/default/scss/module/select-language";
 @import "module/product-list";
 @import "module/catalog-product";
-@import "../../../egov/default/scss/module/catalog-msrp";
-@import "../../../egov/default/scss/module/catalog-seo-sitemap-category";
+@import "../../../egov_old/default/scss/module/catalog-msrp";
+@import "../../../egov_old/default/scss/module/catalog-seo-sitemap-category";
 @import "module/catalog-compare";
-@import "../../../egov/default/scss/module/catalogsearch-advanced-result";
-@import "../../../egov/default/scss/module/catalogsearch-term-popular";
+@import "../../../egov_old/default/scss/module/catalogsearch-advanced-result";
+@import "../../../egov_old/default/scss/module/catalogsearch-term-popular";
 @import "module/checkout-cart";
-@import "../../../egov/default/scss/module/checkout-onepage";
-@import "../../../egov/default/scss/module/checkout-success";
-@import "../../../egov/default/scss/module/configurableswatches";
+@import "../../../egov_old/default/scss/module/checkout-onepage";
+@import "../../../egov_old/default/scss/module/checkout-success";
+@import "../../../egov_old/default/scss/module/configurableswatches";
 @import "module/customer";
-@import "../../../egov/default/scss/module/customer-account-forgotpassword";
-@import "../../../egov/default/scss/module/contacts";
-@import "../../../egov/default/scss/module/egovs-checkout-multipage-login";
-@import "../../../egov/default/scss/module/paypal";
-@import "../../../egov/default/scss/module/review";
-@import "../../../egov/default/scss/module/sales-order-print";
-@import "../../../egov/default/scss/module/slideshow";
-@import "../../../egov/default/scss/module/wishlist";
+@import "../../../egov_old/default/scss/module/customer-account-forgotpassword";
+@import "../../../egov_old/default/scss/module/contacts";
+@import "../../../egov_old/default/scss/module/egovs-checkout-multipage-login";
+@import "../../../egov_old/default/scss/module/paypal";
+@import "../../../egov_old/default/scss/module/review";
+@import "../../../egov_old/default/scss/module/sales-order-print";
+@import "../../../egov_old/default/scss/module/slideshow";
+@import "module/wishlist";
 @import "module/checkout-cart-minicart";
 @import "module/search";
-@import "../../../egov/default/scss/module/account-reviews";
+@import "../../../egov_old/default/scss/module/account-reviews";
 @import "module/account-login";
 @import "module/cms";
-@import "../../../egov/default/scss/module/pricing_conditions";
-@import "../../../egov/default/scss/module/cookies";
-@import "../../../egov/default/scss/module/sales-guest-form";
-@import "../../../egov/default/scss/module/tags";
-@import "../../../egov/default/scss/module/captcha";
-@import "../../../egov/default/scss/module/account-orders";
-@import "../../../egov/default/scss/module/recurring-profiles";
-@import "../../../egov/default/scss/module/billing-agreements";
-@import "../../../egov/default/scss/module/popular-terms";
-@import "../../../egov/default/scss/module/widget";
-@import "../../../egov/default/scss/module/checkout-multi-address";
+@import "../../../egov_old/default/scss/module/pricing_conditions";
+@import "../../../egov_old/default/scss/module/cookies";
+@import "../../../egov_old/default/scss/module/sales-guest-form";
+@import "../../../egov_old/default/scss/module/tags";
+@import "module/captcha";
+@import "../../../egov_old/default/scss/module/account-orders";
+@import "../../../egov_old/default/scss/module/recurring-profiles";
+@import "../../../egov_old/default/scss/module/billing-agreements";
+@import "../../../egov_old/default/scss/module/popular-terms";
+@import "../../../egov_old/default/scss/module/widget";
+@import "../../../egov_old/default/scss/module/checkout-multi-address";
 @import "module/my-account";
-@import "../../../egov/default/scss/module/my-recent-tags";
+@import "../../../egov_old/default/scss/module/my-recent-tags";
 
 
 // ----------------------------------------------
 // Override
-

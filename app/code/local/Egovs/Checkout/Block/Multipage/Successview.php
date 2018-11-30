@@ -39,7 +39,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 	/**
 	 * Get multishipping checkout model
 	 *
-	 * @return Mage_Checkout_Model_Type_Multishipping
+	 * @return Egovs_Checkout_Model_Multipage
 	 */
 	public function getCheckout() {
 		return Mage::getSingleton ( 'mpcheckout/multipage' );
@@ -204,7 +204,7 @@ class Egovs_Checkout_Block_Multipage_Successview extends Mage_Sales_Block_Items_
 	/**
 	 * Retrieve quote
 	 *
-	 * @return Mage_Sales_Model_Qoute
+	 * @return Mage_Sales_Model_Quote
 	 */
 	public function getQuote() {
 		if ($this->_quote == null) {

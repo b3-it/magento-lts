@@ -67,7 +67,7 @@ class Mage_Reports_Model_Resource_Order_Collection extends Mage_Sales_Model_Reso
     /**
      * Check range for live mode
      *
-     * @param unknown_type $range
+     * @param string $range
      * @return Mage_Reports_Model_Resource_Order_Collection
      */
     public function checkIsLive($range)
@@ -751,7 +751,7 @@ class Mage_Reports_Model_Resource_Order_Collection extends Mage_Sales_Model_Reso
     /**
      * Order by orders count
      *
-     * @param unknown_type $dir
+     * @param string $dir
      * @return Mage_Reports_Model_Resource_Order_Collection
      */
     public function orderByOrdersCount($dir = self::SORT_ORDER_DESC)
@@ -763,7 +763,7 @@ class Mage_Reports_Model_Resource_Order_Collection extends Mage_Sales_Model_Reso
     /**
      * Order by customer registration
      *
-     * @param unknown_type $dir
+     * @param string $dir
      * @return Mage_Reports_Model_Resource_Order_Collection
      */
     public function orderByCustomerRegistration($dir = self::SORT_ORDER_DESC)
@@ -787,7 +787,7 @@ class Mage_Reports_Model_Resource_Order_Collection extends Mage_Sales_Model_Reso
     /**
      * Get select count sql
      *
-     * @return unknown
+     * @return integer
      */
     public function getSelectCountSql()
     {

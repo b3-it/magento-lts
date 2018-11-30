@@ -97,8 +97,8 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
     
     /**
      * Periode aus der QuoteOption lesen, oder anhand der Id Laden 
-     * @param unknown $orderitem
-     * @return Dwd_Periode_Model_Periode|Ambigous <Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|NULL
+     * @param Mage_Sales_Model_Order_Item $orderitem
+     * @return Dwd_Periode_Model_Periode|<Mage_Core_Model_Abstract, Mage_Core_Model_Abstract>|NULL
      */
     private function getPeriode($orderitem)
     {  	 
@@ -180,7 +180,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
     /**
      * prüfen ob das ursprüngliche Produkt noch zu verfügung steht
      * Station, Periode
-     * @param unknown $item
+     * @param Dwd_Stationen_Model_Stationen $item
      * @return boolean
      */
     private function isAvailable($item)
@@ -228,6 +228,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
 	   	try
 	   	{
 	   		if (count($items) > 0) {
+	   			/** @var $order Dwd_Abo_Model_Order_Order */
 	   			$order = Mage::getModel('dwd_abo/order_order');
 	   			$order->createOrders($items);   				
 	   			
@@ -345,7 +346,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    	
    /**
     * Falls Staffelpreise vom alten Abo(Bestellung) abhängen muss die Abhängigkeit auf die neue Bestellug geswitcht werden 
-    * @param unknown $OldAbo
+    * @param Dwd_Abo_Model_Abo $OldAbo
     */
    public function switchTierPriceDepends($OldAbo)
    {
@@ -356,7 +357,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    
    /**
     * Helper Datun in Lokaler Zeit formatieren
-    * @return Ambigous <string, unknown>
+    * @return string <string, unknown>
     */
    public function getStopDateFormated() {
    		$sDate = $this->getStopDate();
@@ -366,7 +367,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    
    /**
     * Helper Datun in Lokaler Zeit formatieren
-    * @return Ambigous <string, unknown>
+    * @return string <string, unknown>
     */
    public function getStartDateFormated() {
 	   	$sDate = $this->getStartDate();
@@ -376,7 +377,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    
    /**
     * Helper Datun in Lokaler Zeit formatieren
-    * @return Ambigous <string, unknown>
+    * @return string <string, unknown>
     */
    public function getStopDateTimeFormated() {
 	   	$sDate = $this->getStopDate();
@@ -386,7 +387,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
     
    /**
     * Helper Datun in Lokaler Zeit formatieren
-    * @return Ambigous <string, unknown>
+    * @return string <string, unknown>
     */
    public function getStartDateTimeFormated() {
 	   	$sDate = $this->getStartDate();
@@ -396,7 +397,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
    
    /**
     * Helper Datun in Lokaler Zeit formatieren
-    * @return Ambigous <string, unknown>
+    * @return string <string, unknown>
     */
    public function getCancelationPeriodeEndFormated() {
 	   	$sDate = $this->getCancelationPeriodeEnd();

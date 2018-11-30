@@ -1,0 +1,356 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egov-base-table {
+    width: 100%;
+    font-family: $base-font-family;
+
+    th, td, tbody td {
+        // Adding tbody for extra selector weight
+        border-bottom: none;
+        vertical-align: top;
+    }
+
+    thead {
+        .first th:first-child {
+            border-radius: $global-radius 0px 0px 0px;
+            border-left-width: 0px !important;
+            border-left-style: none !important;
+        }
+
+        .first th:last-child {
+            border-radius: 0px $global-radius 0px 0px;
+            border-right-width: 0px !important;
+            border-right-style: none !important;
+        }
+
+        th {
+            background-color: $global-footer-backgroundcolor;
+            color: $global-footer-fontcolor;
+
+            span.product-name {
+                padding-left: $global-tdpadding;
+            }
+
+            .space {
+                padding-left: $global-tdpadding;
+                padding-right: $global-tdpadding;
+            }
+        }
+    }
+
+
+    tbody td,
+    tbody th {
+        padding: $global-tdpadding 1px;
+        font-family: $base-font-family;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
+    }
+
+    tbody {
+        td {
+            background-color: $global-checkout-tdbackground;
+            color: $global-checkout-tdfontcolor;
+
+            h3 {
+                margin: 0px;
+                padding: 0px;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .checkout-product-image {
+                display: inline-block;
+                margin-right: $fa-icon-margin;
+            }
+        }
+
+        td:nth-child(2), td:nth-child(3),
+        td:nth-child(5), td:nth-child(6) {
+            text-align: right;
+        }
+    }
+}
+
+.egov-base-totals {
+    font-family: $base-font-family;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+
+    tbody td,
+    tfoot td {
+        background-color: $global-checkout-total-background;
+        color: $global-fontcolor-dark;
+        border-color: $global-checkout-tableborder;
+        border-width: $global-checkout-borderwidth;
+        border-style: solid;
+        padding: $global-tdpadding;
+        text-align: right;
+
+        strong span.price {
+            font-size: $global-fontsize-big;
+            color: $global-h1-color;
+        }
+    }
+
+    tbody td:nth-child(2) {
+        width: 160px;
+        padding: 3px;
+    }
+}
+
+.egov-radius {
+    -webkit-border-radius: $global-radius;
+    -moz-border-radius: $global-radius;
+    border-radius: $global-radius;
+}
+
+.egov-productfile-block {
+    display: block;
+    margin-left: $blobal-blockcontent-marginleft;
+    margin-right: $blobal-blockcontent-marginright;
+    margin-top: $blobal-blockcontent-margintop;
+    margin-bottom: $blobal-blockcontent-marginbottom;
+    text-align: left;
+
+    a {
+        margin-right: $global-boxmargin;
+    }
+}
+
+.egov-default-message {
+    @extend .egov-radius;
+    border: $global-box-border solid $global-border-color;
+    padding: $golbal-msgpadding;
+    background-color: $global-sidebar-cart-background;
+}
+
+.egov-navigation-background {
+    *zoom: 1;
+    /* Für IE9/IE10 Filter entfernen */
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='$global-category-color-ms-1', endColorstr='$global-category-color-ms-2');
+
+    background-image: url($global-category-image);
+    background-size: 100% auto;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $global-category-gradientrgb-1), color-stop(66%, $global-category-gradientrgb-2), color-stop(100%, $global-category-item-color));
+    background-image: -webkit-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: -moz-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: -o-linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+    background-image: linear-gradient(top, $global-category-gradientrgb-1 0%, $global-category-gradientrgb-2 66%, $global-category-item-color 100%);
+}
+
+.egov-navheader-base {
+    border-radius: $global-radius $global-radius 0 0;
+    border: $global-box-border solid $global-lightcolor;
+    font-size: $global-category-fontsize;
+
+    li, a {
+        line-height: $global-navigation-line-height;
+    }
+}
+
+// Wechselnde Pfeile in den Navigationen
+.egov-navigation-base {
+    width: 100%;
+    padding: 7px 25px 7px 13px;
+    line-height: $global-navigation-line-height;
+}
+.egov-arrow-main-closed {
+    @extend .egov-navigation-base;
+    //background: $global-content-background url($global-category-arrow-full-right) $global-norepeat-scroll 95% 55%;
+}
+.egov-arrow-main-open {
+    @extend .egov-navigation-base;
+    background: $global-content-background url($global-category-arrow-full-down) $global-norepeat-scroll 95% 55%;
+}
+.egov-arrow-sub-closed {
+    background: $global-content-background url($global-category-arrow-light-right) $global-norepeat-scroll 2% 50%;
+}
+.egov-arrow-sub-open {
+    background: $global-content-background url($global-category-arrow-light-down) $global-norepeat-scroll 2% 50%;
+}
+
+.egov-float-left {
+    float: left !important;
+}
+
+.egov-float-right {
+    float: right !important;
+}
+
+.egov-float-stop {
+    clear: all;
+}
+
+#loading-mask {
+    display: none;
+    border: 0 none;
+    height: 100%;
+    left: 0;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    .loader {
+        background: #fff4e9 none repeat scroll 0 0;
+        border: 2px solid #f1af73;
+        color: #d85909;
+        font-weight: bold;
+        left: 50%;
+        margin-left: -60px;
+        padding: 15px 60px;
+        position: fixed;
+        text-align: center;
+        top: 45%;
+        z-index: 9999;
+
+        @extend .egov-radius;
+
+        -webkit-box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 16px -1px rgba(0,0,0,0.75);
+
+        #loading-spinner {
+            margin-right: 10px;
+            font-size: 2em;
+        }
+
+        #loading-msg {
+            position: relative;
+            top: -3px;
+        }
+    }
+}
+
+/* ============================================ *
+ * Linearize Table
+ * ============================================ */
+
+@mixin linearize-table {
+
+    tr,
+    th,
+    td {
+        display: block;
+    }
+
+    thead th {
+        border-right: 0;
+        border-left: 0;
+    }
+
+    thead th.lin-hide {
+        display: none;
+    }
+
+    thead th:nth-child(1n+2) {
+        display: none;
+    }
+
+    tbody tr {
+        position: relative;
+        border-bottom: 1px solid $c-module-border;
+    }
+
+    tbody td {
+        padding: 0 10px 4px;
+        border-right: 0;
+        border-bottom: 0;
+    }
+
+    tbody td.lin-hide {
+        display: none;
+    }
+
+    tbody td:first-child {
+        padding-top: 10px;
+    }
+
+    tbody td:first-child,
+    tbody td:first-child h3 {
+        font-weight: bold;
+    }
+
+    tbody td[data-rwd-label] {
+        text-align: left;
+        padding-left: 30px;
+    }
+
+    tbody td[data-rwd-label]:before {
+        content: attr(data-rwd-label) ":";
+        font-size: $f-size-xs;
+        font-family: $f-stack-special;
+        padding-right: 5px;
+        text-transform: uppercase;
+    }
+
+    tfoot tr {
+        display: block;
+        text-align: right;
+    }
+
+    tfoot tr:after {
+        @include clearfix();
+    }
+
+    tfoot td {
+        display: block;
+        float: left;
+    }
+
+    tfoot td.lin-hide {
+        display: none;
+    }
+
+    tfoot td:nth-child(odd) {
+        clear: left;
+        width: percentage(3/5);
+    }
+
+    tfoot td:nth-child(even) {
+        text-align: left;
+        width: percentage(2/5);
+    }
+
+    /* Helpers */
+
+    .linearize-hide {
+        display: none;
+    }
+
+    .linearize-unpad {
+        padding: 0;
+    }
+
+    .linearize-show {
+        display: block;
+    }
+}
+
+@include bp(max-width, $bp-xsmall) {
+    .linearize-table {
+        @include linearize-table;
+    }
+}
+
+@include bp(max-width, $bp-small) {
+    .linearize-table-large {
+        @include linearize-table;
+    }
+}
+
+@include bp(min-width, $bp-small + 1) {
+    .linearize-table .linearize-collapse {
+        display: none;
+    }
+}

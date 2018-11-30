@@ -26,7 +26,7 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Nominal_Tax extends Mage_Tax_M
 	 * @param Mage_Sales_Model_Quote_Address $address        Adress-Item
 	 * @param Varien_Object                  $taxRateRequest Tax Request
 	 * 
-	 * @return  Mage_Tax_Model_Sales_Total_Quote
+	 * @return  Mage_Tax_Model_Sales_Total_Quote_Nominal_Tax
 	 */
 	protected function _calculateShippingTax(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
 	{
@@ -57,7 +57,7 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Nominal_Tax extends Mage_Tax_M
 	 * Calculate address tax amount based on one unit price and tax amount
 	 *
 	 * @param   Mage_Sales_Model_Quote_Address $address
-	 * @return  Mage_Tax_Model_Sales_Total_Quote
+	 * @return  Mage_Tax_Model_Sales_Total_Quote_Nominal_Tax
 	 */
 	protected function _unitBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
     {
@@ -98,7 +98,7 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Nominal_Tax extends Mage_Tax_M
 	 *
 	 * @param   Mage_Sales_Model_Quote_Address $address
 	 * @param   Varien_Object $taxRateRequest
-	 * @return  Mage_Tax_Model_Sales_Total_Quote
+	 * @return  Mage_Tax_Model_Sales_Total_Quote_Nominal_Tax
 	 */
 	protected function _rowBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
     {
@@ -139,7 +139,7 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Nominal_Tax extends Mage_Tax_M
 	 *
 	 * @param   Mage_Sales_Model_Quote_Address $address
 	 * @param   Varien_Object $taxRateRequest
-	 * @return  Mage_Tax_Model_Sales_Total_Quote
+	 * @return  Mage_Tax_Model_Sales_Total_Quote_Nominal_Tax
 	 */
 	protected function _totalBaseCalculation(Mage_Sales_Model_Quote_Address $address, $taxRateRequest)
     {

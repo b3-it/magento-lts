@@ -21,13 +21,9 @@ class Egovs_Paymentbase_Helper_Payplace_Data extends Mage_Core_Helper_Abstract
 	 * @return String
 	 */
 	public function getWsdlUrl($params = null, $withAuth = true, $controller) {
-		$urlModel = Mage::getModel('core/url')
-			->setUseSession(false)
-		;
-	
 		$wsdlUrl = ($params !== null)
-				? $urlModel->getUrl('*/*/*', array('_current' => true, '_query' => $params))
-				: $urlModel->getUrl('*/*/*')
+				? Mage::helper('api')->getServiceUrl('*/*/*', array('_current' => true, '_query' => $params))
+				: Mage::helper('api')->getServiceUrl('*/*/*')
 		;
 		$_parsedUrl = parse_url($wsdlUrl);
 		

@@ -71,7 +71,7 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
     	$this->setLog("Register Product ". $item->getProduct()->getId() . " for User " .$customer->getId());
     	
     	$this->save();
-    	$quote->setIsActive(false)->save();
+    	$quote->setIsActive(false)->setIsEventRequest(1)->save();
     
     }
     

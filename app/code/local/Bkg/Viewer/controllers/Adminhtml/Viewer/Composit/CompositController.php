@@ -80,6 +80,11 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 				if(isset($data['node_options'])){
 					$this->saveChilds($data['node_options'], $model->getId());
 				}
+				if(isset($data['sectiontools']))
+                {
+                    $this->saveSelectiontools($data['sectiontools'], $model->getId());
+                }
+
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('bkgviewer')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -99,9 +104,39 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('bkgviewer')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
 	}
-	
+
+
+    public function saveSelectiontools($data,$compositId)
+    {
+        if($data)
+        {
+            foreach($data as $d) {
+                $model = Mage::getModel('bkgviewer/composit_selectiontools');
+                if($d['id'] > 0)
+                {
+                    $model->load($d['id']);
+                }
+				if($d['deleted'] == 0)
+				{
+	                $model->setPos($d['pos'])
+	                    ->setCompositId($compositId)
+	                    ->setLayerId($d['layer_id'])
+	                    ->setLabel($d['label'])
+	                    ->save();
+				}else{
+					$model->delete();
+				}
+            }
+        }
+    }
+
+
 	public function saveChilds($nodes,$compositId)
 	{
+		foreach($nodes as $key =>$node)
+		{
+			$nodes[$key] = json_decode($nodes[$key],true);
+		}
 		$loaded = array();
 		//model erzeugen oder laden
 		foreach($nodes as $node)
@@ -109,17 +144,17 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 			$model = Mage::getModel('bkgviewer/composit_layer');
 			if(!isset($node['id']) || empty($node['id']))
 			{
-				$model->save();
-				$node['id'] = $model->getId();
-				$node['model'] = $model;
+				
 			}else {
 				$model = Mage::getModel('bkgviewer/composit_layer')->load($node['id']);
-				$node['model'] = $model;
 			}
 				
 			$model->setTitle($node['title'])
 			->setPos($node['pos'])
+			->setVisualPos($node['visual_pos'])
 			->setType($node['type'])
+			->setPermanent($node['permanent'])
+			->setIsChecked($node['is_checked'])
 			->setCompositId($compositId);
 				
 			if(!isset($node['serviceLayer']) || empty($node['serviceLayer']))
@@ -129,6 +164,11 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 	
 				$model->setServiceLayerId($node['serviceLayer']);
 			}
+			
+			$model->save();
+			$node['id'] = $model->getId();
+			$node['model'] = $model;
+			
 			$loaded[] = $node;
 				
 		}
@@ -138,7 +178,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 		{
 				
 			$model = $node['model'];
-			$parent = $this->findByNumber($loaded, $node['parent']);
+			$parent = $this->findByNumber($loaded, $node['parent_number']);
 				
 			if($parent){
 				$model->setParentId($parent['model']->getId());
@@ -153,7 +193,7 @@ class Bkg_Viewer_Adminhtml_Viewer_Composit_CompositController extends Mage_Admin
 	
 		foreach($loaded as $node)
 		{
-			if($node['is_delete']){
+			if($node['deleted']){
 				$model = $node['model'];
 				$model->delete();
 			}

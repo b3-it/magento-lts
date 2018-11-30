@@ -154,7 +154,7 @@ class Dwd_Abomigration_Model_Abomigration extends Mage_Core_Model_Abstract
     
     /**
      * Sicheres Passwort erzeugen
-     * @param unknown $username
+     * @param string $username
      * @return string
      */
     public static function createPassword($username)

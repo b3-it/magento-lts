@@ -12,7 +12,7 @@
 html,
 body {
     height: 100%;
-    /* auf 0 setzen, da sonst über dem Header ein Leer-Raum entsteht */
+    /* auf 0 setzen, da sonst ueber dem Header ein Leer-Raum entsteht */
     line-height: 0px;
 }
 
@@ -30,4 +30,55 @@ body {
 
 .wrapper:after {
     @include clearfix;
+}
+
+*[class$="-hidden"] {
+    display: none;
+}
+
+#notice-cookie-block {
+    position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    z-index: 9999;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    .notice-inner {
+        padding-bottom: 20px;
+
+        > div {
+            display: inline-block;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            }
+        }
+
+        .notice-text {
+            width: 70%;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	width: 100%;
+            }
+        }
+        .actions {
+            width: 18.5%;
+            margin: 0;
+            padding: 0;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            	width: 100%;
+            }
+        }
+    }
 }

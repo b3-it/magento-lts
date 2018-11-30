@@ -114,6 +114,8 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
                     $data[$vg->getIdent()] = $tmp;
                 } else {
                     // key already exist, push them to existing array
+                    // DO VERSION CHECK FOR VERY OLD PHP
+                    // version_compare(phpversion(), '5.6.0', '>=')) nützt hier nichts, da es als Syntax-Fehler behandelt wird!
                     array_push($data[$vg->getIdent()], ...$tmp);
                 }
             }
@@ -125,5 +127,40 @@ class Bkg_Viewer_Model_Composit_Composit extends Mage_Core_Model_Abstract
         }
         
         return $data;
+    }
+    
+    public function getOpenLayer($espg = false)
+    {
+    	$text = "var layers_0 = new ol.Collection();".PHP_EOL;
+    	
+    	/**
+    	 * @var Bkg_Viewer_Model_Resource_Composit_Layer_Collection $collection
+    	 */
+    	$collection = Mage::getModel('bkgviewer/composit_layer')->getCollection();
+    	$collection->getSelect()->order('pos');
+    	//echo "}</script>";
+    	
+    	//var_dump($list);
+    	//die();
+    	//->where("service_layer_id != null") // no need for category ones there?
+    	
+    	// done via zIndex
+    	//->order('visual_pos')
+    	;
+    	foreach($collection->getNodesTree($this->getId())->getChildren() as $layer)
+    	{
+    	    //var_dump($layer);
+    	    //die();
+    	    /**
+    	     * @var Bkg_Viewer_Model_Composit_Layer $layer 
+    	     */
+			$text .= " ". $layer->getOpenLayer(0, $espg);
+    	}
+    	 
+    	return $text;
+    }
+    
+    public function getLayerTree() {
+        
     }
 }

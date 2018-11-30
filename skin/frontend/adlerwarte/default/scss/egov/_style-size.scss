@@ -1,0 +1,218 @@
+﻿//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$mobile-header-mainnav-top: 165px;
+$mobile-header-accountnav-top: 190px;
+
+$fa-icon-margin: 5px;
+
+// Da ein Radio kleiner wirkt, werden 3px abgezogen
+$global-radio-checkback-spacing: 8px;
+
+$global-fontsize: 12px;
+$global-fontsize-small: 0.8em;
+$global-fontsize-big: 1.2em;
+$global-lineheight: 1.35em;
+
+$global-radius: 4px;
+
+$global-active-border: 1px;
+
+$global-box-title-padding-top: 0.3em;
+$global-box-title-padding-right: 0em;
+$global-box-title-padding-bottom: 0.3em;
+$global-box-title-padding-left: 0.6em;
+
+$global-navigation-padding-top: 0px;
+$global-navigation-padding-right: 0px;
+$global-navigation-padding-bottom: 0px;
+$global-navigation-padding-left: 10px;
+$global-navigation-line-height: 30px;
+
+$global-navigation-link-padding-top: 3px;
+$global-navigation-link-padding-right: 12px;
+$global-navigation-link-padding-bottom: 3px;
+$global-navigation-link-padding-left: 14px;
+
+$global-wrapper-top: 4px;
+$global-wrapper-width: 100%;
+
+$global-indent: 0px;
+$global-boxmargin: 20px;
+$global-element-magrin-bottom: 16px;
+$global-boxpadding: 5px;
+$global-boxpadding-large: 10px;
+$global-tdpadding: 5px;
+$global-listmargin: 15px;
+$golbal-msgpadding: 20px;
+$global-btn-padding-h: 10px;
+$global-btn-padding-v: 5px;
+
+$global-logo-width: 350px;
+$global-logo-height: auto;
+$global-logo-top: -20px;
+$global-logo-left: 20px;
+
+$global-skiplinks-space: 70px;
+
+$global-h1-size: 3em;
+$global-h2-size: 1.5em;
+$global-h3-size: 1em;
+$global-h4-size: 1em;
+$global-h5-size: 1em;
+$global-h6-size: 8px;
+
+$global-pagetitle-size: 2em;
+
+$global-h1-left: 280px;
+$global-h1-top: 10px;
+
+$global-box-border: 1px;
+$global-box-border-bottom: 3px;
+
+$global-minicart-lineheight: 2em;
+$global-sidebar-cart-top: -15px;
+
+$global-checkout-borderwidth: 1px;
+$global-checkout-marginright: 25px;
+$global-checkout-button-margin: 30px;
+$global-checkout-total-sum: 1.7em;
+$global-checkout-success-order-text: 1.4em;
+$global-checkout-success-order-number: 1.7em;
+
+$global-checkout-op-height: 40px;
+$global-checkout-op-number: 26px;
+$global-checkout-op-boxmargin: 15px;
+
+$global-header-height: 200px;
+
+$global-welcome-header: 63px;
+$global-welcome-left: 0px;
+$global-welcome-top: 20px;
+
+$global-welcome-header-top: 30px;
+
+$global-message-margintop: 20px;
+$global-message-marginbottom: 20px;
+
+// Angabe aller Breiten in Pixel
+$global-fullpage-width      : 960px;
+$global-leftcol-width       : 235px;
+$global-leftcol-marginright : 22px;
+$global-leftcol-margintop   : 15px;
+$global-content-paddingleft : 21px;
+$global-content-width       : 415px;
+$global-content-marginright : 32px;
+$global-rightcol-marginright: 26px;
+$global-rightcol-width      : 230px;
+
+$global-rightcol-margintop : 47px;
+$global-content-paddingtop : 20px;
+
+// Berechnung aller Breiten in Prozent
+$global-3col-factor                 : 1.4; // Verhältnis zwischen Linker- und Hauptspalte bei 3-Spaltig
+$global-leftcol-percent             : percentage( $global-leftcol-width        / $global-fullpage-width );
+$global-leftcol-rightmargin-percent : percentage( $global-leftcol-marginright  / $global-fullpage-width );
+$global-rightcol-leftmargin-percent : percentage( $global-content-marginright  / $global-fullpage-width );
+$global-rightcol-percent            : percentage( $global-rightcol-width       / $global-fullpage-width );
+$global-rightcol-3col-percent       : $global-rightcol-percent * $global-3col-factor;
+$global-rightcol-rightmargin-percent: percentage( $global-rightcol-marginright / $global-fullpage-width );
+$global-content-leftpadding-percent : percentage( $global-content-paddingleft  / $global-fullpage-width );
+
+// Breite der Linken Spalte mit dem Abstand nach rechts
+$global-left-col-fixed  : $global-leftcol-width + $global-leftcol-marginright;
+$global-left-col-percent: $global-leftcol-percent + $global-leftcol-rightmargin-percent;
+
+// Breite der Rechten Spalte mit dem Abstand nach links und rechts
+$global-right-col-fixed   : $global-content-marginright + $global-rightcol-width + $global-rightcol-marginright;
+$global-right-col-percent : $global-rightcol-leftmargin-percent + $global-rightcol-percent + $global-rightcol-rightmargin-percent;
+$global-right-3col-percent: $global-rightcol-leftmargin-percent + $global-rightcol-3col-percent + $global-rightcol-rightmargin-percent;
+
+// Content-Breiten (berechnet Pixel)
+$global-content-1col-width      : $global-fullpage-width - $global-content-paddingleft - $global-content-marginright;
+$global-content-2col-left-width : $global-fullpage-width - $global-left-col-fixed;
+$global-content-2col-right-width: $global-fullpage-width - $global-right-col-fixed;
+$global-content-3col-width      : $global-fullpage-width - $global-left-col-fixed - $global-right-col-fixed;
+
+// Content-Breiten (berechnet Prozent)
+$global-content-1col-percent      : 100 - $global-content-leftpadding-percent - $global-rightcol-rightmargin-percent;
+$global-content-2col-left-percent : 100 - $global-left-col-percent;
+$global-content-2col-right-percent: 100 - $global-right-col-percent;
+$global-content-3col-percent      : 100 - $global-right-3col-percent;
+
+// Breite Maincol (std + col right)
+$global-maincol-width-fixed  : $global-fullpage-width - $global-left-col-fixed;
+$global-maincol-width-percent: 100 - $global-left-col-percent;
+$global-maincol-title-fixed  : $global-maincol-width-fixed - $global-rightcol-marginright;
+$global-maincol-title-percent: percentage( $global-maincol-title-fixed / $global-maincol-width-fixed);
+
+//One-Page-Checkout - Breiten in Prozent
+$onepage-content-width: percentage( ($global-fullpage-width - $global-rightcol-width - 100) / $global-fullpage-width);
+
+$blobal-blockcontent-marginleft  : 5px;
+$blobal-blockcontent-marginright : 5px;
+$blobal-blockcontent-margintop   : 5px;
+$blobal-blockcontent-marginbottom: 5px;
+
+$global-footer-lineheight: 2em;
+$global-footer-fontsize: 1em;
+$global-footer-height: 160px;
+$global-footer-horizontal-margin: 25px;
+$global-footer-links-top: 28px;
+$global-footer-links-width: 33%;
+//$global-footer-linkswidth: 53em;
+
+$global-min-width: 60em;
+
+$global-content-top-position: 0px;
+$global-content-top-padding: 1em;
+$global-content-bottom-padding: 60px;
+$global-content-bottom-bordersize: 1px;
+
+$global-cms-top-position: 0px;
+
+$global-category-width: 225px;
+$global-category-top-padding: 70px;
+$global-category-margintop: 0px;
+$global-category-marginright: 0px;
+$global-category-lineheight: 21px;
+$global-category-fontsize: 15px;
+$global-category-height: 30px;
+$global-category-subindent: 5px;
+
+$global-category-image-maxwidth: 80px;
+$global-category-image-maxheight: 53px;
+
+$global-subcat-left: 0px;
+$global-subcat-top: 0px;
+$global-subcat-paddingtop: 0px;
+$global-subcat-paddingbottom: 0px;
+$global-subcat-paddingleft: 0px;
+$global-subcat-paddingright: 0px;
+
+$global-product-spacing: 20px;
+$global-product-grid-action-height: 85px;
+$global-product-list-imagesize: 25%;
+$global-product-list-desc_height: 63%;
+$global-product-list-button-width: 32%;
+$global-product-list-price-width: 48%;
+
+$gobal-cart-block-height: 35px;
+
+$global-1-product-height: 300px;
+$global-product-image-1-width: 40%;
+$global-product-info-1-width: 59%;
+
+$global-2L-product-height: auto;
+$global-product-image-2L-width: 40%;
+$global-product-info-2L-width: 59%;
+
+$global-2R-product-height: 400px;
+
+$global-3-product-height: 300px;
+$global-product-image-3-width: 50%;
+$global-product-info-3-width: 49%;

@@ -36,6 +36,21 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	return parent::_afterLoad();
     }
     
+    public function copy()
+    {
+    	$result = Mage::getModel('eventmanager/participant');
+    	$result->setData($this->getData());
+    	$result->unsetData('participant_id');
+    	$result->unsetData('order_id');
+    	$result->unsetData('order_item_id');
+    	$result->unsetData('created_time');
+    	$result->unsetData('update_time');
+    	$result->unsetData('status');
+    	$result->setIndustry($this->getIndustry());
+    	$result->setLobby($this->getLobby());
+    	return $result;
+    }
+    
     protected function _saveAttribute($field, $key)
     {
     	$orig = $this->getResource()->getAttributeValues($this->getId(), $key);
@@ -61,8 +76,8 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     
     /**
      * Daten aus der Bestellung in die Veranstaltundsdatenbank übernehmen
-     * @param unknown $order
-     * @param unknown $orderItem
+     * @param Mage_Sales_Model_Order $order
+     * @param Mage_Sales_Model_Order_Item $orderItem
      * @return Bfr_EventManager_Model_Participant
      */
     public function importOrder($order,$orderItem)
@@ -75,7 +90,10 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     		$address = $order->getBillingAddress();
     	}
     	$productOptions = ($orderItem->getProductOptions());
-    	$personalOptions = $productOptions['info_buyRequest']['personal_options'];
+    	$personalOptions = array();
+    	if(isset($productOptions['info_buyRequest']['personal_options'])){
+    		$personalOptions = $productOptions['info_buyRequest']['personal_options'];
+    	}
     	if(!is_array($personalOptions)){
     		$personalOptions = array();
     	}
@@ -110,7 +128,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     	$this->setEventId($event->getId());
     	$this->setCreatedTime(now())->setUpdateTime(now());
     	$fields = array('prefix'=>'getPrefix','academic_titel'=>'getAcademicTitel','position'=>'getPosition',
-    			'firstname'=>'getFirstname','lastname'=>'getLastName','company'=>'getCompany','company2'=>'getCompany2',
+    			'firstname'=>'getFirstname','lastname'=>'getLastname','company'=>'getCompany','company2'=>'getCompany2',
     			'company3'=>'getCompany3','street'=>'getStreetFull','city'=>'getCity','postcode'=>'getPostcode','email'=>'getEmail',
     			'country'=>'getCountry','phone'=>'getPhone');
     	foreach($fields as $field => $func){

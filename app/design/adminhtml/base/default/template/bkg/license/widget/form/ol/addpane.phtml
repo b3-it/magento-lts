@@ -1,0 +1,31 @@
+		<table class="massaction">
+			<tbody style="background:none;">
+				<tr>
+					<td>
+						<div class="right select-button-container">
+							<div class="entry-edit">
+								<select id="tollcategory" onchange="<?php echo $this->getOnchange()?>">
+									<?php foreach($this->getValuesCat() as $opt):?>
+										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+									<?php endforeach;?>
+								</select>
+								<select id="toll" onchange="<?php echo $this->getOnchangeToll()?>">
+									<option value='0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								<select id="tolluse" onchange="<?php echo $this->getOnchangeUse()?>">
+									<option value='0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								<select id="tolloption">
+									<option value='0'><?php echo $this->__('-- Please Select --')?> </option>
+								</select>
+								<button  class="scalable add" onclick="addTableRow( $j(this) );" type="button" title="<?php echo Mage::helper('bkg_license')->__('Add')?>">
+									<span>
+										<?php echo Mage::helper('bkg_license')->__('Add')?>
+									</span>
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>

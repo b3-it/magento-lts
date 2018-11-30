@@ -78,14 +78,18 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 
      	return Mage::getBlockSingleton("page/html_head")->getTitle();
      }
-     
-     public function getUrl($route = '', $params = array()) {
-     	if (strlen($route) < 1 && count($params) < 1) {
-     		return Mage::getStoreConfig('web/url/header_home_link');
-     	}
-     	return parent::getUrl($route, $params);
-     }
-     
+
+    public function getUrl($route = '', $params = array()) {
+        if (strlen($route) < 1 && count($params) < 1) {
+            $homelink = Mage::getStoreConfig('web/url/header_home_link');
+            if (!empty($homelink)) {
+                return $homelink;
+            }
+            return Mage::app()->getStore()->getHomeUrl();
+        }
+        return parent::getUrl($route, $params);
+    }
+
      public function getWelcome() {
      	if (empty($this->_data['welcome'])) {
      		if (Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()) {
@@ -94,12 +98,12 @@ class Egovs_Bitv_Block_Page_Html_Header extends Mage_Page_Block_Html_Header
 		    		$str = trim($customer->getName());
 		    		//Firma
 		    		if (!empty($str)) {
-                        $str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->htmlEscape($str), $this->htmlEscape($customer->getCompany())));
+		    			$str = trim(sprintf('%s <span id="welcome-company">(%s)</span>', $this->escapeHtml($str), $this->escapeHtml($customer->getCompany())));
 		    		} else {
-                        $str = trim(sprintf('%s', $this->htmlEscape($customer->getCompany())));
+		    			$str = trim(sprintf('%s', $this->escapeHtml($customer->getCompany())));
 		    		}
 		    	} else {
-                    $str = $this->htmlEscape($customer->getName());
+		    		$str = $this->escapeHtml($customer->getName());
 		    	}
                 $this->_data['welcome'] = $this->__('Welcome, %s!', $str);
      		} else {

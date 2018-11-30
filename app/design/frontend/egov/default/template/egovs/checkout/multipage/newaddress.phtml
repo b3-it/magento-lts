@@ -97,9 +97,9 @@
                             <?php echo $_egov_helper->getFieldRequiredHtml('street', $_checkout_method) ?>
                             <?php echo $this->__('Street Address') ?>
                         </label>
-	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="22" />
-                    <?php for ($_i=1, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
-		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i+1)) ?>" class="input-text" maxlength="21" />
+	                      <input tabindex="8" type="text" title="<?php echo $this->__('Street Address') ?>" name="billing[street][]" id="billing:street1" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('street', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="22" />
+                    <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+		    		            <input tabindex="8" type="text" title="<?php echo $this->__('Street Address '.$_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i?>" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" class="input-text" maxlength="21" />
 		                <?php endfor ?>
                     </div>
 		    		    </li>
@@ -261,23 +261,22 @@
             </ul>
         </div>
 
-    </div>
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 
-    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-
-    <div class="buttons-set">
-        <a class="button" href="<?php echo $this->getBackUrl() ?>" tabindex="21">
-            <span><?php echo $this->__('Back') ?></span>
-        </a>
-        <a class="button" href="<?php echo $this->getUrl() ?>" tabindex="22">
-            <span><?php echo $this->__('Continue Shopping') ?></span>
-        </a>
-        <button  class="button" type="submit" tabindex="23">
-            <span><?php echo $this->__('Continue') ?></span>
-        </button>
-    </div>
-
-</form>
+        <div class="buttons-set">
+            <a class="button" href="<?php echo $this->getBackUrl() ?>" tabindex="21">
+                <span><?php echo $this->__('Back') ?></span>
+            </a>
+            <a class="button" href="<?php echo $this->getUrl() ?>" tabindex="22">
+                <span><?php echo $this->__('Continue Shopping') ?></span>
+            </a>
+            <button  class="button" type="submit" tabindex="23">
+                <span><?php echo $this->__('Continue') ?></span>
+            </button>
+        </div>
+    
+    </form>
+</div>
 
 <script type="text/javascript">
 //<![CDATA[

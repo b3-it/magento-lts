@@ -100,6 +100,7 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     	if (!$this->getSession()->getProductToAdd()) {
     		$this->getSession()->unsParams();
     		$this->_redirect('', array('_secure'=>true));
+    		return;
     	}
     	
     	if (!$this->getSession()->getProductToAdd()->isAvailable()) {
@@ -110,6 +111,7 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     		} else {
     			$this->_redirect('', array('_secure'=>true));
     		}
+    		return;
     	}
     	
     	if ($this->_getState()->getActiveStep() != Sid_Wishlist_Model_State::STEP_ADD_SELECT) {
@@ -209,18 +211,27 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     		$this->_getState()->setCompleteStep(Sid_Wishlist_Model_State::STEP_ADD_SELECT);
     		
     	} catch (Sid_Wishlist_Model_Quote_NoProductException $e) {
-    		Mage::getSingleton('core/session')->addError($e->getMessage());
-    		$this->getSession()->unsParams();
-    		//redirect to Startpage
-    		$this->_redirect('', array('_secure'=>true));
+            Mage::getSingleton('core/session')->addError($e->getMessage());
+            $this->getSession()->unsParams();
+            if ($e->getRefererUrl() !== NULL && $this->_isUrlInternal($e->getRefererUrl())) {
+                $this->_redirectUrl($e->getRefererUrl());
+            } else {
+                //redirect to Startpage
+                $this->_redirect('', array('_secure' => true));
+            }
     		return;
     	} catch (Mage_Core_Exception $e) {
-    		Mage::getSingleton('sidwishlist/session')->addError($e->getMessage());
+    		Mage::logException($e);
+    		$messages = array_unique(explode("\n", $e->getMessage()));
+    		foreach ($messages as $message) {
+    			Mage::getSingleton('sidwishlist/session')->addError($message);
+    		}
+    		
     		if ($wishlistId == 'new') {
-    			$this->_redirect('*/*/newwishlist', array('_secure'=>true));
+                $this->_forward('newwishlist', null, null, array('_secure'=>true));
     			return;
     		}
-    		$this->_redirect('*/*/add', array('_secure'=>true));
+    		$this->_forward('add', null, null, array('_secure'=>true));
     		return;
     	} catch (Exception $e) {
     		Mage::getSingleton('sidwishlist/session')->addException(
@@ -229,10 +240,10 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     		Mage::log("sidwishlist::".$e->getMessage(), Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 
     		if ($wishlistId == 'new') {
-    			$this->_redirect('*/*/newwishlist', array('_secure'=>true));
+                $this->_forward('newwishlist', null, null, array('_secure'=>true));
     			return;
     		}
-    		$this->_redirect('*/*/add', array('_secure'=>true));
+            $this->_forward('add', null, null, array('_secure'=>true));
     		return;
     	}
     	

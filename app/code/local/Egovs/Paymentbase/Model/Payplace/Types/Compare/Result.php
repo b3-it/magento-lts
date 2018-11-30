@@ -27,14 +27,14 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare_Result extends Egovs_Paymen
     public $_;
     /**
      * The ref
-     * @var NCName
+     * @var string
      */
     public $ref;
     /**
      * Constructor method for compareResult
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Enum_CheckResultEnum $__
-     * @param NCName $_ref
+     * @param string $_ref
      * @return Egovs_Paymentbase_Model_Payplace_Types_Compare_Result
      */
     public function __construct($__ = NULL,$_ref = NULL)
@@ -65,7 +65,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare_Result extends Egovs_Paymen
     }
     /**
      * Get ref value
-     * @return NCName|null
+     * @return string|null
      */
     public function getRef()
     {
@@ -73,8 +73,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Compare_Result extends Egovs_Paymen
     }
     /**
      * Set ref value
-     * @param NCName $_ref the ref
-     * @return NCName
+     * @param string $_ref the ref
+     * @return bool
      */
     public function setRef($_ref)
     {

@@ -21,8 +21,10 @@ function fetchPrice(){
     });		
 }
 
-function setPrice(amount = false)
+function setPrice(amount)
 {
+	amount = (typeof amount !== 'undefined') ?  amount : false;
+	
 	if(amount === false ) {
 		amount = $j('#amount').val();
 	}

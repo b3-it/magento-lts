@@ -1,0 +1,30 @@
+<script type="text/javascript">
+//<![CDATA[
+
+</script>
+
+<div class="entry-edit">
+	<?php foreach($this->getFeesSections() as $sect):?>
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('virtualgeo')->__($sect['label']) ?></h4>
+		</div>
+		<fieldset >
+			<div class="fees_settings">
+				<table class="form-list" cellspacing="0">
+					<tbody>
+						<?php foreach($this->getUsageSections() as $usage):?>
+							<tr>
+								<td class="label"><?php echo Mage::helper('virtualgeo')->__($usage['taxfree_label']) ?></td>
+								<td class="value"><?php echo $this->getRapSelect($sect['ident'],$usage['ident'])?></td>
+							</tr>
+							<tr>
+								<td class="label"><?php echo Mage::helper('virtualgeo')->__($usage['tax_label']) ?></td>
+								<td class="value"><?php echo $this->getRapSelect($sect['ident'],$usage['ident'].'_tax')?></td>
+							</tr>
+						<?php endforeach;?>
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
+	<?php endforeach;?>
+</div>

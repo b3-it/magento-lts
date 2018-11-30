@@ -77,4 +77,76 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
     	return $this->getUrl('sales/order/view/', array('order_id'=> $this->getOrder()->getId(), '_secure' => true));
     }
+    
+    
+    public function getOrderItems()
+    {
+    	return $this->getOrder()->getAllItems();
+    }
+    
+    public function getBillingAddress()
+    {
+    	return $this->getOrder()->getAllItems();
+    }
+    
+    public function getLogoPath()
+    {
+    	$logo =  Mage::getStoreConfig('gka_checkout/invoice/logo_src');
+    	if (!empty($logo)) {
+    		 return Mage::getDesign()->getSkinBaseDir().DS.$logo;
+    	}
+    	
+    	return null;
+    }
+    
+    /**
+     * Get current day of week and current date
+     *
+     * @return string
+     */
+    public function getOrderTime()
+    {
+        $format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+        $date = strtotime($this->getOrder()->getUpdatedAt());
+        
+        return Mage::app()->getLocale()->date($date, null, null, false)->toString($format);
+    }
+    
+    /**
+     * Name des Kunden der aktuellen Bestellung
+     * 
+     * @return string
+     */
+    public function getOrderCustomerName()
+    {
+        return $this->getOrder()->getCustomerFirstname() . ' ' . $this->getOrder()->getCustomerLastname();
+    }
+
+    /**
+     * Kassenzeicher der aktuellen Bestellung
+     * 
+     * @return Egovs_Paymentbase_Model_Paymentbase
+     */
+    public function getKassenzeichen()
+    {
+        return $this->getOrder()->getPayment()->getData('kassenzeichen');
+    }
+    
+
+    
+    /**
+     * der Name der Zahlart
+     */
+    public function getPaymentTitle()
+    {
+    	$info = $this->getOrder()->getPayment()->getMethodInstance();
+    	
+    	return $info->getTitle();
+    }
+    
+    public function getContinueUrl()
+    {
+    	return $this->getUrl('/');
+    }
+    
 }

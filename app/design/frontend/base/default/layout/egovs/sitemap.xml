@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
-<layout version="0.1.0"> 
- <xcatalog_seo_sitemap translate="label">
-        <reference name="root">
-        	<!-- egovs custom code begin -->
-            <action method="setTemplate"><template>page/3columns.phtml</template></action>
-            <!-- egovs custom code end -->
-        </reference>
-		
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <catalog_seo_sitemap translate="label">
         <reference name="seo.sitemap.container">
-				 <action method="unsetChild"><name>seo.sitemap.links</name></action>
-            	<block type="egovssitemap/cms" name="seo.sitemap.cms" as="cms" template="egovs/sitemap/cms.phtml"/>
+            <remove name="seo.sitemap.links"/>
+            <remove name="seo.sitemap.pager.top"/>
+            <remove name="seo.sitemap.pager.bottom"/>
+            <block type="egovssitemap/cms" name="seo.sitemap.cms" as="cms" template="egovs/sitemap/cms.phtml"/>
+            <action method="setTitleSiteMap" translate="title" module="catalog">
+                <title>Site Map</title>
+            </action>
+            <action method="setTitleSiteCms" translate="title" module="catalog">
+                <title>General</title>
+            </action>
         </reference>
-    </xcatalog_seo_sitemap>
-	</layout>
+    </catalog_seo_sitemap>
+</layout>

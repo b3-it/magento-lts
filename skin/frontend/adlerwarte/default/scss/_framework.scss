@@ -1,0 +1,52 @@
+﻿//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2016 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// SASS / Compass Framework
+// ==============================================
+
+// ----------------------------------------------
+// Compass
+
+@import "compass";
+@import "compass/css3";
+
+// ----------------------------------------------
+// EGOV-Definitionen (Maße und Variablen)
+@import "egov/fontbase";
+@import "egov/style-size";
+@import "egov/style-images";
+@import "egov/style-colors";
+
+// ----------------------------------------------
+// Default :: Vars
+
+@import "../../../egov_old/default/scss/var";
+
+// ----------------------------------------------
+// Default :: font-awesome
+@import "../../../egov_old/default/scss/egov/font-awesome";
+
+// ----------------------------------------------
+// Functions
+
+// ----------------------------------------------
+// Defaults
+@import "../../../egov_old/default/scss/mixin/breakpoint";
+@import "../../../egov_old/default/scss/mixin/multi-column";
+@import "../../../egov_old/default/scss/mixin/clearfix";
+@import "mixin/egov_loginform";
+@import "../../../egov_old/default/scss/mixin/image-replacement";
+@import "mixin/menu";
+@import "mixin/main-navigation";
+@import "mixin/new_address";
+@import "../../../egov_old/default/scss/mixin/not-selectable";
+@import "../../../egov_old/default/scss/mixin/if-resolution";
+@import "mixin/toggle-content";
+@import "../../../egov_old/default/scss/mixin/triangle";
+@import "mixin/typography";
+@import "../../../egov_old/default/scss/mixin/loading-overlay";

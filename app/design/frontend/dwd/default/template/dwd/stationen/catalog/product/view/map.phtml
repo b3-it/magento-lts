@@ -5,7 +5,7 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * 
- * @var Dwd_Stationen_Block_Catalog_Product_View_Abstract $this
+ * @var Dwd_Stationen_Block_Catalog_Product_View_Map $this
  */
 ?>
 
@@ -17,7 +17,5 @@ var jsonUrl      = "<?php echo $this->getGeoJsonUrl(); ?>";
 var marker_klein = "<?php echo $this->getSkinUrl(); ?>geomap/images/map2_point4.gif";
 var marker_gross = "<?php echo $this->getSkinUrl(); ?>geomap/images/map2_point4.png";
 </script>
-<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/ol.js"></script>
-<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/ol3pz.js"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>geomap/js/init.js"></script>
 <?php endif;?>

@@ -1,0 +1,63 @@
+<?php $_element =  $this->getElement();?>
+<?php $_itemID = $_element->getId(); ?>
+
+<script type="text/javascript" src="<?php echo $this->getJsUrl('egovs/table-assign.js'); ?>"></script>
+<script type="text/javascript">
+var assign_<?php echo $_itemID?> = new assignTable('<?php echo $_itemID?>','<?php echo  $_element->getName();?>');
+var messageNoItemSelected = '<?php echo $this->__('At least one option must be selected.'); ?>';
+
+$j(document).ready(function(){
+  <?php if($_element->getValue()): ?>
+   <?php foreach($_element->getValue() as $value):?>
+    assign_<?php echo $_itemID?>.appendRow(<?php echo $value?>);
+   <?php endforeach;?>
+  <?php endif;?>
+});
+</script>
+
+<tr class='grid'>
+	<td class="label">
+		<?php echo $this->__($_element->getLabel())?>
+	</td>
+	<td class="value">
+		<table cellspacing="0" class="data" id="table-<?php echo $_itemID; ?>">
+			<colgroup>
+				<col />
+				<col />
+				<col style="width: 110px;" />
+			</colgroup>
+			<thead>
+				<tr class="headings">
+					<th><?php echo $this->__($_element->getLeftLabel())?></th>
+					<th><?php echo $this->__($_element->getRightLabel())?></th>
+					<th>&nbsp;</th>
+				</tr>
+				<tr class="massaction">
+					<th>
+						<select id='left-assign-<?php echo $_itemID?>' >
+						  <?php foreach($_element->getLeftValues() as $opt):?>
+							<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+						  <?php endforeach;?>
+						</select>
+					</th>
+					<th>
+						<select  id='right-assign-<?php echo $_itemID?>' >
+							<?php foreach($_element->getRightValues() as $opt):?>
+								<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+							<?php endforeach;?>
+						</select>
+					</th>
+					<th>
+						<button class="scalable add" onclick="assign_<?php echo $_itemID?>.appendRow();" type="button" title="<?php echo Mage::helper('egovsbase')->__('Add')?>">
+							<span>
+								<?php echo Mage::helper('bkg_license')->__('Add')?>
+							</span>
+						</button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</td>
+</tr>

@@ -35,11 +35,26 @@
 
 class Egovs_Object 
 {
-	private $_isLogEnabled = null;
-	private $_ModuleName = null;
+    /**
+     * Object isLogEnabled
+     *
+     * @var boolean
+     */
+    private $_isLogEnabled = null;
+
+    /**
+     * Object ModuleName
+     *
+     * @var string
+     */
+    private $_ModuleName = null;
 	
 	
-	protected function setLog($msg)
+    /**
+     * Write Memory-message to LOG-File
+     *
+     */
+    protected function setLog($msg)
 	{
 		if($this->isLogEnabled())
 		{
@@ -51,11 +66,20 @@ class Egovs_Object
 		}
 	}
 	
+	/**
+	 * Error-Handling
+	 *
+	 */
 	protected function setLogException(Exception $ex)
 	{
 		$this->setLog($ex->getMessage());
 	}
 	
+	/**
+	 * Check if Logging is Enabled (StoreView)
+	 *
+     * @return bool
+	 */
 	private function isLogEnabled()
 	{
 		if($this->_isLogEnabled === null)
@@ -73,6 +97,11 @@ class Egovs_Object
 	}
 	
 	
+	/**
+	 * Return the Name of the current Module
+	 *
+	 * @return string
+	 */
 	private function getModuleName()
 	{
 		if($this->_ModuleName == null)
@@ -89,4 +118,15 @@ class Egovs_Object
 		return $this->_ModuleName;
 	}
 	
+	
+	/**
+	 * Check if Field ist set in Data-Array
+	 *
+	 * @return bool
+	 */
+	public function isFieldEquals($field, $compareTo)
+	{
+		$field = $this->getData($field);
+		return boolval($field == $compareTo);
+	}
 }

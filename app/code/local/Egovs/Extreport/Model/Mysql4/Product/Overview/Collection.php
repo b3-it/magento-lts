@@ -35,7 +35,7 @@ class Egovs_Extreport_Model_Mysql4_Product_Overview_Collection extends Mage_Cata
     /**
      * Setzt den Kategorienfilter
      * 
-     * @param unknown_type $filter Filter
+     * @param Mage_Catalog_Block_Layer_Filter_Category $filter Filter
      * 
      * @return void
      */

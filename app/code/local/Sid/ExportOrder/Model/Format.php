@@ -14,7 +14,7 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 	protected $_FileExtention = '.txt';
 	/**
 	 * 
-	 * @param unknown $type
+	 * @param string  $type
 	 * @return Sid_ExportOrder_Model_Format
 	 */
 	public static function getInstance($type)
@@ -34,7 +34,7 @@ abstract class Sid_ExportOrder_Model_Format extends Mage_Core_Model_Abstract
 	
 	/**
 	 * Erzeugen eines formatierten Streams aus der Bestellung
-	 * @param Mage_Sales_Model_Orderr $order
+	 * @param Mage_Sales_Model_Order $order
 	 */
 	public abstract function processOrder($order);
 	

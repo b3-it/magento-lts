@@ -220,4 +220,8 @@ class Sid_Wishlist_Block_View extends Sid_Wishlist_Block_View_Quote_Abstract
 	public function hasSaleableItems() {
 		return $this->getQuote()->hasSaleableItems();
 	}
+
+	public function hasQtyOrdered() {
+	    return $this->getQuote()->hasQtyOrdered();
+    }
 }

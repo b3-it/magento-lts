@@ -45,7 +45,7 @@
                                     <?php echo $this->getFieldRequiredHtml('email')?>
                                     <?php echo $this->__('Email Address') ?>
                                 </label>
-                                <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="billing[email]" id="billing:email" value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
+                                <input type="email" spellcheck="false" name="billing[email]" id="billing:email" value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>" title="<?php echo $this->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
                             </div>
                         </li>
                       <?php endif; ?>
@@ -214,6 +214,7 @@
             <?php echo $this->__('Loading next step...') ?>
         </span>
     </div>
+    <?php echo $this->getBlockHtml('formkey') ?>
 </form>
 
 <script type="text/javascript">

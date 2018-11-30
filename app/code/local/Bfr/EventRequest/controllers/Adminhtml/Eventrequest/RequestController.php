@@ -198,4 +198,8 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
         $response->sendResponse();
         die;
     }
+    
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventrequest_request');
+    }
 }

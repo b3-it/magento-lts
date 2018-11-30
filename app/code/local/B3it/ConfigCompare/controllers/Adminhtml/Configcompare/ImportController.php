@@ -18,6 +18,7 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_ImportController extends B3it_C
  
 	public function indexAction() {
 		
+		$storeId = intval($this->getRequest()->getParam('store_id',0));
 		
 		if ($data = $this->getRequest()->getPost()) {
 				
@@ -25,8 +26,8 @@ class B3it_ConfigCompare_Adminhtml_Configcompare_ImportController extends B3it_C
 				try {
 					$xml = file_get_contents($_FILES['filename']['tmp_name']);
 					$xml = simplexml_load_string($xml);
-					Mage::getModel('configcompare/configCompare')->import($xml);
-					$this->_redirect('*/configcompare_compare');
+					Mage::getModel('configcompare/configCompare')->setStoreId($storeId)->import($xml);
+					$this->_redirect('*/configcompare_compare',array('store_id'=>$storeId));
 				} catch (Exception $e) {
 					Mage::logException($e);
 				}				 

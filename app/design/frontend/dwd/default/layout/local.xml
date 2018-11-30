@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
 <layout>
     <default>
         <reference name="head">
@@ -30,6 +31,7 @@
         <reference name="left">
             <remove name="catalog.leftnav" />
             <remove name="cart_sidebar" />
+            <remove name="left.newsletter" />
             
             <block type="checkout/cart_sidebar" name="cart_sidebar_dwd" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -71,6 +73,12 @@
         </reference>
     </default>
     
+    <cms_index_noroute>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </cms_index_noroute>
+    
     <catalog_product_view translate="label">
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
@@ -94,13 +102,7 @@
             <block type="mpcheckout/cart_coupon" name="checkout.cart.coupon" as="coupon" after="methods" template="checkout/cart/coupon.phtml"/>
         </reference>
     </checkout_cart_index>
-    
-    <catalogsearch_result_index>
-        <reference name="left_first">
-            <remove name="catalogsearch.leftnav" />
-        </reference>
-    </catalogsearch_result_index>
-    
+
     <catalog_product_view>
         <reference name="head">
             <action method="removeItem">
@@ -128,6 +130,8 @@
             <action method="removeLinkByName"><name>billing_agreements</name></action>
             <action method="removeLinkByName"><name>recurring_profiles</name></action>
             <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+            <action method="removeLinkByName"><name>reviews</name></action>
+            <action method="removeLinkByName"><name>tags</name></action>
         </reference>
 
         <!-- cart_sidebar does need to be over the account navigation -->

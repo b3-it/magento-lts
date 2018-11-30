@@ -613,8 +613,9 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     
     /**
      * Rendert die einzelen Items in einer Schleife
-     * @param unknown $object die Rechnung/Gutschrift/Lieferung
-     * @param unknown $template das Template
+     * 
+     * @param Varien_Object                             $object       die Rechnung/Gutschrift/Lieferung
+     * @param Egovs_Pdftemplate_Model_Template          $template     das Template
      * @return Egovs_Pdftemplate_Model_Pdf_Abstract
      */
 	protected function RenderTable($object,$template)
@@ -853,10 +854,19 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
         $config['kostenstelle'] = Mage::getStoreConfig('sales/identity/kostenstelle', $store);
         $config['address'] = Mage::getStoreConfig('sales/identity/address', $store);
         $design = Mage::getDesign();
+        
+        $package =  Mage::getStoreConfig('design/package/name', $store);
+        if(empty($package)){
+        	$package = null;
+        }
         $design->setStore($store)
         		->setArea('frontend')
-        		->setPackageName(null);
+        		->setPackageName($package);
         $config['skinbasedir'] = $design->getSkinBaseDir();
+        
+        $dir = Mage::getStoreConfig('system/filesystem/media', $store);;
+        $dir = realpath( Mage::getConfig()->substDistroServerVars($dir));
+        $config['mediadir'] = $dir;
            
         
         return $config;

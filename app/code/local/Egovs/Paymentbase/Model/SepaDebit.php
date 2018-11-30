@@ -534,7 +534,7 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 		
 		$customer = $this->getCustomer();
 		$customer->setData(Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID, '');
-		if ($customer->getId() > 0 && !$customer->getDeleteOnPlatform()) {
+		if ($customer->getId() > 0) {
 			/* @var $resource Mage_Customer_Model_Resource_Customer */
 			$resource = $customer->getResource();
 			$resource->saveAttribute($customer, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_SEPA_MANDATE_ID);
@@ -590,7 +590,7 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @param string $_mandateReference Mandatsreferenz
 	 *
 	 * @return Egovs_Paymentbase_Model_Sepa_Mandate_Interface
-	 * @throws Exception
+	 * @throws Egovs_Paymentbase_Exception_Validation
 	 */
 	public final function getMandate($_mandateReference = null) {
 		$customer = $this->getCustomer();
@@ -1053,12 +1053,13 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @return string BLZ des Kunden
 	 */
 	public function getBic() {
-		if ($this->getIbanOnly()) {
+	    $info = $this->getInfoInstance();
+	    $return = $info->getCcType();
+	    
+		if ($this->getIbanOnly() && empty($return)) {
 			return '';
 		}
-		
-		$info = $this->getInfoInstance();
-		$return = $info->getCcType();
+
 	
 		return (string) $return;
 	}
@@ -1156,7 +1157,7 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 	 * @param Varien_Object $payment Payment
 	 * @param integer       $amount  Betrag
 	 *
-	 * @return  Mage_Payment_Model_Abstract
+	 * @return  Egovs_Paymentbase_Model_Debit
 	 *
 	 * @see Egovs_Paymentbase_Model_Debit::_authorize
 	 * @see Egovs_Paymentbase_Model_Abstract::createAccountingListParts

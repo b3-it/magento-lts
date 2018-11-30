@@ -19,10 +19,11 @@
             <?php else: ?>
                 <?php echo $this->escapeHtml($this->__($_crumbInfo['label'])) ?>
             <?php endif; ?>
+
+            <?php if(!$_crumbInfo['last']): ?>
+                <img src="<?php echo $this->getSkinUrl('images/icon_breadcrump.gif'); ?>" />
+            <?php endif; ?>
             </li>
-          <?php if(!$_crumbInfo['last']): ?>
-            <img src="<?php echo $this->getSkinUrl('images/icon_breadcrump.gif'); ?>" />
-          <?php endif; ?>
         <?php endforeach; ?>
       <?php else: ?>
         <li>

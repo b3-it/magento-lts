@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Egovs_B2b>
+            <version>0.1.0.0</version>
+        </Egovs_B2b>
+    </modules>
+    <global>
+        <helpers>
+            <egovs_b2b>
+                <class>Egovs_B2b_Helper</class>
+            </egovs_b2b>
+        </helpers>
+        <resources>
+            <egovs_b2b_setup>
+                <setup>
+                    <module>Egovs_B2b</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </egovs_b2b_setup>
+        </resources>
+        <blocks>
+          <egovs_b2b>
+              <class>Egovs_B2b_Block</class>
+          </egovs_b2b>
+        </blocks>
+        <models>
+            <egovs_b2b>
+                <class>Egovs_B2b_Model</class>
+                <resourceModel>egovs_b2b_resource</resourceModel>
+            </egovs_b2b>
+
+
+        </models>
+    </global>
+
+    <admin>
+
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Egovs_B2b>
+                    <files>
+                        <default>Egovs/B2b.csv</default>
+                    </files>
+                </Egovs_B2b>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <egovsb2b>
+              <file>Egovs/B2b.xml</file>
+            </egovsb2b>
+          </updates>
+        </layout>
+    </adminhtml>
+</config>

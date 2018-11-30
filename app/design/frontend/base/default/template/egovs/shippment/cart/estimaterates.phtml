@@ -1,5 +1,5 @@
         <?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
-        <?php if(count($_shippingRateGroups) > 1):?>
+          <?php if(count($_shippingRateGroups) > 1):?>
             <dl class="sp-methods">
                 <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
                     <dt><?php echo $this->getCarrierName($code) ?></dt>
@@ -26,15 +26,34 @@
                     </dd>
                 <?php endforeach; ?>
             </dl>
-            <!-- 
-            <div class="buttons-set">
-                <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button" name="do" value="<?php echo $this->__('Update Total') ?>"><span><span><?php echo $this->__('Update Total') ?></span></span></button>
-            </div>
-             -->
-             <?php endif; ?>
+          <?php else : ?>
+            <dl class="sp-methods">
+                <dt><?php echo $this->getCarrierName(key($_shippingRateGroups)); ?></dt>
+                <dd>
+                    <ul>
+                    <?php foreach ($_shippingRateGroups[key($_shippingRateGroups)] as $_rate): ?>
+                        <li<?php if ($_rate->getErrorMessage()) echo ' class="error-msg"';?>>
+                           <?php if ($_rate->getErrorMessage()): ?>
+                                <?php echo $_rate->getErrorMessage() ?>
+                           <?php else: ?>
+                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $_rate->getMethodTitle() ?>
+                                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                <?php echo $_excl; ?>
+                                <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                    (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                <?php endif; ?>
+                                </label>
+                           <?php endif ?>
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                </dd>
+            </dl>
+          <?php endif; ?>
         <?php else:?>
              <?php $plz = $this->getEstimatePostcode(); if (empty($plz)) {
-            		echo $this->__('Calculation of shipping cost requires postcode!'); 
+            		echo $this->__('Calculation of shipping cost requires postcode!');
 				} else{
 					echo $this->__('No Valid Shipping Method found!');
 				}?>

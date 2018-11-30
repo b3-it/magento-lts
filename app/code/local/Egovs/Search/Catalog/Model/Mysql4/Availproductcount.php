@@ -62,7 +62,7 @@ class Egovs_Search_Catalog_Model_Mysql4_Availproductcount
     /**
      * Retreive count for available products
      *
-     * @return count for available/notavailable products
+     * @return array count for available/notavailable products
      */
     public function getProductCountAvailArray()
     {

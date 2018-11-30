@@ -153,8 +153,8 @@ class Mage_Customer_Model_Address_Abstract extends Mage_Core_Model_Abstract
     /**
      * set address street informa
      *
-     * @param unknown_type $street
-     * @return unknown
+     * @param array|string $street
+     * @return string
      */
     public function setStreet($street)
     {
@@ -199,10 +199,6 @@ class Mage_Customer_Model_Address_Abstract extends Mage_Core_Model_Abstract
         $regionId = $this->getData('region_id');
         $region   = $this->getData('region');
 
-    	if ($this->getCountryId() != 'DE') {
-    		$this->setData('region', '');
-    		$this->setData('region_id', 0);
-    	} else {
         if ($regionId) {
                if ($this->getRegionModel($regionId)->getCountryId() == $this->getCountryId()) {
                    $region = $this->getRegionModel($regionId)->getName();
@@ -224,7 +220,6 @@ class Mage_Customer_Model_Address_Abstract extends Mage_Core_Model_Abstract
                 $this->setData('region', $this->getRegionModel($regionId)->getName());
             }
         }
-		}
 
         return $this->getData('region');
     }

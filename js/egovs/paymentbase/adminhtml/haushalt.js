@@ -1,43 +1,50 @@
 /**
- * Es wird mindestens Prototype 1.6 benötigt!
- *
  * @category    Egovs
  * @package     Egovs_Paymentbase
- * @copyright   Copyright (c) 2013 EDV-Beratung-Hempel
+ * @copyright   Copyright (c) 2017 B3-IT Systeme GmbH
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * 
- * @see egovs/bind.trigger.prototype.js Sollte in local.xml enthalten sein
  */
 
-Haushalt = Class.create({
-	containerId : '',
-    container : null,
-    selectBox : null,
-    
-    initialize : function(containerId) {
-    	//Wird für getElement(...) benötigt!
-    	this.containerId = containerId, this.container = $(this.containerId);
-    	this.selectBox = $('type');
-    	Event.observe(this.selectBox, 'change', this.onChange.bind(this));
-    },
-    onChange : function(event) {
-    	var src = Event.element(event);
-    	if (!src || !this.container) {
-    		return;
-    	}
-    	
-    	switch (src.value) {
-    		case "2":
-    		case "3":
-    			this.container.enable();
-    			break;
-    		default :
-    			this.container.disable();
-    	}
-    },
-});
+/**
+ * Ändert die Aktiv-Option des HH-Elements
+ * 
+ * @param element
+ * @returns
+ */
+function changeHHType(element)
+{
+    if( $j(element).attr('name') == 'type' ) {
+        var hh_sel = $j(element).val();
 
-$(document).observe("dom:loaded", function() {
-	var haushalt = new Haushalt($('hhstelle'));
-	$('type').trigger('change');
+        // aus der aktuellen Auswahl den zugehörigen Var-Namen zum Längen-Wert ermitteln
+        var name   = 'select' + hh_sel;
+        // aus dem dynamischen Var-Namen den betreffenden Wert ermitteln
+        var l_neu  = eval( eval(name) );
+        // Wert dem Element als max zuweisen
+        $j('#value').attr('maxlength', l_neu);
+
+        // Validator-Klasse erzeugen
+        var validator_class = 'maximum-length-' + l_neu;
+        // Validator-Klasse zuweisen
+        $j('#value').removeClass(DefaultValidator).addClass(validator_class);
+        // Validator-Klasse speichern
+        DefaultValidator = validator_class;
+
+        if ( hh_sel == '2' || hh_sel == '3' ) {
+            $j('#hhstelle').prop("disabled", false);
+        }
+        else {
+            $j('#hhstelle').prop("disabled", true);
+            $j("#hhstelle > option").removeAttr("selected");
+        }
+    }
+}
+
+/**
+ * Dokument fertig geladen; Ändern der HH-Parameter
+ * 
+ * @returns
+ */
+$j(document).ready(function(){
+    changeHHType('#haushaltsparameter_form select');
 });

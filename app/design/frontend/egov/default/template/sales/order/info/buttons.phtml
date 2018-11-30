@@ -1,7 +1,7 @@
 ﻿<?php
 /**
  * @category    design
- * @package     dwd_default
+ * @package     egov_default
  * @copyright   Copyright (c) 2016 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -18,13 +18,11 @@
 <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
     <a href="<?php echo $this->getReorderUrl($_order) ?>"
        class="egov-reorder"
-       alt="<?php echo $this->__('Reorder') ?>"
        title="<?php echo $this->__('Reorder') ?>"> </a>
     <span class="separator">|</span>
 <?php endif ?>
 <a href="<?php echo $this->getPrintUrl($_order) ?>"
    class="egov-print"
    onclick="this.target='_blank';"
-   alt="<?php echo $this->__('Print Order') ?>"
    title="<?php echo $this->__('Print Order') ?>"> </a>
 <?php echo $this->getChildHtml(); ?>

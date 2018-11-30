@@ -34,12 +34,12 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
      * The id
      * Meta informations extracted from the WSDL
      * - documentation : This id makes it easier to assign a response to a request. Copy this attribute to the "ref" attribute of the response, if it is provided.
-     * @var ID
+     * @var int
      */
     public $id;
     /**
      * The version
-     * @var anonymous15
+     * @var string
      */
     public $version;
     /**
@@ -47,8 +47,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Types_Payment_Response $_paymentResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_PanAlias_Response $_panAliasResponse
-     * @param ID $_id
-     * @param anonymous15 $_version
+     * @param int $_id
+     * @param string $_version
      * @return Egovs_Paymentbase_Model_Payplace_Types_Callback_Request
      */
     public function __construct($_paymentResponse = NULL,$_panAliasResponse = NULL,$_id = NULL,$_version = NULL)
@@ -91,7 +91,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
     }
     /**
      * Get id value
-     * @return ID|null
+     * @return int|null
      */
     public function getId()
     {
@@ -99,8 +99,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
     }
     /**
      * Set id value
-     * @param ID $_id the id
-     * @return ID
+     * @param int $_id the id
+     * @return bool
      */
     public function setId($_id)
     {
@@ -108,7 +108,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
     }
     /**
      * Get version value
-     * @return anonymous15|null
+     * @return string|null
      */
     public function getVersion()
     {
@@ -116,8 +116,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Callback_Request extends Egovs_Paym
     }
     /**
      * Set version value
-     * @param anonymous15 $_version the version
-     * @return anonymous15
+     * @param string $_version the version
+     * @return bool
      */
     public function setVersion($_version)
     {

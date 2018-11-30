@@ -12,6 +12,8 @@
  */
 abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Model_Abstract
 {
+    static $dbLockResult = null;
+
 	/**
 	 * Aktuelles Kassenzeichen
 	 * 
@@ -54,6 +56,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$config = GiroCheckout_SDK_Config::getInstance();
 		$config->setConfig('DEBUG_MODE', $this->getDebug());
 		$config->setConfig('DEBUG_PATH', Mage::getBaseDir('var') . DS . 'log');
+		//TODO: Pfad zu CA Bundle setzen
+		//Pfad muss jetzt vor allem für Windows per INI_SET oder in PHP INI gesetzt werden
+		//https://curl.haxx.se/docs/sslcerts.html
+		//https://curl.haxx.se/docs/caextract.html
+		//curl.cainfo =
+		$config->setConfig('CURLOPT_CAINFO', null);
 		
 		parent::__construct();
     }
@@ -92,6 +100,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
     			$payment = $this->getInfoInstance();
     		}
     	}
+
+    	if (($txId = $payment->getTransactionId()) || ($txId = $payment->getOrder()->getExternesKassenzeichen())) {
+            if (preg_match('/[\w]+\/[\w]+$/', $txId)) {
+                return $txId;
+            }
+        }
     	if (!$payment->hasKassenzeichen() || !$payment->getKassenzeichen()) {
     		Mage::throwException($this->__('No kassenzeichen available!'));
     	}
@@ -184,10 +198,9 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * This is the function that gets called if button "Place Order" is pressed
 	 * in the checkout process.
 	 *
-	 * @return the URL to be redirected to
+	 * @return string the URL to be redirected to
 	 */
 	public function getOrderPlaceRedirectUrl() {
-		//return Mage::getUrl("girosolution/{$this->getCode()}/redirect");
 		return $this->getGirosolutionRedirectUrl();
 	}
 	/**
@@ -306,7 +319,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 					$transactionType,
 					$this->getBuchungsListeParameter($this->_getOrder()->getPayment(), (float) $this->_getOrder()->getGrandTotal())
 			);			
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 				$objResult = $this->_getSoapClient()->anlegenKassenzeichen($this->_getMandantNr(), $this->_getECustomerId(), $objBuchungsliste, null, null, $transactionType);
@@ -319,21 +332,21 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		$this->loeschenKunde();	
 		
 //		Mage::log("{$this->getCode()}::post::objSOAPClientBfF->anlegenKassenzeichen(" . var_export($this->_getMandantNr(), true) . ", " . var_export($this->_getECustomerId(), true) . ", " . var_export($objResult->buchungsListe, true) . ", null, null, $saferpay_type)", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-		
+
 		return $objResult->buchungsListe->kassenzeichen;
 	}
-	
+
 	/**
 	 * Capture payment
-	 * 
+	 *
 	 * @param Varien_Object $payment Payment
 	 * @param float         $amount  Betrag
-	 * 
+	 *
 	 * @return Egovs_Paymentbase_Model_Saferpay
 	 */
 	public function capture(Varien_Object $payment, $amount) {
 		parent::capture($payment, $amount);
-		
+
 		//Ticket #705
 		//http://www.kawatest.de:8080/trac/ticket/705
 		if (!$this->hasKassenzeichen($payment)) {
@@ -341,25 +354,13 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		}
 		
 		$order = $this->_getOrder();
-		
+
 		if (!$order->getPayment()->getTransactionId()) {
 			Mage::throwException(
 					Mage::helper('paymentbase')->__('Payment not confirmed from payment gateway. In most cases you have to cancel the invoice and order.')
 			);
 		}
-		if ($order 
-			&& ($order->getState() == Mage_Sales_Model_Order::STATE_NEW
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT
-				|| $order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)
-		) {
-			
-    		//STATE_COMPLETE ist in Magento ab 1.6 geschützt
-    		//wird für Virtuelle Produkte aber automatisch gesetzt
-    		$orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
-	    	
-			//$order->setState($orderState);
-		}
-		
+
 		if ($order
 			&& ($order->getState() == Mage_Sales_Model_Order::STATE_PROCESSING
 				|| $order->getState() == Mage_Sales_Model_Order::STATE_COMPLETE)
@@ -368,10 +369,10 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			// we add a status message to the message-section in admin
 			$order->addStatusHistoryComment(Mage::helper('paymentbase')->__('Successfully received payment from customer'));
 		}
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Eigene Anpassungen für $this->_fieldsArr für Girosolution
 	 * 
@@ -382,7 +383,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	
 	/**
 	 * Liefert die PayerNote
-	 * 
+	 *
 	 * Falls es keine PayerNote gibt wird:
 	 * <ul>
 	 * 	<li>Beschreibung</li>
@@ -390,7 +391,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * 	<li>Zahlung per Saferpay</li>
 	 * </ul>
 	 * als Alternative geliefert.
-	 * 
+	 *
 	 * @return string
          */
 	protected function _getPayerNote() {
@@ -399,7 +400,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
 				//Wenn Description nicht gefüllt
 	        	if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/title")) <= 0) {
-	        		$desc = "Zahlung per Saferpay";
+	        		$desc = "Zahlung per GiroSolution";
 	        	} else {
 	        		$desc = Mage::getStoreConfig("payment/{$this->getCode()}/title");
 	        	}
@@ -409,7 +410,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		} else {
 			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
 		}
-		
+
 		return $desc;
 	}
 	/**
@@ -419,7 +420,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 *
 	 * Abgeleitete Klassen müssen _getGirosolutionRedirectUrl() überschreiben!
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public final function getGirosolutionRedirectUrl() {
 
@@ -439,7 +440,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         } else {
 			$this->_fieldsArr['amount'] = ($_source->getTotalDue() * 100);
 			$this->_fieldsArr['currency'] = $_source->getOrderCurrencyCode();
-			
+
 			$_realOrderId = $_source->getRealOrderId();
         }
 		
@@ -477,75 +478,76 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		$msg = null;
 		$iReturnCode = null;
-		$request = null;
+        $request = new GiroCheckout_SDK_Request($this->_transaction_type);
 		try {
 			// Sends request to Girocheckout.
-			$request = new GiroCheckout_SDK_Request($this->_transaction_type);
 			$request->setSecret($this->getProjectPassword());
 			foreach ($this->_fieldsArr as $param => $value) {
 				$request->addParam($param, $value);
 			}
 			$request->submit();
-			
+
 			if ($request->requestHasSucceeded()) {
 				$strUrlRedirect = $request->getResponseParam('redirect');
-				
-				$result ["status"] = 1001;
-				$result ["redirect"] = $strUrlRedirect;
-				$result ["reference"] = $request->getResponseParam('reference');
-				$result ["gcTransInfo"] = $request->getResponseParams();
-				
+
 				return $strUrlRedirect;
-			} else {
-				$iReturnCode = $request->getResponseParam('rc');
-				$strResponseMsg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
-				if (!$strResponseMsg) {
-					$strResponseMsg = $this->_getHelper()->__("Unkown server error.");
-				}
-				if ($request->getResponseParam('reference')) {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				} else {
-					$params = var_export($request->getResponseParams(), true);
-					$msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
-					Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-				}
-				$_source = $this->_getOrder();
-				if (!$_source) {
-					/** @var $_source Mage_Sales_Model_Quote */
-					$_source = $this->getInfoInstance()->getQuote();
-				} else {
-					/** @var $_source Mage_Sales_Model_Order */
-					/** @var $payment Mage_Sales_Model_Order_Payment */
-					$payment = $_source->getPayment();
-					$payment->setTransactionId($request->getResponseParam('reference'));
-					$transaction = $payment->addTransaction('order', null, false, '');
-					$transaction->setParentTxnId($_source->getIncrementId());
-					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
-					$transaction->save ();
-					$_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
-					$_source->cancel()->save();
-					
-					$_quoteId = $_source->getQuoteId();
-					$_source = $_source->getQuote();
-					if (!$_source) {
-						$_source = Mage::getModel('sales/quote')->load($_quoteId);
-					}
-				}
-				
-				if (!$_source->isEmpty()) {
-					if (!$_source->getIsActive()) {
-						$_source->setIsActive(true)->save();
-					}
-					Mage::getSingleton('checkout/session')->replaceQuote($_source);
-				}
 			}
+
+            $iReturnCode = $request->getResponseParam('rc');
+            $strResponseMsg = $request->getResponseMessage($iReturnCode, Mage::helper('egovs_girosolution')->getLanguageCode());
+            if (!$strResponseMsg) {
+                $strResponseMsg = $this->_getHelper()->__("Unkown server error.");
+            }
+            if ($request->getResponseParam('reference')) {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on Girosolution REFID:{$request->getResponseParam('reference')}\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            } else {
+                $params = var_export($request->getResponseParams(), true);
+                $msg = "{$this->getCode()}::Failed to start transaction on Girosolution\n{$strResponseMsg}\nAdditional Information:\n{$params}";
+                Mage::log($msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
+
+            $msg = 'Failed to start transaction on GiroSolution';
+            throw new Exception($msg);
 		} catch ( Exception $e ) {
 			Mage::logException($e);
+
+            //Roll Back
+            $_source = $this->_getOrder();
+            if (!$_source) {
+                /** @var $_source Mage_Sales_Model_Quote */
+                $_source = $this->getInfoInstance()->getQuote();
+            } else {
+                /** @var $_source Mage_Sales_Model_Order */
+                /** @var $payment Mage_Sales_Model_Order_Payment */
+                $payment = $_source->getPayment();
+                $payment->setTransactionId($request->getResponseParam('reference'));
+                $transaction = $payment->addTransaction('order', null, false, '');
+                if ($transaction) {
+                    $transaction->setParentTxnId($_source->getIncrementId());
+                    $transaction->setIsClosed(1);
+                    $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $request->getResponseParams());
+                    $transaction->save();
+                }
+                $_source->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                $_source->cancel()->save();
+
+                $_quoteId = $_source->getQuoteId();
+                $_source = $_source->getQuote();
+                if (!$_source) {
+                    $_source = Mage::getModel('sales/quote')->load($_quoteId);
+                }
+            }
+
+            if (!$_source->isEmpty()) {
+                if (!$_source->getIsActive()) {
+                    $_source->setIsActive(true)->save();
+                }
+                Mage::getSingleton('checkout/session')->replaceQuote($_source);
+            }
 		}
-		
+
 		if (is_null($msg)) {
 			$msg = GiroCheckout_SDK_ResponseCode_helper::getMessage(5100, Mage::helper('egovs_girosolution')->getLanguageCode());
 		}
@@ -574,7 +576,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	public function getRedirectBlockType() {
 		return $this->_redirectBlockType;
 	}
-	
+
 	/**
 	 * Gibt an ob dieses Zahlmodul nur Offline-Erstattungen erlaubt
 	 *
@@ -587,180 +589,250 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	public function getSupportsOnlyOfflineCreditmemo() {
 		return true;
 	}
-	
-	/**
-	 * Ändert die Order nach der Bezahlung
-	 * 
-	 * @param string $paymentSuccessful
-	 * @param string $merchantTxId
-	 * @param string $updateOrderState
-	 * @param string $orderStateComment
-	 * @param string $sendEmail
-	 * @param string $createInvoice
-	 * @param string $invoiceComment
-	 * @param string $gcRef
-	 * @param unknown $gcTransInfo
-	 * @param string $orderStateFinished
-	 * 
-	 * @return boolean
-	 */
+
+    /**
+     * Ändert die Order nach der Bezahlung
+     *
+     * @param bool   $paymentSuccessful
+     * @param string $merchantTxId
+     * @param bool   $updateOrderState
+     * @param string $orderStateComment
+     * @param bool   $sendEmail
+     * @param bool   $createInvoice
+     * @param string $invoiceComment
+     * @param string $gcRef
+     * @param array  $gcTransInfo
+     * @param string $orderStateFinished
+     *
+     * @return boolean
+     * @throws \Exception
+     * @throws \Mage_Core_Exception
+     */
 	public function modifyOrderAfterPayment(
-			$paymentSuccessful = false,
-			$merchantTxId = '',
-			$updateOrderState = false,
-			$orderStateComment = '',
-			$sendEmail = false,
-			$createInvoice = true,
-			$invoiceComment = '',
-			$gcRef = null,
-			$gcTransInfo = null,
-			$orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING) {
-	
-				$paymentSuccessful = isset($paymentSuccessful) ? (is_bool($paymentSuccessful) ? $paymentSuccessful : false) : false;
-				$merchantTxId = isset($merchantTxId) ? $merchantTxId : '';
-				$updateOrderState = isset($updateOrderState) ? (is_bool($updateOrderState) ? $updateOrderState : false) : false;
-				$orderStateComment = isset($orderStateComment) ? $orderStateComment : '';
-	
-				if($orderStateComment == '') {
-					if($paymentSuccessful == true)
-						$orderStateComment = 'Payment was successful';
-						else
-							$orderStateComment = 'Payment failed';
-				}
-				$sendEmail = isset($sendEmail) ? (is_bool($sendEmail) ? $sendEmail : false) : false;
-				$createInvoice = isset($createInvoice) ? (is_bool($createInvoice) ? $createInvoice : true) : true;
-				$invoiceComment = isset($invoiceComment) ? $invoiceComment : '';
-				if($invoiceComment == '') {
-					$invoiceComment = Mage::helper('egovs_girosolution')->__('Automatically generated by payment confirmation');
-				}
-				
-				if ($this->getDebug()) {
-					$tmp = '';
-					foreach ($gcTransInfo as $k => $v) {
-						$tmp .= '<' .$k .'>' .$v .'</' .$k .'>';
-					}
-					Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				}
-	
-				$extKassenzeichen = trim(str_replace("{$this->_getBewirtschafterNr()}/", "", $merchantTxId));
-				
-				$order = $this->_getOrder();
-				// If order was not found, return false
-				if(!$order || $order->isEmpty()) {
-					Mage::log("{$this->getCode()}::Es ist keine Bestellung verfügbar!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					return false;
-				}
-				$orderId = $order->getIncrementId();
-				
-				if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
-					Mage::log("{$this->getCode()}::Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-					return false;
-				}
-				
-				//If order was already updated, do not update again.
-				if($order->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
-					$updateOrderState = false;
-				} else {
-					//update transaction
-					$payment = $order->getPayment();
-					$payment->setTransactionId($gcRef);
-					$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER, null, false, '');
-					$transaction->setParentTxnId($this->getTransactionId($payment));
-					$transaction->setIsClosed(1);
-					$transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $gcTransInfo);
-					$transaction->save();
-					// Modify payment
-					$order->setState(
-							Mage_Sales_Model_Order::STATE_PENDING_PAYMENT,
-							false,
-							$this->__("Modifying state for further processing."),
-							false
-							);
-					$order->save();
-				}
-	
-				if($paymentSuccessful == false) {
-					// If no update was required, return true, because the order was found
-					if($updateOrderState == false) {
-						return true;
-					}
-	
-					$order->cancel();
-					$order->addStatusHistoryComment($orderStateComment);
-					$order->save();
-					Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
-					return true;
-				} // end failed payment
-	
-	
-				// SUCCESSFUL PAYMENT
-				// Set customers shopping cart inactive
-				$quote = $this->_getOrder()->getQuoteId();
-				$quote = Mage::getModel('sales/quote')->load($quote);
-				//Mage::getSingleton('checkout/session')->getQuote()->setIsActive(false)->save();
-				$quote->setIsActive(false)->save();
-				
-				// If no update was required, return true, because the order was found
-				if($updateOrderState == false) {
-					return true;
-				}
-				
-				//TODO : Providername ermitteln
-				$_providerName = 'VISA';
-				
-				$_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $gcRef, $_providerName);
-				
-				if ($_kassenzeichenActivated) {
-					/** @var $payment Mage_Sales_Model_Order_Payment */
-					$payment = $order->getPayment();
-					$payment->setTransactionId($this->getTransactionId($payment));
-					$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_AUTH, null, false, $this->__('Kassenzeichen activated'));
-					//$transaction->setParentTxnId($this->getTransactionId($payment));
-					$transaction->setIsClosed(1);
-					$transaction->save();
-				} else {
-					$order->setState(Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW, false, $this->__('Could not activate Kassenzeichen! See log files for further informations.'), false);
-					return true;
-				}
-	
-				// Send email
-				if($sendEmail == true) {
-					$order->sendNewOrderEmail();
-					$order->setEmailSent(true);
-				}
-					
-				if(empty($orderStateFinished)) {
-					$orderStateFinished = true;
-				}
-	
-				// Modify payment
-				$order->setState(
-						Mage_Sales_Model_Order::STATE_PROCESSING,
-						$orderStateFinished,
-						$orderStateComment,
-						$sendEmail
-				);
-	
-				if($createInvoice == true) {
-					if($order->canInvoice()) {
-						$invoice = $order->prepareInvoice();
-						$invoice->addComment($invoiceComment);
-						$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-						$invoice->register();
-						
-						Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder())->save();
-						$invoice->sendEmail(true, '');
-						//$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
-					}
-				}
-	
-				$order->save();
-				//Event muss aus Kompatibilitätsgründen so heißen!?
-				Mage::log("{$this->getCode()}::dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
-				Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				return true;
+        $paymentSuccessful = false,
+        $merchantTxId = '',
+        $updateOrderState = false,
+        $orderStateComment = '',
+        $sendEmail = false,
+        $createInvoice = true,
+        $invoiceComment = '',
+        $gcRef = null,
+        $gcTransInfo = null,
+        $orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING
+    ) {
+        //=======================================================================================================
+        if (function_exists('microtime')) {
+            $startTime = microtime(true);
+        } else {
+            $startTime = time();
+        }
+
+        $order = $this->_getOrder();
+        // If order was not found, return false
+        if(!$order || $order->isEmpty()) {
+            Mage::log("{$this->getCode()}::Es ist keine Bestellung verfügbar!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            return false;
+        }
+
+        /*
+         * 20150122::Frank Rochlitzer
+         * Setzen des "mutex" via APC schlägt mit CGI fehl
+         */
+        $cgiMode = false;
+        $sapiType = php_sapi_name();
+        if (strtolower(substr($sapiType, 0, 3)) == 'cgi') {
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment in CGI mode", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+            $cgiMode = true;
+        }
+        /*
+         * 20110804:Frank Rochlitzer
+         * Die parallele Ausführung dieser Funktion muss verhindert werden (Kritischer Abschnitt)!
+         * Durch die BSI-Restriktionen kann die Session ID nicht an die NOTIFY URL angehängt werden,
+         * da der Saferpay-Aufruf eine andere IP besitzt als der Kunde der entsprechenden Bestellung.
+         * Jeder Aufruf der NOTIFY_ACTION wird als eigene Session behandelt, da in der URL keine
+         * SID enthalten ist.
+         *
+         * Der einzige Parameter ist die REAL_ORDER_ID mit der die entsprechende Order identifiziert werden kann.
+         * Es kann also nur ein Flag an der Order zur Kontrolle verwendet werden!
+         * Diese Aktionen sind jedoch nicht atomar und bieten somit keine 100% Sicherheit.
+         *
+         * Die konsequente Lösung wäre die Benutzung eines Semaphores, diese sind in PHP aber nur unter Linux/Unix
+         * verfügbar und sind standarmäßig deaktiviert.
+         */
+        $lockKey = 'roi_mutex'.$this->_getOrder()->getId();
+        if (function_exists('apcu_add') && function_exists('apcu_fetch') && !$cgiMode) {
+            if (apcu_fetch($lockKey)) {
+                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:APC_FETCH:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+                $updateOrderState = false;
+            }
+            //dauert ca. 1msec
+            //TTL = 180s = 3Min
+            $apcAdded = apcu_add($lockKey, true, 180);
+            $this->_logLockTimeDiff($startTime, 'apcu');
+        }
+
+        $lockResult = $this->_getDbLock($lockKey);
+        $this->_logLockTimeDiff($startTime, 'DB:get_lock');
+        if ($lockResult == 0) {
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            $updateOrderState = false;
+        }
+
+        $paymentSuccessful = isset($paymentSuccessful) ? (is_bool($paymentSuccessful) ? $paymentSuccessful : false) : false;
+        $merchantTxId = isset($merchantTxId) ? $merchantTxId : '';
+        $updateOrderState = isset($updateOrderState) ? (is_bool($updateOrderState) ? $updateOrderState : false) : false;
+
+        $extKassenzeichen = trim($merchantTxId);
+        if (preg_match('/(?<=\/)[\w]+$/', $extKassenzeichen, $matches)) {
+            $extKassenzeichen = $matches[0];
+        }
+
+        if ($extKassenzeichen != $order->getPayment()->getKassenzeichen()) {
+            $msg = "Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!";
+            $msg .= "\r\nTKonnekt:$extKassenzeichen != {$order->getPayment()->getKassenzeichen()}:Webshop";
+            Mage::log("{$this->getCode()}::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            return false;
+        }
+
+        //If order was already updated, do not update again.
+        if($order->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:modifyOrderAfterPayment already called, omitting! State was: {$this->_getOrder()->getState()}", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            $updateOrderState = false;
+        } else {
+            // Modify payment
+            $order->setState(
+                Mage_Sales_Model_Order::STATE_PENDING_PAYMENT,
+                false,
+                $this->__("Modifying state for further processing."),
+                false
+            );
+            //Schnelles Speichern um Bereich zu verriegeln!
+            $orderResource = $order->getResource();
+            $orderResource->saveAttribute($order, 'state');
+            $this->_logLockTimeDiff($startTime, 'state');
+
+            //update transaction
+            $payment = $order->getPayment();
+            $payment->setTransactionId($gcRef);
+            $transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER, null, false, '');
+            $transaction->setParentTxnId($this->getTransactionId($payment));
+            $transaction->setIsClosed(1);
+            $transaction->setAdditionalInformation(Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $gcTransInfo);
+            $transaction->save();
+
+            $order->save();
+        }
+
+        if ($this->getDebug()) {
+            $tmp = '';
+            foreach ($gcTransInfo as $k => $v) {
+                $tmp .= '<' .$k .'>' .$v .'</' .$k .'>';
+            }
+            Mage::log("{$this->getCode()}::\n$tmp", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        }
+
+        //Some more inits
+        $orderStateComment = isset($orderStateComment) ? $orderStateComment : '';
+        if ($orderStateComment == '') {
+            if ($paymentSuccessful == true) {
+                $orderStateComment = 'Payment was successful';
+            } else {
+                $orderStateComment = 'Payment failed';
+            }
+        }
+        $sendEmail = isset($sendEmail) ? (is_bool($sendEmail) ? $sendEmail : false) : false;
+        $createInvoice = isset($createInvoice) ? (is_bool($createInvoice) ? $createInvoice : true) : true;
+        $invoiceComment = isset($invoiceComment) ? $invoiceComment : '';
+        if($invoiceComment == '') {
+            $invoiceComment = Mage::helper('egovs_girosolution')->__('Automatically generated by payment confirmation');
+        }
+
+        if($paymentSuccessful == false) {
+            // If no update was required, return true, because the order was found
+            if($updateOrderState == false) {
+                return true;
+            }
+
+            $order->cancel();
+            $order->addStatusHistoryComment($orderStateComment);
+            $order->save();
+            Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
+            $this->_releaseDbLock($lockKey);
+            return true;
+        } // end failed payment
+
+
+        // SUCCESSFUL PAYMENT
+        // Set customers shopping cart inactive
+        $quote = $this->_getOrder()->getQuoteId();
+        $quote = Mage::getModel('sales/quote')->load($quote);
+        //Mage::getSingleton('checkout/session')->getQuote()->setIsActive(false)->save();
+        $quote->setIsActive(false)->save();
+
+        // If no update was required, return true, because the order was found
+        if($updateOrderState == false) {
+            return true;
+        }
+
+        //TODO : Providername ermitteln
+        $_providerName = 'VISA';
+
+        $_kassenzeichenActivated = $this->_activateKassenzeichen($merchantTxId, $gcRef, $_providerName);
+
+        if ($_kassenzeichenActivated) {
+            /** @var $payment Mage_Sales_Model_Order_Payment */
+            $payment = $order->getPayment();
+            $payment->setTransactionId($this->getTransactionId($payment));
+            $transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_AUTH, null, false, $this->__('Kassenzeichen activated'));
+            //$transaction->setParentTxnId($this->getTransactionId($payment));
+            $transaction->setIsClosed(1);
+            $transaction->save();
+        } else {
+            $order->setState(Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW, false, $this->__('Could not activate Kassenzeichen! See log files for further informations.'), false);
+            $order->save();
+            $this->_releaseDbLock($lockKey);
+            return true;
+        }
+
+        // Send email
+        if($sendEmail == true) {
+            $order->sendNewOrderEmail();
+            $order->setEmailSent(true);
+        }
+
+        if(empty($orderStateFinished)) {
+            $orderStateFinished = true;
+        }
+
+        // Modify payment
+        $order->setState(
+                Mage_Sales_Model_Order::STATE_PROCESSING,
+                $orderStateFinished,
+                $orderStateComment,
+                $sendEmail
+        );
+
+        if($createInvoice == true) {
+            if($order->canInvoice()) {
+                $invoice = $order->prepareInvoice();
+                $invoice->addComment($invoiceComment);
+                $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+                $invoice->register();
+
+                Mage::getModel('core/resource_transaction')->addObject($invoice)->addObject($invoice->getOrder())->save();
+                $invoice->sendEmail(true, '');
+                //$order->setState(Mage_Sales_Model_Order::STATE_PROCESSING, $orderStateFinished, $invoiceComment);
+            }
+        }
+
+        $order->save();
+        //Event muss aus Kompatibilitätsgründen so heißen!?
+        Mage::log("{$this->getCode()}::dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
+        Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        $this->_releaseDbLock($lockKey);
+        return true;
 	}
 	
 	/**
@@ -854,7 +926,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @param string $refId			TranskationsID des Zahlungsproviders
 	 * @param string $providerName  VISA,MASTER,GIROPAY,SEPASDD
 	 *
-	 * @return Ergebnis Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
+	 * @return Egovs_Paymentbase_Model_Abstract Ein Objekt vom Typ "Ergebnis" siehe ePayBL Schnittstelle
 	 *
 	 * @throws Exception
 	 */
@@ -870,4 +942,68 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		
 		return $this;
 	}
+
+	protected function _logLockTimeDiff($startTime, $lockMethod = '') {
+        if (function_exists('microtime')) {
+            $endTime = microtime(true);
+        } else {
+            $endTime = time();
+        }
+        $runTime = $endTime - $startTime;
+        if ($runTime > 8) {
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:Server seems to be under heavy load! It took $runTime seconds until the lock ($lockMethod) was set!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        } else {
+            Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for LOCK ($lockMethod) was %s seconds.", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+        }
+    }
+
+    protected function _getDbLock($lockKey) {
+        $lockResult = null;
+        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
+        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
+        try {
+            $dbVersion = $adapter->fetchOne("SELECT @@version;");
+            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
+                Mage::log("{$this->getCode()}::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                /*
+                 * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
+                 * (for example, because another client has previously locked the name),
+                 * or NULL if an error occurred (such as running out of memory or the thread was killed with mysqladmin kill).
+                 * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
+                 */
+                $lockResult = $adapter->fetchOne("SELECT GET_LOCK(':id', 10) as 'lock_result';", array('id' => $lockKey));
+                static::$dbLockResult = $lockResult;
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        return $lockResult;
+    }
+
+    protected function _releaseDbLock($lockKey) {
+        $lockResult = null;
+
+        if (!static::$dbLockResult) {
+            return false;
+        }
+        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
+        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
+        try {
+            $dbVersion = $adapter->fetchOne("SELECT @@version;");
+            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
+                /*
+                 * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
+                 * (for example, because another client has previously locked the name),
+                 * or NULL if an error occurred (such as running out of memory or the thread was killed with mysqladmin kill).
+                 * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
+                 */
+                $lockResult = $adapter->fetchOne("SELECT RELEASE_LOCK(':id') as 'lock_result';", array('id' => $lockKey));
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        return $lockResult;
+    }
 }

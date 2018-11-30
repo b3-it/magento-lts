@@ -28,7 +28,7 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	main_table.entity_id as xxx, parent_id, customer_address_id, main_table.quote_address_id, region_id, customer_id, fax, region, postcode, lastname, street, city, email, telephone, country_id, firstname, address_type, prefix, middlename, suffix, company, company2, company3, taxvat");
       	
     	$company = new Zend_Db_Expr("trim(concat(COALESCE(company,''),' ',COALESCE(company2,''), ' ',COALESCE(company3,''))) as ebewi_company");
-    	
+    	$adressId = new Zend_Db_Expr("IFNULL(main_table.customer_address_id,CONCAT('OA',main_table.entity_id)) AS real_address_id");
     	$this->getSelect()
     	//->columns($cols)
     	->distinct()
@@ -36,11 +36,12 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	->join(array('order'=>'sales_flat_order'),'order.entity_id=main_table.parent_id',array('order_increment_id'=>'increment_id','order_customer_id'=>'customer_id',
     			'customer_prefix'=>'customer_prefix','customer_firstname'=>'customer_firstname','customer_lastname'=>'customer_lastname','customer_company'=>'customer_company'))
     	->columns($company)
+    	->columns($adressId)
     	//->columns(array('address_id'=>'entity_id'))
     	;
     	
  	//die($this->getSelect()->__toString())   ;	
-    	$this->_novirtual = clone($this->getSelect());
+    	//$this->_novirtual = clone($this->getSelect());
     	$this->_virtual = clone($this->getSelect());
 
         
@@ -84,12 +85,12 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	
     	$eav = Mage::getResourceModel('eav/entity_attribute');
     	
-    	$virtualIncrementId = new Zend_Db_Expr("CONCAT(order.increment_id,'_1') as ibewi_order_increment_id");
+    	$virtualIncrementId = new Zend_Db_Expr("order.increment_id as ibewi_order_increment_id");
     	$NonvirtualIncrementId = new Zend_Db_Expr("CONCAT(order.increment_id,'_0') as ibewi_order_increment_id");
     	// $name = new Zend_Db_Expr("trim(concat(COALESCE(firstname, ''),' ',COALESCE(lastname,''))) as ebewi_name");
     	
-    	$virtualFilter = new Zend_Db_Expr("(SELECT order_id FROM sales_flat_order_item WHERE is_virtual = 1 GROUP BY order_id)");
-    	$NotvirtualFilter = new Zend_Db_Expr("(SELECT order_id FROM sales_flat_order_item WHERE is_virtual = 0 GROUP BY order_id)");
+    	$virtualFilter = new Zend_Db_Expr("(SELECT order_id FROM sales_flat_order_item  GROUP BY order_id)");
+    	//$NotvirtualFilter = new Zend_Db_Expr("(SELECT order_id FROM sales_flat_order_item WHERE is_virtual = 0 GROUP BY order_id)");
     	
     	
     	 
@@ -99,9 +100,13 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	->columns($virtualIncrementId)
     	->columns(new Zend_Db_Expr("IF(main_table.address_type ='billing','billing','shipping') as ibewi_address_type"))
     	->join(array('item' => $virtualFilter),'item.order_id = order.entity_id',array())
-    	->where("((address_type = 'billing') OR (address_type = 'base_address'))")
+    	->where(new Zend_Db_Expr("(address_type = 'billing' OR address_type = IF(is_virtual = 0, 'shipping','base_address'))"))
     	;
-    	
+
+
+
+
+    	/*
     	$this->_novirtual
     	->where('invoice.created_at >= ' .$this->_from)
     	->where('invoice.created_at < ' .$this->_to)
@@ -110,13 +115,13 @@ class Dwd_Ibewi_Model_Mysql4_Address_Collection extends Mage_Sales_Model_Resourc
     	->join(array('item' => $NotvirtualFilter),'item.order_id = order.entity_id',array())
     	->where("((address_type = 'billing') OR (address_type = 'shipping'))")
     	;
-    	
+    	*/
     	 
     	$this->getSelect()
     	->reset()
     	->union(array($this->_virtual,$this->_novirtual),Zend_Db_Select::SQL_UNION_ALL);
     	
-    	$sql = new Zend_Db_Expr("(". $this->getSelect()->__toString().")");
+    	$sql = new Zend_Db_Expr("(". $this->_virtual->__toString().")");
 //die($sql->__toString()) ;   	 
     	$this->getSelect()
     	->reset()

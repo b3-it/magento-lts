@@ -17,15 +17,16 @@
     background-image: -o-linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-image: linear-gradient(top, $global-rgba-1 0%, $global-rgba-2 $global-button-gradient, $global-button-color 100%);
     background-size: 100% auto;
-
     border: $global-active-border solid $global-button-color;
-
     border-radius: $global-radius;
     -moz-border-radius: $global-radius;
-
     max-width: 300px;
-
+    height: 50px;
     padding: $global-btn-padding-v $global-btn-padding-h;
+    
+    @include bp(max-width, $bp-xsmall) {
+        max-width: 100%;
+    }
 
     &:hover, &:active, &:focus {
         background-color: $global-button-hovercolor;
@@ -35,8 +36,18 @@
         box-shadow: 5px 5px 5px 0 $global-text-shadow;
     }
 
-    span.default-font {
+    span, span.default-font {
         font-family: $base-font-family;
-        font-size: 0.9em;
+        font-size: 0.9rem;
     }
+}
+
+// This mixin gets applied to elements that are only buttons on smartphones (or sometimes tablets), such as layered
+// nav links or checkbox labels.
+// Building this as a mixin (rather than an extendable class) since it will be included within mq breakpoints, and
+// extending doesn't work within media queries: http://sass-lang.com/documentation/file.SASS_REFERENCE.html#_in_directives
+@mixin touch-button {
+    color: $global-button-font-color;
+    background-color: $global-lightcolor;
+    padding: 5px 10px;
 }

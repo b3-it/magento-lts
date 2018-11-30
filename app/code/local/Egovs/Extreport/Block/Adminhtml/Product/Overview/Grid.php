@@ -240,7 +240,7 @@ class Egovs_Extreport_Block_Adminhtml_Product_Overview_Grid extends Mage_Adminht
     						'width' => '90px',
     						'index' => 'is_in_stock',
     						'type'  => 'options',
-    						'options' => array('1'=>Mage::helper('extstock')->__('In stock'),'0'=>Mage::helper('extstock')->__('Not in stock')),
+    						'options' => array('1'=>Mage::helper('cataloginventory')->__('In stock'),'0'=>Mage::helper('cataloginventory')->__('Not in stock')),
     				));
     	}
 

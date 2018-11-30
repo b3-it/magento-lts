@@ -21,3 +21,7 @@
 "To Date is wrong!","Das Bis-Datum ist falsch!"
 "Date has been changed. Use \'Show Report\' Button to force reloading of new data.","Ein Datum wurde geändert. Bitte die Seite über \'Bericht anzeigen\' neu laden"
 "Report is not in past!","Der Bericht ist nicht in der Vergangenheit!"
+"Value","Wert"
+"Cost Unit","Kostenträger"
+"-- Please Select --","-- Bitte wählen --"
+"Cost Unit is used by these Products: %s.","Der Kostenträger wird bei folgenden Produkten genutzt: %s."

@@ -24,7 +24,21 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @var string
 	 */
 	const ATTRIBUTE_SEPA_MANDATE_ID = 'sepa_mandate_id';
-	
+
+    /**
+     * Datum des Abrufs des Zahlungseingangs von der ePayBL
+     */
+    const ATTRIBUTE_EPAYBL_CAPTURE_DATE = 'epaybl_capture_date';
+
+    /**
+     * Status für den automatischen Zahlungsabruf
+     */
+    const ATTRIBUTE_EPAYBL_APR_STATUS = 'epaybl_apr_status';
+
+    /**
+     * Anzahl Fehler seit letztem erfolgreichem Abruf
+     */
+    const ATTRIBUTE_EPAYBL_APR_ERROR_COUNT = 'epaybl_apr_error_count';
 	
 	const ATTRIBUTE_SEPA_ADDITIONAL = 'sepa_additional_data';
 	
@@ -32,10 +46,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	
 	const EPAYBL_2_X_VERSION = 2;
 
-	/**
+    /**
 	 * Client zur Soap - Kommunikation
 	 *
-	 * @var SOAP_BfF
+	 * @var SOAP_Client
 	 */
 	private $__objSOAPClientBfF = null;
 
@@ -543,8 +557,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @see Egovs_Paymentbase_Helper_Data::getECustomerIdNonVolatile
 	 * @see Egovs_Paymentbase_Helper_Data::getCustomerId
 	 * @see Egovs_Paymentbase_Model_Abstract::_getECustomerId
-	 * @see Egovs_Paypage_Model_Paypage::_anlegenKassenzeichenPaypage
-	 * @see Egovs_Paypage_Model_Paypage::getPaypageUrl
+	 * @see Egovs_PayplacePaypage_Model_Paypage::_anlegenKassenzeichenPaypage
+	 * @see Egovs_PayplacePaypage_Model_Paypage::getPaypageUrl
 	 *
 	 * @deprecated Egovs_Paymentbase_Helper_Data::getECustomerIdRandom
 	 */
@@ -592,8 +606,8 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return String ePayment Kundennummer
 	 *
 	 * @see Egovs_Paymentbase_Helper_Data::getCustomerId
-	 * @see Egovs_Paypage_Model_Paypage::_anlegenKassenzeichenPaypage
-	 * @see Egovs_Paypage_Model_Paypage::getPaypageUrl
+	 * @see Egovs_PayplacePaypage_Model_Paypage::_anlegenKassenzeichenPaypage
+	 * @see Egovs_PayplacePaypage_Model_Paypage::getPaypageUrl
 	 * @see Egovs_Paymentbase_Model_Adapter_Abstract::hash
 	 */
 	public function getECustomerIdRandom($customer = null, $throwIfNotExists = false) {
@@ -701,6 +715,13 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @var string
 	 */
 	private $__mandantNr = null;
+
+    /**
+     * Aktueller Store
+     *
+     * @var Mage_Core_Model_Store
+     */
+	private $__store = null;
 	/**
 	 * Liefert die Mandanten-Nr für die ePayment Plattform
 	 *
@@ -709,7 +730,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getMandantNr() {
-		if (!$this->__mandantNr) {
+		if (!$this->__mandantNr || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/mandantnr')) <= 0) {
 				$msg = $this->__('MandantNr not set');
 				$session = Mage::getSingleton("admin/session");
@@ -723,6 +744,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+			    $this->__store = Mage::app()->getStore();
 				$this->__mandantNr = Mage::getStoreConfig('payment_services/paymentbase/mandantnr');
 			}
 		}
@@ -744,7 +766,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getBewirtschafterNr() {
-		if (!$this->__bewirtschfterNr) {
+		if (!$this->__bewirtschfterNr || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr')) <= 0) {
 				$msg = $this->__('BewirtschafterNr not set');
 				$session = Mage::getSingleton("admin/session");
@@ -758,6 +780,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+                $this->__store = Mage::app()->getStore();
 				$this->__bewirtschfterNr = trim(Mage::getStoreConfig('payment_services/paymentbase/bewirtschafternr'));
 			}
 		}
@@ -779,7 +802,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 	 * @return string
 	 */
 	public function getWebShopDesMandanten() {
-		if (!$this->__webshopDesMandanten) {
+		if (!$this->__webshopDesMandanten || $this->__store !== Mage::app()->getStore()) {
 			if (strlen(Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten')) <= 0) {
 				$msg = $this->__('Webshopdesmandanten not set');
 				$session = Mage::getSingleton("admin/session");
@@ -793,6 +816,7 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 				Mage::log('paymentbase::'.$msg, Zend_Log::ERR, Egovs_Helper::LOG_FILE);
 				$this->sendMailToAdmin('Fehler in ePayment Konfiguration: \n'. $msg);
 			} else {
+                $this->__store = Mage::app()->getStore();
 				$this->__webshopDesMandanten = trim(substr(Mage::getStoreConfig('payment_services/paymentbase/webshopdesmandanten'), 0, 4));
 			}
 		}
@@ -1446,15 +1470,21 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 						$sMailText .= sprintf("Das Errorlogfile '%s' enthält weitere Informationen. Der Fehler kann unter Umständen ignoriert werden.\n", Egovs_Helper::EXCEPTION_LOG_FILE);
 						break;
 					case -440:
-						if ($objKunde && isset($objKunde->bankverbindung)) {
-							if ($objKunde->bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung) {
-								$sMailText .= sprintf("BIC: %s\n", $objKunde->bankverbindung->getBic());
-							} elseif ($objKunde->bankverbindung instanceof SoapVar) {
-								if (isset($objKunde->bankverbindung->BIC)) {
-									$sMailText .= sprintf("BIC: %s\n", $objKunde->bankverbindung->BIC);
-								}
+					    $_bankverbindung = $objKunde->getBankverbindung();
+						if ($objKunde && isset($_bankverbindung)) {
+							if ($_bankverbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung) {
+								$sMailText .= sprintf("BIC: %s\n", $_bankverbindung->getBic());
+							} elseif ($_bankverbindung instanceof stdClass) {
+								if (isset($_bankverbindung->BIC)) {
+									$sMailText .= sprintf("BIC: %s\n", $_bankverbindung->BIC);
+								} else {
+								    $sMailText .= sprintf("Keine BIC verfügbar!\n");
+                                }
 							}
-						}
+							//$sMailText .= sprintf("Bankverbindung:\n%s\n", var_export($_bankverbindung, true));
+						} else {
+						    $sMailText .= "Keine Bankverbindung verfügbar!\n";
+                        }
 						break;
 				}
 				$sMailText .= "\n";

@@ -18,7 +18,7 @@ class Gka_Barkasse_Model_Kassenbuch_Cashbox extends Mage_Core_Model_Abstract
     
     /**
      * Ermitteln der Barkasse des aktuellen Kunden
-     * @param unknown $customerId
+     * @param Mage_Customer_Model_Customer $customerId
      * @return NULL | Gka_Barkasse_Block_Kassenbuch_Journal
      */
     public function getCashbox($customerId = null)

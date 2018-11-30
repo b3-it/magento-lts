@@ -250,7 +250,7 @@ class Sid_Wishlist_Model_Session extends Mage_Core_Model_Session_Abstract
     /**
      * Liefert hinzuzufügendes Produkt aus Session
      * 
-     * @return null|Catalog_Product_Model_Product
+     * @return null|Mage_Catalog_Model_Product
      */
     public function getProductToAdd() {
     	$params = $this->getParams();

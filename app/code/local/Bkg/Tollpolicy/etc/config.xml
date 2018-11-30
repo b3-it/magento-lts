@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Bkg_Tollpolicy>
+            <version>0.1.0.0</version>
+        </Bkg_Tollpolicy>
+    </modules>
+    <global>
+        <helpers>
+            <bkg_tollpolicy>
+                <class>Bkg_Tollpolicy_Helper</class>
+            </bkg_tollpolicy>
+        </helpers>
+        <resources>
+            <bkg_tollpolicy_setup>
+                <setup>
+                    <module>Bkg_Tollpolicy</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bkg_tollpolicy_setup>
+        </resources>
+        <blocks>
+          <bkg_tollpolicy>
+              <class>Bkg_Tollpolicy_Block</class>
+          </bkg_tollpolicy>
+        </blocks>
+        <models>
+            <bkg_tollpolicy>
+                <class>Bkg_Tollpolicy_Model</class>
+                <resourceModel>bkg_tollpolicy_resource</resourceModel>
+            </bkg_tollpolicy>
+            <bkg_tollpolicy_resource>
+                <class>Bkg_Tollpolicy_Model_Resource</class>
+                <entities>
+                  <toll_category>
+                    <table>bkg_tollpolicy_toll_category</table>
+                  </toll_category>
+                  <toll_category_customer_group>
+                    <table>bkg_toll_category_customer_group</table>
+                  </toll_category_customer_group>
+                  <toll_entity>
+                    <table>bkg_tollpolicy_toll_entity</table>
+                  </toll_entity>
+                  <toll_label>
+                    <table>bkg_tollpolicy_toll_label</table>
+                  </toll_label>
+                  <use_type_entity>
+                    <table>bkg_tollpolicy_use_type_entity</table>
+                  </use_type_entity>
+                  <use_type_label>
+                    <table>bkg_tollpolicy_use_type_label</table>
+                  </use_type_label>
+                  <use_options_entity>
+                    <table>bkg_tollpolicy_use_options_entity</table>
+                  </use_options_entity>
+                  <use_options_label>
+                    <table>bkg_tollpolicy_use_options_label</table>
+                  </use_options_label>
+
+                </entities>
+            </bkg_tollpolicy_resource>
+        </models>
+    </global>
+    <frontend>
+      <routers>
+            <bkg_tollpolicy>
+                <use>standard</use>
+                <args>
+                    <module>Bkg_Tollpolicy</module>
+                    <frontName>bkg_tollpolicy</frontName>
+                </args>
+            </bkg_tollpolicy>
+        </routers>
+        <layout>
+            <updates>
+                <bkg_tollpolicy>
+                  <file>bkg/tollpolicy.xml</file>
+                </bkg_tollpolicy>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <Bkg_Tollpolicy>
+                  <files>
+                      <default>Bkg/Tollpolicy.csv</default>
+                  </files>
+              </Bkg_Tollpolicy>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Bkg_Tollpolicy_Adminhtml after="Mage_Adminhtml">Bkg_Tollpolicy_Adminhtml</Bkg_Tollpolicy_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <bkgtollpolicy module="bkg_tollpolicy">
+              <title>Tollpolicy</title>
+              <sort_order>50</sort_order>
+              <children>
+                  <bkgtollpolicy_toll_category module="bkg_tollpolicy">
+                      <title>Toll Category</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/tollpolicy_tollcategory/index</action>
+                  </bkgtollpolicy_toll_category>
+                  <bkgtollpolicy_toll_entity module="bkg_tollpolicy">
+                      <title>Toll</title>
+                      <sort_order>20</sort_order>
+                      <action>adminhtml/tollpolicy_toll/index</action>
+                  </bkgtollpolicy_toll_entity>
+                  
+                  <bkgtollpolicy_use_type module="bkg_tollpolicy">
+                      <title>Type of Use</title>
+                      <sort_order>40</sort_order>
+                      <action>adminhtml/tollpolicy_usetype/index</action>
+                  </bkgtollpolicy_use_type>
+
+
+              </children>
+          </bkgtollpolicy>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <bkgtollpolicy module="bkg_tollpolicy">
+                          <title>Bkg Tollpolicy</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <bkgtollpolicy_toll_category module="bkg_tollpolicy">
+                                  <title>Toll_category</title>
+                                  <sort_order>10</sort_order>
+                              </bkgtollpolicy_toll_category>
+                                <bkgtollpolicy_toll_entity module="bkg_tollpolicy">
+                                  <title>Toll_entity</title>
+                                  <sort_order>20</sort_order>
+                              </bkgtollpolicy_toll_entity>
+                              
+                                <bkgtollpolicy_use_type_entity module="bkg_tollpolicy">
+                                  <title>Use_type_entity</title>
+                                  <sort_order>40</sort_order>
+                              </bkgtollpolicy_use_type_entity>
+
+                               
+
+                          </children>
+                      </bkgtollpolicy>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Bkg_Tollpolicy>
+                    <files>
+                        <default>Bkg/Tollpolicy.csv</default>
+                    </files>
+                </Bkg_Tollpolicy>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <bkgtollpolicy>
+              <file>bkg/tollpolicy.xml</file>
+            </bkgtollpolicy>
+          </updates>
+        </layout>
+    </adminhtml>
+</config>

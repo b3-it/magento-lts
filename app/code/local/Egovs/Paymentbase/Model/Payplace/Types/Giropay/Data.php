@@ -50,7 +50,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Giropay_Data extends Egovs_Paymentb
     public $extMerchantTag;
     /**
      * The labelledText
-     * @var Egovs_Paymentbase_Model_Payplace_Types_Labelled_Text
+     * @var Egovs_Paymentbase_Model_Payplace_Types_LabelledText
      */
     public $labelledText;
     /**

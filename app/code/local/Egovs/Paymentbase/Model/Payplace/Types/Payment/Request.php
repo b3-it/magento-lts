@@ -30,7 +30,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * - documentation : 3D secure field. Unique transaction identifier determined by merchant.
      * - from schema : file:///etc/Callback.wsdl
      * - length : 28
-     * @var base64String
+     * @var string
      */
     public $xid;
     /**
@@ -39,7 +39,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * - documentation : 3D secure field. Determined by ACS.
      * - from schema : file:///etc/Callback.wsdl
      * - length : 28
-     * @var base64String
+     * @var string
      */
     public $cavv;
     /**
@@ -56,7 +56,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * - from schema : file:///etc/Callback.wsdl
      * - maxLength : 22
      * - pattern : [A-Za-z0-9_/\-]+
-     * @var anyExtId
+     * @var int
      */
     public $txReferenceExtId;
     /**
@@ -65,7 +65,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * - documentation : Amount in the smallest currency unit (Cent in the case of the Euro). Only has to be submitted if different from the amount of the referenced transaction.
      * - from schema : file:///etc/Callback.wsdl
      * - minInclusive : 1
-     * @var long
+     * @var float
      */
     public $changedAmount;
     /**
@@ -74,7 +74,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * - documentation : Amount in the smallest currency unit (Cent in the case of the Euro).
      * - from schema : file:///etc/Callback.wsdl
      * - minInclusive : 0
-     * @var long
+     * @var float
      */
     public $amount;
     /**
@@ -129,7 +129,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * The batchReferenceExtId
      * Meta informations extracted from the WSDL
      * - minLength : 1
-     * @var token
+     * @var int
      */
     public $batchReferenceExtId;
     /**
@@ -141,12 +141,12 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * Constructor method for paymentRequest
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Action $_action
-     * @param base64String $_xid
-     * @param base64String $_cavv
+     * @param string $_xid
+     * @param string $_cavv
      * @param string $_ucaf
-     * @param anyExtId $_txReferenceExtId
-     * @param long $_changedAmount
-     * @param long $_amount
+     * @param int $_txReferenceExtId
+     * @param float $_changedAmount
+     * @param float $_amount
      * @param string $_currency
      * @param Egovs_Paymentbase_Model_Payplace_Types_CreditCard $_creditCard
      * @param string $_dueDate
@@ -154,7 +154,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
      * @param Egovs_Paymentbase_Model_Payplace_Types_Mandate $_mandate
      * @param string $_merchantRef
      * @param Egovs_Paymentbase_Model_Payplace_Types_Address $_address
-     * @param token $_batchReferenceExtId
+     * @param int $_batchReferenceExtId
      * @param string $_aid
      * @return Egovs_Paymentbase_Model_Payplace_Types_Payment_Request
      */
@@ -205,7 +205,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get xid value
-     * @return base64String|null
+     * @return string|null
      */
     public function getXid()
     {
@@ -213,8 +213,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set xid value
-     * @param base64String $_xid the xid
-     * @return base64String
+     * @param string $_xid the xid
+     * @return bool
      */
     public function setXid($_xid)
     {
@@ -222,7 +222,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get cavv value
-     * @return base64String|null
+     * @return string|null
      */
     public function getCavv()
     {
@@ -230,8 +230,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set cavv value
-     * @param base64String $_cavv the cavv
-     * @return base64String
+     * @param string $_cavv the cavv
+     * @return bool
      */
     public function setCavv($_cavv)
     {
@@ -256,7 +256,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get txReferenceExtId value
-     * @return anyExtId|null
+     * @return int|null
      */
     public function getTxReferenceExtId()
     {
@@ -264,8 +264,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set txReferenceExtId value
-     * @param anyExtId $_txReferenceExtId the txReferenceExtId
-     * @return anyExtId
+     * @param int $_txReferenceExtId the txReferenceExtId
+     * @return bool
      */
     public function setTxReferenceExtId($_txReferenceExtId)
     {
@@ -273,7 +273,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get changedAmount value
-     * @return long|null
+     * @return float|null
      */
     public function getChangedAmount()
     {
@@ -281,8 +281,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set changedAmount value
-     * @param long $_changedAmount the changedAmount
-     * @return long
+     * @param float $_changedAmount the changedAmount
+     * @return bool
      */
     public function setChangedAmount($_changedAmount)
     {
@@ -290,7 +290,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get amount value
-     * @return long|null
+     * @return int|null
      */
     public function getAmount()
     {
@@ -298,8 +298,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set amount value
-     * @param long $_amount the amount
-     * @return long
+     * @param int $_amount the amount
+     * @return bool
      */
     public function setAmount($_amount)
     {
@@ -426,7 +426,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Get batchReferenceExtId value
-     * @return token|null
+     * @return int|null
      */
     public function getBatchReferenceExtId()
     {
@@ -434,8 +434,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Payment_Request extends Egovs_Payme
     }
     /**
      * Set batchReferenceExtId value
-     * @param token $_batchReferenceExtId the batchReferenceExtId
-     * @return token
+     * @param int $_batchReferenceExtId the batchReferenceExtId
+     * @return bool
      */
     public function setBatchReferenceExtId($_batchReferenceExtId)
     {

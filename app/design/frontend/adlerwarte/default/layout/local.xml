@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/adlerwarte_custom.js</name></action>
+        </reference>
+    </default>
+    
+    <catalogsearch_advanced_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_advanced_index>
+    
+    <checkout_cart_index translate="label">
+        <reference name="content">
+            <remove name="checkout.cart.coupon" />
+        </reference>
+    </checkout_cart_index>
+    
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+            <action method="removeLinkByName"><name>downloadable_products</name></action>
+            <action method="removeLinkByName"><name>recurring_profiles</name></action>
+            <action method="removeLinkByName"><name>reviews</name></action>
+            <action method="removeLinkByName"><name>tags</name></action>
+        </reference>
+    </customer_account>
+    
+    <catalog_seo_sitemap>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+    </catalog_seo_sitemap>
+</layout>

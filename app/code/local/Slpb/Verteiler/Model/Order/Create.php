@@ -58,7 +58,7 @@ class Slpb_Verteiler_Model_Order_Create extends Mage_Core_Model_Abstract
 	 		$collection->addAttributeToSelect('name');
 	 		
 	 		$ids = implode(',',array_keys($this->_items));
-	 		$collection->getSelect()->where('entity_id in (?)',$ids);
+	 		$collection->getSelect()->where('entity_id in ('.$ids.')',$ids);
 	 		$items = $collection->getItems();
  		}
  		

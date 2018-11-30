@@ -5,76 +5,81 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.egov-fa-base {
+	font-family: 'FontAwesome' !important;
+	@extend .fa;
+}
+
 // Loading-Spinner für Seiten-Lade-DIV
 .egov-spinner {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-spinner;
     @extend .fa-spin;
 }
 
 // Icon für Bearbeiten (Stift)
 .egov-pencile {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-pencil;
     font-size: $global-fontsize + 4 !important;
 }
 
 // Icon für Löschen (Mülltonne)
 .egov-delete {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-trash-o;
     font-size: $global-fontsize + 4;
 }
 
 // Icon 2 für Löschen (Kreuz)
 .egov-delete2 {
-	@extend .fa;
+	@extend .egov-fa-base;
 	@extend .fa-times;
 	font-size: $global-fontsize + 4;
 }
 
 // Icon für Suchen (Lupe)
 .egov-search {
-	@extend .fa;
+	@extend .egov-fa-base;
 	@extend .fa-search;
 	font-size: $global-fontsize + 6 !important;
 }
 
 // Icon für Passwort (Schloss)
 .egov-password {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-lock;
     font-size: $global-fontsize + 4 !important;
 }
 
 // Icon für eMail (Briefumschlag)
 .egov-email {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-envelope;
     font-size: $global-fontsize + 4 !important;
 }
 
 // Icon für Telefon (Telefon)
 .egov-phone {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-phone;
 }
 
 // Icon für Mobil (Handy)
 .egov-mobile {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-mobile;
 }
 
 // Icon für Fax (Fax)
 .egov-fax {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-fax;
 }
 
 // Icon für Kachel-Asicht der Produkte (Gitter)
 .egov-grid {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-th-large;
     font-size: $global-fontsize + 8;
     margin: $fa-icon-margin;
@@ -82,7 +87,7 @@
 
 // Icon für Listen-Ansicht der Produkte (Liste)
 .egov-list {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-bars;
     font-size: $global-fontsize + 10;
     margin: $fa-icon-margin;
@@ -90,7 +95,7 @@
 
 // Navbar-Icon für Startseite (Häuschen)
 .egov-home {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-home;
     font-size: $global-fontsize + 12;
     margin: $fa-icon-margin;
@@ -98,7 +103,7 @@
 
 // Navbar-Icon für Benutzermenü (Männchen)
 .egov-user {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-user;
     font-size: $global-fontsize + 12;
     margin: $fa-icon-margin;
@@ -106,7 +111,7 @@
 
 // Navbar-Icon für Warenkorb (Einkaufswagen)
 .egov-cart {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-shopping-cart;
     font-size: $global-fontsize + 12;
     margin: $fa-icon-margin;
@@ -114,7 +119,7 @@
 
 // Icon für Wunschzettel (Stern)
 .egov-star {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-star;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -122,7 +127,7 @@
 
 // Icon für Katalog-Sortierung absteigend (Pfeil runter)
 .egov-arrow-up {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-arrow-up;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -130,7 +135,7 @@
 
 // Icon für Katalog-Sortierung aufsteigend (Pfeil hoch)
 .egov-arrow-down {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-arrow-down;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -138,7 +143,7 @@
 
 // Icon für Nachbestellen in der Bestellübersicht (runder Pfeil)
 .egov-reorder {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-repeat;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -146,7 +151,7 @@
 
 // Icon für Drucken in der Bestellansicht des Benutzerkontos (Drucker)
 .egov-print {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-print;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -154,7 +159,7 @@
 
 // Icon für Details in der Bestellübersicht (Auge)
 .egov-view {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-eye;
     font-size: $global-fontsize + 2;
     margin: $fa-icon-margin;
@@ -162,7 +167,7 @@
 
 // Icon für Alles-Anzeigen in der Bestellübersicht (2 Zettel)
 .egov-view-all {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-files-o;
     font-size: $global-fontsize + 2;
     margin: $fa-icon-margin;
@@ -170,7 +175,7 @@
 
 // Icons für Produkte auf Vergleichsliste (2 Icons)
 .egov-compare {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-balance-scale;
     font-size: $global-fontsize;
     margin: $fa-icon-margin;
@@ -178,7 +183,7 @@
 
 // Icons für RSS-Feet
 .egov-rss {
-    @extend .fa;
+    @extend .egov-fa-base;
     @extend .fa-rss-square;
     font-size: $global-fontsize + 6;
     display: inline-block;
@@ -186,4 +191,26 @@
     top: 5px;
     float: left;
     margin-right: 15px;
+}
+
+.egov-refresh {
+    @extend .egov-fa-base;
+	@extend .fa-refresh;
+	font-size: $global-fontsize + 13;
+
+	&:hover, &:active {
+	    @extend .fa-spin;
+	}
+}
+
+// Icon für Context-Hilfe
+.egov-help {
+    @extend .egov-fa-base;
+    @extend .fa-question-circle;
+    font-size: $global-fontsize + 12;
+    margin: $fa-icon-margin;
+}
+
+span.default-font {
+	font-family: $base-font-family;
 }

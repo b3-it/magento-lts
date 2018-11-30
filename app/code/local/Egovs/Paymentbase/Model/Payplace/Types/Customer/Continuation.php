@@ -22,17 +22,17 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
 {
     /**
      * The successURL
-     * @var anyURI
+     * @var string
      */
     public $successURL;
     /**
      * The errorURL
-     * @var anyURI
+     * @var string
      */
     public $errorURL;
     /**
      * The notificationFailedURL
-     * @var anyURI
+     * @var string
      */
     public $notificationFailedURL;
     /**
@@ -46,9 +46,9 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     /**
      * Constructor method for customerContinuation
      * @see parent::__construct()
-     * @param anyURI $_successURL
-     * @param anyURI $_errorURL
-     * @param anyURI $_notificationFailedURL
+     * @param string $_successURL
+     * @param string $_errorURL
+     * @param string $_notificationFailedURL
      * @param boolean $_redirect
      * @return Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation
      */
@@ -58,7 +58,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Get successURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getSuccessURL()
     {
@@ -66,8 +66,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Set successURL value
-     * @param anyURI $_successURL the successURL
-     * @return anyURI
+     * @param string $_successURL the successURL
+     * @return bool
      */
     public function setSuccessURL($_successURL)
     {
@@ -75,7 +75,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Get errorURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getErrorURL()
     {
@@ -83,8 +83,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Set errorURL value
-     * @param anyURI $_errorURL the errorURL
-     * @return anyURI
+     * @param string $_errorURL the errorURL
+     * @return bool
      */
     public function setErrorURL($_errorURL)
     {
@@ -92,7 +92,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Get notificationFailedURL value
-     * @return anyURI|null
+     * @return string|null
      */
     public function getNotificationFailedURL()
     {
@@ -100,8 +100,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Customer_Continuation extends Egovs
     }
     /**
      * Set notificationFailedURL value
-     * @param anyURI $_notificationFailedURL the notificationFailedURL
-     * @return anyURI
+     * @param string $_notificationFailedURL the notificationFailedURL
+     * @return bool
      */
     public function setNotificationFailedURL($_notificationFailedURL)
     {

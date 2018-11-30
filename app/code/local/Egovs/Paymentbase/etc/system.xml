@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE config>
 <config>
     <sections>
          <payment translate="label" module="payment">
@@ -264,7 +265,7 @@
                         <client_certificate translate="label">
                             <label>Client Zertifikat</label>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_cert</frontend_model>
                             <backend_model>paymentbase/system_config_backend_epayblcert</backend_model>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
@@ -279,7 +280,7 @@
                         <ca_certificate translate="label">
                             <label>CA Zertifikat</label>
                             <frontend_type>text</frontend_type>
-                            <frontend_model>paymentbase/adminhtml_system_config_form_field_acl</frontend_model>
+                            <frontend_model>paymentbase/adminhtml_system_config_form_field_cert</frontend_model>
                             <backend_model>paymentbase/system_config_backend_epayblcert</backend_model>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
@@ -415,6 +416,47 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </auto_sync_epaybl_data>
+                        <enable_apr translate="label">
+                            <label>Enable automatic payment retrieval?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>910</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable_apr>
+                        <apr_cronjob translate="label comment tooltip">
+                            <label>Cron configuration for automatic payment retrieval</label>
+                            <sort_order>911</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable_apr>1</enable_apr>
+                            </depends>
+                            <comment><![CDATA[P1 P2 P3 P4 P5<br/>P1 Minute (0-59)<br/>P2 Hour (0-23)<br/>P3 Day (0-31)<br/>P4 Month (1-12)<br/>P5 Day of Week (0-7, Sunday is 0 or 7)]]></comment>
+                            <tooltip>Default is: 0 8 * * 1,2,3,4,5<br/> Cron runs every weekday at 08:00</tooltip>
+                        </apr_cronjob>
+                        <apr_max_error_count translate="label comment tooltip">
+                            <label>Payment retrieval max retries</label>
+                            <sort_order>912</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry validate-number validate-greater-than-zero</validate>
+                            <comment>Number of maximum errors for incoming payments</comment>
+                        </apr_max_error_count>
+                        <apr_new_payments translate="label comment tooltip">
+                            <label>Inform for new payment retrievals</label>
+                            <sort_order>920</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enable_apr>1</enable_apr>
+                            </depends>
+                            <comment>Semicolon separated list of E-Mails</comment>
+                        </apr_new_payments>
                         <is_alive translate="label">
                             <label>Check if is alive</label>
                             <frontend_type>select</frontend_type>
@@ -422,7 +464,7 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>999</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Jetzt Prüfen ob ePayBL-Server erreichbar ist?</comment>
                         </is_alive>

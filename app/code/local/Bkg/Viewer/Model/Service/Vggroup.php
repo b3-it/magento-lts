@@ -96,8 +96,8 @@ class Bkg_Viewer_Model_Service_Vggroup extends Mage_Core_Model_Abstract
     
     /**
      * Laden einer Gruppe von Verwaltungsgebieten anhand der ident und CRS
-     * @param unknown $ident
-     * @param unknown $crs
+     * @param string $ident
+     * @param string $crs
      * @return Bkg_Viewer_Model_Resource_Service_Vggroup
      */
     public function loadWithCRS($ident, $crs = null)

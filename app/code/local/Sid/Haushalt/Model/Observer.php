@@ -2,12 +2,10 @@
 
 class Sid_Haushalt_Model_Observer extends Mage_Core_Model_Abstract
 {
-   
-	
-    
 	/**
 	 * Exportstatus der Bestellung und Haushaltsystem speichern
-	 * @param unknown $observer
+	 * 
+	 * @param Varien_Event_Observer $observer
 	 */
 	public function onCreateOrder($observer)
 	{

@@ -266,6 +266,121 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
         }
     }
 
+    
+    /**
+     * Minicart delete action
+     */
+    public function ajaxDeleteAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		Mage::throwException('Invalid form key');
+    	}
+    	$id = (int) $this->getRequest()->getParam('id');
+    	$result = array();
+    	if ($id) {
+    		try {
+    			$this->_getCart()->removeItem($id)->save();
+    
+    			$result['qty'] = $this->_getCart()->getSummaryQty();
+    
+    			$this->loadLayout();
+    			$result['content'] = $this->getLayout()->getBlock('minicart_content')->toHtml();
+    
+    			$result['success'] = 1;
+    			$result['message'] = $this->__('Item was removed successfully.');
+    			Mage::dispatchEvent('ajax_cart_remove_item_success', array('id' => $id));
+    		} catch (Exception $e) {
+    			$result['success'] = 0;
+    			$result['error'] = $this->__('Can not remove the item.');
+    		}
+    	}
+    
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    
+    /**
+     * Minicart ajax update qty action
+     */
+    public function ajaxUpdateAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		Mage::throwException('Invalid form key');
+    	}
+    	$result = array();
+    	
+    	$id = (int)$this->getRequest()->getParam('id');
+    	$qty = $this->getRequest()->getParam('qty');
+    	
+    	
+    	$customer = $this->getCustomerSession()->getCustomer();
+    	if(($customer == null) || ($customer->getId() == null))
+    	{
+    		
+    		$result['success'] = 0;
+    		$result['error'] = $this->__('Please login first!');
+    		//id entfernen damit nächste Bedingung false ist
+    		$id = null;
+    		
+    	}
+    	 
+    	if((!Sid_Roles_Model_Customer_Authority::getIsAuthorizedOrderer($customer)))
+    	{
+    		$result['success'] = 0;
+    		$result['error'] = $this->__('You are not authorized to put items into cart.');
+    		//id entfernen damit nächste Bedingung false ist
+    		$id = null;
+    	
+    	}
+    	
+    	
+    	
+    	
+    	if ($id) {
+    		try {
+    			$cart = $this->_getCart();
+    			if (isset($qty)) {
+    				$filter = new Zend_Filter_LocalizedToNormalized(
+    						array('locale' => Mage::app()->getLocale()->getLocaleCode())
+    						);
+    				$qty = $filter->filter($qty);
+    			}
+    
+    			$quoteItem = $cart->getQuote()->getItemById($id);
+    			if (!$quoteItem) {
+    				Mage::throwException($this->__('Quote item is not found.'));
+    			}
+    			if ($qty == 0) {
+    				$cart->removeItem($id);
+    			} else {
+    				$quoteItem->setQty($qty)->save();
+    			}
+    			$this->_getCart()->save();
+    
+    			$this->loadLayout();
+    			$result['content'] = $this->getLayout()->getBlock('minicart_content')->toHtml();
+    
+    			$result['qty'] = $this->_getCart()->getSummaryQty();
+    
+    			if (!$quoteItem->getHasError()) {
+    				$result['message'] = $this->__('Item was updated successfully.');
+    			} else {
+    				$result['notice'] = $quoteItem->getMessage();
+    			}
+    			$result['success'] = 1;
+    		} catch (Exception $e) {
+    			$result['success'] = 0;
+    			$result['error'] = $this->__('Can not save item.');
+    		}
+    	}
+    
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    
+    }
+    
+    
+    
     public function addgroupAction()
     {
         $orderItemIds = $this->getRequest()->getParam('order_items', array());
@@ -336,6 +451,11 @@ class Sid_Checkout_CartController extends Mage_Core_Controller_Front_Action
      */
     public function updateItemOptionsAction()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+
         $cart   = $this->_getCart();
         $id = (int) $this->getRequest()->getParam('id');
         $params = $this->getRequest()->getParams();

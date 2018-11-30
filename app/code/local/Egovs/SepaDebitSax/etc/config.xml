@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <!--
 /**
 * Magento
@@ -81,21 +82,24 @@
         
         <template>
             <email>
-                <sepa_mandate_email_template translate="label" module="sepadebitsax">
+            	<!-- see Mage_Adminhtml_Model_System_Config_Source_Email_Template line 58
+                	Default Template-Name wird aus Config-Node-Path gebildet!
+                -->
+                <payment_sepadebitsax_mandate_template translate="label" module="sepadebitsax">
                     <label>Your SEPA Mandate</label>
                     <file>egov/sepadebitsax/sepa_mandate.html</file>
                     <type>html</type>
-                </sepa_mandate_email_template>
-                <sepa_mandate_notification_email_template translate="label" module="sepadebitsax">
+                </payment_sepadebitsax_mandate_template>
+                <payment_sepadebitsax_notification_template translate="label" module="sepadebitsax">
                     <label>SEPA Debit Notification</label>
                     <file>egov/sepadebitsax/sepa_mandate_notification.html</file>
                     <type>html</type>
-                </sepa_mandate_notification_email_template>
-                <sepa_mandate_amendment_email_template translate="label" module="sepadebitsax">
+                </payment_sepadebitsax_notification_template>
+                <payment_sepadebitsax_amendment_template translate="label" module="sepadebitsax">
                     <label>SEPA Debit Amendment</label>
                     <file>egov/sepadebitsax/sepa_mandate_amendment.html</file>
                     <type>html</type>
-                </sepa_mandate_amendment_email_template>
+                </payment_sepadebitsax_amendment_template>
             </email>
         </template>
     </global>
@@ -130,9 +134,12 @@
                 <agent_id>Webshop</agent_id>
                 <allow_ooff>1</allow_ooff>
                 <iban_only>0</iban_only>
-                <mandate_template>sepa_mandate_email_template</mandate_template>
-                <notification_template>sepa_mandate_notification_email_template</notification_template>
-                <mandate_amendment_template>sepa_mandate_amendment_email_template</mandate_amendment_template>                
+                <!-- see Mage_Adminhtml_Model_System_Config_Source_Email_Template line 58
+                	Default Template-Name wird aus Config-Node-Path gebildet!
+                -->
+                <mandate_template>payment_sepadebitsax_mandate_template</mandate_template>
+                <notification_template>payment_sepadebitsax_notification_template</notification_template>
+                <mandate_amendment_template>payment_sepadebitsax_amendment_template</mandate_amendment_template>                
             </sepadebitsax>
         </payment>
     </default>

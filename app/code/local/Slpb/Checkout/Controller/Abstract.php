@@ -14,7 +14,7 @@ class Slpb_Checkout_Controller_Abstract extends Mage_Checkout_Controller_Action
     /**
      * Retrieve checkout model
      *
-     * @return Slpb_Checkout_Model_Type_Multipage
+     * @return Slpb_Checkout_Controller_Abstract
      */
     protected function _getCheckout()
     {
@@ -41,7 +41,7 @@ class Slpb_Checkout_Controller_Abstract extends Mage_Checkout_Controller_Action
     /**
      * Retrieve checkout url heler
      *
-     * @return Slpb_Checkout_Helper_Url
+     * @return Slpb_Checkout_Helper_Data
      */
     protected function _getHelper()
     {

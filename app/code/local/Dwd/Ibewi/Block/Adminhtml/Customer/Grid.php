@@ -104,7 +104,7 @@ class Dwd_Ibewi_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_Widge
       $this->addColumn('customer_address_id', array(
           'header'    => 'Kundenadresse Id',
           'width'     => '50px',
-          'index'     => 'customer_address_id',
+          'index'     => 'real_address_id',
       	  'renderer'	=> 'ibewi/adminhtml_widget_grid_column_renderer_plaintext'
       ));
       
@@ -210,10 +210,10 @@ class Dwd_Ibewi_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_Widge
       
 
       
-    $this->addColumn('taxvat', array(
+    $this->addColumn('vat_id', array(
           'header'    => 'Steuernummer',
           'width'     => '50px',
-          'index'     => 'taxvat',
+          'index'     => 'vat_id',
     		'renderer'	=> 'ibewi/adminhtml_widget_grid_column_renderer_plaintext'
       ));
     

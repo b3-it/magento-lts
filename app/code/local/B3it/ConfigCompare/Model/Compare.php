@@ -21,6 +21,8 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
 	protected $_attributesExcludeExport  = array('id');
 	protected $_attributesExcludeCompare  = array('id');
 	
+	protected $_storeId = 0;
+	
 	
     public function _construct()
     {
@@ -28,6 +30,17 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
         $this->_init('configcompare/coreConfigData');
     }
     
+    
+    public function setStoreId($storeId)
+    {
+    	$this->_storeId = intval($storeId);
+    	return $this;
+    }
+    
+    public function getStoreId()
+    {
+    	return $this->_storeId;
+    }
     
     
     public abstract function getCollectionDiff($importXML);
@@ -80,7 +93,8 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     protected function _findInCollection($path ,$stores){
     	foreach($this->_collectionArray['items'] as $key => $item){
     		if($item['identifier'] == $path){
-    			if($item['stores'] == $stores){
+    			//if($item['stores'] == $stores)
+    			{
 		    			return $key;
     			}
     		}
@@ -90,10 +104,10 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     
     /**
      * Helper für den xml Export
-     * @param unknown $xml
-     * @param unknown $xml_node
-     * @param unknown $item
-     * @param unknown $field
+     * @param Varien_Simplexml_Element $xml
+     * @param Varien_Simplexml_Element $xml_node
+     * @param object $item
+     * @param string $field
      */
     protected function _addElement($xml, $xml_node ,$item, $field)
     {
@@ -119,7 +133,14 @@ abstract class B3it_ConfigCompare_Model_Compare extends Mage_Core_Model_Abstract
     public function export($xml, $xml_node, $label="not_defined")
     {
     	$collection =  $this->getExportCollection();
-    	foreach($collection->getItems() as $item){
+    	
+    	if(is_array($collection)){
+    		$items = $collection;
+    	}else{
+    		$items = $collection->getItems();
+    	}
+    	
+    	foreach($items as $item){
     		$xml_item = $xml->createElement( $label);
     		$xml_node->appendChild($xml_item);
     

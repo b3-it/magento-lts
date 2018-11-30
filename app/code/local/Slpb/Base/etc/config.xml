@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Slpb_Base>
+            <version>0.0.0.4</version>
+        </Slpb_Base>
+    </modules>
+    <global>
+        <resources>
+            <slpbbase_setup>
+                <setup>
+                    <module>Slpb_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </slpbbase_setup>
+        </resources>
+    </global>
+</config>

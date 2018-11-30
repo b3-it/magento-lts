@@ -21,10 +21,10 @@
 {{template config_path="design/email/header"}}
 {{inlinecss file="email-inline.css"}}
 
-<table cellpadding="0" cellspacing="0" border="0">
+<table style="border:0;">
     <tr>
         <td>
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table style="border:0;">
                 <tr>
                     <td class="email-heading">
                         <h1>Hallo {{htmlescape var=$order.getCustomerName()}},</h1>
@@ -54,14 +54,14 @@
     <tr class="order-information">
         <td>
             {{if order.getEmailCustomerNote()}}
-            <table cellspacing="0" cellpadding="0" class="message-container">
+            <table class="message-container">
                 <tr>
                     <td>{{var order.getEmailCustomerNote()}}</td>
                 </tr>
             </table>
             {{/if}}
             {{layout handle="sales_email_order_items" order=$order}}
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table style="border:0;">
                 <tr>
                     <td class="address-details">
                         <h6>Rechnungsadresse:</h6>

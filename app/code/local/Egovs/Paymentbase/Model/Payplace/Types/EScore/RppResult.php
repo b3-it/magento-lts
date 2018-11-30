@@ -60,7 +60,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
      * Meta informations extracted from the WSDL
      * - documentation : date of the first notice
      * - from schema : file:///etc/Callback.wsdl
-     * @var date
+     * @var DateTime
      */
     public $eScoreFirstNoticeDate;
     /**
@@ -68,7 +68,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
      * Meta informations extracted from the WSDL
      * - documentation : date of the last notice
      * - from schema : file:///etc/Callback.wsdl
-     * @var date
+     * @var DateTime
      */
     public $eScoreLastNoticeDate;
     /**
@@ -78,8 +78,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
      * @param string $_eScoreContentDescription
      * @param string $_eScoreContentCode
      * @param string $_eScoreNoOfMatches
-     * @param date $_eScoreFirstNoticeDate
-     * @param date $_eScoreLastNoticeDate
+     * @param DateTime $_eScoreFirstNoticeDate
+     * @param DateTime $_eScoreLastNoticeDate
      * @return Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult
      */
     public function __construct($_eScoreContentType = NULL,$_eScoreContentDescription = NULL,$_eScoreContentCode = NULL,$_eScoreNoOfMatches = NULL,$_eScoreFirstNoticeDate = NULL,$_eScoreLastNoticeDate = NULL)
@@ -156,7 +156,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
     }
     /**
      * Get eScoreFirstNoticeDate value
-     * @return date|null
+     * @return DateTime|null
      */
     public function getEScoreFirstNoticeDate()
     {
@@ -164,8 +164,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
     }
     /**
      * Set eScoreFirstNoticeDate value
-     * @param date $_eScoreFirstNoticeDate the eScoreFirstNoticeDate
-     * @return date
+     * @param DateTime $_eScoreFirstNoticeDate the eScoreFirstNoticeDate
+     * @return bool
      */
     public function setEScoreFirstNoticeDate($_eScoreFirstNoticeDate)
     {
@@ -173,7 +173,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
     }
     /**
      * Get eScoreLastNoticeDate value
-     * @return date|null
+     * @return DateTime|null
      */
     public function getEScoreLastNoticeDate()
     {
@@ -181,8 +181,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_EScore_RppResult extends Egovs_Paym
     }
     /**
      * Set eScoreLastNoticeDate value
-     * @param date $_eScoreLastNoticeDate the eScoreLastNoticeDate
-     * @return date
+     * @param DateTime $_eScoreLastNoticeDate the eScoreLastNoticeDate
+     * @return bool
      */
     public function setEScoreLastNoticeDate($_eScoreLastNoticeDate)
     {

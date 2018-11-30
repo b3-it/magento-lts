@@ -15,7 +15,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 
 		/**
 		 * Hinzufügen der Infoletter zur Kundengrid Massenaktion
-		 * @param unknown $observer
+		 * @param Varien_Event_Observer $observer Observer
 		 */
 		public function onCustomerGridMassaction($observer)
 		{
@@ -45,7 +45,7 @@ class Egovs_Infoletter_Model_Observer extends Mage_Core_Model_Abstract
 		
 		/**
 		 * Hinzufügen der Infoletter zur Bestellungengrid Massenaktion
-		 * @param unknown $observer
+		 * @param Varien_Event_Observer $observer Observer
 		 */
 		public function onSalesOrderGridMassaction($observer)
 		{

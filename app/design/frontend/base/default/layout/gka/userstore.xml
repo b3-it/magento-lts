@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
-
+<!DOCTYPE layout>
 <layout version="0.1.0">
-
     <userstore_index_index translate="label">
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="userstore/form_switch" name="switch" template="gka/userstore/form/switch.phtml" />
         </reference>
     </userstore_index_index>
-
-
-
-
 </layout>

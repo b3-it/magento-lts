@@ -1,9 +1,4 @@
 <?php
-// Laut Eclipse wird das niemals verwendet
-//use \SE\Component\OpenTrans;
-//use \Doctrine\Common;
-
-
 class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Adminhtml_Controller_action
 {
 
@@ -64,14 +59,71 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
  
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
-			
-			
-	  			
-	  			
-			$model = Mage::getModel('framecontract/vendor');		
-			$model->setData($data)
-				->setId($this->getRequest()->getParam('id'));
-			
+
+            if (isset($data['client_certificate_delete'])) {
+                $data['transfer']['client_certificate'] = null;
+            }
+
+            if (isset($data['client_ca_delete'])) {
+                $data['transfer']['client_ca'] = null;
+            }
+
+            if(isset($_FILES['client_certificate']['name']) && $_FILES['client_certificate']['name'] != '') {
+                try {
+                    $uploader = new Varien_File_Uploader('client_certificate');
+                    // Any extention would work
+                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
+                    $uploader->setValidMimeTypes(array('application/octet-stream', 'text/plain'));
+                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setFilesDispersion(true);
+                    $uploader->setAllowCreateFolders(true);
+
+                    $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
+                    $uploader->save($path);
+
+                    //this way the name is saved in DB
+                    $data['transfer']['client_certificate'] = $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $msg = Mage::helper('framecontract')->__("Can't save client certificate! Error Message was: ");
+                    $msg .= Mage::helper('framecontract')->__($e->getMessage());
+                    Mage::getSingleton('adminhtml/session')->addError($msg);
+                }
+            }
+
+            if(isset($_FILES['client_ca']['name']) && $_FILES['client_ca']['name'] != '') {
+                try {
+                    $uploader = new Varien_File_Uploader('client_ca');
+                    // Any extention would work
+                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
+                    $uploader->setValidMimeTypes(array('application/x-x509-ca-cert', 'text/plain'));
+                    $uploader->setAllowRenameFiles(false);
+                    $uploader->setFilesDispersion(true);
+                    $uploader->setAllowCreateFolders(true);
+
+                    $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
+                    $uploader->save($path);
+
+                    //this way the name is saved in DB
+                    $data['transfer']['client_ca'] = $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $msg = Mage::helper('framecontract')->__("Can't save CA certificate! Error Message was: ");
+                    $msg .= Mage::helper('framecontract')->__($e->getMessage());
+                    Mage::getSingleton('adminhtml/session')->addError($msg);
+                }
+            }
+
+            $model = Mage::getModel('framecontract/vendor');
+            $model->setData($data)
+                ->setId($this->getRequest()->getParam('id'));
+
+            if ($model->hasClientCertificateDelete()) {
+                $model->setClientCertificate('');
+            }
+
+            if ($model->hasClientCaDelete()) {
+                $model->setClientCa('');
+            }
+
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
@@ -81,6 +133,20 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 				}	
 				
 				$model->save();
+
+                if ($transfer = $model->getTransfer()) {
+                    if (is_array($transfer)) {
+                        $transfer = new Varien_Object($transfer);
+                    }
+                    if ($transfer->getCheckConnection() == true && $model->getTransferType() == 'post') {
+                        if (($_result = $model->getTransferModel()->checkConnection()) === true) {
+                            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Successfully connected to remote host'));
+                        } else {
+                            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('framecontract')->__('Error while connection to remote host: %s', $_result));
+                        }
+                    }
+                }
+
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('framecontract')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -121,17 +187,17 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 
     public function massDeleteAction() {
         $vendorIds = $this->getRequest()->getParam('vendor');
-        if(!is_array($framecontractIds)) {
+        if(!is_array($vendorIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($framecontractIds as $framecontractId) {
-                    $framecontract = Mage::getModel('framecontract/vendor')->load($framecontractId);
-                    $framecontract->delete();
+                foreach ($vendorIds as $vendorId) {
+                    $vendor = Mage::getModel('framecontract/vendor')->load($vendorId);
+                    $vendor->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($framecontractIds)
+                        'Total of %d record(s) were successfully deleted', count($vendorIds)
                     )
                 );
             } catch (Exception $e) {
@@ -144,19 +210,19 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
     public function massStatusAction()
     {
         $vendorIds = $this->getRequest()->getParam('vendor');
-        if(!is_array($framecontractIds)) {
+        if(!is_array($vendorIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
                 foreach ($vendorIds as $vendorId) {
-                    $vendor = Mage::getSingleton('framecontract/vendor')
-                        ->load($framecontractId)
+                    Mage::getSingleton('framecontract/vendor')
+                    ->load($vendorId)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)
                         ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($framecontractIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($vendorIds))
                 );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());

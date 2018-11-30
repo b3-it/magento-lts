@@ -33,7 +33,9 @@
  */
 class Mage_Install_Block_Locale extends Mage_Install_Block_Abstract
 {
-
+    /**
+     * 
+     */
     public function __construct()
     {
         parent::__construct();
@@ -158,6 +160,10 @@ class Mage_Install_Block_Locale extends Mage_Install_Block_Abstract
             : Mage::app()->getLocale()->getCurrency();
     }
 
+    /**
+     * 
+     * @return Varien_Object|mixed|string
+     */
     public function getFormData()
     {
         $data = $this->getData('form_data');

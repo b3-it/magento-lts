@@ -13,7 +13,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_DefineparamsController extends Mag
 	/**
 	 * Init
 	 *
-	 * @return Egovs_Paymentbase_Adminhtml_DefineparamsController
+	 * @return Egovs_Paymentbase_Adminhtml_Paymentbase_DefineparamsController
 	 */
 	protected function _initAction() {
 		$this->loadLayout();

@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <layout version="0.1.0">
     <adminhtml_configcompare_import_index>
         <reference name="content">
             <block type="configcompare/adminhtml_import_data" name="configcompare" />
         </reference>
     </adminhtml_configcompare_import_index>
+     <adminhtml_configcompare_export_index>
+        <reference name="content">
+            <block type="configcompare/adminhtml_export_data" name="configcompare" />
+        </reference>
+    </adminhtml_configcompare_export_index>
 </layout>

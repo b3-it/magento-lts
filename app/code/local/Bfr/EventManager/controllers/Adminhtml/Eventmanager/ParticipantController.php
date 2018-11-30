@@ -15,7 +15,7 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('participant/items')
+			->_setActiveMenu('bfr_eventmanager/eventmanager_participant')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
 
 		return $this;
@@ -42,11 +42,7 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 			}
 			Mage::register('participant_data', $model);
 
-			$this->loadLayout();
-			$this->_setActiveMenu('eventmanager/items');
-
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-			$this->_addBreadcrumb(Mage::helper('adminhtml')->__('Item News'), Mage::helper('adminhtml')->__('Item News'));
+			$this->_initAction();
 
 			$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
@@ -63,6 +59,34 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 	public function newAction() {
 		$this->_forward('edit');
 	}
+
+
+    public function massStatusParticipantCopyAction()
+    {
+        $participantIds = $this->getRequest()->getParam('participant');
+        $new_event = $this->getRequest()->getParam('new_event');
+        if(!is_array($participantIds)) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+        } else if(!$new_event) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select Event'));
+
+        } else {
+            try {
+                foreach($participantIds as $participantId){
+                    $participant = Mage::getModel('eventmanager/participant')->load($participantId);
+                    $clone = $participant->copy();
+                    $clone->setEventId($new_event)->save();
+                }
+
+                $this->_getSession()->addSuccess(
+                    $this->__('Total of %d record(s) were copied', count($participantIds))
+                );
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+        $this->_redirect('*/*/index',array('_current'=>true));
+    }
 
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
@@ -144,17 +168,17 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
 
     public function massDeleteAction() {
         $participantIds = $this->getRequest()->getParam('participant');
-        if(!is_array($eventmanagerIds)) {
+        if(!is_array($participantIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($eventmanagerIds as $eventmanagerId) {
+                foreach ($participantIds as $eventmanagerId) {
                     $eventmanager = Mage::getModel('eventmanager/participant')->load($eventmanagerId);
                     $eventmanager->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($eventmanagerIds)
+                        'Total of %d record(s) were successfully deleted', count($participantIds)
                     )
                 );
             } catch (Exception $e) {
@@ -217,5 +241,9 @@ class Bfr_EventManager_Adminhtml_EventManager_ParticipantController extends Mage
         $response->setBody($content);
         $response->sendResponse();
         die;
+    }
+    
+    protected function _isAllowed() {
+    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_participant');
     }
 }

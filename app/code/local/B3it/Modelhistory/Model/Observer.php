@@ -122,31 +122,28 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      */
     public function isTraceableObject($source)
     {
-        if (get_class($source) === 'Mage_CatalogIndex_Model_Catalog_Index_Flag') {
-            return false;
-        }
-
-        if (strpos(get_class($source), 'Mage_Index_') === 0) {
-            return false;
-        }
-
         // prevent loop
         if ($source instanceof B3it_ModelHistory_Model_History
-            || $source instanceof B3it_ModelHistory_Model_Config) {
-            return false;
-        }
+            || $source instanceof B3it_ModelHistory_Model_Config
+            || $source instanceof B3it_Modelhistory_Model_Settings) {
+                return false;
+            }
 
-        if ($source instanceof Mage_Sales_Model_Abstract
-            || $source instanceof Mage_Sales_Model_Order_Item
-            || $source instanceof Mage_Sales_Model_Quote
-            || $source instanceof Mage_Sales_Model_Quote_Item_Abstract
-            || $source instanceof Mage_Sales_Model_Quote_Item_Option
-            || $source instanceof Mage_Sales_Model_Order_Invoice_Item
-            || $source instanceof Mage_Sales_Model_Order_Shipment_Item
-            || $source instanceof Mage_Payment_Model_Info
-            || $source instanceof Mage_Downloadable_Model_Link_Purchased_Item
-            || $source instanceof Mage_CatalogInventory_Model_Stock_Item) {
-            return false;
+        /**
+         * @var B3it_Modelhistory_Model_Resource_Settings_Collection $collection
+         */
+        $collection = Mage::getModel("b3it_modelhistory/settings")->getCollection();
+        
+        foreach ($collection->getItemsByColumnValue('blocked', true) as $type) {
+            /**
+             * @var B3it_Modelhistory_Model_Settings $type
+             */
+            $modelName = $type->getData('model');
+            if ($source instanceof $modelName) {
+                return false;
+            } else if (strpos(get_class($source), $modelName) === 0) {
+                return false;
+            }
         }
         
         return true;
@@ -314,30 +311,28 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }
 
         // remove empty keys from new data
-        $result_data = array_filter($data, function ($value, $key) use ($origData) {
-            if ($this->_conditionalExcludeKey($key, $origData[$key], $value, 0)) {
+        $result_data = $this::__myArrayFilter($data, function ($value, $key) use ($origData) {
+            if ($this->_conditionalExcludeKey($key, isset($origData[$key]) ? $origData[$key] : null, $value, 0)) {
                 return false;
             }
 
-            if ($value === '' && (!isset($origData[$key]) || $origData[$key] !== '')) {
-                return false;
-            } else if ($value === false && (!isset($origData[$key]) || $origData[$key] !== false)) {
+            if (empty($value) && (!isset($origData[$key]) || !empty($origData[$key]))) {
                 return false;
             } else {
                 return true;
             }
-        }, ARRAY_FILTER_USE_BOTH);
+        });
 
         // filter origData
-        $origData = array_filter($origData, function ($value, $key) use ($result_data) {
-            if ($value === null && !isset($result_data[$key])) {
+        $origData = $this::__myArrayFilter($origData, function ($value, $key) use ($result_data) {
+            if (empty($value) && !isset($result_data[$key])) {
                 return false;
-            } else if ($this->_conditionalExcludeKey($key, $value, $result_data[$key], 0)) {
+            } else if ($this->_conditionalExcludeKey($key, $value, isset($result_data[$key]) ? $result_data[$key] : null, 0)) {
                 return false;
             } else {
                 return true;
             }
-        }, ARRAY_FILTER_USE_BOTH);
+        });
         
         // filter variables that only did change type from string to integer
         array_walk($result_data, function (&$value, $key) use ($origData) {
@@ -608,8 +603,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
     /**
      * Nötig da {@link Mage_Core_Model_App::__callObserverMethod} method_exists verwendet
      *
-     * @param unknown $observer
-     *            Observer
+     * @param Varien_Event_Observer $observer
      *            
      * @return void
      */
@@ -637,11 +631,13 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      *            
      * @return array
      */
-    protected function _arrayDiff($old, $new, $level = 0)
+    protected function _arrayDiff($old, $new, $level = 0, $parentKey = null)
     {
-        if ($level > 2) {
+        /*
+        if ($level > 3) {
             return '';
         }
+        //*/
         
         if ($old instanceof Varien_Object) {
             $old = $old->getData();
@@ -671,15 +667,20 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 if (isset($new[$key])) {
                     $newValue = $new[$key];
                 }
-                
+                //*
+                //*/
                 if ($origValue !== $newValue) {
                     if ((is_array($origValue) or is_object($origValue)) || (is_array($newValue) or is_object($newValue))) {
-                        $res[$key] = $this->_arrayDiff($origValue, $newValue, $level + 1);
+                        
+                        //if ($parentKey === "media_attributes") {
+                        //    var_dump([$parentKey, $key, $origValue, $newValue, $level]);
+                        //    exit();
+                        //}
+                        $res[$key] = $this->_arrayDiff($origValue, $newValue, $level + 1, $key);
                         if (empty($res[$key])) {
                             unset($res[$key]);
                         }
                     } else {
-                        
                         $origValue = trim($origValue);
                         $newValue = trim($newValue);
                         
@@ -711,12 +712,20 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             }
         }
         
+        /*
+        if ($parentKey === "productfiledescription") {
+            var_dump([$parentKey, $old, $new, $level]);
+            var_dump($res);
+            exit();
+        }
+        //*/
         return $res;
     }
 
     protected function _conditionalExcludeKey($key, $origValue, $newValue, $level = 0)
     {
         if (empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0
+            || strpos($key, '_cache_') === 0
             || strpos($key, '_is_formated') !== false && $newValue == true && empty($origValue)
             || strpos($key, 'use_config_') !== false && $newValue == true && empty($origValue)
             || $key == 'parent_id' && $newValue == 0 && empty($origValue) || $key == 'post_index'  // Gilt für Änderung an Adressen
@@ -730,12 +739,18 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             || $key == 'is_default_shipping' && $newValue == true && empty($origValue)
             || $key == 'customer_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
             || $key == 'store_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+            || $key == 'original_group_id'
             || $key == 'current_password'
             || $key == 'password'
             || $key == 'new_password'
             || $key == 'password_confirmation'
             || $key == 'password_hash'
             || $key == 'form_key') {
+            return true;
+        }
+        
+        // exclude media_gallery stuff variables
+        if ($origValue === null && $newValue === 'no_selection' && $level === 2) {
             return true;
         }
 
@@ -758,5 +773,20 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             $tmp .= '...';
         }
         return $tmp;
+    }
+    
+
+    static protected function __myArrayFilter($array, $closure) {
+        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            return array_filter($array, $closure, ARRAY_FILTER_USE_BOTH);
+        } else {
+            $newData = array();
+            foreach ($array as $key=>$val) {
+                if (call_user_func_array($closure, array($val, $key))) {
+                    $newData[$key]= $val;
+                }
+            }
+            return($array);
+        }
     }
 }

@@ -184,24 +184,35 @@ class Dwd_Icd_Model_Cron extends Mage_Core_Model_Abstract
     }
     
     
-    /**
-     * alle abgelaufenen Zugänge deaktivieren und SyncStatus auf pending stellen 
+    /***
+     * alle abgelaufenen Zugänge deaktivieren und SyncStatus auf pending stellen und synchronisieren
      */
     private function disableOutDated()
     {
     	$collection = Mage::getModel('dwd_icd/orderitem')->getCollection();
+    	
+    	$ORDERSTATUS_ACTIVE = Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE;
+    	//Zählen wieviele Stationen dieses Kontos aktiv sind 
+    	$expr = new Zend_Db_Expr("(SELECT count(id) as aktiv, account_id, station_id, application FROM {$collection->getMainTable()}  AS main_table WHERE status = {$ORDERSTATUS_ACTIVE} GROUP BY application, account_id, station_id)");
+    		
     	$collection->getSelect()
-    	//->where('sync_status = ' . Dwd_Icd_Model_Syncstatus::SYNCSTATUS_SUCCESS)
     	->where('status = ' . Dwd_Icd_Model_OrderStatus::ORDERSTATUS_ACTIVE)
-    	->where('end_time < ' ."'". Mage::getModel('core/date')->gmtDate()."'");
-    	//die($collection->getSelect()->__toString());
+    	->where('end_time < ' ."timestampadd(HOUR,1,'". Mage::getModel('core/date')->gmtDate()."')")
+    	->joinLeft(array('z'=>$expr), 'z.account_id = main_table.account_id and z.station_id=main_table.station_id and z.application=main_table.application', array('aktiv'));
+    	
     	foreach ($collection->getItems() as $item)
     	{
-    		$item
-    			->setStatus(Dwd_Icd_Model_OrderStatus::ORDERSTATUS_DISABLED)
-    			->setSyncStatus(Dwd_Icd_Model_Syncstatus::SYNCSTATUS_PENDING)
-    			->save()
-    			->sync();
+    		$item->setStatus(Dwd_Icd_Model_OrderStatus::ORDERSTATUS_DISABLED);
+    		$aktiv = intval($item->getAktiv());
+    		if(intval($item->getAktiv()) > 1)
+    		{
+    			$item->setSyncStatus(Dwd_Icd_Model_Syncstatus::SYNCSTATUS_SUCCESS)
+    				->save();
+    		}else{
+    			$item->setSyncStatus(Dwd_Icd_Model_Syncstatus::SYNCSTATUS_PENDING)
+    				 ->save()
+    				 ->sync();
+    		}
     			
     	}
     }

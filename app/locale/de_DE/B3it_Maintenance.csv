@@ -1,3 +1,4 @@
+"Show Offline Stores","zeige abgeschaltete Stores"
 "Offline Options","Offline Optionen"
 "Offline","Offline"
 "Switch store offline?","Store offline nehmen?"
@@ -10,3 +11,8 @@
 "No","Nein"
 "Yes","Ja"
 "Scheduled","Geplant"
+"Off Time","Abschalt-Zeitpunkt"
+"On Time","Aktivierungs-Zeitpunkt"
+"Duration Hours","Dauer (Stunden)"
+"Duration Days","Dauer (Tage)"
+"Store Offline","Shop-Offline"

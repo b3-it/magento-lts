@@ -42,9 +42,8 @@ if (!$installer->tableExists($installer->getTable('egovsbase/mail_attachment'))
 			'primary'   => true,
 	), 'Entity ID')
 	->addColumn('message_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(), 'Message Id')
-	->addForeignKey('fk_relation_store','message_id', $installer->getTable('core/email_queue'), 'message_id',
-			Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
-
+	//->addForeignKey('fk_relation_store','message_id', $installer->getTable('core/email_queue'), 'message_id',
+	//    Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
 			//2^21 => 2MB
 	->addColumn('body', Varien_Db_Ddl_Table::TYPE_TEXT, 2097152, array('default'=>''), 'Body')
 	->addColumn('mime_type', Varien_Db_Ddl_Table::TYPE_VARCHAR, 128, array('default'=>''), 'MimeType')
@@ -53,6 +52,19 @@ if (!$installer->tableExists($installer->getTable('egovsbase/mail_attachment'))
 	->addColumn('filename', Varien_Db_Ddl_Table::TYPE_VARCHAR, 1024, array('default'=>''), 'Original FileName')
 	;
 	$installer->getConnection()->createTable($table);
+	
+	/**
+	 * Add foreign keys
+	 */
+	$installer->getConnection()->addForeignKey(
+	    $installer->getFkName('egovsbase/mail_attachment', 'message_id', 'core/email_queue', 'message_id'),
+	    $installer->getTable('egovsbase/mail_attachment'),
+	    'message_id',
+	    $installer->getTable('core/email_queue'),
+	    'message_id',
+	    Varien_Db_Ddl_Table::ACTION_CASCADE,
+	    Varien_Db_Ddl_Table::ACTION_CASCADE
+	);
 }
 
 $installer->endSetup();

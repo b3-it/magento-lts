@@ -2,7 +2,7 @@
 
 class Gka_Checkout_Block_Cart_Cart extends Mage_Checkout_Block_Cart
 {
-	private $_CheckoutUrl = 'gkacheckout/multishipping';
+	private $_CheckoutUrl = 'gkacheckout/singlepage/overview';
     
     public function getDeleteAllUrl()
     {

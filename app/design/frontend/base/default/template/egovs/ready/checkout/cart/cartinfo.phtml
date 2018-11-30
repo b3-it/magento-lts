@@ -24,7 +24,7 @@
 ?>
 <ul class="cartinfo">
 	<?php if ($this->getOrderUrl() != null): ?>
-    <li>
+    <li id="cartinfo-order">
     	<a href="<?php echo $this->getOrderUrl() ?>">
     		<?php echo Mage::helper('egovsready')->__('How to order') ?>.
     	</a>
@@ -32,7 +32,7 @@
     <?php endif; ?>
     <?php if ($this->getRevocationUrl() != null): ?>
     <?php $link = '<a href="' . $this->getRevocationUrl() . '">' ?>
-    <li>
+    <li id="cartinfo-withdrawal">
     	<?php echo Mage::helper('egovsready')->__('Click here to read the %s details about your Right of Withdrawal</a>', $link) ?>.
     </li>
     <?php endif; ?>

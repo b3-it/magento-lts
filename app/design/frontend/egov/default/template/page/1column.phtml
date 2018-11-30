@@ -5,6 +5,9 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+ $_showBannerActive = Mage::getStoreConfig('design/banner/banner_image_use', Mage::app()->getStore());
+ $_showBannerOn     = Mage::getStoreConfig('design/banner/banner_image_show', Mage::app()->getStore());
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -20,13 +23,19 @@
             <div class="page">
                 <?php echo $this->getChildHtml('header') ?>
                 <div class="main-container col1-layout">
+                    <?php echo $this->getChildHtml('breadcrumbs') ?>
+                  <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 1 ) : ?>
+                    <?php echo $this->getChildHtml('banner'); ?>
+                  <?php endif; ?>
                     <div class="main">
                         <div class="col-left" style="display: none !important;">
                             <?php /* Das muß hier rein, da es im 1-Spaltigen-Layout keine Navigation o.Ä. gibt => Mobil wird unbedienbar! */ ?>
                             <?php echo $this->getChildHtml('left') ?>
                         </div>
-                        <?php echo $this->getChildHtml('breadcrumbs') ?>
                         <div class="col-main">
+                          <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 2 ) : ?>
+                            <?php echo $this->getChildHtml('banner'); ?>
+                          <?php endif; ?>
                             <?php echo $this->getChildHtml('global_messages') ?>
                             <?php echo $this->getChildHtml('content') ?>
                             <?php echo $this->getChildHtml('footer_before') ?>

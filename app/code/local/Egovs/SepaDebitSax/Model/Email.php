@@ -21,8 +21,8 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 	/**
 	 * Daten für die Verwendung im Email Template anhängen
 	 * 
-	 * @param unknown $key
-	 * @param unknown $value
+	 * @param string $key
+	 * @param string $value
 	 * @return Egovs_SepaDebitSax_Model_Email
 	 */
 	public function addTemplateVar($key,$value)
@@ -34,7 +34,7 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 	
 	/**
 	 * Namen für das Attachment setzen
-	 * @param unknown $filename
+	 * @param string $filename
 	 * @return Egovs_SepaDebitSax_Model_Email
 	 */
 	public function setFilename($filename)
@@ -46,9 +46,9 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 	
 	/**
 	 * 
-	 * @param unknown $customer
-	 * @param unknown $attachment
-	 * @param unknown $storeId
+	 * @param Mage_Customer_Model_Customer $customer
+	 * @param Varien_File_Object $attachment
+	 * @param Mage_Core_Model_Store $storeId
 	 * 
 	 * @return Egovs_SepaDebitSax_Model_Email
 	 * 
@@ -61,8 +61,8 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 	/**
 	 * 
 	 * @param Mage_Customer_Model_Customer|int $customer Kunde
-	 * @param unknown $attachment
-	 * @param int|Store $storeId
+	 * @param Varien_File_Object $attachment
+	 * @param int|Mage_Core_Model_Store $storeId
 	 * 
 	 * @return Egovs_SepaDebitSax_Model_Email
 	 */
@@ -90,6 +90,10 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 		}
 		
 		$this->_templatedata["customer"] = $customer;
+		if (($mandate = $customer->getMandate())) {
+		    /** @var $mandate \Egovs_SepaDebitSax_Model_Sepa_Mandate */
+		    $this->_templatedata["mandate_reference"] = $mandate->getReference();
+        }
 		
 		// Set all required params and send emails
 		$sender = array();

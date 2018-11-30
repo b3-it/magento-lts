@@ -33,10 +33,10 @@
 <?php if (!$this->getAgreements()) return; ?>
 
 <?php foreach ($this->getAgreements() as $_a): ?>
-	      <p class="agree">
+	      <div class="agree">
             <input type="checkbox" id="agreement-<?php echo $_a->getId()?>" name="agreement[<?php echo $_a->getId()?>]" value="1" class="checkbox" />
             <label for="agreement-<?php echo $_a->getId()?>"><?php echo $_a->getCheckboxText()?><span class="required">*</span></label>
             <div class="agreecontent"><?php echo $_a->getContent() ?></div>
-        </p>
+          </div>
 <?php endforeach ?>
 <p class="required"><?php echo $this->__('* Required Fields') ?></p>

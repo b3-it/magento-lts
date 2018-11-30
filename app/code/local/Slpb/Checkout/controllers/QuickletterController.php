@@ -59,6 +59,8 @@ class Slpb_Checkout_QuickletterController extends Mage_Core_Controller_Front_Act
 		$this->loadLayout('checkout_cart_index');
         try {
         	if ($product) {
+        		Mage::dispatchEvent('checkout_cart_add_product_before',
+        				array('product' => $product, 'request' => new Varien_Object(array('qty'=>1)), 'cart' => $cart));
         		$cart->addProduct($product, $params);
 	                    
         		$cart->save();

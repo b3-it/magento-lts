@@ -32,7 +32,7 @@
     <?php $_itemCount = count($_items); ?>
     <tr>
         <td>
-            <table class="items" cellpadding="0" cellspacing="0" border="0">
+            <table class="items" style="border:0;">
                 <thead>
                     <tr>
                         <th class="cell-name">
@@ -66,7 +66,7 @@
         <?php $_giftMessage = $this->helper('giftmessage/message')->getGiftMessage($_order->getGiftMessageId()); ?>
         <?php if ($_giftMessage): ?>
             <br />
-            <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #EAEAEA;">
+            <table style="width:100%; border:1px solid #EAEAEA;">
                 <thead>
                     <tr>
                         <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><strong><?php echo $this->__('Gift Message for this Order') ?></strong></th>

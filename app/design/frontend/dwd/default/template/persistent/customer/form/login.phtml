@@ -13,6 +13,29 @@
  */
 /** @var $this Mage_Customer_Block_Form_Login */
 ?>
+
+<?php
+$_allowedRegister = Mage::getStoreConfig('customer/create_account/register_user_on_login', $this->getStoreId());
+
+$_use_ssl_logo  = Mage::getStoreConfig('design/login/ssl_logo_use', Mage::app()->getStore());
+$_ssl_image     = Mage::getStoreConfig('design/login/ssl_logo', Mage::app()->getStore());
+$_ssl_image_css = Mage::getStoreConfig('design/login/ssl_logo_style', Mage::app()->getStore());
+$_ssl_alt       = $this->__( Mage::getStoreConfig('design/login/ssl_logo_alt', Mage::app()->getStore()) );
+$_ssl_title     = $this->__( Mage::getStoreConfig('design/login/ssl_logo_title', Mage::app()->getStore()) );
+
+$_is_https   = Mage::app()->getFrontController()->getRequest()->isSecure();
+$_show_image = ( strlen($_ssl_image) ? Mage::getBaseUrl('media') . 'ssl_logo/' . $_ssl_image : $this->getSkinUrl('images/litessl_tl_trans.gif') );
+
+$_show_ssl = false;
+if ( ($_use_ssl_logo == 0) || ($_use_ssl_logo == 2 && $_is_https) ) {
+    $_show_ssl = true;
+}
+$show_css = '';
+if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
+    $show_css = ' style="' . $this->escapeHtml($_ssl_image_css) . '"';
+}
+?>
+
 <div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
         <div class="col2-set dwd-account-login">
@@ -25,8 +48,7 @@
                     <?php endif; ?></h1>
             </div>
 
-
-            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+            <?php if ($_allowedRegister): ?>
             <div class="col-1 new-users">
                 <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">
                     <h2><?php echo $this->__('New Here?') ?></h2>
@@ -53,11 +75,11 @@
                         </p>
 
 			            <div class="securityLabel">
-			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
-				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
+			              <?php if( $_show_ssl ): ?>
+				            <img src="<?php echo $_show_image; ?>" alt="<?php echo $this->__($_ssl_alt); ?>" title="<?php echo $this->__($_ssl_title); ?>" />
 			              <?php endif; ?>
 			            </div>
-			            <fieldset<?php if( $_secure != true ): ?> class="width"<?php endif; ?>>
+			            <fieldset<?php if( $_is_https != true ): ?> class="width"<?php endif; ?>>
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>

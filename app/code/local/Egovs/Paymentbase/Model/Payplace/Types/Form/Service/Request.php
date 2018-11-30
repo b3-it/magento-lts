@@ -30,7 +30,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Request extends Egovs_
      * - documentation : Amount in the smallest currency unit (Cent in the case of the Euro).
      * - from schema : file:///etc/Callback.wsdl
      * - minInclusive : 0
-     * @var long
+     * @var float
      */
     public $amount;
     /**
@@ -115,7 +115,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Request extends Egovs_
      * Constructor method for formServiceRequest
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Enum_Action $_action
-     * @param long $_amount
+     * @param float $_amount
      * @param string $_currency
      * @param Egovs_Paymentbase_Model_Payplace_Types_BankAccount $_bankAccount
      * @param Egovs_Paymentbase_Model_Payplace_Types_Giropay_Data $_giropayData
@@ -159,7 +159,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Request extends Egovs_
     }
     /**
      * Get amount value
-     * @return long|null
+     * @return float|null
      */
     public function getAmount()
     {
@@ -167,8 +167,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_Form_Service_Request extends Egovs_
     }
     /**
      * Set amount value
-     * @param long $_amount the amount
-     * @return long
+     * @param float $_amount the amount
+     * @return bool
      */
     public function setAmount($_amount)
     {

@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <!-- Egovs_ShippingTax muss deaktiviert sein! -->
     <modules>
@@ -252,11 +253,11 @@
         </sales>
     </global>
     <default>
-    <tax>
-    	<calculation>
-    		<cross_border_trade_enabled>0</cross_border_trade_enabled>
-    		<deny_order_without_taxrule>0</deny_order_without_taxrule>
-    	</calculation>
-    </tax>
+        <tax>
+            <calculation>
+                <cross_border_trade_enabled>0</cross_border_trade_enabled>
+                <deny_order_without_taxrule>0</deny_order_without_taxrule>
+            </calculation>
+        </tax>
     </default>
 </config>

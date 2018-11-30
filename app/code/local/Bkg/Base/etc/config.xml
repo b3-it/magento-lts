@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Bkg_Base>
+            <version>0.0.0.1</version>
+        </Bkg_Base>
+    </modules>
+    <global>
+        <resources>
+            <bkg_base_setup>
+                <setup>
+                    <module>Bkg_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bkg_base_setup>
+        </resources>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <product_code/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+    </global>
+</config>

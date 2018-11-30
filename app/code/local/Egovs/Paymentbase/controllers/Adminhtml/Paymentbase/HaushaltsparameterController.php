@@ -13,7 +13,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 	/**
 	 * Init
 	 *
-	 * @return Egovs_Paymentbase_Adminhtml_HaushaltsparameterController
+	 * @return Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController
 	 */
 	protected function _initAction() {
 		$this->loadLayout();
@@ -91,7 +91,7 @@ class Egovs_Paymentbase_Adminhtml_Paymentbase_HaushaltsparameterController exten
 				->setId($this->getRequest()->getParam('id'));
 			
 			try {
-				if ($model->getCreatedTime == null || $model->getUpdateTime() == null) {
+				if ($model->getCreatedTime() == null || $model->getUpdateTime() == null) {
 					$model->setCreatedTime(now())
 						->setUpdateTime(now());
 				} else {

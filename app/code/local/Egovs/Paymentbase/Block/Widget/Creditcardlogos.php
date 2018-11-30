@@ -19,7 +19,12 @@ class Egovs_Paymentbase_Block_Widget_Creditcardlogos extends Mage_Core_Block_Tem
 	 */
 	protected function _toHtml() {
 		$payments = Mage::getSingleton('payment/config')->getActiveMethods();
-		if (!array_key_exists('saferpay', $payments) && !$this->getForceEnabled()) {
+
+		if (!array_key_exists('saferpay', $payments) AND
+		    !array_key_exists('egovs_girosolution_giropay', $payments) AND
+			!array_key_exists('egovs_girosolution_creditcard', $payments) AND
+			!$this->getForceEnabled()
+		   ) {
 			return '';
 		}
 
@@ -44,7 +49,7 @@ class Egovs_Paymentbase_Block_Widget_Creditcardlogos extends Mage_Core_Block_Tem
 	 * @return string
 	 */
 	public function getTitle() {
-	  return Mage::helper('paymentbase')->__($this->getData('title'));
+		return Mage::helper('paymentbase')->__($this->getData('title'));
 	}
 
 	/**

@@ -32,7 +32,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExportResponse extends Egovs_Paymen
     public $riskCheckResponse;
     /**
      * The ref
-     * @var NCName
+     * @var string
      */
     public $ref;
     /**
@@ -40,7 +40,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExportResponse extends Egovs_Paymen
      * @see parent::__construct()
      * @param Egovs_Paymentbase_Model_Payplace_Types_Payment_Response $_paymentResponse
      * @param Egovs_Paymentbase_Model_Payplace_Types_RiskCheck_Response $_riskCheckResponse
-     * @param NCName $_ref
+     * @param string $_ref
      * @return Egovs_Paymentbase_Model_Payplace_Types_ExportResponse
      */
     public function __construct($_paymentResponse = NULL,$_riskCheckResponse = NULL,$_ref = NULL)
@@ -83,7 +83,7 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExportResponse extends Egovs_Paymen
     }
     /**
      * Get ref value
-     * @return NCName|null
+     * @return string|null
      */
     public function getRef()
     {
@@ -91,8 +91,8 @@ class Egovs_Paymentbase_Model_Payplace_Types_ExportResponse extends Egovs_Paymen
     }
     /**
      * Set ref value
-     * @param NCName $_ref the ref
-     * @return NCName
+     * @param string $_ref the ref
+     * @return bool
      */
     public function setRef($_ref)
     {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Sid_Base>
+            <version>0.0.0.2</version>
+        </Sid_Base>
+    </modules>
+    <global>
+        <resources>
+            <sidbase_setup>
+                <setup>
+                    <module>Sid_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sidbase_setup>
+        </resources>
+    </global>
+</config>

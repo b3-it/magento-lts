@@ -1,0 +1,116 @@
+<?php
+/**
+ * @var Bkg_Shapefile_Block_Customer_List $this
+ */
+?>
+<?php $_items = $this->getItems(); ?>
+<?php if($this->getAllowShapefile()):?>
+<div class="page-title">
+    <h1><?php echo Mage::helper('bkg_shapefile')->__('My Shape files') ?></h1>
+</div>
+<form action="<?php echo $this->getAddUrl() ?>" method="post" enctype="multipart/form-data">
+	<div class="fieldset">
+    	<ul class="form-list">
+    		<li class="fields">
+        		<div class="field">
+        			<label for="shp_name">
+            			<span class="required">*</span>
+            			<?php echo $this->__('Name') ?>
+        			</label>
+        			<input type="text" name="name" id="shp_name" required="required" />
+        		</div>
+        	</li>
+        	<li class="fields">
+        		<div class="field">
+        			<label for="shp_zIndex">
+            			<?php echo $this->__('z-Index') ?>
+        			</label>
+        			<input type="number" name="zIndex" id="shp_zIndex" />
+        		</div>
+        	</li>
+        	<li class="fields">
+        		<div class="field">
+        			<label for="shp_file">
+            			<span class="required">*</span>
+            			<?php echo $this->__('shp File') ?>
+        			</label>
+        			<input type="file" name="shp" id="shp_file" accept=".shp" required="required" />
+        		</div>
+        	</li>
+        	<li class="fields">
+        		<div class="field">
+        			<label for="dbf_file">
+            			<span class="required">*</span>
+            			<?php echo $this->__('dbf File') ?>
+        			</label>
+        			<input type="file" name="dbf" id="dbf_file" accept=".dbf" required="required" />
+        		</div>
+        	</li>
+        	<li class="fields">
+        		<div class="field">
+        			<label for="shx_file">
+            			<span class="required">*</span>
+            			<?php echo $this->__('shx File') ?>
+        			</label>
+        			<input type="file" name="shx" id="shx_file" accept=".shx" required="required" />
+        		</div>
+        	</li>
+        	<li class="fields">
+        		<div class="field">
+            		<label for="georef_select">
+            			<span class="required">*</span>
+            			<?php echo $this->__('Georef') ?>
+            		</label>
+            		<select name="georef" id="georef_select" required="required" >
+                		<?php
+                		foreach (Mage::getModel('virtualgeo/components_georef')->getCollection()->toOptionHash() as $key => $value) {
+                		    echo "<option value='".$key."'>".$value."</option>";
+                		}
+                		?>
+            		</select>
+        		</div>
+        	</li>
+    	</ul>
+	</div>
+    <?php echo $this->getBlockHtml('formkey')?>
+	<div class="buttons-set">
+        <button class="button" type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Upload Shape Files')) ?>">
+            <?php echo $this->__('Upload Shape Files') ?>
+        </button>
+    </div>
+</form>
+<hr />
+<?php echo $this->getChildHtml('pager'); ?>
+<?php if(count($_items)): ?>
+<form  action="<?php echo $this->getUpdateUrl() ?>"  method="post" enctype="multipart/form-data">
+<table class="data-table" id="my-shapefile-table">
+	<thead>
+            <tr>
+                <th><?php echo Mage::helper('bkg_shapefile')->__('#') ?></th>
+                <th><?php echo Mage::helper('bkg_shapefile')->__('Name') ?></th>
+                <th><?php echo Mage::helper('bkg_shapefile')->__('Delete') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($_items as $_item): ?>
+                <tr>
+                    <td><?php echo $_item->getId(); ?></td>
+                    <td><span class="nobr"><?php echo $_item->getName(); ?></span></td>
+                    <td><input id="shapefile_delete_id<?php echo $_item->getId(); ?>" type="checkbox" name="_delete[]" value="<?php echo $_item->getId(); ?>" /></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php echo $this->getBlockHtml('formkey')?>
+	<div class="buttons-set">
+        <button class="button" type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Update Shapes')) ?>">
+            <?php echo $this->__('Update Shapes') ?>
+        </button>
+    </div>
+    </form>
+    <script type="text/javascript">decorateTable('my-shapefile-table')</script>
+<?php else: ?>
+    <p><?php echo Mage::helper('bkg_shapefile')->__('You have no shape file yet.'); ?></p>
+<?php endif; ?>
+<?php echo $this->getChildHtml('pager'); ?>
+<?php endif; //getAllowShapefile?>

@@ -26,12 +26,12 @@ class Egovs_Paymentbase_Model_Haushaltsparameter_Type extends Varien_Object
     static public function getOptionArray() {
         return array(
             self::HAUSHALTSTELLE    => Mage::helper('paymentbase')->__('Haushaltsstelle'),
-            self::OBJEKTNUMMER   => Mage::helper('paymentbase')->__('Objektnummer'),
-            self::OBJEKTNUMMER_MWST   => Mage::helper('paymentbase')->__('Objektnummer MwSt'),
-            self::HREF   => Mage::helper('paymentbase')->__('HREF'),
-            self::HREF_MWST   => Mage::helper('paymentbase')->__('HREF MwSt'),
-            self::BUCHUNGSTEXT   => Mage::helper('paymentbase')->__('Buchungstext'),
-            self::BUCHUNGSTEXT_MWST   => Mage::helper('paymentbase')->__('Buchungstext MwSt')
+            self::OBJEKTNUMMER      => Mage::helper('paymentbase')->__('Objektnummer'),
+            self::OBJEKTNUMMER_MWST => Mage::helper('paymentbase')->__('Objektnummer MwSt'),
+            self::HREF              => Mage::helper('paymentbase')->__('HREF'),
+            self::HREF_MWST         => Mage::helper('paymentbase')->__('HREF MwSt'),
+            self::BUCHUNGSTEXT      => Mage::helper('paymentbase')->__('Buchungstext'),
+            self::BUCHUNGSTEXT_MWST => Mage::helper('paymentbase')->__('Buchungstext MwSt')
         );
     }
 

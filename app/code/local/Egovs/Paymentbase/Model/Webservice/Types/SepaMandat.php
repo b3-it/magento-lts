@@ -235,6 +235,9 @@ class Egovs_Paymentbase_Model_Webservice_Types_SepaMandat
 extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Adaptee
 {
+    /**
+     * @deprecated since SEPA 3.0 - Es soll stattdessen 'RCUR' benutzt werden
+     */
 	const SEQUENCE_TYPE_FRST = 'FRST';
 	const SEQUENCE_TYPE_RCUR = 'RCUR';
 	const SEQUENCE_TYPE_FNAL = 'FNAL';

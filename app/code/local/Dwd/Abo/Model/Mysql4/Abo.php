@@ -30,9 +30,9 @@ class Dwd_Abo_Model_Mysql4_Abo extends Mage_Core_Model_Mysql4_Abstract
     
     /**
      * Ermitteln wieviele AktiveAbos der Kunde von diesem Produkt hat
-     * @param unknown $customer_id
-     * @param unknown $product_id
-     * @return Ambigous <string, boolean, mixed>
+     * @param integer $customer_id
+     * @param integer $product_id
+     * @return integer
      */
     public function getAcvitvProductAbosCount($customer_id,$product_id)
     {

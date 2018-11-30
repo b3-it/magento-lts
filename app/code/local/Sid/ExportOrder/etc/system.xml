@@ -1,7 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <config>
 	<sections>
+		<sid_exportorder translate="label" module="exportorder">
+			<label>Export Order</label>
+			<tab>sid</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>100</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<sid_exportorder_plaintext translate="label">
+					<label>Template for PlainText</label>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<plaintext_template translate="label">
+							<label>Text Template</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</plaintext_template>
+					</fields>
+				</sid_exportorder_plaintext>
+			</groups>
+		</sid_exportorder>
 		<dev>
 			<groups>
 				<modulelog>
@@ -34,6 +62,58 @@
 						</exportorder_error_template>
 					</fields>
 				</email>
+				<proxy_exportorder translate="label">
+					<label>Proxy Settings</label>
+					<sort_order>100</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+					<fields>
+						<use_proxy translate="label">
+							<label>Use Proxy</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</use_proxy>
+						<proxy_name translate="label">
+							<label>Name or IP of Proxy</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</proxy_name >
+						<proxy_port translate="label">
+							<label>Proxy Port</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</proxy_port>
+						<proxy_user translate="label">
+							<label>Proxy Username</label>
+							<comment>Optional</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</proxy_user>
+						<proxy_user_pwd translate="label">
+							<label>Proxy Password</label>
+							<comment>Optional</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</proxy_user_pwd>
+					</fields>
+				</proxy_exportorder>
 			</groups>
 		</framecontract>
 	</sections>

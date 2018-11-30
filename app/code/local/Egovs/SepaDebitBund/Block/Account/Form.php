@@ -22,8 +22,6 @@ class Egovs_SepaDebitBund_Block_Account_Form extends Egovs_SepaDebitBund_Block_F
 	 * URL für Controller
 	 * 
 	 * @return string
-	 * 
-	 * @see Egovs_DebitPIN_PinchangeController::changeAction
 	 */
 	public function getActionUrl() {
 		return $this->getUrl('sepadebitbund/change/change', array('_secure'=>'true'));

@@ -1,16 +1,20 @@
-var jq_version = '1.10.2';
-var jq_subpath = 'lib/jquery/';
+var jq_version    = '1.10.2';
+var jq_subpath    = 'lib/jquery/';
+var jq_noconflict = 'noconflict.js';
+var showStatusMsg = false;
 
 /**
  * Nachladen von beliebigen JS-Dateien
  *
  * @param    string       vollstündige URL zum JavaScript
  * @param    function     Callback-Funktion, welche im Anschluss ausgeführt werden soll
+ * 
+ * https://www.nczonline.net/blog/2009/07/28/the-best-way-to-load-external-javascript/
  */
 function loadScript(url, callback) {
     var script = document.createElement("script");
 	script.type = "text/javascript";
-	
+
 	if(script.readyState) {
 		script.onreadystatechange = function() {
 			if ( script.readyState === "loaded" || script.readyState === "complete" ) {
@@ -34,15 +38,22 @@ if ( typeof $j == 'undefined' ) {
     // jQuery nicht geladen
     
     // jQuery-LIB laden
-    loadScript(JS_URL + jq_subpath + 'jquery-' + jq_version + '.min.js', function() {
-        //alert('JQ ready!');
+	var jq_main = JS_URL + jq_subpath + 'jquery-' + jq_version + '.min.js';
+	var jq_conf = JS_URL + jq_subpath + jq_noconflict;
+	
+    loadScript(jq_main, function() {
+        if ( showStatusMsg == true ) {
+        	alert('jQuery fertig geladen!');
+        }
     });
 
 	// 0,5 Sekunde warten
 	setTimeout(function(){
     	// Magento-eigenes noConflict laden
-    	loadScript(JS_URL + jq_subpath + 'noconflict.js', function() {
-            //alert('JQ-NC ready!');
+    	loadScript(jq_conf, function() {
+            if ( showStatusMsg == true ) {
+            	alert('jQuery-noConflict fertig geladen!');
+            }
         });
 	}, 500);	
 	
@@ -55,7 +66,9 @@ if ( typeof $j == 'undefined' ) {
         }
         
         if ( typeof $j == 'undefined' || typeof jQuery == 'undefined' ) {
-	        alert('jQuery nicht geladen!');
+	        if ( showStatusMsg == true ) {
+	        	alert("jQuery nicht geladen!\n\n" + jq_main + "\n" + jq_conf);
+	        }
         }
 	}, 1000);
 }

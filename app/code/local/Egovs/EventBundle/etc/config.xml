@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <modules>
         <Egovs_EventBundle>
@@ -99,6 +100,7 @@
             </catalog_model_product_duplicate>
         </events>
 		<menu>
+            <!--
 			<report>
 				<children>
 					<salesroot translate="title" module="reports">
@@ -111,6 +113,7 @@
 					</salesroot>
 				</children>
 			</report>
+			-->
 		</menu>
 		<acl>
 			<resources>
@@ -270,7 +273,7 @@
             </catalogindex_plain_reindex_after>
         </events>
         <eventbundle_personal>
-            <show>true</show>
+            <show>false</show>
             <fields>
                 <firstname>
                     <label>Firstname</label>

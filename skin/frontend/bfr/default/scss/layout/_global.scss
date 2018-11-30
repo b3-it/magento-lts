@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     bfr_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -22,13 +22,21 @@ body {
     background-color: $global-wrapper-color;
     position: relative;
     width: 100%;
+    
+    @include bp(max-width, $bp-medium) {
+        background-color: $global-page-color;
+    }
 
     .page {
-        min-height: 100vh;
         min-width: $global-min-page-width;
         max-width: $global-max-page-width;
         width: 94%;
         margin: 0 auto;
+        
+        @include bp(max-width, $bp-medium) {
+            width: 100%;
+            margin: 0;
+        }
     }
 
     .main-container {
@@ -36,9 +44,61 @@ body {
         border-width: medium 5px 5px;
         border-color: -moz-use-text-color #d7dbdc #d7dbdc;
         background-color: $global-page-color;
+        position: relative;
+        
+        @include bp(max-width, $bp-medium) {
+            border: 0;
+        }
     }
 }
 
 .wrapper:after {
     @include clearfix;
+}
+
+#notice-cookie-block {
+    position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    z-index: 9999;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    .notice-inner {
+        padding-bottom: 20px;
+
+        > div {
+            display: inline-block;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            }
+        }
+
+        .notice-text {
+            width: 70%;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	width: 100%;
+            }
+        }
+        .actions {
+            width: 18.5%;
+            margin: 0;
+            padding: 0;
+            
+            @include bp(max-width, $bp-medium + 1) {
+            	display: block;
+            	width: 100%;
+            }
+        }
+    }
 }

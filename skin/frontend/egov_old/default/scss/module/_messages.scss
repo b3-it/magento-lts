@@ -1,0 +1,59 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* -------------------------------------------- *
+ * Messages
+ */
+
+.messages {
+    margin-top: $global-message-margintop;
+    margin-bottom: $global-message-marginbottom;
+}
+
+.messages li li {
+    position: relative;
+    margin-bottom: 5px;
+    padding: 7px 10px 7px 20px;
+    background: $global-message-background;
+    font-size: $global-fontsize;
+}
+
+.messages li li:before {
+    top: 50%;
+    left: 0;
+    margin-top: -6px;
+}
+
+.messages .error-msg li {
+    color: $global-fontcolor-dark;
+    border-left: 5px solid $global-warning-color;
+    background-color: $global-warning-background;
+}
+
+.messages .error-msg li:before {
+    @include triangle(right, 6px, $global-warning-color);
+}
+
+.messages .notice-msg li {
+    color: $global-fontcolor-dark;
+    border-left: 5px solid $global-notice-color;
+    background-color: $global-notice-background;
+}
+
+.messages .notice-msg li:before {
+    @include triangle(right, 6px, $global-notice-color);
+}
+
+.messages .success-msg li {
+    color: $global-fontcolor-dark;
+    border-left: 5px solid $global-success-color;
+    background-color: $global-success-background;
+}
+
+.messages .success-msg li:before {
+    @include triangle(right, 6px, $global-success-color);
+}

@@ -243,7 +243,7 @@ class Sid_Checkout_Block_Multishipping_Overview extends Mage_Sales_Block_Items_A
     /**
      * Retrieve quote
      *
-     * @return Mage_Sales_Model_Qoute
+     * @return Mage_Sales_Model_Quote
      */
     public function getQuote()
     {

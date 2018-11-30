@@ -72,7 +72,7 @@ class Slpb_Checkout_Block_Shop_Successview extends Mage_Sales_Block_Items_Abstra
  	/**
      * Retrieve info block name
      *
-     * @return unknown
+     * @return string|bool
      */
     protected function _getInfoBlockName()
     {
@@ -199,7 +199,7 @@ class Slpb_Checkout_Block_Shop_Successview extends Mage_Sales_Block_Items_Abstra
     /**
      * Retrieve quote
      *
-     * @return Mage_Sales_Model_Qoute
+     * @return Mage_Sales_Model_Quote
      */
     public function getQuote()
     {

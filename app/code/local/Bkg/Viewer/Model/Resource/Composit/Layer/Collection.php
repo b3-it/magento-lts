@@ -25,7 +25,7 @@ class Bkg_Viewer_Model_Resource_Composit_Layer_Collection extends Mage_Core_Mode
     {
     	$this->getSelect()->where('composit_id = '.intval($compositId));
     	if($addServiceLayer){
-    		$this->getSelect()->joinLeft(array('layer'=>$this->getTable('bkgviewer/service_layer')), 'main_table.service_layer_id=layer.id',array('service_title'=>'title'));
+    		$this->getSelect()->joinLeft(array('layer'=>$this->getTable('bkgviewer/service_layer')), 'main_table.service_layer_id=layer.id',array('layer_name'=>'title'));
     	}
     	//die($this->getSelect()->__toString());
     	$allItems = $this->getItems();
@@ -37,6 +37,8 @@ class Bkg_Viewer_Model_Resource_Composit_Layer_Collection extends Mage_Core_Mode
     	{
     		$tmp = array();
     		foreach($allItems as $item){
+    			$item->setIsChecked(boolval($item->getIsChecked()));
+    			$item->setPermanent(boolval($item->getPermanent()));
     			if($item->getParentId() == null)
     			{
     				$root->addChild($item);

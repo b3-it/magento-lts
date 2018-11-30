@@ -14,18 +14,20 @@ $fa-icon-margin: 5px;
 $global-radio-checkback-spacing: 8px;
 
 $global-fontsize: 12px;
-$global-fontsize-small: 0.8em;
-$global-fontsize-big: 1.2em;
-$global-lineheight: 1.35em;
+$global-fontsize-small: 0.8rem;
+$global-fontsize-big: 1.2rem;
+$global-lineheight: 1.1rem;
 
-$global-radius: 4px;
+$catalog-product-name-max-lines: 4;
+
+$global-radius: 0px;
 
 $global-active-border: 1px;
 
-$global-box-title-padding-top: 0.3em;
-$global-box-title-padding-right: 0em;
-$global-box-title-padding-bottom: 0.3em;
-$global-box-title-padding-left: 0.6em;
+$global-box-title-padding-top: 0.3rem;
+$global-box-title-padding-right: 0;
+$global-box-title-padding-bottom: 0.3rem;
+$global-box-title-padding-left: 0.6rem;
 
 $global-navigation-padding-top: 0px;
 $global-navigation-padding-right: 0px;
@@ -54,19 +56,19 @@ $global-btn-padding-v: 5px;
 
 $global-logo-width: 225px;
 $global-logo-height: 35px;
-$global-logo-top: 3px;
+$global-logo-top: 20px;
 $global-logo-left: 0px;
 
 $global-skiplinks-space: 70px;
 
-$global-h1-size: 3em;
-$global-h2-size: 1.5em;
-$global-h3-size: 1em;
-$global-h4-size: 1em;
+$global-h1-size: 3rem;
+$global-h2-size: 1.5rem;
+$global-h3-size: 1rem;
+$global-h4-size: 1rem;
 $global-h5-size: 8px;
 $global-h6-size: 8px;
 
-$global-pagetitle-size: 2em;
+$global-pagetitle-size: 2rem;
 
 $global-h1-left: 280px;
 $global-h1-top: 10px;
@@ -74,15 +76,15 @@ $global-h1-top: 10px;
 $global-box-border: 1px;
 $global-box-border-bottom: 3px;
 
-$global-minicart-lineheight: 2em;
+$global-minicart-lineheight: 2rem;
 $global-sidebar-cart-top: -15px;
 
 $global-checkout-borderwidth: 1px;
 $global-checkout-marginright: 25px;
 $global-checkout-button-margin: 30px;
-$global-checkout-total-sum: 1.7em;
-$global-checkout-success-order-text: 1.4em;
-$global-checkout-success-order-number: 1.7em;
+$global-checkout-total-sum: 1.7rem;
+$global-checkout-success-order-text: 1.4rem;
+$global-checkout-success-order-number: 1.7rem;
 
 $global-checkout-op-height: 40px;
 $global-checkout-op-number: 26px;

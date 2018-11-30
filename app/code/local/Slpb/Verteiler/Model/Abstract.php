@@ -110,7 +110,7 @@ class Slpb_Verteiler_Model_Abstract extends Mage_Core_Model_Abstract
 
        	if($totals['grand_total']['value'] < 0.01)
 		{
-			$this->addPaymentMethodeToQuote($quote,'freepayment');
+			$this->addPaymentMethodeToQuote($quote,'free');
 		
 		}
         else 

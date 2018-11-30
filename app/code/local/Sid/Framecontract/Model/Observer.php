@@ -4,7 +4,7 @@ class Sid_Framecontract_Model_Observer extends Mage_Core_Model_Abstract
 {
 	/**
 	 * 
-	 * @param unknown $observer
+	 * @param Varien_Event_Observer $observer
 	 */
 	public function onAdminSalesOrderView($observer) {
 		if (!$observer->hasAction() || !($observer->getAction() instanceof Mage_Adminhtml_Sales_OrderController)) {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
 	<modules>
 		<Egovs_Video>
@@ -57,5 +58,10 @@
                 </rewrite>
 			</uploader>
 		</helpers>
+		<models>
+		      <egovsvideo>
+                <class>Egovs_Video_Model</class>
+            </egovsvideo>
+		</models>
 	</global>
 </config>

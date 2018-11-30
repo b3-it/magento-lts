@@ -23,7 +23,7 @@
 "Cashbox opened!","Barkasse eröffnet!"
 "Open","Eröffnen"
 "Withdrawal","Entnahme"
-"Last Balance","Kassenbestand der Vortages"
+"Last Balance","Kassenbestand des Vortages"
 "Sum of cash payments", "Summe der Barzahlungen"
 "Closing balance of the cash desk","Endbestand der Barkasse"
 "Opening Date","Eröffnungsdatum"
@@ -37,5 +37,6 @@
 "The starting amount must not be less than the final amount of the previous day!","Der Startbetrag darf nicht kleiner als der Endbetrag des Vortages sein!"
 "Total Taking","Gesamtentnahme"
 "Closing balance must be greather than zero!","Der Endsaldo muss größer 0.00 sein!"
+"Change Amount not plausible!","Der Einzahlbetrag reicht nicht aus!"
 
 "TEXT_PROCESS_ERROR:-0609","Der Buchungstext einer Buchung der Buchungsliste ist zu lang oder zu kurz."

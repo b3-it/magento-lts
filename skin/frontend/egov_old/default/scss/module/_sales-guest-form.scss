@@ -1,0 +1,54 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.sales-guest-form {
+    .main-container {
+        position: relative;
+        left: -10px;
+    }
+
+    .page-title, #oar_widget_orders_and_returns_form {
+        width: 95%;
+    }
+
+    ul.form-list {
+        li {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+            margin-bottom: $global-listmargin;
+        }
+
+        em {
+            color: $global-warning-color;
+        }
+
+        input, select {
+            width: 100% !important;
+            margin: 0px;
+        }
+
+        li.wide {
+            display: block;
+            width: 98%;
+        }
+    }
+/*
+    .buttons-set {
+        p.required {
+            position: relative;
+            top: -50px;
+            color: $global-warning-color;
+        }
+
+        button {
+            position: relative;
+            right: -85px;
+        }
+    }
+*/
+}

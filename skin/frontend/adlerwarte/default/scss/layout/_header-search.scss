@@ -1,0 +1,120 @@
+//
+// @category    design
+// @package     adlerwarte_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Search - Skip Link
+ * ============================================ */
+
+.skip-search {
+    .icon {
+        @extend .egov-search;
+    }
+   
+    @include bp(min-width, 911px) {
+    	display: none;
+    }
+    @include bp(max-width, $bp-medium) {
+    	display: inline-block;
+    	top: 0;
+    	width: 20%;
+    }
+}
+
+/* ============================================ *
+ * Search - Skip Content
+ * ============================================ */
+#header-search {
+    position: absolute;
+    background-color: transparent;
+    width: 215px;
+    top: 150px;
+    padding: 0px !important;
+    z-index: 99;
+    right: 10px;
+    height: 28px;
+    padding: 20px;
+    
+    @include bp(min-width, 910px) {
+    	top: 15px;
+    }
+    
+    @include bp(min-width, $bp-medium + 1) {
+        display: block; // Force visibility
+        top: 15px;
+        right: 8px;
+        width: 30%;
+        padding: 0;
+    }
+    	
+    @include bp(max-width, $bp-medium) {
+    	top: 145px;
+    	right: 0;
+    }
+}
+
+/* ============================================ *
+ * Search Input
+ * ============================================ */
+
+#search_mini_form .input-box {
+    position: relative;
+    padding-top: 0;
+}
+
+#search_mini_form label {
+    display: none;
+}
+
+#search {
+    width: 70%;
+    float: left;
+    font-family: $base-font-family;
+    height: 28px;
+    border-top: $global-box-border solid $global-input-bordercolor;
+    border-right: none;
+    border-bottom: $global-box-border solid $global-input-bordercolor;
+    border-left: $global-box-border solid $global-input-bordercolor;
+    border-radius: $global-radius 0 0 $global-radius;
+
+}
+
+#search_mini_form .button {
+	padding: 5px;
+}
+
+#search_mini_form .search-button {
+    @include image-replacement;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: none;
+}
+
+#search_mini_form .search-button:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -15px;
+    @extend .icon-sprite;
+    background-position: 0+4px (-150px + ($toolbar-icon-padding-offset/2));
+}
+
+#search_mini_form .search-button:hover:before {
+    opacity: 0.8;
+}
+
+#search_mini_form .search-button:active:before {
+    margin-top: -15px + 2px;
+    margin-left: -15px + 2px;
+}

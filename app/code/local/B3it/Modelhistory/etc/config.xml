@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <!--
 /**
@@ -18,7 +18,7 @@
 <config>
     <modules>
         <B3it_Modelhistory>
-            <version>0.0.1.0</version>
+            <version>0.0.3.0</version>
         </B3it_Modelhistory>
     </modules>
     <default>
@@ -44,6 +44,15 @@
         </routers>
     </admin>
     <adminhtml>
+		<translate>
+			<modules>
+				<B3it_Modelhistory>
+					<files>
+						<default>B3it_Modelhistory.csv</default>
+					</files>
+				</B3it_Modelhistory>
+			</modules>
+		</translate>
         <menu>
             <system>
                 <children>
@@ -62,6 +71,11 @@
                                         <sort_order>20</sort_order>
                                         <action>adminhtml/modelhistory_config</action>
                                     </modelhistory_config>
+                                    <modelhistory_settings module="adminhtml">
+                                        <title>Settings</title>
+                                        <sort_order>30</sort_order>
+                                        <action>adminhtml/modelhistory_settings</action>
+                                    </modelhistory_settings>
                                 </children>
                             </modelhistory>
                         </children>
@@ -154,6 +168,9 @@
                     <history_config>
                         <table>history_config</table>
                     </history_config>
+                    <history_settings>
+                        <table>history_settings</table>
+                    </history_settings>
                 </entities>
             </b3it_modelhistory_resource>
         </models>

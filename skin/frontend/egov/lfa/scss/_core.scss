@@ -1,0 +1,107 @@
+﻿//
+// @category    design
+// @package     egov_lfa
+// @copyright   Copyright (c) 2017 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// Browser Resets
+@import "../../default/scss/vendor/normalize";
+@import "../../default/scss/core/reset";
+
+
+// ----------------------------------------------
+// EGOV-Definitionen
+//    ACHTUNG!!!
+//    Variablen werden in "_framework.scss" eingebunden
+@import "../../default/scss/egov/bitv";
+@import "../../default/scss/egov/video";
+@import "egov/egov-base";
+@import "../../default/scss/egov/fa-icons";
+@import "../../default/scss/egov/mp-checkout";
+@import "../../default/scss/egov/checkiban";
+@import "../../default/scss/egov/silver-track";
+@import "../../default/scss/egov/credit-cards";
+@import "../../default/scss/egov/mobile-switch";
+
+
+// ----------------------------------------------
+// Core
+@import "../../default/scss/core/common";
+
+
+// ----------------------------------------------
+// Vendor
+
+
+// ----------------------------------------------
+// Layout
+@import "../../default/scss/layout/button-set";
+@import "../../default/scss/layout/buttons";
+@import "../../default/scss/layout/global";
+@import "../../default/scss/layout/header";
+@import "../../default/scss/layout/header-nav";
+@import "../../default/scss/layout/header-search";
+@import "../../default/scss/layout/header-account";
+@import "../../default/scss/layout/header-cart";
+@import "../../default/scss/layout/marginal-blocks";
+@import "../../default/scss/layout/footer";
+
+
+// ----------------------------------------------
+// Modules
+
+// The sort order here is important for two reasons:
+//  1. The compiled CSS needs to be logically ordered/grouped (NOT alphabetically ordered)
+//  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
+//     so we should try not to change this order once it is in place
+@import "../../default/scss/module/select-language";
+@import "module/product-list";
+@import "../../default/scss/module/catalog-product";
+@import "../../default/scss/module/catalog-msrp";
+@import "../../default/scss/module/catalog-seo-sitemap-category";
+@import "../../default/scss/module/catalog-compare";
+@import "../../default/scss/module/catalogsearch-advanced-result";
+@import "../../default/scss/module/catalogsearch-term-popular";
+@import "../../default/scss/module/checkout-cart";
+@import "../../default/scss/module/checkout-onepage";
+@import "../../default/scss/module/checkout-success";
+@import "../../default/scss/module/configurableswatches";
+@import "../../default/scss/module/customer";
+@import "../../default/scss/module/customer-account-forgotpassword";
+@import "../../default/scss/module/contacts";
+@import "../../default/scss/module/egovs-checkout-multipage-login";
+@import "../../default/scss/module/paypal";
+@import "../../default/scss/module/review";
+@import "../../default/scss/module/sales-order-print";
+@import "../../default/scss/module/slideshow";
+@import "../../default/scss/module/wishlist";
+@import "../../default/scss/module/checkout-cart-minicart";
+@import "../../default/scss/module/search";
+@import "../../default/scss/module/account-reviews";
+@import "../../default/scss/module/account-login";
+@import "../../default/scss/module/cms";
+@import "../../default/scss/module/pricing_conditions";
+@import "../../default/scss/module/cookies";
+@import "../../default/scss/module/sales-guest-form";
+@import "../../default/scss/module/tags";
+@import "../../default/scss/module/captcha";
+@import "../../default/scss/module/account-orders";
+@import "../../default/scss/module/recurring-profiles";
+@import "../../default/scss/module/billing-agreements";
+@import "../../default/scss/module/popular-terms";
+@import "../../default/scss/module/widget";
+@import "../../default/scss/module/checkout-multi-address";
+@import "../../default/scss/module/my-account";
+@import "../../default/scss/module/my-recent-tags";
+@import "../../default/scss/module/grid-table";
+@import "../../default/scss/module/sales-order-printshipment";
+
+// ----------------------------------------------
+// Override
+

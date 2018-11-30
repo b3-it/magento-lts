@@ -120,8 +120,8 @@ class Egovs_Checkout_Model_Address_Abstract extends Mage_Customer_Model_Address_
     /**
      * set address street informa
      *
-     * @param unknown_type $street
-     * @return unknown
+     * @param array@string $street
+     * @return Egovs_Checkout_Model_Address_Abstract
      */
     public function setStreet($street)
     {

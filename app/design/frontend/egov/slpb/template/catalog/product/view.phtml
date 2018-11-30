@@ -46,6 +46,8 @@
                         <?php echo $this->getChildHtml('bundle_prices'); ?>
                         <?php echo $this->getTierPriceHtml(); ?>
                     </div>
+                    
+                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('slpb_liefer_block')->toHTML(); ?>
 
                     <div class="extra-info">
                         <?php echo $this->getReviewsSummaryHtml($_product, 'default', false); ?>

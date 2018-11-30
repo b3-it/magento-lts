@@ -23,9 +23,16 @@
  * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+/**
+ * @var Mage_Customer_Model_Customer $customer
+ * @var Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses $this
+ * @var array $addressCollection
+ * @var Egovs_Base_Helper_Customer_Address $egovsHelper
+ */
+$egovsHelper = Mage::helper('egovsbase/customer_address');
 ?>
 <!-- Addresses list -->
-<table cellspacing="0" class="form-edit">
+<table class="form-edit">
 <tr>
 <td class="address-list">
     <div class="entry-edit-head">
@@ -37,7 +44,7 @@
     <?php if(count($addressCollection)): ?>
         <?php foreach ($addressCollection as $_address): ?>
         <li id="address_item_<?php echo $_address->getId() ?>">
-            <?php if (!$this->isReadonly()): ?>
+            <?php if (!$this->isReadonly() && !$egovsHelper->isAddressReadOnly($_address)): ?>
             <a href="#" class="btn-remove-address">
                 <img src="<?php echo $this->getSkinUrl('images/cancel_icon.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('customer')->__('Remove address')) ?>" id="delete_button<?php echo ++$_iterator ?>" />
             </a>
@@ -114,14 +121,25 @@
             <?php foreach ($addressCollection as $_address): ?>
             <div id="form_address_item_<?php echo $_address->getId() ?>" style="display:none">
             <?php
-                    $this->getForm()->addValues($_address->getData())
-                            ->setHtmlIdPrefix("_item{$_address->getId()}")
-                            ->setFieldNameSuffix('address['.$_address->getId().']');
-                    $this->addValuesToNamePrefixElement($_address->getPrefix())
-                        ->addValuesToNameSuffixElement($_address->getSuffix());
+                /** @var Varien_Data_Form $form */
+                $form = $this->getForm();
+                    
+                $form->setValues(array()); // reset values
+                $form->addValues($_address->getData())
+                        ->setHtmlIdPrefix("_item{$_address->getId()}")
+                        ->setFieldNameSuffix('address['.$_address->getId().']');
+
+                $this->addValuesToNamePrefixElement($_address->getPrefix())
+                    ->addValuesToNameSuffixElement($_address->getSuffix());
+
+                $readOnly = $egovsHelper->isAddressReadOnly($_address);
+                // reset readOnly
+                $form->setReadonly($readOnly, true);
+                echo $this->getForm()->getHtml()
             ?>
-            <?php echo $this->getForm()->getHtml() ?>
+            <?php if(!$readOnly) : ?>
             <input type="hidden" name="address[<?php echo $_address->getId() ?>][_deleted]" id="deleted_address_item_<?php echo $_address->getId() ?>" />
+            <?php endif; ?>
             </div>
             <?php endforeach; ?>
         <?php else: ?>

@@ -107,12 +107,12 @@
                     <input type="hidden" value="<?php echo $this->getOrder()->getId()?>" name="order_id" />
                     <span class="field-row">
                         <label class="normal" for="printnote1"><?php echo Mage::helper('sales')->__('Printing Note 1') ?></label>
-                        <input type="text" id="printnote1" name="printnote1" value="<?php echo $this->getOrder()->getPrintnote1();?>" style="width:99%;" />
+                        <input type="text" id="printnote1" name="printnote1" value="<?php echo $this->escapeHtml($this->getOrder()->getPrintnote1());?>" style="width:99%;" />
                     </span>
     
                     <span class="field-row">
                         <label class="normal" for="printnote2"><?php echo Mage::helper('sales')->__('Printing Note 2') ?></label>
-                        <input type="text" id="printnote2" name="printnote2" value="<?php echo $this->getOrder()->getPrintnote2();?>" style="width:99%;" />
+                        <input type="text" id="printnote2" name="printnote2" value="<?php echo $this->escapeHtml($this->getOrder()->getPrintnote2());?>" style="width:99%;" />
                     </span>
                     <div class="f-right">
                         <button class="scalable save" type="button" id="submit_printingnote_button">

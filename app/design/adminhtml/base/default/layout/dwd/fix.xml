@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_fix_rechnung_rechnung_index>
+        <reference name="content">
+            <block type="dwd_fix/adminhtml_rechnung_rechnung" name="rechnung_rechnung" />
+        </reference>
+    </adminhtml_fix_rechnung_rechnung_index>
+
+</layout>

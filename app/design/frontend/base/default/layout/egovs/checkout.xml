@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE layout>
 <!--
 /**
  * Magento
@@ -27,7 +28,8 @@
 
 -->
 <layout version="0.1.0">
-    <mpcheckout>
+    <mpcheckout translate="label">
+        <label>Egovs Checkout</label>
         <!-- Mage_Checkout -->
         <reference name="root">
             <action method="setTemplate">
@@ -45,6 +47,7 @@
        <remove name="catalog.leftnav_sachsen"/>
        <remove name="right.newsletter"/>
        <reference name="left">
+           <!--
             <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -53,7 +56,7 @@
                     <label>Shopping Cart Sidebar Extra Actions</label>
                 </block>
             </block>
-
+            -->
         </reference>
         <reference name="content">
             <block type="mpcheckout/multipage_state" name="checkout_state" template="egovs/checkout/multipage/state.phtml"/>
@@ -61,7 +64,8 @@
     </mpcheckout>
 
 
-    <egovs_checkout_multipage_login>
+    <egovs_checkout_multipage_login translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Login</label>
         <update handle="mpcheckout"/>
         <remove name="checkout_state"/>
         <!-- Mage_Checkout -->
@@ -91,33 +95,39 @@
         </reference>
     </egovs_checkout_multipage_login>
 
-    <egovs_checkout_edit_newshipping>
+    <egovs_checkout_edit_newshipping translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Edit New Shipping</label>
         <update handle="mpcheckout"/>
         <update handle="egovs_checkout_multipage_customer_address"/>
     </egovs_checkout_edit_newshipping>
 
-    <egovs_checkout_edit_editshipping>
+    <egovs_checkout_edit_editshipping translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Edit Shipping</label>
         <update handle="checkout_multishipping"/>
         <update handle="checkout_multishipping_customer_address"/>
     </egovs_checkout_edit_editshipping>
 
-    <egovs_checkout_edit_editaddress>
+    <egovs_checkout_edit_editaddress translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Edit Address</label>
         <update handle="checkout_multishipping"/>
         <update handle="checkout_multishipping_customer_address"/>
     </egovs_checkout_edit_editaddress>
 
-    <egovs_checkout_edit_editbilling>
+    <egovs_checkout_edit_editbilling translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Edit Billing</label>
         <update handle="checkout_multishipping"/>
         <update handle="checkout_multishipping_customer_address"/>
     </egovs_checkout_edit_editbilling>
 
-    <egovs_checkout_multipage_customer_address>
+    <egovs_checkout_multipage_customer_address translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Customer Address</label>
         <reference name="content">
             <block type="customer/address_edit" name="customer_address_edit" template="customer/address/edit.phtml"/>
         </reference>
     </egovs_checkout_multipage_customer_address>
 
-    <egovs_checkout_multipage_addresses>
+    <egovs_checkout_multipage_addresses translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Addresses</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -151,7 +161,8 @@
         </reference>
     </egovs_checkout_multipage_addresses>
 
-   <egovs_checkout_multipage_newaddress>
+   <egovs_checkout_multipage_newaddress translate="label" module="mpcheckout">
+       <label>Egovs Checkout - New Address</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -186,7 +197,8 @@
         </reference>
     </egovs_checkout_multipage_newaddress>
 
-    <egovs_checkout_multipage_shipping>
+    <egovs_checkout_multipage_shipping translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Shipping</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -226,7 +238,8 @@
         </reference>
     </egovs_checkout_multipage_shipping>
 
-     <egovs_checkout_multipage_newshipping>
+     <egovs_checkout_multipage_newshipping translate="label" module="mpcheckout">
+         <label>Egovs Checkout - New Shipping</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -235,7 +248,8 @@
         </reference>
     </egovs_checkout_multipage_newshipping>
 
-    <egovs_checkout_multipage_shippingmethod>
+    <egovs_checkout_multipage_shippingmethod translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Shipping Method</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -282,7 +296,8 @@
         </reference>
     </egovs_checkout_multipage_shippingmethod>
 
-    <egovs_checkout_multipage_billing>
+    <egovs_checkout_multipage_billing translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Billing</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -344,7 +359,8 @@
         </reference>
     </egovs_checkout_multipage_billing>
 
-   <egovs_checkout_multipage_billingdetails>
+   <egovs_checkout_multipage_billingdetails translate="label" module="mpcheckout">
+       <label>Egovs Checkout - Billing Details</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -406,7 +422,8 @@
         </reference>
     </egovs_checkout_multipage_billingdetails>
 
-    <egovs_checkout_multipage_overview>
+    <egovs_checkout_multipage_overview translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Overview</label>
         <!--
         <remove name="left"/>
         <remove name="right"/>
@@ -505,7 +522,8 @@
     </egovs_checkout_multipage_overview>
 
 
-    <egovs_checkout_multipage_success>
+    <egovs_checkout_multipage_success translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Success</label>
         <update handle="mpcheckout"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -513,7 +531,8 @@
         </reference>
     </egovs_checkout_multipage_success>
 
-    <egovs_checkout_multipage_successview>
+    <egovs_checkout_multipage_successview translate="label" module="mpcheckout">
+        <label>Egovs Checkout - Successview</label>
          <remove name="left"/>
 		 <remove name="right"/>
 
@@ -605,7 +624,7 @@
     </egovs_checkout_multipage_successview>
 
 
-    <egovs_shipment_cart_totals>
+    <egovs_shipment_cart_totals translate="label" module="mpcheckout">
         <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
     </egovs_shipment_cart_totals>
 

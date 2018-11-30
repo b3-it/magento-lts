@@ -8,8 +8,7 @@
  * @copyright	Copyright (c) 2012 - 2017 B3 IT Systeme GmbH <https://www.b3-it.de>
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
- */
-class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Template
+ */class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Template
 {
 	protected $_baseMail = null;
 	
@@ -62,7 +61,7 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		
 		if (preg_match('/<!--@vars\s*((?:.)*?)\s*@-->/us', $templateText, $matches)) {
 			$this->setData('orig_template_variables', str_replace("\n", '', $matches[1]));
-			$templateText = str_replace($matches[0], '', $templateText);
+			//$templateText = str_replace($matches[0], '', $templateText);
 		}
 		
 		if (preg_match('/<!--@styles\s*(.*?)\s*@-->/s', $templateText, $matches)) {
@@ -80,8 +79,6 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		$templateText = preg_replace('/^\n+|^[\t\s]*\n+/','',$templateText);
 		
 		$this->setTemplateText($templateText);
-		
-	
 		
 		return $this;
 	}
@@ -282,5 +279,129 @@ class Egovs_Base_Model_Core_Email_Template extends Mage_Core_Model_Email_Templat
 		}
 		
 		return $res;
+	}
+	
+	protected function _applyInlineCss($html) {
+		try {
+			// Check to see if the {{inlinecss file=""}} directive set a CSS file to inline
+			$inlineCssFile = $this->getInlineCssFile();
+			// Only run Emogrify if HTML exists
+			if (strlen($html) && $inlineCssFile) {
+				$cssToInline = $this->_getCssFileContent($inlineCssFile);
+				$emogrifier = new Pelago_Emogrifier();
+				$emogrifier->setHtml($html);
+				$emogrifier->setCss($cssToInline);
+				// Don't parse inline <style> tags, since existing tag is intentionally for no-inline styles
+				$emogrifier->disableInlineStyleAttributesParsing();
+		
+				$processedHtml = $emogrifier->emogrify();
+			} elseif (strlen($html)) {
+				if (preg_match('/<!--@styles\s*(.*?)\s*@-->/s', $html, $matches)) {
+					$this->setTemplateStyles($matches[1]);
+					$html = str_replace($matches[0], '', $html);
+				}
+				
+				//Styles in HEAD einfügen
+				if ($this->getTemplateStyles()) {
+                    $prevErrorState = libxml_use_internal_errors(true);
+				    libxml_clear_errors();
+					$dom = new DOMDocument('1.0', 'UTF-8');
+					if ($dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD)) {
+						$domElements = $dom->getElementsByTagName('head');
+						$head = null;
+						if ($domElements && $domElements->length > 0) {
+							$head = $domElements->item(0);
+						} else {
+							$domElements = $dom->getElementsByTagName('html');
+							if ($domElements && $domElements->length > 0) {
+								$head = $dom->createElement('head');
+								$body = $dom->getElementsByTagName('body');
+								if ($body && $body->length > 0) {
+									$body = $body->item(0);
+								} else {
+									$body = null;
+								}
+								$head = $domElements->item(0)->insertBefore($head, $body);
+							}
+						}
+				
+						if ($head) {
+							$style = $dom->createElement('style', $this->getTemplateStyles());
+							$style->setAttribute('type', 'text/css');
+							$head->appendChild($style);
+							
+							$contentTypeExists = false;
+							$metas = $dom->getElementsByTagName('meta');
+							foreach ($metas as $meta) {
+								if (!$meta->hasAttribute('content')) {
+									continue;
+								}
+								$contentTypeExists = true;
+								break;
+							}
+								
+							if (!$contentTypeExists) {
+								$meta = $dom->createElement('meta');
+								$meta->setAttribute('http-equiv', 'Content-Type');
+								$meta->setAttribute('content', 'text/html; charset=utf-8');
+								$head->appendChild($meta);
+								//Explizit UTF-8 verwenden
+								$dom->encoding = 'UTF-8';
+							}
+							$html = $dom->saveHTML();
+						}
+					} else {
+					    $errors = libxml_get_errors();
+					    /** @var LibXMLError $error */
+                        foreach ($errors as $error) {
+                            switch ($error->level) {
+                                case LIBXML_ERR_FATAL:
+                                    $level = "Fatal";
+                                    $logLevel = Zend_Log::CRIT;
+                                    break;
+                                case LIBXML_ERR_ERROR:
+                                    $level = "Error";
+                                    $logLevel = Zend_Log::ERR;
+                                    break;
+                                case LIBXML_ERR_WARNING:
+                                default:
+                                    $level = "Warning";
+                                    $logLevel = Zend_Log::WARN;
+                            }
+					        $msg = sprintf("%s: %s: %s, line: %s in %s (ID: %s)", $level, $error->code, $error->message, $error->line, $this->getTemplateCode(), $this->getId());
+					        Mage::log($msg, $logLevel);
+                        }
+                        libxml_clear_errors();
+                    }
+                    libxml_use_internal_errors($prevErrorState);
+				}
+				$processedHtml = $html;
+			} else {
+				$processedHtml = $html;
+			}
+		} catch (Exception $e) {
+			$processedHtml = '{CSS inlining error: ' . $e->getMessage() . '}' . PHP_EOL . $html;
+		}
+		return $processedHtml;
+	}
+	
+	protected function _beforeSave()
+	{
+		parent::_beforeSave();
+		$templateText = $this->getTemplateText();
+		if (preg_match('/<!--@vars\s*((?:.)*?)\s*@-->/us', $templateText, $matches)) {
+			$variablesString = str_replace("\n", '', $matches[1]);
+			try{
+				$variables = Zend_Json::decode($variablesString);
+			}catch(Exception $ex){
+				Mage::getSingleton('adminhtml/session')->addError('@var '. $ex->getMessage());
+			}
+			
+		}
+		
+		
+		
+		
+		
 	}
 }

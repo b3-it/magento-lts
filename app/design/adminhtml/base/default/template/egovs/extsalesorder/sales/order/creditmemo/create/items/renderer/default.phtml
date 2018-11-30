@@ -131,12 +131,13 @@
             <input type="checkbox" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][back_to_stock]" value="1"<?php if ($_item->getBackToStock()):?> checked<?php endif;?>/>
         <?php else: ?>    
         	<input type="checkbox" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][back_to_stock]" value="1"<?php if ($_item->getBackToStock()):?> checked<?php endif;?> class="disabled" disabled="disabled" />
+        	<input type="hidden" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][back_to_stock]" value="<?php echo (bool)$_item->getBackToStock() ?>" />
         <?php endif; ?>
         </td>
     <?php endif; ?>
     <td class="a-center">
     <?php if ($this->canEditQty()) : ?>
-    	<?php if($this->isShipped()):?>
+    	<?php if($this->isShipped() || $_item->getCreditMemo()->getSpecialCancel()):?>
         	<input type="text" class="input-text qty-input" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][qty]" value="<?php echo $_item->getQty()*1 ?>"/>
         <?php else:?>
         	<input type="text" class="input-text qty-input" name="creditmemo[items][<?php echo $_item->getOrderItemId() ?>][qty]" value="<?php echo 0 ?>"/>

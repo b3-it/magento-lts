@@ -42,8 +42,8 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 	}
 	
 	/**
-	 * Hinzufügen der Temennewsletter zur Bestellungengrid Massenaktion
-	 * @param unknown $observer
+	 * Hinzufügen der Themennewsletter zur Bestellungengrid Massenaktion
+	 * @param Egovs_Extnewsletter_Model_Observer $observer
 	 */
 	public function onSalesOrderGridMassaction($observer)
 	{
@@ -75,8 +75,8 @@ class Egovs_Extnewsletter_Model_Observer extends Mage_Core_Model_Abstract
 	
 	
 	/**
-	 * Hinzufügen der Temennewsletter zur Kundengrid Massenaktion
-	 * @param unknown $observer
+	 * Hinzufügen der Themennewsletter zur Kundengrid Massenaktion
+	 * @param Egovs_Extnewsletter_Model_Observer $observer
 	 */
 	public function onCustomerGridMassaction($observer)
 	{

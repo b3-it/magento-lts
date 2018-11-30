@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <B3it_Messagequeue>
+            <version>0.1.0.0</version>
+        </B3it_Messagequeue>
+    </modules>
+    <global>
+        <helpers>
+            <b3it_mq>
+                <class>B3it_Messagequeue_Helper</class>
+            </b3it_mq>
+        </helpers>
+        <resources>
+            <b3it_messageQueue_setup>
+                <setup>
+                    <module>B3it_Messagequeue</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </b3it_messageQueue_setup>
+        </resources>
+        <blocks>
+          <b3it_mq>
+              <class>B3it_Messagequeue_Block</class>
+          </b3it_mq>
+        </blocks>
+        <models>
+            <b3it_mq>
+                <class>B3it_Messagequeue_Model</class>
+                <resourceModel>b3it_mq_resource</resourceModel>
+            </b3it_mq>
+            <b3it_mq_resource>
+                <class>B3it_Messagequeue_Model_Resource</class>
+                <entities>
+                  <queue_rule>
+                    <table>b3it_mq_queue_rule</table>
+                  </queue_rule>
+                  <queue_message>
+                    <table>b3it_mq_queue_message</table>
+                  </queue_message>
+                  <queue_ruleset>
+                    <table>b3it_mq_queue_ruleset</table>
+                  </queue_ruleset>
+                  <email_queue>
+                    <table>b3it_mq_email_queue</table>
+                  </email_queue>
+                  <email_recipient>
+                    <table>b3it_mq_email_recipient</table>
+                  </email_recipient>
+
+                </entities>
+            </b3it_mq_resource>
+        </models>
+        <b3it_messagequeue>
+            <compare>
+                <customergroup>
+                    <label>Customergroup</label>
+                    <model>b3it_mq/compare_customergroup</model>
+                </customergroup>
+                 <producttype>
+                    <label>Product Type</label>
+                    <model>b3it_mq/compare_producttype</model>
+                </producttype>
+                 <orderstatus>
+                    <label>Order Status</label>
+                    <model>b3it_mq/compare_orderstatus</model>
+                </orderstatus>                
+            </compare>
+            <category>
+                <order>
+                    <label>Order</label>
+                    <model>b3it_mq/queue_processing_order</model>
+                </order>
+                <invoicepay>
+                    <label>Invoice Pay</label>
+                    <model>b3it_mq/queue_processing_invoicepay</model>
+                </invoicepay>
+            </category>
+        </b3it_messagequeue>
+                <events>
+            <checkout_submit_all_after>
+                <observers>
+                    <b3it_mq_order_submit>
+                        <type>singleton</type>
+                        <class>b3it_mq/observer</class>
+                        <method>onCheckoutSubmitAllAfter</method>
+                    </b3it_mq_order_submit>
+                </observers>
+            </checkout_submit_all_after>
+             <sales_order_invoice_pay>
+                <observers>
+                    <b3it_mq_invoice_pay>
+                        <type>singleton</type>
+                        <class>b3it_mq/observer</class>
+                        <method>onSalesOrderInvoicePay</method>
+                    </b3it_mq_invoice_pay>
+                </observers>
+            </sales_order_invoice_pay>
+            </events>
+    </global>
+    <frontend>
+      <routers>
+            <b3it_mq>
+                <use>standard</use>
+                <args>
+                    <module>B3it_Messagequeue</module>
+                    <frontName>b3it_mq</frontName>
+                </args>
+            </b3it_mq>
+        </routers>
+        <layout>
+            <updates>
+                <b3it_mq>
+                  <file>b3it/messageQueue.xml</file>
+                </b3it_mq>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <B3it_Messagequeue>
+                  <files>
+                      <default>b3it/messageQueue.csv</default>
+                  </files>
+              </B3it_Messagequeue>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <B3it_Messagequeue_Adminhtml after="Mage_Adminhtml">B3it_Messagequeue_Adminhtml</B3it_Messagequeue_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <system>
+              <children>
+          <b3itmessageQueue module="b3it_mq">
+              <title>Message Queue</title>
+              <sort_order>50</sort_order>
+              <children>
+
+                  <b3itmessageQueue_queue_message module="b3it_mq">
+                      <title>Messages</title>
+                      <sort_order>20</sort_order>
+                      <action>adminhtml/messageQueue_queue_message/index</action>
+                  </b3itmessageQueue_queue_message>
+                  <b3itmessageQueue_queue_ruleset module="b3it_mq">
+                      <title>Rules</title>
+                      <sort_order>30</sort_order>
+                      <action>adminhtml/messageQueue_queue_ruleset/index</action>
+                  </b3itmessageQueue_queue_ruleset>
+
+              </children>
+          </b3itmessageQueue>
+              </children>
+          </system>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <b3itmessageQueue module="b3it_mq">
+                          <title>B3it Messagequeue</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <b3itmessageQueue_queue_rule module="b3it_mq">
+                                  <title>Queue Rule</title>
+                                  <sort_order>10</sort_order>
+                              </b3itmessageQueue_queue_rule>
+                                <b3itmessageQueue_queue_message module="b3it_mq">
+                                  <title>Queue Message</title>
+                                  <sort_order>20</sort_order>
+                              </b3itmessageQueue_queue_message>
+                                <b3itmessageQueue_queue_ruleset module="b3it_mq">
+                                  <title>Queue Ruleset</title>
+                                  <sort_order>30</sort_order>
+                              </b3itmessageQueue_queue_ruleset>
+
+                          </children>
+                      </b3itmessageQueue>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <B3it_Messagequeue>
+                    <files>
+                        <default>b3it/messageQueue.csv</default>
+                    </files>
+                </B3it_Messagequeue>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <b3itmessageQueue>
+              <file>b3it/messageQueue.xml</file>
+            </b3itmessageQueue>
+          </updates>
+        </layout>
+    </adminhtml>
+       <crontab>
+        <jobs>
+            <mq_queue_process>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
+                <run><model>b3it_mq/queue_cron::runCron</model></run>
+            </mq_queue_process>
+            <mq_email_queue_send_all>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
+                <run><model>b3it_mq/email_queue::sendAll</model></run>
+            </mq_email_queue_send_all>
+        </jobs>
+    </crontab>
+</config>

@@ -95,7 +95,7 @@ implements Varien_Data_Form_Element_Renderer_Interface
     /**
      * Retrive config object
      *
-     * @return Varien_Config
+     * @return Varien_Simplexml_Config
      */
     public function getConfig()
     {

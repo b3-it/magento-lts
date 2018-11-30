@@ -204,9 +204,10 @@ class Egovs_Extreport_Model_Mysql4_Product_Stockflow_Collection extends Mage_Rep
 		$qtyOrderedSelect = new Varien_Db_Select($outwards->getConnection());
         $qtyOrderedSelect->from(
             array('outward' => new Zend_Db_Expr("({$outwardsSelect->assemble()})")),
-            array('ordered_qty' => "total_shipped",
+            array('ordered_qty' => "SUM(qty_shipped)",
             	'entity_id' => "product_id")
         );
+        $qtyOrderedSelect->group('product_id');
         return $qtyOrderedSelect;
     }
 }

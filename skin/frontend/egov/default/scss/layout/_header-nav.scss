@@ -15,42 +15,23 @@
     &:not(.skip-active):hover {
         text-decoration: none;
     }
-}
-
-.skip-nav .label {
-    display: inline;
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, 500px) {
-
-    .skip-nav {
+    
+    .label {
+   		display: inline;
+	}
+    
+    @include bp(max-width, $bp-medium) {
         width: 25%;
     }
-
-}
-
-// ---------------------------------------------
-
-@include bp(min-width, $bp-medium + 1) {
-
-    .skip-nav {
+    
+    @include bp(min-width, $bp-medium + 1) {
         display: none;
     }
-
 }
 
 /* ============================================ *
  * Nav - Skip Content
  * ============================================ */
-
-// ---------------------------------------------
-
-@include bp(min-width, $bp-medium + 1) {
-    #header-nav {
-    }
-}
 
 @include bp(max-width, $bp-medium) {
     #egov-nav {

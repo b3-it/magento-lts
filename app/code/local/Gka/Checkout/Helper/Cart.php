@@ -56,7 +56,8 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
 
         $routeParams = array(
             $urlParamName   => $continueUrl,
-            'product'       => $product->getEntityId()
+            'product'       => $product->getEntityId(),
+            '_secure' => $this->_getRequest()->isSecure()
         );
 
         if (!empty($additional)) {
@@ -79,14 +80,15 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Retrieve url for remove product from cart
      *
-     * @param   Mage_Sales_Quote_Item $item
+     * @param   Mage_Sales_Model_Quote_Item $item
      * @return  string
      */
     public function getRemoveUrl($item)
     {
         $params = array(
             'id'=>$item->getId(),
-            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url()
+            Mage_Core_Controller_Front_Action::PARAM_NAME_BASE64_URL => $this->getCurrentBase64Url(),
+            '_secure' => $this->_getRequest()->isSecure()
         );
         return $this->_getUrl('checkout/cart/delete', $params);
     }
@@ -94,7 +96,7 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Retrieve shopping cart url
      *
-     * @return unknown
+     * @return string
      */
     public function getCartUrl()
     {
@@ -124,7 +126,7 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Get shopping cart summary qty
      *
-     * @return decimal
+     * @return float
      */
     public function getItemsQty()
     {
@@ -134,7 +136,7 @@ class Gka_Checkout_Helper_Cart extends Mage_Core_Helper_Url
     /**
      * Get shopping cart items summary (inchlude config settings)
      *
-     * @return decimal
+     * @return float
      */
     public function getSummaryCount()
     {

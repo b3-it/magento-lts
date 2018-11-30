@@ -84,7 +84,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 	 *
 	 * @param string $name Parametername
 	 *
-	 * @return 0
+	 * @return bool|false|int
 	 *
 	 * @see Egovs_Paymentbase_Model_Webservice_Types_Abstract::_getParamLength()
 	 */

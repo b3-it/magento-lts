@@ -14,8 +14,8 @@ $cms_blocks = array(
                          'title'      => 'Top-Links für DWD-Layout',
                       	 'identifier' => 'dwd_top_links',
                       	 'content'    => '<ul id="top-row-content-list">
-<li><a href="{{store url="impressum"}}">Impressum</a></li>
-<li><a href="{{store url="contactpage"}}">Kontakt</a></li>
+<li id="header-imprint-link"><a href="{{store url="impressum"}}">Impressum</a></li>
+<li id="header-contact-link"><a href="{{store url="contactpage"}}">Kontakt</a></li>
 </ul>',
                     	 'isactive'   => 1,
 				         'stores'     => array(0)
@@ -24,10 +24,10 @@ $cms_blocks = array(
  						'title'      => 'Footer-Info für den DWD',
  						'identifier' => 'dwd_footer_block',
 						'content'    => '<div id="footer-block-legal">
-<img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\'}}" />
+<img title="Bundesadler" alt="Bundesadler" src="{{skin url=\'images/adler.svg\' _secure=1}}" />
 <div>
-<p>Der Deutsche Wetterdienst ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
-<p>{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</p>
+<p id="footer-text-top">Der Deutsche Wetterdienst ist eine Bundesoberbeh&ouml;rde im Gesch&auml;ftsbereich des Bundesministeriums f&uuml;r Verkehr und digitale Infrastruktur.</p>
+<p id="footer-text-bottom">{{block type="imprint/field" value="company_first"}}, {{block type="imprint/field" value="street"}}, {{block type="imprint/field" value="zip"}} {{block type="imprint/field" value="city"}}</p>
 </div>
 </div>',
 						'isactive'   => 1,
@@ -73,7 +73,7 @@ $cms_blocks = array(
 <ul>
 <li><a href="{{store url="agb"}}">AGB</a></li>
 <li><a href="{{store url="widerruf"}}">Widerruf</a></li>
-<li><a href="{{store url=""}}">Streitbeilegung</a></li>
+<li><a href="http://ec.europa.eu/consumers/odr/">Streitbeilegung</a></li>
 <li><a href="{{store url="lieferung"}}">Lieferung</a></li>
 <li><a href="{{store url="zahlung"}}">Zahlungsarten</a></li>
 <li><a href="{{store url="bestellung"}}">Bestellvorgang</a></li>
@@ -89,6 +89,7 @@ $cms_blocks = array(
 						'title'      => 'DWD Footer Navigation',
 						'identifier' => 'dwd_footer_navigation',
 						'content'    => '<ul id="footer-navigation">
+<li class="show-on-mobile"><a href="{{store url="impressum"}}">Impressum</a></li>
 <li><a href="{{store url="datenschutz"}}">Datenschutz</a></li>
 <li><a href="{{store url="disclaimer"}}">Disclaimer</a></li>
 <li><a href="{{store url="agb"}}">AGB</a></li>

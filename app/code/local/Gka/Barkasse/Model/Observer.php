@@ -41,7 +41,7 @@ class Gka_Barkasse_Model_Observer extends Varien_Object
 
 	/**
 	 * Hinweis zur Eröffnung eines Kassenbuches anzeigen
-	 * @param unknown $observer
+	 * @param Gka_Barkasse_Model_Observer $observer
 	 */
 	public function onCustomerAuthenticated($observer)
 	{

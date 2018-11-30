@@ -33,6 +33,7 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     const VALIDATOR_HTTP_VIA_KEY                = 'http_via';
     const VALIDATOR_REMOTE_ADDR_KEY             = 'remote_addr';
     const VALIDATOR_SESSION_EXPIRE_TIMESTAMP    = 'session_expire_timestamp';
+    const VALIDATOR_PASSWORD_CREATE_TIMESTAMP   = 'password_create_timestamp';
     const SECURE_COOKIE_CHECK_KEY               = '_secure_cookie_check';
 
     /**
@@ -61,7 +62,7 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
          * Filter all input data in frontend
          */
         Egovs_Base_Model_Security_Filter::start();
-        
+
         
         // getSessionSaveMethod has to return correct version of handler in any case
         $moduleName = $this->getSessionSaveMethod();
@@ -142,12 +143,12 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
 
         //egovs
         //check if cookie is valid    
-        if(isset($_COOKIE[$sessionName])) {
+        if (isset($_COOKIE[$sessionName])) {
 	        $key = $_COOKIE[$sessionName];
-	        if((strlen($key) > 128) || (!preg_match('#^[0-9a-zA-Z,-]+$#', $key))) {
+	        if ((strlen($key) > 128) || (!preg_match('#^[0-9a-zA-Z,-]+$#', $key))) {
 	        	$ip =  $_SERVER['REMOTE_ADDR'];
-	        	$msg = "Security Alert: Cookie: $_COOKIE[$sessionName] Ip:$ip";
-	        	Mage::log($msg, Zend_Log::ALERT, '');
+	        	$msg = "Security Alert: Cookie: $_COOKIE[$sessionName] IP:$ip";
+	        	Mage::log($msg, Zend_Log::ALERT);
 	        	session_unset();
 				$_SESSION = array();
 				$_COOKIE = array();
@@ -162,20 +163,24 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         if (Mage::app()->getFrontController()->getRequest()->isSecure() && empty($cookieParams['secure'])) {
             // secure cookie check to prevent MITM attack
             $secureCookieName = $sessionName . '_cid';
-            if (isset($_SESSION[self::SECURE_COOKIE_CHECK_KEY])
-                && $_SESSION[self::SECURE_COOKIE_CHECK_KEY] !== md5($cookie->get($secureCookieName))
-            ) {
-                //session_regenerate_id(false);
-                $this->regenerateSessionId(false);
-                $sessionHosts = $this->getSessionHosts();
-                $currentCookieDomain = $cookie->getDomain();
-                foreach (array_keys($sessionHosts) as $host) {
-                    // Delete cookies with the same name for parent domains
-                    if (strpos($currentCookieDomain, $host) > 0) {
-                        $cookie->delete($this->getSessionName(), null, $host);
+            if (isset($_SESSION[self::SECURE_COOKIE_CHECK_KEY])) {
+                if ($_SESSION[self::SECURE_COOKIE_CHECK_KEY] !== md5($cookie->get($secureCookieName))) {
+                    session_regenerate_id(false);
+                    $sessionHosts = $this->getSessionHosts();
+                    $currentCookieDomain = $cookie->getDomain();
+                    foreach (array_keys($sessionHosts) as $host) {
+                        // Delete cookies with the same name for parent domains
+                        if (strpos($currentCookieDomain, $host) > 0) {
+                            $cookie->delete($this->getSessionName(), null, $host);
+                        }
                     }
+                    $_SESSION = array();
+                } else {
+                    /**
+                     * Renew secure cookie expiration time if secure id did not change
+                     */
+                    $cookie->renew($secureCookieName, null, null, null, true, null);
                 }
-                $_SESSION = array();
             }
             if (!isset($_SESSION[self::SECURE_COOKIE_CHECK_KEY])) {
                 $checkId = Mage::helper('core')->getRandomString(16);
@@ -188,10 +193,8 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         if (!Mage::app()->getStore()->isAdmin() && //regenerate ID not at BE -> flashupload
         		!$this->getControllerActionFlag('no_regenerate_id')
         ) {
-        	
-        	if(isset($_SESSION['regenerate_time'])) {
+        	if (isset($_SESSION['regenerate_time'])) {
         		if (microtime(true) - $_SESSION['regenerate_time'] > 10.1 ) {
-        			$this->_revalidateCookie();
         			$cookie->delete($sessionName);
         			$this->regenerateSessionId();
         		}
@@ -202,14 +205,10 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         	 
         	$_SESSION['regenerate_time'] = microtime(true);
         }
-        else {
-        	$this->_revalidateCookie();
-        }
-        
         
         /**
-        * Renew cookie expiration time if session id did not change
-        */
+         * Renew cookie expiration time if session id did not change
+         */
         if ($cookie->get(session_name()) == $this->getSessionId()) {
             $cookie->renew(session_name());
         }
@@ -250,24 +249,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         return Mage::getSingleton('core/cookie');
     }
 
-    protected function _revalidateCookie() {
-    	if (!$this->getCookie()->getLifetime()) {
-    		return $this;
-    	}
-    	 
-    	//201200201::Frank Rochlitzer
-    	//bei jedem Request das Cookieverfallsdatum erneuern
-    	if (!headers_sent()) {
-    		$name = $this->getSessionName();
-    		$value = $this->getSessionId();
-    		if ($value !== false) {
-    			$this->getCookie()->set($name, $value);
-    		}
-    	}
-    	 
-    	return $this;
-    }
-    
     /**
      * Revalidate cookie
      * @deprecated after 1.4 cookie renew moved to session start method
@@ -457,6 +438,16 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
     }
 
     /**
+     * Use password creation timestamp in validator key
+     *
+     * @return bool
+     */
+    public function useValidateSessionPasswordTimestamp()
+    {
+        return true;
+    }
+
+    /**
      * Retrieve skip User Agent validation strings (Flash etc)
      *
      * @return array
@@ -535,6 +526,14 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             $this->_data[self::VALIDATOR_KEY][self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP]
                 = $validatorData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP];
         }
+        if ($this->useValidateSessionPasswordTimestamp()
+            && isset($validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP])
+            && isset($sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP])
+            && $validatorData[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP]
+            > $sessionData[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] - $this->getCookie()->getLifetime()
+        ) {
+            return false;
+        }
 
         return true;
     }
@@ -569,6 +568,11 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
             $parts[self::VALIDATOR_HTTP_USER_AGENT_KEY] = (string)$_SERVER['HTTP_USER_AGENT'];
         }
 
+        if (isset($this->_data['visitor_data']['customer_id'])) {
+            $parts[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP] =
+                Mage::helper('customer')->getPasswordTimestamp($this->_data['visitor_data']['customer_id']);
+        }
+
         $parts[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] = time() + $this->getCookie()->getLifetime();
 
         return $parts;
@@ -578,22 +582,26 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
      * Regenerate session Id
      *
      * @param boolean $delete_old_session
-     * 
+     *
      * @return Mage_Core_Model_Session_Abstract_Varien
      */
-    public function regenerateSessionId($delete_old_session = true) {
-    	if(!$this->_SessionIsRegenerated) {
+    public function regenerateSessionId()
+    {
+    	if (!$this->_SessionIsRegenerated) {
 	    	$this->setLastSessionId($this->getSessionId());
-	    	session_regenerate_id($delete_old_session);
+	    	try {
+                session_regenerate_id(true);
+	    	} catch(Exception $ex) {
+	    	}
     	}
     	$this->_SessionIsRegenerated = true;
         return $this;
     }
     
     /**
-     * 
+     *
      * @param string $flag
-     * 
+     *
      * @return string
      */
     private function getControllerActionFlag($flag = 'no_regenerate_id') {

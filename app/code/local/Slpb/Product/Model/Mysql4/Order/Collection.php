@@ -111,9 +111,9 @@ class Slpb_Product_Model_Mysql4_Order_Collection extends Mage_Sales_Model_Mysql4
  		if(count($orderids) > 0)
  		{
 	 		$orderItems->getSelect()
-	 			->where("order_id in (?)", implode(',',$orderids))
+	 			->where("order_id in (".implode(',',$orderids).")")
 	 			->order("order_id");
-	 			
+ 			
 	 		//fehlende Items pro Bestellung merken
 	 		$missingItems = array();
 	 		foreach($orderItems->getItems() as $item)
