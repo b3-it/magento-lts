@@ -127,6 +127,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
           'name'      => 'signature_title',
       ));
 
+      $fieldset->addField('event_place', 'text', array(
+          'label'     => Mage::helper('eventmanager')->__('Event Place'),
+          //'class'     => 'readonly',
+          //'readonly'  => true,
+          'name'      => 'event_place',
+      ));
+
       $form->setValues($data);
 
 

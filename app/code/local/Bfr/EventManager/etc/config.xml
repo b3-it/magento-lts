@@ -228,5 +228,27 @@
                 <participation_certificate>Participation Certificate</participation_certificate>
             </types>
         </pdftemplate>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <use4_participation_certificate>
+                    <to_order_item>*</to_order_item>
+                </use4_participation_certificate>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <use4_participation_certificate>
+                    <to_quote_item>*</to_quote_item>
+                    <to_invoice_item>*</to_invoice_item>
+                </use4_participation_certificate>
+            </sales_convert_order_item>
+        </fieldsets>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <use4_participation_certificate/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
     </global>
 </config>
