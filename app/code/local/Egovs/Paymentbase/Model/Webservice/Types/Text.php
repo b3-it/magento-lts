@@ -23,14 +23,14 @@ class Egovs_Paymentbase_Model_Webservice_Types_Text extends Egovs_Paymentbase_Mo
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Text(
+	public function __construct(
 			$code = null,
 			$sprache = null
 	) {
 		$this->code = $code;
         $this->sprache = $sprache;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

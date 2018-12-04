@@ -20,7 +20,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BuchungList(
+	public function __construct(
 			$buchungen = null
 	) {
 		$args = func_get_args();
@@ -30,7 +30,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 		}
 		$this->buchungen = $buchungen;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

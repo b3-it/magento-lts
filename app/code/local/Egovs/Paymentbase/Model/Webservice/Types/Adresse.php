@@ -22,34 +22,16 @@ class Egovs_Paymentbase_Model_Webservice_Types_Adresse
 extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Address
 {
-	/* public function Egovs_Paymentbase_Model_Webservice_Types_Adresse(
-			$strasse = null,
-			$land = null,
-			$PLZ = null,
-			$ort = null,
-			$hausNr = null,
-			$postfach = null) {
-		    	
-    	if ($strasse != null)
-        	$this->strasse = $strasse;
-        if ($hausNr != null)
-           $this->hausNr = $hausNr;
-        if ($hausNr != null)
-           $this->postfach = $postfach;
-        $this->land = $land;
-        $this->PLZ = $PLZ;
-        $this->ort = $ort;
-        
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
-	} */
 	/**
 	 * Konstruktor
 	 * 
 	 * Als Parameter kann eine Adresse als Array oder Varien_Object übergeben werden
+     *
+     * @param \Varien_Object|array addressData
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Adresse() {
+	public function __construct() {
 		Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		$adresse = func_get_args();
@@ -75,6 +57,8 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Address
 			
 			return;
 		}
+
+		parent::__construct();
 	}
 	
 	/**

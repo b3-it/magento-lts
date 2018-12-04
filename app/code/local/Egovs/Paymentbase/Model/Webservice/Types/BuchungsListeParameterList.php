@@ -20,19 +20,18 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 *
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterList(
+	public function __construct(
 			$buchungslistenParameter= null
-			) {
-				$args = func_get_args();
-				Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-				
-				if (!is_array($buchungslistenParameter)) {
-					$buchungslistenParameter = array($buchungslistenParameter);
-				}
-				
-				$this->buchungslistenParameter= $buchungslistenParameter;
-				
-				parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        ) {
+            Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+
+            if (!is_array($buchungslistenParameter)) {
+                $buchungslistenParameter = array($buchungslistenParameter);
+            }
+
+            $this->buchungslistenParameter= $buchungslistenParameter;
+
+            parent::__construct();
 	}
 	
 	/**

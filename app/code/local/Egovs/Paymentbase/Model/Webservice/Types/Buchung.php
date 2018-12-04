@@ -29,23 +29,22 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
     // Default-Wert für Feld-Länge
     CONST LENGTH_DEFAULT = 1000;
 
-	/**
-	 * Konstruktor
-	 * 
-	 * @param string $haushaltsstelle Haushaltsstelle
-	 * @param string $objektnummer    Objektnummer
-	 * @param string $buchungstext    Buchungstext
-	 * @param number $betrag          Betrag
-	 * @param string $belegNr         Belegnummer
-	 * @param string $href            HREF
-	 * 
-	 * @return void
-	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Buchung(
+    /**
+     * Konstruktor
+     *
+     * @param string $haushaltsstelle Haushaltsstelle
+     * @param string $objektnummer    Objektnummer
+     * @param string $buchungstext    Buchungstext
+     * @param float  $betrag          Betrag
+     * @param string $belegNr         Belegnummer
+     * @param string $href            HREF
+     *
+     */
+	public function __construct(
 			$haushaltsstelle,
 			$objektnummer = '',
 			$buchungstext = '',
-			$betrag = 0,
+			$betrag = 0.0,
 			$belegNr = null,
 			$href = null
 	) {
@@ -69,7 +68,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 		if (isset($href)) {
 			$this->href = $href;
 		}
-		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+		parent::__construct();
 	}
 	
 	public function getParamLength($name = '')

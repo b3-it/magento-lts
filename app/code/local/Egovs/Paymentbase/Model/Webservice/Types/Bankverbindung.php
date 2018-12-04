@@ -29,7 +29,7 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Bankverbindung(
+	public function __construct(
 			$blz = null,
 			$kontoNr = null
 	) {
@@ -51,7 +51,7 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
 		}
 		
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

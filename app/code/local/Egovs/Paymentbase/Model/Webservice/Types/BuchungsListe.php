@@ -33,7 +33,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Payme
 	/**
 	 * Konstruktor
 	 * 
-	 * @param number $betrag                   Betrag
+	 * @param float  $betrag                   Betrag
 	 * @param string $waehrungskennzeichen     Währungskennzeichen
 	 * @param string $faelligkeitsdatum        Datum der Fälligkeit im Format: YYYY-MM-ddTHH:MM:SSZ
 	 * @param array  $buchungen                BuchungList
@@ -42,8 +42,8 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Payme
 	 * @param string $kassenzeichen            Kassenzeichen
 	 * @param string $eShopTransaktionsNr      Transaktionsnummer
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe(
-			$betrag = 0,
+	public function __construct(
+			$betrag = 0.0,
 			$waehrungskennzeichen = 'EUR',
 			$faelligkeitsdatum = '1970-01-01T00:00:00Z',
 			$buchungen = null,
@@ -69,7 +69,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Payme
 		if (isset($eShopTransaktionsNr)) {
         	$this->EShopTransaktionsNr= $eShopTransaktionsNr;
 		}
-		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+		parent::__construct();
 	}
 	
 	/**

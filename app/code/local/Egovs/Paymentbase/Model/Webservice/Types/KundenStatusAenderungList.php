@@ -20,10 +20,9 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_KundenStatusAenderungList(
+	public function __construct(
 			$kundenStatusAenderungList = null
 	) {
-		$args = func_get_args();
 		Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		if (!is_array($kundenStatusAenderungList)) {
@@ -31,7 +30,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 		}
 		$this->kundenStatusAenderungList = $kundenStatusAenderungList;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**
