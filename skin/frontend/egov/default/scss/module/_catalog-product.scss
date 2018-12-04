@@ -149,9 +149,9 @@
         }
 
         .product-options {
-            .options-list label {
+            .options-list label, .price-notice {
                 position: relative;
-                top: 5px;
+                top: 2px;
             }
         }
 
