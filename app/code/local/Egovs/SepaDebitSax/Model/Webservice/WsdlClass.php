@@ -224,20 +224,16 @@ class Egovs_SepaDebitSax_Model_Webservice_WsdlClass extends stdClass implements 
      * @param string $_className optional (used by inherited classes in order to always call this method)
      * @return Egovs_SepaDebitSax_Model_Webservice_WsdlClass|null
      */
-    public static function __set_state(array $_array,$_className = __CLASS__)
+    public static function __set_state(array $_array)
     {
-        if(class_exists($_className))
+        $_className = __CLASS__;
+        $object = @new $_className();
+        if(is_object($object) && is_subclass_of($object,'Egovs_SepaDebitSax_Model_Webservice_WsdlClass'))
         {
-            $object = @new $_className();
-            if(is_object($object) && is_subclass_of($object,'Egovs_SepaDebitSax_Model_Webservice_WsdlClass'))
-            {
-                foreach($_array as $name=>$value)
-                    $object->_set($name,$value);
-            }
-            return $object;
+            foreach($_array as $name=>$value)
+                $object->_set($name,$value);
         }
-        else
-            return null;
+        return $object;
     }
     /**
      * Static method getting current SoapClient
