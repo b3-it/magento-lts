@@ -28,8 +28,9 @@
  * @see Mage_Tax_Block_Checkout_Subtotal
  */
 
+$_tollerace = 0.009;
 $_totals = $this->getTotals();
-$_hasZeroTax = ( $_totals['tax']->getData['value'] <= 0.009 );
+$_hasZeroTax = ( $_totals['tax']->getData('value') <= $_tollerace );
 $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getValueExclTax();
 ?>
 <?php if ($this->displayBoth()):?>
@@ -49,7 +50,7 @@ $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getVal
         <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueInclTax()) ?>
     </td>
 </tr>
-    <?php if($_summFreeTax < 0.009 && $_hasZeroTax ): ?>
+    <?php if($_summFreeTax <= $_tollerace && $_hasZeroTax ): ?>
         <tr id="subtotal-free-tax">
             <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-free-tax subtotal-label" colspan="<?php echo $this->getColspan(); ?>">
                 <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
@@ -62,7 +63,7 @@ $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getVal
 <?php else : ?>
 <tr id="subtotal-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-label" colspan="<?php echo $this->getColspan(); ?>">
-      <?php if($_summFreeTax < 0.009 && $_hasZeroTax): ?>
+      <?php if($_summFreeTax <= $_tollerace && $_hasZeroTax): ?>
           <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
       <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
         <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
