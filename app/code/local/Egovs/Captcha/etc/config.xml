@@ -77,6 +77,14 @@
                     </captcha>
                 </observers>
             </controller_action_predispatch_customer_account_loginpost>
+            <controller_action_predispatch_wishlist_index_send>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkWishlistSharing</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_wishlist_index_send>
             <controller_action_predispatch_customer_account_forgotpasswordpost>
                 <observers>
                     <captcha>
@@ -101,6 +109,14 @@
                     </captcha>
                 </observers>
             </controller_action_predispatch_adminhtml_index_forgotpassword>
+            <controller_action_predispatch_sendfriend_product_sendmail>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkSendfriendSend</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_sendfriend_product_sendmail>
             <admin_user_authenticate_before>
                 <observers>
                     <captcha>
