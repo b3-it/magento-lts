@@ -31,7 +31,7 @@
  */
 
 $_totals = $this->getTotals();
-$_hasZeroTax = ( $_totals['tax']->getData['value'] <= 0.009 );
+$_hasZeroTax = ( $_totals['tax']->getValue() <= 0.009 );
 $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getValueExclTax();
 ?>
 <?php if ($this->displayBoth()):?>
