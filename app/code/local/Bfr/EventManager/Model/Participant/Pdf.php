@@ -27,7 +27,7 @@ class Bfr_EventManager_Model_Participant_Pdf extends Egovs_Pdftemplate_Model_Pdf
             Mage::throwException(Mage::helper('eventmanager')->__("Pdf Tempalte is not set"));
         }
 
-        $participant->setTemplateId($template->getId());
+        $participant->setTemplateId($template->getPdftemplateId());
 
         $this->LoadTemplate($participant);
 
