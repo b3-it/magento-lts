@@ -12,7 +12,6 @@ $fktable = $installer->getTable('pdftemplate/template');
 if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventmanager/event'), 'pdftemplate_id')) {
 	$installer->run("
 			ALTER TABLE {$installer->getTable('eventmanager/event')}
-			ADD COLUMN pdftemplate_id int(11) unsigned default null,
 			ADD COLUMN signature_original_filename varchar(255),
 			ADD COLUMN signature_filename varchar(255),
 			ADD COLUMN signature_title varchar(255),
@@ -20,6 +19,23 @@ if (!$installer->getConnection()->tableColumnExists($installer->getTable('eventm
 			ADD CONSTRAINT fk_pdftemplate_id FOREIGN KEY (pdftemplate_id) REFERENCES {$fktable}(pdftemplate_template_id) ON DELETE SET NULL
 			");
 
+}
+
+if (!$installer->tableExists($installer->getTable('eventmanager/event_pdftemplate')))
+{
+    $installer->run("
+			-- DROP TABLE IF EXISTS {$this->getTable('eventmanager/event_pdftemplate')};
+			CREATE TABLE {$this->getTable('eventmanager/event_pdftemplate')} (
+			`id` int(11) unsigned NOT NULL auto_increment,
+			`pdftemplate_id` int(11) unsigned not null,
+			`event_id` int(11) unsigned not null,
+			`store_id` smallint(6) unsigned not null,
+			FOREIGN KEY (pdftemplate_id) REFERENCES {$fktable}(pdftemplate_template_id) ON DELETE CASCADE,
+			FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE,
+			FOREIGN KEY (`event_id`) REFERENCES `{$this->getTable('eventmanager/event')}`(`event_id`) ON DELETE CASCADE,
+			PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	");
 }
 
 $columnName = 'use4_participation_certificate';

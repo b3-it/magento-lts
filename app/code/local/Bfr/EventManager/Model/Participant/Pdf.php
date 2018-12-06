@@ -17,7 +17,17 @@ class Bfr_EventManager_Model_Participant_Pdf extends Egovs_Pdftemplate_Model_Pdf
         $participant = array_shift($participant);
         $this->Name = Mage::helper('eventmanager')->__('ParticipationCertificate').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';
 
-        $participant->setTemplateId($participant->getEvent()->getPdftemplateId());
+        $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
+        $pdfs->getSelect()
+            ->where('event_id=?', $participant->getEvent()->getId())
+            ->where('store_id=?', $participant->getStoreId());
+
+        $template = $pdfs->getFirstItem();
+        if(empty($template->getId())){
+            Mage::throwException(Mage::helper('eventmanager')->__("Pdf Tempalte is not set"));
+        }
+
+        $participant->setTemplateId($template->getId());
 
         $this->LoadTemplate($participant);
 

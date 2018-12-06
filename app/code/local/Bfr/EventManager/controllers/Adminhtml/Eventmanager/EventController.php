@@ -130,6 +130,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
                 }
 
                 $model->save();
+                $this->_savePdfTemplates($data,$model);
 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('eventmanager')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
@@ -156,6 +157,44 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $this->_redirect('*/*/');
 	}
 
+	protected function _savePdfTemplates($data,$model)
+    {
+        $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
+        $pdfs->getSelect()->where('event_id=?', $model->getId());
+
+
+        $values = array();
+        if(isset($data['pdftemplate_id'])){
+            $values = $data['pdftemplate_id'];
+        }
+
+
+        foreach ($pdfs as $pdf)
+        {
+            if(isset($values[$pdf->getStoreId()])) {
+                if (!empty($values[$pdf->getStoreId()])) {
+                    if ($pdf->getPdftemplateId() != $values[$pdf->getStoreId()]) {
+                        $pdf->setPdftemplateId($values[$pdf->getStoreId()])
+                            ->save();
+                    }
+                }else{
+                    $pdf->delete();
+                }
+                $values[$pdf->getStoreId()] = null;
+            }
+        }
+
+        foreach($values as $key => $value) {
+            if($value != null && !empty($value)) {
+                $pdf = Mage::getModel('eventmanager/event_pdftemplate');
+                $pdf->setStoreId($key)
+                    ->setPdftemplateId($value)
+                    ->setEventId($model->getId())
+                    ->save();
+            }
+        }
+
+    }
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -549,7 +588,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
                     }
                 }
                 foreach($participants as $participant){
-
+                    $participant->sendPdfFile();
                 }
                 $this->_getSession()->addSuccess(
                     $this->__('Total of %d record(s) were send', count($participantIds))

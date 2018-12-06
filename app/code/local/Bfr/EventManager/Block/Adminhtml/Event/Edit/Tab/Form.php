@@ -85,12 +85,16 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       $fieldset = $form->addFieldset('event_form1', array('legend'=>Mage::helper('eventmanager')->__('Participant Certificate')));
       $pdfs = Mage::getModel('pdftemplate/template')->toOptionArray('participation_certificate');
 
-      $fieldset->addField('pdftemplate_id', 'select', array(
-          'label'     => Mage::helper('eventmanager')->__('Pdf Template'),
-          'name'      => 'pdftemplate_id',
-          'values'    => $pdfs,
-      ));
+      $stores = Mage::app()->getStores();
 
+      foreach($stores as $store)
+      {
+          $fieldset->addField('pdftemplate_id_'.$store->getId(), 'select', array(
+              'label' => Mage::helper('eventmanager')->__('Pdf Template')." [".$store->getName()."]",
+              'name' => "pdftemplate_id[".$store->getId()."]",
+              'values' => $pdfs,
+          ));
+      }
       $data =  Mage::registry('event_data');
 
       if(empty($data->getData('signature_original_filename'))){
@@ -135,6 +139,21 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       ));
 
       $form->setValues($data);
+
+      if(isset($data)) {
+          $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
+          $pdfs->getSelect()->where('event_id=?', $data->getId());
+
+          //die templates für die Stores extra setzen
+
+          foreach ($pdfs as $pdf) {
+              $element = $form->getElement('pdftemplate_id_' . $pdf->getStoreId());
+              if ($element) {
+                  $element->setValue($pdf->getPdftemplateId());
+              }
+          }
+      }
+
 
 
       return parent::_prepareForm();

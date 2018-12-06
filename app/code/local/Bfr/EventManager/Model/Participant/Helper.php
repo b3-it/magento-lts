@@ -48,7 +48,7 @@ class Bfr_EventManager_Model_Participant_Helper extends Varien_Object
             if ($this->getParticipant()) {
                 $id = $this->getParticipant()->getOrderItemId();
             }
-            $collection = Mage::getModel('sales/order_items')->getCollection();
+            $collection = Mage::getModel('sales/order_item')->getCollection();
             $collection->getSelect()
                     ->where('parent_item_id = ?',$id)
                     ->where('use4_participation_certificate = 1');

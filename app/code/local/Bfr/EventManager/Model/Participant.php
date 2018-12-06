@@ -71,6 +71,9 @@
  */
 class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
 {
+
+    protected $_Order = null;
+
     public function _construct()
     {
         parent::_construct();
@@ -242,16 +245,57 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
 
         $helper->setParticipant($this);
         $helper->setEvent($event);
+        $helper->setOrder($this->getOrder());
+        $helper->setStoreId($this->getOrder()->getStoreId());
         return $pdf->getPdf(array($helper));//->save($path);
     }
 
-    public function createPdfFile()
+    /**
+     * Die Teilnahmebestätigung per Email versenden
+     * @param $event
+     */
+    public function sendPdfFile()
     {
+        $event = Mage::getModel('eventmanager/event')->load($this->getEventId());
+        $pdf = $this->_createPdf($event,Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL);
 
+        $file = array();
+        $file['content']  = $pdf->render();
+        $file['filename'] = Mage::helper('eventmanager')->__('ParticipationCertificate').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';
 
+        $storeId = $this->getOrderStoreId();
 
+        //$template = Mage::getStoreConfig('eventmanager/participation_certificate_email/template',$storeId);
+
+        $helper = Mage::getModel('eventmanager/participant_helper');
+        $helper->setParticipant($this);
+        $helper->setEvent($event);
+        $helper->setOrder($this->getOrder());
+
+        Mage::helper('eventmanager')->sendEmail('eventmanager/participation_certificate_email/template', $this, $helper->getData() , $storeId, $file);
     }
 
+    /**
+     * Die Bestellung des Teilnehmers
+     * @return Mage_Sales_Model_Order
+     */
+    public function getOrder()
+    {
+        if($this->_Order == null){
+            $this->_Order = Mage::getModel('sales/order')->load((int)$this->getOrderId());
+
+        }
+        return $this->_Order;
+    }
+
+    /**
+     * die SoreId der Bestellung
+     * @return int
+     */
+    public function getOrderStoreId()
+    {
+        return $this->getOrder()->getStoreId();
+    }
 
 
 }

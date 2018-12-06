@@ -103,6 +103,17 @@
                                 </eventmanager_translate>
                             </children>
                         </bfr_eventmanager>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <eventmanager>
+                                            <title>Event Manager Section</title>
+                                        </eventmanager>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
                     </children>
                 </admin>
             </resources>
@@ -168,6 +179,9 @@
                     <translate>
                         <table>eventmanager_translate</table>
                     </translate>
+                    <event_pdftemplate>
+                        <table>eventmanager_event_pdftemplate</table>
+                    </event_pdftemplate>
                 </entities>
             </eventmanager_resource>
         </models>
@@ -250,5 +264,25 @@
                 </item>
             </quote>
         </sales>
+
+        <template>
+            <email>
+                <!-- see Mage_Adminhtml_Model_System_Config_Source_Email_Template line 58
+                    Default Template-Name wird aus Config-Node-Path gebildet!
+                -->
+                <eventmanager_participation_certificate_email_template translate="label" module="eventmanager">
+                    <label>Your Participation Certificate</label>
+                    <file>bfr/eventmanager/participation_certificate.html</file>
+                    <type>html</type>
+                </eventmanager_participation_certificate_email_template>
+            </email>
+        </template>
     </global>
+    <default>
+        <eventmanager>
+            <participation_certificate_email>
+                <template>eventmanager_participation_certificate_email_template</template>
+            </participation_certificate_email>
+        </eventmanager>
+    </default>
 </config>
