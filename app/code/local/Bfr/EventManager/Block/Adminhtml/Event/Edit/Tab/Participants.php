@@ -333,7 +333,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
               'getter'    => 'getId',
               'actions'   => array(
                   array(
-                      'caption'   => Mage::helper('eventmanager')->__('Participation Ceritificate'),
+                      'caption'   => Mage::helper('eventmanager')->__('Participation Certificate'),
                       'url'       => array('base'=> '*/*/ceritificate'),
                       'field'     => 'id'
                   )
