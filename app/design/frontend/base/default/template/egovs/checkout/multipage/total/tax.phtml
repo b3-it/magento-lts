@@ -47,17 +47,19 @@
 
         <?php $weees = $this->getAllWeee(); ?>
 
-        <?php foreach ($weees as $weeeTitle => $weeeAmount): ?>
-        <tr class="summary-details-<?php echo $taxIter; ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif; ?>" style="display:none;">
-            <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
-                <?php echo $this->escapeHtml($weeeTitle); ?>
-                <br />
-            </td>
-            <td style="<?php echo $_style ?>" class="a-right" rowspan="1">
-                <?php echo $this->helper('checkout')->formatPrice($weeeAmount); ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
+        <?php if( is_array($weees) && count($weees) ): ?>
+            <?php foreach ($weees as $weeeTitle => $weeeAmount): ?>
+            <tr class="summary-details-<?php echo $taxIter; ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif; ?>" style="display:none;">
+                <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
+                    <?php echo $this->escapeHtml($weeeTitle); ?>
+                    <br />
+                </td>
+                <td style="<?php echo $_style ?>" class="a-right" rowspan="1">
+                    <?php echo $this->helper('checkout')->formatPrice($weeeAmount); ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
     <?php endforeach; ?>
 <?php endif;?>
