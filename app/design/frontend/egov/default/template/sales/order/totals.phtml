@@ -11,7 +11,10 @@
  */
 
 $_tollerace = 0.009;
-$_taxValue  = $this->getTotal()->getGrandTotalIncl() - $this->getTotal()->getGrandTotal();
+$_totals    = $this->getTotals();
+$_gt_incl   = ( isset($_totals['grand_total_incl']) ? $_totals['grand_total_incl']->getValue() : 0 );
+$_gt        = ( isset($_totals['grand_total'])      ? $_totals['grand_total']->getValue()      : 0 );
+$_taxValue  = $_gt_incl - $_gt;
 ?>
 <?php foreach ($this->getTotals() as $_code => $_total): ?>
     <?php if ($_total->getBlockName()): ?>
@@ -19,23 +22,21 @@ $_taxValue  = $this->getTotal()->getGrandTotalIncl() - $this->getTotal()->getGra
     <?php else:?>
     <tr class="<?php echo $_code?>">
         <td <?php echo $this->getLabelProperties()?>>
-            <?php if ($_total->getStrong()):?>
-                <strong><?php echo $this->escapeHtml($_total->getLabel());?></strong>
-            <?php else: ?>
-                <?php if($_code == 'subtotal'): ?>
-                    <?php if($_taxValue <= $_tollerace): ?>
-                        <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
-                    <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
-                        <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
-                    <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
-                        <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
-                    <?php else: ?>
-                        <?php echo $this->escapeHtml($_total->getLabel());?>
-                    <?php endif?>
+            <?php if ($_total->getStrong()):?><strong><?php endif?>
+            <?php if($_code == 'subtotal'): ?>
+                <?php if($_taxValue <= $_tollerace): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
+                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
+                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
                 <?php else: ?>
                     <?php echo $this->escapeHtml($_total->getLabel());?>
                 <?php endif?>
+            <?php else: ?>
+                <?php echo $this->escapeHtml($_total->getLabel());?>
             <?php endif?>
+            <?php if ($_total->getStrong()):?></strong><?php endif?>
         </td>
         <td <?php echo $this->getValueProperties()?>>
             <?php if ($_total->getStrong()):?>
