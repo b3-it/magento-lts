@@ -30,7 +30,6 @@ if (!$installer->tableExists($installer->getTable('eventmanager/event_pdftemplat
 			`pdftemplate_id` int(11) unsigned not null,
 			`event_id` int(11) unsigned not null,
 			`store_id` smallint(6) unsigned not null,
-			FOREIGN KEY (pdftemplate_id) REFERENCES {$fktable}(pdftemplate_template_id) ON DELETE CASCADE,
 			FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}`(`store_id`) ON DELETE CASCADE,
 			FOREIGN KEY (`event_id`) REFERENCES `{$this->getTable('eventmanager/event')}`(`event_id`) ON DELETE CASCADE,
 			PRIMARY KEY (`id`)
