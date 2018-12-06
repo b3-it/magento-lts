@@ -44,28 +44,54 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
 			}
 		}
 	}
-	
+
+    /**
+     * @param \Mage_Catalog_Model_Product $product
+     *
+     * @return bool|float|int
+     * @throws \Mage_Core_Model_Store_Exception
+     */
 	protected function _loadTaxCalculationRate(Mage_Catalog_Model_Product $product) {
-		$_taxPercent = $product->getTaxPercent();
-		
-		if ($_taxPercent === NULL) {
-			$_taxClassId = $product->getTaxClassId();
-			if ($_taxClassId) {
-				$_store = Mage::app()->getStore();
-				$_groupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-				$_group = Mage::getModel('customer/group')->load($_groupId);
-				$_customerTaxClassId = $_group->getTaxClassId();
-	
-				/* @var $calculation Mage_Tax_Model_Calculation */
-				$_calculation = Mage::getSingleton('tax/calculation');
-				$_request = $_calculation->getRateRequest(null, null, $_customerTaxClassId, $_store);
-				$_taxPercent = $_calculation->getRate($_request->setProductClassId($_taxClassId));
-			}
-		}
-	
-		if ($_taxPercent) {
-			return $_taxPercent;
-		}
+        /**
+         * @var $_priceModel Mage_Bundle_Model_Product_Price
+         */
+        $_priceModel  = $product->getPriceModel();
+
+        if ($product->isComposite() && $product->getPriceType() != 1) {
+            list($_minimalPrice, $_maximalPrice) = $_priceModel->getTotalPrices($product, null, false, false);
+            //We have to unset min max price to get price with tax
+            $min_price = $product->getData('min_price');
+            $max_price = $product->getData('max_price');
+            $product->unsetData('min_price');
+            $product->unsetData('max_price');
+            list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($product, null, true, false);
+            $product->setData('min_price', $min_price);
+            $product->setData('max_price', $max_price);
+            if ($_maximalPrice != $_maximalPriceInclTax) {
+                return true;
+            }
+        } else {
+            $_taxPercent = $product->getTaxPercent();
+
+            if ($_taxPercent === NULL) {
+                $_taxClassId = $product->getTaxClassId();
+                if ($_taxClassId) {
+                    $_store = Mage::app()->getStore();
+                    $_groupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+                    $_group = Mage::getModel('customer/group')->load($_groupId);
+                    $_customerTaxClassId = $_group->getTaxClassId();
+
+                    /* @var $calculation Mage_Tax_Model_Calculation */
+                    $_calculation = Mage::getSingleton('tax/calculation');
+                    $_request = $_calculation->getRateRequest(null, null, $_customerTaxClassId, $_store);
+                    $_taxPercent = $_calculation->getRate($_request->setProductClassId($_taxClassId));
+                }
+            }
+
+            if ($_taxPercent) {
+                return $_taxPercent;
+            }
+        }
 	
 		return 0;
 	}

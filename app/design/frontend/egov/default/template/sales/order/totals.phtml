@@ -15,6 +15,7 @@ $_totals    = $this->getTotals();
 $_gt_incl   = ( isset($_totals['grand_total_incl']) ? $_totals['grand_total_incl']->getValue() : 0 );
 $_gt        = ( isset($_totals['grand_total'])      ? $_totals['grand_total']->getValue()      : 0 );
 $_taxValue  = $_gt_incl - $_gt;
+$_zeroTax   = $_gt_incl == $_gt;
 ?>
 <?php foreach ($this->getTotals() as $_code => $_total): ?>
     <?php if ($_total->getBlockName()): ?>
@@ -24,7 +25,7 @@ $_taxValue  = $_gt_incl - $_gt;
         <td <?php echo $this->getLabelProperties()?>>
             <?php if ($_total->getStrong()):?><strong><?php endif?>
             <?php if($_code == 'subtotal'): ?>
-                <?php if($_taxValue <= $_tollerace): ?>
+                <?php if($_taxValue <= $_tollerace || $_zeroTax): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
                 <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>

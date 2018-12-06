@@ -10,16 +10,15 @@
  * @license        	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */
-?>
-<?php
+
+
 /** 
  * @var $this \Mage_Core_Block_Template
  * @see Egovs_Ready_Block_Catalog_Product_Price
  * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
-?>
-<?php $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl() ?>
-<?php
+
+$shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
 $_taxPrefix = 'Incl.';
 if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ) {
     $_taxPrefix = 'Excl.';
