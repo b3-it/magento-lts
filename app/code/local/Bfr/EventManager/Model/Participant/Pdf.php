@@ -23,6 +23,17 @@ class Bfr_EventManager_Model_Participant_Pdf extends Egovs_Pdftemplate_Model_Pdf
             ->where('store_id=?', $participant->getStoreId());
 
         $template = $pdfs->getFirstItem();
+
+        //falls nicht gefunden weil Storeid nicht verfügbar
+        if(!$template->getId()){
+            $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
+            $pdfs->getSelect()
+                ->where('event_id=?', $participant->getEvent()->getId());
+
+            $template = $pdfs->getFirstItem();
+        }
+
+
         if(empty($template->getId())){
             Mage::throwException(Mage::helper('eventmanager')->__("Pdf Tempalte is not set"));
         }
