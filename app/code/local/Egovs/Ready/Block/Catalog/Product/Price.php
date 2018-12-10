@@ -113,7 +113,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
      */
 	public function getFormattedTaxRate() {
 		if ($this->getTaxRate() === null || $this->getProduct()->getTypeId() == 'bundle') {
-			return '';
+			return false;
 		}
 	
 		$_locale = Mage::app()->getLocale()->getLocaleCode();
