@@ -67,9 +67,9 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
             if ($_taxPercent) {
                 return $_taxPercent;
             }
-        } else if ($product->isConfigurable()) {
+        } else if ($product->isConfigurable() || $product->isGrouped()) {
             /**
-             * @var $_priceModel Mage_Catalog_Model_Product_Type_Configurable_Price
+             * @var $_priceModel Mage_Catalog_Model_Product_Type_Configurable_Price|Mage_Catalog_Model_Product_Type_Grouped_Price
              */
             // currently no tax display for you because it is combined by the parts
             return null;
