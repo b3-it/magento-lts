@@ -44,9 +44,6 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
      * @throws \Mage_Core_Model_Store_Exception
      */
     protected function _loadTaxCalculationRate(Mage_Catalog_Model_Product $product) {
-        /**
-         * @var $_priceModel Mage_Bundle_Model_Product_Price
-         */
         $_priceModel  = $product->getPriceModel();
 
         if (!$product->isComposite() || $product->getPriceType() == 1) {
@@ -70,7 +67,16 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
             if ($_taxPercent) {
                 return $_taxPercent;
             }
+        } else if ($product->isConfigurable()) {
+            /**
+             * @var $_priceModel Mage_Catalog_Model_Product_Type_Configurable_Price
+             */
+            // currently no tax display for you because it is combined by the parts
+            return null;
         } else {
+            /**
+             * @var $_priceModel Mage_Bundle_Model_Product_Price
+             */
             list($_minimalPrice, $_maximalPrice) = $_priceModel->getTotalPrices($product, null, false, false);
             //We have to unset min max price to get price with tax
             $min_price = $product->getData('min_price');
