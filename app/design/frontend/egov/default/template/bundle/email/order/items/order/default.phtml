@@ -7,10 +7,15 @@
  */
 ?>
 
-<?php $parentItem = $this->getItem() ?>
-<?php $items = array_merge(array($parentItem), $parentItem->getChildrenItems()); ?>
+<?php
+$_item = $this->getItem();
+$_order   = $this->getOrder();
+$_product = $this->getItem()->getProduct();
+$parentItem = $this->getItem();
+$items = array_merge(array($parentItem), $parentItem->getChildrenItems());
+?>
 
-<?php if($this->getItemOptions() || $_item->getDescription() || $this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
+<?php if($this->getItemOptions() || $_item->getDescription() || ($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId())): ?>
     <?php $_showlastRow = true ?>
 <?php else: ?>
     <?php $_showlastRow = false ?>
