@@ -63,7 +63,7 @@ $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getVal
 <?php else : ?>
 <tr id="subtotal-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right subtotal-label" colspan="<?php echo $this->getColspan(); ?>">
-      <?php if($_summFreeTax <= $_tollerace || $_hasZeroTax): ?>
+      <?php if ($_hasZeroTax): ?>
           <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
       <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
         <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
