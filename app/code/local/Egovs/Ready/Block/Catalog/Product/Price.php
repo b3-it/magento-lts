@@ -46,7 +46,7 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
     protected function _loadTaxCalculationRate(Mage_Catalog_Model_Product $product) {
         $_priceModel  = $product->getPriceModel();
 
-        if ($product->isComposite() && $product->getPriceType() == 0) {
+        if ($product->isComposite() && $product->getPriceType() === 0) {
             //Bundle mit dynamischem Preis
             /**
              * @var $_priceModel Mage_Bundle_Model_Product_Price
@@ -62,6 +62,17 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
             $product->setData('max_price', $max_price);
             if ($_maximalPrice != $_maximalPriceInclTax) {
                 return true;
+            }
+        } elseif ($product->isGrouped()) {
+            /* @var $typeInstance Mage_Catalog_Model_Product_Type_Grouped */
+            $typeInstance = $product->getTypeInstance(true);
+            $associatedProducts = $typeInstance->setStoreFilter($product->getStore(), $product)
+                ->getAssociatedProducts($product);
+            foreach ($associatedProducts as $childProduct) {
+                $_taxCalcRate = $this->_loadTaxCalculationRate($childProduct);
+                if ($_taxCalcRate > 0.009) {
+                    return true;
+                }
             }
         } else {
             $_taxPercent = $product->getTaxPercent();
