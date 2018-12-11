@@ -46,9 +46,26 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
     protected function _loadTaxCalculationRate(Mage_Catalog_Model_Product $product) {
         $_priceModel  = $product->getPriceModel();
 
-        if (!$product->isComposite() || $product->getPriceType() == 1) {
+        if ($product->isComposite() && $product->getPriceType() == 0) {
+            //Bundle mit dynamischem Preis
+            /**
+             * @var $_priceModel Mage_Bundle_Model_Product_Price
+             */
+            list($_minimalPrice, $_maximalPrice) = $_priceModel->getTotalPrices($product, null, false, false);
+            //We have to unset min max price to get price with tax
+            $min_price = $product->getData('min_price');
+            $max_price = $product->getData('max_price');
+            $product->unsetData('min_price');
+            $product->unsetData('max_price');
+            list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($product, null, true, false);
+            $product->setData('min_price', $min_price);
+            $product->setData('max_price', $max_price);
+            if ($_maximalPrice != $_maximalPriceInclTax) {
+                return true;
+            }
+        } else {
             $_taxPercent = $product->getTaxPercent();
-		
+
             if (is_null($_taxPercent)) {
                 $_taxClassId = $product->getTaxClassId();
                 if ($_taxClassId) {
@@ -66,28 +83,6 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 
             if ($_taxPercent) {
                 return $_taxPercent;
-            }
-        } else if ($product->isConfigurable() || $product->isGrouped()) {
-            /**
-             * @var $_priceModel Mage_Catalog_Model_Product_Type_Configurable_Price|Mage_Catalog_Model_Product_Type_Grouped_Price
-             */
-            // currently no tax display for you because it is combined by the parts
-            return null;
-        } else {
-            /**
-             * @var $_priceModel Mage_Bundle_Model_Product_Price
-             */
-            list($_minimalPrice, $_maximalPrice) = $_priceModel->getTotalPrices($product, null, false, false);
-            //We have to unset min max price to get price with tax
-            $min_price = $product->getData('min_price');
-            $max_price = $product->getData('max_price');
-            $product->unsetData('min_price');
-            $product->unsetData('max_price');
-            list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($product, null, true, false);
-            $product->setData('min_price', $min_price);
-            $product->setData('max_price', $max_price);
-            if ($_maximalPrice != $_maximalPriceInclTax) {
-                return true;
             }
         }
 
