@@ -39,7 +39,8 @@ class Bfr_EventManager_Model_Participant_Pdf extends Egovs_Pdftemplate_Model_Pdf
         }
 
         $participant->setTemplateId($template->getPdftemplateId());
-
+        $participant->setConfig($this->getConfig($participant->getStoreId()));
+        $participant->setImprint($this->getImprint($participant->getStoreId()));
         $this->LoadTemplate($participant);
 
         $this->_Pdf->addPage();
