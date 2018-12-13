@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ruleset name="PHP 7.2 Compatibility">
+    <description>PHP 7.2 Compatibility</description>
+
+    <!-- Run against the PHPCompatibility ruleset -->
+    <rule ref="PHPCompatibility">
+        <exclude name="PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.MethodDoubleUnderscore"/>
+    </rule>
+
+    <rule ref="Internal.LineEndings.Mixed">
+        <severity>0</severity>
+    </rule>
+
+    <!--<rule ref="Zend"/>-->
+
+    <!-- Run against a second ruleset -->
+    <!-- <rule ref="PSR2"/> -->
+    <!-- Check for cross-version support for PHP 5.6 and higher. -->
+    <config name="testVersion" value="7.2-"/>
+</ruleset>
