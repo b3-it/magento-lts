@@ -15,10 +15,6 @@ class Bfr_EventManager_Model_Participant_Helper extends Varien_Object
     protected $_eventbunlde_order_item  = null;
     protected $_lecture_order_items  = null;
 
-    public function getSignatureImage()
-    {
-        return Mage::helper('eventmanager')->getSignaturePath() . DS . $this->getEvent()->getSignatureFilename();
-    }
 
     /**
      * gibt das OrderItem des Eventbundles zurück
