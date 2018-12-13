@@ -298,4 +298,19 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     }
 
 
+    public function getBundleOptions()
+    {
+        $options = array();
+
+        foreach($this->getOrder()->getAllItems() as $item) {
+            if ($item->getParentItemId() == $this->getOrderItemId()) {
+                if ($item->getProduct()->getUse4ParticipationCertificate() == 1) {
+                    $options[] = $item;
+                }
+            }
+        }
+        return $options;
+    }
+
+
 }
