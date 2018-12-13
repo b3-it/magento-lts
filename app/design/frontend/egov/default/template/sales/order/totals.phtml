@@ -24,6 +24,7 @@ $_zeroTax   = $_gt_incl == $_gt;
     <tr class="<?php echo $_code?>">
         <td <?php echo $this->getLabelProperties()?>>
             <?php if ($_total->getStrong()):?><strong><?php endif?>
+            <?php $_taxPostfix = ''; ?>
             <?php if($_code == 'subtotal'): ?>
                 <?php if($_taxValue <= $_tollerace || $_zeroTax): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
@@ -34,8 +35,15 @@ $_zeroTax   = $_gt_incl == $_gt;
                 <?php else: ?>
                     <?php echo $this->escapeHtml($_total->getLabel());?>
                 <?php endif?>
-            <?php else: ?>
-                <?php echo $this->escapeHtml($_total->getLabel());?>
+            <?php elseif($_code == 'shipping'): ?>
+                <?php if($_taxValue <= $_tollerace || $_zeroTax): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Tax Free').')'; ?>
+                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Excl. Tax').')' ?>
+                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Incl. Tax').')' ?>
+                <?php endif?>
+                <?php echo $this->escapeHtml($_total->getLabel().$_taxPostfix);?>
             <?php endif?>
             <?php if ($_total->getStrong()):?></strong><?php endif?>
         </td>
