@@ -547,6 +547,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     public function ceritificateAction()
     {
         $id         = (int) $this->getRequest()->getParam('id');
+        $event_id         = (int) $this->getRequest()->getParam('event');
 
 
 
@@ -554,7 +555,9 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $model  = Mage::getModel('eventmanager/participant')->load($id);
         if($model->getStatus() != Bfr_EventManager_Model_Status::STATUS_ENABLED){
             $this->_getSession()->addError($this->__('Wrong Participation Status'));
-            $this->_redirect('*/*/*');
+            $this->_redirect('*/eventmanager_event/edit',array('_current'=>true,'active_tab'=>'participants_section','id'=>$event_id));
+
+            return;
         }
 
         $event = Mage::getModel('eventmanager/event')->load($model->getEventId());
@@ -579,20 +582,21 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
-                foreach($participantIds as $participantId){
-                 $participant = Mage::getModel('eventmanager/participant')->load($participantId);
-                 $participants[] =  $participant;
-                 if($participant->getStatus() != Bfr_EventManager_Model_Status::STATUS_ENABLED){
+                foreach($participantIds as $participantId) {
+                    $participant = Mage::getModel('eventmanager/participant')->load($participantId);
+                    $participants[] = $participant;
+                    if ($participant->getStatus() != Bfr_EventManager_Model_Status::STATUS_ENABLED) {
                         $this->_getSession()->addError($this->__('Wrong Participation Status'));
-                        $this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
+                        $this->_redirect('*/*/edit', array('_current' => true, 'active_tab' => 'participants_section'));
+                        return;
                     }
                 }
-                foreach($participants as $participant){
-                    $participant->sendPdfFile();
-                }
-                $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were send', count($participantIds))
-                );
+                foreach ($participants as $participant) {
+                        $participant->sendPdfFile();
+                    }
+                    $this->_getSession()->addSuccess(
+                        $this->__('Total of %d record(s) were send', count($participantIds))
+                    );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());
             }
