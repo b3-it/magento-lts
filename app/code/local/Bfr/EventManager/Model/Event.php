@@ -32,5 +32,10 @@ class Bfr_EventManager_Model_Event extends Mage_Core_Model_Abstract
     	
     	return $this->_product;
     }
+
+    public function getSignatureImage()
+    {
+        return Mage::helper('eventmanager')->getSignaturePath() . DS . $this->getSignatureFilename();
+    }
     
 }
