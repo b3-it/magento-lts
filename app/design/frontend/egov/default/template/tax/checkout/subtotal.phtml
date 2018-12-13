@@ -30,7 +30,10 @@
 
 $_tollerace = 0.009;
 $_totals = $this->getTotals();
-$_hasZeroTax = ( $_totals['tax']->getValue() <= $_tollerace );
+$_hasZeroTax = true;
+if (isset($_totals['tax'])) {
+    $_hasZeroTax = ($_totals['tax']->getValue() <= $_tollerace);
+}
 $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getValueExclTax();
 ?>
 <?php if ($this->displayBoth()):?>

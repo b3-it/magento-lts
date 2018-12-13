@@ -31,10 +31,9 @@
  */
 
 $_totals = $this->getTotals();
-if(isset($_totals['tax'])) {
+$_hasZeroTax = true;
+if (isset($_totals['tax'])) {
     $_hasZeroTax = ($_totals['tax']->getValue() <= 0.009);
-}else{
-    $_hasZeroTax = true;
 }
 $_summFreeTax = $this->getTotal()->getValueInclTax() - $this->getTotal()->getValueExclTax();
 ?>
