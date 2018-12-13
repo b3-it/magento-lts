@@ -82,7 +82,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       ));
 
 
-      $fieldset = $form->addFieldset('event_form1', array('legend'=>Mage::helper('eventmanager')->__('Participant Certificate')));
+      $fieldset = $form->addFieldset('event_form1', array('legend'=>Mage::helper('eventmanager')->__('Participation Certificate')));
       $pdfs = Mage::getModel('pdftemplate/template')->toOptionArray('participation_certificate');
 
       $stores = Mage::app()->getStores();
@@ -110,14 +110,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
           ));
 
           $fieldset->addField('signature_original_filename', 'text', array(
-              'label'     => Mage::helper('eventmanager')->__('File'),
+              'label'     => Mage::helper('eventmanager')->__('Signature Image'),
               'class'     => 'readonly',
               'readonly'  => true,
               'name'      => 'signature_original_filename',
           ));
 
           $fieldset->addField('delete_signature', 'checkbox', array(
-              'label'     => Mage::helper('eventmanager')->__('Delete File'),
+              'label'     => Mage::helper('eventmanager')->__('Delete Signature Image'),
               //'class'     => 'readonly',
               //'readonly'  => true,
               'name'      => 'delete_signature',

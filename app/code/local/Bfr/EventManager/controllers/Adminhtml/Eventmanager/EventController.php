@@ -14,7 +14,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 {
 
 	protected function _initAction() {
-	    $this->_title(Mage::helper('adminhtml')->__('Event'));
+	    $this->_title(Mage::helper('adminhtml')->__('Event Manager'));
 		$this->loadLayout()
 			->_setActiveMenu('bfr_eventmanager/eventmanager_event')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
