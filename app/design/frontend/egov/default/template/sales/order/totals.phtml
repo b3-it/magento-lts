@@ -12,10 +12,8 @@
 
 $_tollerace = 0.009;
 $_totals    = $this->getTotals();
-$_gt_incl   = ( isset($_totals['grand_total_incl']) ? $_totals['grand_total_incl']->getValue() : 0 );
-$_gt        = ( isset($_totals['grand_total'])      ? $_totals['grand_total']->getValue()      : 0 );
-$_taxValue  = $_gt_incl - $_gt;
-$_zeroTax   = $_gt_incl == $_gt;
+$_taxAmount = $this->getOrder()->getTaxAmount();
+$_zeroTax   = $_taxAmount <= $_tollerace;
 ?>
 <?php foreach ($this->getTotals() as $_code => $_total): ?>
     <?php if ($_total->getBlockName()): ?>
@@ -26,24 +24,26 @@ $_zeroTax   = $_gt_incl == $_gt;
             <?php if ($_total->getStrong()):?><strong><?php endif?>
             <?php $_taxPostfix = ''; ?>
             <?php if($_code == 'subtotal'): ?>
-                <?php if($_taxValue <= $_tollerace || $_zeroTax): ?>
+                <?php if($_zeroTax): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
-                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 1 ): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
-                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 2 ): ?>
                     <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
                 <?php else: ?>
                     <?php echo $this->escapeHtml($_total->getLabel());?>
                 <?php endif?>
             <?php elseif($_code == 'shipping'): ?>
-                <?php if($_taxValue <= $_tollerace || $_zeroTax): ?>
+                <?php if($_zeroTax): ?>
                     <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Tax Free').')'; ?>
-                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 1 ): ?>
                     <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Excl. Tax').')' ?>
-                <?php elseif( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 2 ): ?>
                     <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Incl. Tax').')' ?>
                 <?php endif?>
                 <?php echo $this->escapeHtml($_total->getLabel().$_taxPostfix);?>
+            <?php else: ?>
+                <?php echo $this->escapeHtml($_total->getLabel());?>
             <?php endif?>
             <?php if ($_total->getStrong()):?></strong><?php endif?>
         </td>

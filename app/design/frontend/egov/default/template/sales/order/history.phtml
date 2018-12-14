@@ -2,12 +2,19 @@
 /**
  * @category    design
  * @package     egov_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2018 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-$_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price';
-$mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
+/**
+ * GrandTotal der Order enthält immer den Gesamtpreis inkl. MwSt.
+ */
+
+/**
+ * Annahme: Falls tax/sales_display/full_summary false dann ist Shop MwSt befreit
+ */
+$_taxPostfix = Mage::getStoreConfigFlag('tax/sales_display/full_summary') ?
+    $this->__('(Incl. Tax)') : $this->__('(Tax Free)');
 ?>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <?php $_orders = $this->getOrders(); ?>
@@ -23,60 +30,28 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
         <col class="my-orders-date" width="60" />
         <col class="my-orders-shipping" />
         <col class="my-orders-price" width="80" />
-        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col class="my-orders-price" width="80" />
-        <?php endif; ?>
         <col class="my-orders-status" width="1" />
         <col class="my-orders-options" width="10" />
     </colgroup>
 
     <thead>
         <tr>
-            <th rowspan="<?php echo $mergedCells; ?>" class="number"><?php echo $this->__('Order #') ?></th>
-            <th rowspan="<?php echo $mergedCells; ?>" class="date"><?php echo $this->__('Date') ?></th>
-            <th rowspan="<?php echo $mergedCells; ?>" class="ship"><?php echo $this->__('Ship To') ?></th>
-            <th class="a-center cart-total-head" colspan="<?php echo $mergedCells; ?>">
-                <?php echo $this->__('Order Total') ?>
-                <?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
-                    <?php echo $this->__('(Excl. Tax)'); ?>
-                <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
-                    <?php echo $this->__('(Incl. Tax)'); ?>
-                <?php endif; ?>
-            </th>
-            <th rowspan="<?php echo $mergedCells; ?>" class="status"><span class="nobr"><?php echo $this->__('Order Status') ?></span></th>
-            <th rowspan="<?php echo $mergedCells; ?>" class="view">&nbsp;</th>
+            <th class="number"><?php echo $this->__('Order #') ?></th>
+            <th class="date"><?php echo $this->__('Date') ?></th>
+            <th class="ship"><?php echo $this->__('Ship To') ?></th>
+            <th class="total"><?php echo $this->__('Order Total') ?> <?php echo $_taxPostfix; ?></th>
+            <th class="status"><span class="nobr"><?php echo $this->__('Order Status') ?></span></th>
+            <th class="view">&nbsp;</th>
         </tr>
-        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <tr>
-                <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
-                <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
-            </tr>
-        <?php endif; ?>
     </thead>
     <tbody>
-        <?php $_odd = ''; ?>
         <?php foreach ($_orders as $_order): ?>
             <?php /** @var $_order \Mage_Sales_Model_Order */ ?>
         <tr>
             <td class="number"><?php echo $_order->getRealOrderId() ?></td>
             <td class="date"><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
             <td class="ship"><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
-            <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-                <td class="total"><?php echo $_order->formatPrice($_order->getSubtotal()) ?></td>
-            <?php endif; ?>
-            <td class="total">
-                <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-                    <?php if( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
-                        <?php echo $_order->formatPrice($_order->getSubtotal()) ?>
-                    <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
-                        <?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
-                    <?php else: ?>
-                        <?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
-                <?php endif; ?>
-            </td>
+            <td class="total"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
             <td class="status"><em><?php echo $_order->getStatusLabel() ?></em></td>
             <td class="a-center view">
                 <span class="nobr">
