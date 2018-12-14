@@ -98,8 +98,10 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListe extends Egovs_Payme
 				break;
 			case 'kennzeichenMahnverfahren':
 				$length = 5;
+				break;
 			case 'bewirtschafterNr':
 				$length = 8;
+				break;
 			case 'kassenzeichen':
 			case 'eShopTransaktionsNr':
 				$length = 30;

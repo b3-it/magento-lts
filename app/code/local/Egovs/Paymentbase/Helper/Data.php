@@ -170,9 +170,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			}
 			foreach ($files as $file => $ref) {
 				$file = $path.$file;
-				foreach ($bicsToCheck as $bic) {
+                /** @noinspection SuspiciousLoopInspection */
+                foreach ($bicsToCheck as $bic) {
 					// Open file
-					$fp = fopen($file, 'r');
+					$fp = fopen($file, 'rb');
 	
 					while ($data = fgetcsv($fp, 1024, ";")) {
 						if (trim($data[$ref['bic']]) == $bic) {
@@ -615,9 +616,9 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 
 		if (!$this->__eCustomerId && !$throwIfNotExists) {
 			if ($this->getAdapter()) {
-				$this->__eCustomerId = $this->getAdapter()->hash($this->getBewirtschafterNr() . $this->getWebShopDesMandanten() . $this->getCustomerId() . rand() . rand() . time() . $this->getSalt());
+				$this->__eCustomerId = $this->getAdapter()->hash($this->getBewirtschafterNr() . $this->getWebShopDesMandanten() . $this->getCustomerId() . mt_rand() . mt_rand() . time() . $this->getSalt());
 			} else {
-				$this->__eCustomerId = substr(md5($this->getBewirtschafterNr() . $this->getWebShopDesMandanten() . $this->getCustomerId() . rand() . rand() . time() . $this->getSalt()), -32);
+				$this->__eCustomerId = substr(md5($this->getBewirtschafterNr() . $this->getWebShopDesMandanten() . $this->getCustomerId() . mt_rand() . mt_rand() . time() . $this->getSalt()), -32);
 			}
 			Mage::log('paymentbase::getECustomerIdRandom():: Generated customer ID for ePayBL: '.$this->__eCustomerId, Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		} elseif (!$this->__eCustomerId && $throwIfNotExists) {
@@ -1367,8 +1368,9 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 					$this->resetECustomerId();
 					break;
 				case -199:
-				//Kunde nicht vorhanden
-				Mage::log("paymentbase::The customer doesn't exist on the ePayment server (ID: ".$customer ? $customer->getId() : "0".")", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+				    //Kunde nicht vorhanden
+                    $customerId = $customer ? $customer->getId() : "0";
+				    Mage::log("paymentbase::The customer doesn't exist on the ePayment server (ID: $customerId)", Zend_Log::INFO, Egovs_Helper::LOG_FILE);
 					break;
 				default:
 					self::parseAndThrow($code);

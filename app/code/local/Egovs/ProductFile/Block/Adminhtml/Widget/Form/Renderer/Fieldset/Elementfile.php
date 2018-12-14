@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2011 TRW-NET - http://www.trw-net.de
  * @license	   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_ProductFile_Block_Adminhtml_Widget_Form_Renderer_Fieldset_Elementfile extends Mage_Adminhtml_Block_Widget_Form_Renderer_Fieldset_Element implements Varien_Data_Form_Element_Renderer_Interface
+class Egovs_ProductFile_Block_Adminhtml_Widget_Form_Renderer_Fieldset_Elementfile extends Mage_Adminhtml_Block_Widget_Form_Renderer_Fieldset_Element
 {
     /**
      * Setzt eigenes Template

@@ -218,7 +218,7 @@ class Egovs_Zahlpartnerkonten_Model_Pool extends Mage_Core_Model_Abstract
 	protected function _pruefziffer($value) {
 		$arr = str_split($value);
 	    $sum = 0;
-	    for ($i = 0; $i < count($arr); $i++) {
+	    for ($i = 0, $iMax = count($arr); $i < $iMax; $i++) {
 		
 			$w = $this->_wertigkeit(count($arr) - $i);
 			$m = $arr[$i] * $w;

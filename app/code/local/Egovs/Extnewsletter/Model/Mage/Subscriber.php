@@ -310,7 +310,8 @@ class Egovs_Extnewsletter_Model_Mage_Subscriber extends Mage_Newsletter_Model_Su
     	
     	$last = strtotime($this->getLastConfirmationRequest());
     	$jetzt = strtotime(date('Y-m-d H:i:s'));
-    	if(($jetzt - $last) < 24*60*60)
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
+        if(($jetzt - $last) < 24*60*60)
     	{
     		return;
     	} 

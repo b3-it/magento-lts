@@ -207,7 +207,7 @@ abstract class Egovs_Paymentbase_Model_Debit extends Egovs_Paymentbase_Model_Abs
 		$file = $this->_getFilePath();
 
 		// Open file
-		$fp = fopen($file, 'r');
+		$fp = fopen($file, 'rb');
 		
 		while ($data = fgetcsv($fp, 1024, ";")) {
 			if ($data[0] == $blz) {

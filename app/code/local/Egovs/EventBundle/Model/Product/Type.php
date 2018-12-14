@@ -155,15 +155,21 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     		);
     
     		$options = $optionCollection->appendSelections($selectionCollection, false, $_appendAllSelections);
-    
+            $selections = [[]];
     		foreach ($options as $option) {
     			if (($option->getRequired() == 1) && count($option->getSelections()) == 1) {
-    				$selections = array_merge($selections, $option->getSelections());
+    				$selections[] = $option->getSelections();
     			} else {
-    				$selections = array();
+    				$selections = [[]];
     				break;
     			}
     		}
+            if (version_compare(PHP_VERSION, '5.6', '>=')) {
+                $selections = array_merge(...$selections);
+            } else {
+                /* PHP below 5.6 */
+                $selections = call_user_func_array('array_merge', $selections);
+            }
     	}
     	if (count($selections) > 0 || !$isStrictProcessMode) {
     		$uniqueKey = array($product->getId());

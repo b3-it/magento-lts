@@ -155,7 +155,7 @@ class Egovs_Base_Model_Sales_Order_Pdf_Addresslabel extends Mage_Sales_Model_Ord
 	
 		$drawingString = iconv('UTF-8', 'UTF-16BE', $text);
 	     $characters = array();
-	     for ($i = 0; $i < strlen($drawingString); $i++) {
+	     for ($i = 0, $iMax = strlen($drawingString); $i < $iMax; $i++) {
 		         $characters[] = (ord($drawingString[$i++]) << 8) | ord
 			($drawingString[$i]);
 		     }

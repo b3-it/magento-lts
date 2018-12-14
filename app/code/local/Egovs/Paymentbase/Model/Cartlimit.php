@@ -44,7 +44,6 @@ class Egovs_Paymentbase_Model_Cartlimit extends Egovs_Paymentbase_Model_Abstract
 	 */
 	protected function _authorize(Varien_Object $payment, $amount) {
 		//dummy zur nutzung der abstrakten Basisklasse
-		return;
 	}
 	
 }

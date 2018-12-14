@@ -424,7 +424,7 @@ class Egovs_Paymentbase_Model_Payplace_WsdlClass extends stdClass implements Arr
     	}
     	
     	$port = 8080;
-    	if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
+    	if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')) > 0) {
     		$port =  Mage::getStoreConfig('web/proxy/proxy_port');
     	}
     	

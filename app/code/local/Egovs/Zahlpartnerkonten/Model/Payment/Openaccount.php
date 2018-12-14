@@ -104,10 +104,8 @@ class Egovs_Zahlpartnerkonten_Model_Payment_Openaccount extends Egovs_Openaccoun
 		);
 			
 		// Webservice aufrufen
-		$objResult = null;
-		
 		$objResult = $this->_getSoapClient()->ueberweisenNachLieferungMitBLP($this->_getECustomerId(), $objBuchungsliste, $this->getBuchungsListeParameter($payment, $amount));
-		if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+		if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 			//Fallback zu alter Methode
 			Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 		        $objResult = $this->_getSoapClient()->ueberweisenNachLieferung($this->_getECustomerId(), $objBuchungsliste);
