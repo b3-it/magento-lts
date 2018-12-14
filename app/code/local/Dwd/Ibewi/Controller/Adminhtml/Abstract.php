@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
+
 /**
  * Dwd Ibewi Reports
  *

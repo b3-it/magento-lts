@@ -66,6 +66,5 @@ class Dwd_Stationen_IndexController extends Mage_Core_Controller_Front_Action
     	</items>";
     	
     	$this->getResponse()->setBody($res);
-    	return;
     }
 }

@@ -279,7 +279,8 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     	//Egovs_Helper::printMemUsage('addAttributeNameValuePair<=');
     	$model = Dwd_Icd_Model_Account_Attributes::getAttribute($this->getAccount(), $name."=".$value);
     	$success  = true;
-    	$this->setLog(sprintf('addAttributeNameValuePair Account %s %s=%s Count %i ',$this->getAccount()->getLogin(), $name, $value, $model->getCount()));
+        /** @noinspection PrintfScanfArgumentsInspection */
+        $this->setLog(sprintf('addAttributeNameValuePair Account %s %s=%s Count %i ',$this->getAccount()->getLogin(), $name, $value, $model->getCount()));
     	if($model->getCount() == 0)
     	{
     		$success = $this->_addAttributeNameValuePair($name,$value);
@@ -318,6 +319,7 @@ class Dwd_Icd_Model_Orderitem extends Dwd_Icd_Model_Abstract
     {
     	$model = Dwd_Icd_Model_Account_Attributes::getAttribute($this->getAccount(), $name."=".$value);
     	$success  = true;
+        /** @noinspection PrintfScanfArgumentsInspection */
     	$this->setLog(sprintf('removeAttributeNameValuePair Account %s %s=%s Count %i ',$this->getAccount()->getLogin(), $name, $value, $model->getCount()));
     	if($model->getCount() == 1)
     	{

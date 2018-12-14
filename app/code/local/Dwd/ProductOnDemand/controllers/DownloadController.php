@@ -143,7 +143,8 @@ class Dwd_ProductOnDemand_DownloadController extends Mage_Downloadable_DownloadC
     		//Zeit in Tagen
     		$storageTime = $product->getPodStorageTime();
     		//Tage in Sekunden
-    		$storageTime = $storageTime * 86400;
+            /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
+            $storageTime = $storageTime * 86400;
     		$validTo = date(Varien_Date::DATETIME_PHP_FORMAT, time() + $storageTime);
     		$item->setValidTo($validTo);
     	}

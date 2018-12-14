@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
 
 class Dwd_Periode_Model_Periode extends Mage_Core_Model_Abstract
 {

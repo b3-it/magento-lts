@@ -330,6 +330,7 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
     protected function _initTypeModels()
     {
         $config = Mage::getConfig()->getNode(self::CONFIG_KEY_PRODUCT_TYPES)->asCanonicalArray();
+        $this->_particularAttributes = [[]];
         foreach ($config as $type => $typeModel) {
             if (!($model = Mage::getModel($typeModel, array($this, $type)))) {
                 Mage::throwException("Entity type model '{$typeModel}' is not found");
@@ -342,11 +343,15 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
             if ($model->isSuitable()) {
                 $this->_productTypeModels[$type] = $model;
             }
-            $this->_particularAttributes = array_merge(
-                $this->_particularAttributes,
-                $model->getParticularAttributes()
-            );
+            $this->_particularAttributes[] = $model->getParticularAttributes();
         }
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $this->_particularAttributes = array_merge(...$this->_particularAttributes);
+        } else {
+            /* PHP below 5.6 */
+            $this->_particularAttributes = call_user_func_array('array_merge', $this->_particularAttributes);
+        }
+
         // remove doubles
         $this->_particularAttributes = array_unique($this->_particularAttributes);
 
@@ -511,13 +516,11 @@ class Dwd_Abomigration_Model_Import_Entity_Abo extends Mage_ImportExport_Model_I
     
     protected function getPeriodeId($product_id)
     {
-    	
-    
     	if($this->_lastProductId4Periode == $product_id)
     	{
     		return $this->_lastPeriodeId;
     	}
-    	$this->_lastPeriodeId == null;
+    	$this->_lastPeriodeId = null;
     	/* @var $product Mage_Catalog_Model_Product */
     	$collection = Mage::getModel('periode/periode')->getCollection();
     	$collection->getSelect()->where('product_id=?', $product_id);

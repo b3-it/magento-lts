@@ -406,7 +406,8 @@ class Dwd_AutoFileAssignment_Model_Assigner extends Mage_Core_Model_Abstract
 
 		$storagePath = $this->getConfigStorage();
 		if (!file_exists($storagePath)) {
-			if (!mkdir($storagePath, 0777, true)) {
+            /** @noinspection MkdirRaceConditionInspection */
+            if (!mkdir($storagePath, 0777, true)) {
 				$message = Mage::helper('dwdafa')->__("Can't create %s directory.", $storagePath);
 				Mage::helper('dwdafa')->sendMailToAdmin("dwdafa::".$message);
 				Mage::throwException($message);
@@ -443,7 +444,7 @@ class Dwd_AutoFileAssignment_Model_Assigner extends Mage_Core_Model_Abstract
 		$filesToDeleteErrors = 0;
 		$exceptionToThrow = null;
 
-		for ($i = 0; $i < 2 && !($_lastDbProcessResult = $this->_processDbData()); $i++);
+		for ($i = 0; $i < 2 && !($_lastDbProcessResult = $this->_processDbData()); $i++) /** @noinspection SuspiciousSemicolonInspection */;
 		if (!$_lastDbProcessResult) {
 			$message = "dwdafa::".Mage::helper('dwdafa')->__("Processing DB data failed, see log file for further information!");
 			Mage::helper('dwdafa')->sendMailToAdmin($message);
@@ -820,12 +821,23 @@ class Dwd_AutoFileAssignment_Model_Assigner extends Mage_Core_Model_Abstract
 			Mage::log(sprintf('dwdafa::glob function throws error for paths, check your log files. Pattern:%s', $pattern), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
 			$paths = array();
 		}
-		foreach ($paths as $path) {
+        /* the inner empty array covers cases when no loops were made */
+		$mergedFiles = [[]];
+        /** @noinspection SuspiciousLoopInspection */
+        foreach ($paths as $path) {
 			if (strpos($path, Mage::getBaseDir('media').DS.'downloadable') !== false) {
 				continue;
 			}
-			$files = array_merge($files, $this->rglob($pattern, $flags, $path));
+			$mergedFiles[] = $this->rglob($pattern, $flags, $path);
 		}
+		if (version_compare(PHP_VERSION, '5.6', '>=')) {
+		    $mergedFiles = array_merge(...$mergedFiles);
+        } else {
+            /* PHP below 5.6 */
+            $mergedFiles = call_user_func_array('array_merge', $mergedFiles);
+        }
+		$files = array_merge($files, $mergedFiles);
+
 		return $files;
 	}
 }

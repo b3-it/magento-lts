@@ -237,7 +237,7 @@ class Dwd_Icd_Model_Webservice_IcdServices extends Varien_Object
 	
 	public function isAlive()
 	{
-		$this->_soapClient == null;
+		$this->_soapClient = null;
 		$this->_options['cache_wsdl'] = WSDL_CACHE_NONE;
 		//$this->_getSoapClient()->setWsdlCache(null);
 		$this->_getSoapClient()->getFunctions();

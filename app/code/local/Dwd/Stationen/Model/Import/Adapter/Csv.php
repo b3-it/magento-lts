@@ -173,7 +173,7 @@ class Dwd_Stationen_Model_Import_Adapter_Csv extends Mage_ImportExport_Model_Imp
     public function translateColNames()
     {
     
-    	for($i = 0; $i < count($this->_colNames);$i++)
+    	for($i = 0, $iMax = count($this->_colNames); $i < $iMax; $i++)
     	{
     		if(trim($this->_colNames[$i]) == 'KENN'){
     			$this->_colNames[$i] = 'stationskennung';

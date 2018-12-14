@@ -147,7 +147,6 @@ class Dwd_Abomigration_Model_Import_Adapter_Csv extends Mage_ImportExport_Model_
 
     public function translateColNames()
     {
-    	return;
     	/*
         foreach( $this->_colNames AS $key => $val )
         {
