@@ -106,10 +106,10 @@ class Slpb_Shipping_Model_Mysql4_Tablerate extends Mage_Core_Model_Mysql4_Abstra
     protected function _getCsvValues($string, $separator=",")
     {
         $elements = explode($separator, trim($string));
-        for ($i = 0; $i < count($elements); $i++) {
+        for ($i = 0, $iMax = $jMax = count($elements); $i < $iMax; $i++) {
             $nquotes = substr_count($elements[$i], '"');
             if ($nquotes %2 == 1) {
-                for ($j = $i+1; $j < count($elements); $j++) {
+                for ($j = $i+1; $j < $jMax; $j++) {
                     if (substr_count($elements[$j], '"') > 0) {
                         // Put the quoted string's pieces back together again
                         array_splice($elements, $i, $j-$i+1, implode($separator, array_slice($elements, $i, $j-$i+1)));

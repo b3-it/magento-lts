@@ -50,7 +50,7 @@ class Slpb_Extstock_Adminhtml_Extstock_WarningController extends Slpb_Extstock_C
 		$amounts = explode(',',$params['amount_to_order']);
 		$packages = explode(',',$params['package']);
 		$move = array();
-		for($i = 0; $i < count($products);$i++)
+		for($i = 0, $iMax = count($products); $i < $iMax; $i++)
 		{
 			$product = $products[$i];
 			$destination = $destinations[$i];
@@ -139,14 +139,6 @@ class Slpb_Extstock_Adminhtml_Extstock_WarningController extends Slpb_Extstock_C
     public function gridAction()
     {
     	$this->_forward('index');
-			return;
-		//datums button f�r massaktionen funktionert nicht mit ajax
-			/*
-    	$this->loadLayout();
-        $this->getResponse()->setBody(
-            $this->getLayout()->createBlock('extstock/adminhtml_warning_grid')->toHtml()
-        );
-        */
     }
  
 

@@ -166,6 +166,7 @@ class Slpb_Product_Adminhtml_Slpbproduct_OrderController extends Mage_Adminhtml_
         
         $flag = false;
         if (!empty($orderIds)) {
+            $_pages = [[]];
             foreach ($orderIds as $orderId) {
                 $order = Mage::getModel('sales/order')->load($orderId);
                 $shipments = Mage::getResourceModel('sales/order_shipment_collection')
@@ -183,10 +184,17 @@ class Slpb_Product_Adminhtml_Slpbproduct_OrderController extends Mage_Adminhtml_
                         $pdf = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
                     } else {
                         $pages = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
-                        $pdf->pages = array_merge ($pdf->pages, $pages->pages);
+                        $_pages[] = $pages->pages;
                     }
                 }
             }
+            if (version_compare(PHP_VERSION, '5.6', '>=')) {
+                $_pages = array_merge(...$_pages);
+            } else {
+                /* PHP below 5.6 */
+                $_pages = call_user_func_array('array_merge', $_pages);
+            }
+            $pdf->pages = array_merge ($pdf->pages, $_pages);
             if ($flag) {
                 return $this->_prepareDownloadResponse('packingslip'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(), 'application/pdf');
             } else {

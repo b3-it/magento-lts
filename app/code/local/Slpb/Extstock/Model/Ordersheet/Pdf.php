@@ -69,21 +69,17 @@ class Slpb_Extstock_Model_Ordersheet_Pdf extends Varien_Object
 			$this->odd = true;	
             foreach ($items as $item){
                 
-            	if($this->odd) 
-            		$this->_page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
-        		else 
-        			$this->_page->setFillColor(new Zend_Pdf_Color_GrayScale(0.9)); 
+            	if ($this->odd) {
+                    $this->_page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
+                } else {
+                    $this->_page->setFillColor(new Zend_Pdf_Color_GrayScale(0.9));
+                }
             	
-                $this->_drawItem($item);
-                $this->odd =! $this->odd;
-           
-                
+        		$this->_drawItem($item);
 
             	if ($this->_y > 270) {
             		$this->_y = 20;
                     $this->_page = $this->newPage();
-                   
-                   
                 }
             }
            // $this->insertTotals($this->_page,$invoice);
@@ -354,7 +350,7 @@ class Slpb_Extstock_Model_Ordersheet_Pdf extends Varien_Object
 	
 		$drawingString = iconv('UTF-8', 'UTF-16BE', $text);
 	     $characters = array();
-	     for ($i = 0; $i < strlen($drawingString); $i++) {
+	     for ($i = 0, $iMax = strlen($drawingString); $i < $iMax; $i++) {
 		         $characters[] = (ord($drawingString[$i++]) << 8) | ord
 			($drawingString[$i]);
 		     }

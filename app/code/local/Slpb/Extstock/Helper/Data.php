@@ -75,7 +75,7 @@ class Slpb_Extstock_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 			
 			
-			for($i = 0; $i < count($products);$i++)
+			for($i = 0, $iMax = count($products); $i < $iMax; $i++)
 			{
 				$product = $products[$i];
 				$destination = $destinations[$i];

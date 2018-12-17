@@ -62,6 +62,7 @@ class Slpb_Extstock_Block_Adminhtml_Widget_Columnrenderaction extends Mage_Admin
             	    if(is_array($action['url'])) {
             	        $params = array($action['field']=>$this->_getValue($row));
             	        if(isset($action['url']['params'])) {
+                            /** @noinspection SlowArrayOperationsInLoopInspection */
                             $params = array_merge($action['url']['params'], $params);
                 	    }
                 	    $action['href'] = $this->getUrl($action['url']['base'], $params);
