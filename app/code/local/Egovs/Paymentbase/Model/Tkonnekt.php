@@ -392,29 +392,13 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 	/**
 	 * Liefert die PayerNote
 	 *
-	 * Falls es keine PayerNote gibt wird:
-	 * <ul>
-	 * 	<li>Beschreibung</li>
-	 * 	<li>Titel</li>
-	 * 	<li>Zahlung per Saferpay</li>
-	 * </ul>
-	 * als Alternative geliefert.
+	 * Falls es keine PayerNote gibt wird null zurückgegeben
 	 *
-	 * @return string
+	 * @return string|null
          */
 	protected function _getPayerNote() {
 		if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/payernote")) <= 0) {
-			//Wenn Payernote nicht gefüllt ist
-			if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/description")) <= 0) {
-				//Wenn Description nicht gefüllt
-	        	if (strlen(Mage::getStoreConfig("payment/{$this->getCode()}/title")) <= 0) {
-	        		$desc = "Zahlung per TKonnekt";
-	        	} else {
-	        		$desc = Mage::getStoreConfig("payment/{$this->getCode()}/title");
-	        	}
-	        } else {
-	        	$desc = Mage::getStoreConfig("payment/{$this->getCode()}/description");
-	        }
+			$desc = null;
 		} else {
 			$desc = Mage::getStoreConfig("payment/{$this->getCode()}/payernote");
 		}
@@ -460,7 +444,11 @@ abstract class Egovs_Paymentbase_Model_Tkonnekt extends Egovs_Paymentbase_Model_
 
         $this->_fieldsArr['merchantTxId'] = $this->getTransactionId();
 
-        $this->_fieldsArr['purpose'] = "{$this->_fieldsArr['merchantTxId']} : $desc";
+        if (!empty($desc)) {
+            $this->_fieldsArr['purpose'] = "{$this->_fieldsArr['merchantTxId']}:$desc";
+        } else {
+            $this->_fieldsArr['purpose'] = $this->_fieldsArr['merchantTxId'];
+        }
 
 		//Call to the implementation method for childrens
 		$this->_getTkonnektRedirectUrl();
