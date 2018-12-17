@@ -105,7 +105,7 @@ class Stala_Abo_Adminhtml_Stalaabo_Contract_CreateController extends Mage_Adminh
     	if(isset($data['billing_adr']))$contract->setBillingAddressId($data['billing_adr']);
     	
     	$items=array();
-	    for($i = 0; $i < count($data['items']['id']); $i++)
+	    for($i = 0, $iMax = count($data['items']['id']); $i < $iMax; $i++)
 	    {
 		    	$item = new Varien_Object();	
 		    	$item->setId($data['items']['id'][$i]);
@@ -155,7 +155,7 @@ class Stala_Abo_Adminhtml_Stalaabo_Contract_CreateController extends Mage_Adminh
 	    		$fromDate = Mage::app()->getLocale()->date($contract['from_date'],Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT));
 	    		//$fromDate =($contract['from_date']);
 	    		
-	    		for($i = 0; $i < count($contract['items']['id']); $i++)
+	    		for($i = 0, $iMax = count($contract['items']['id']); $i < $iMax; $i++)
 	    		{
 		    		$item = Mage::getModel('stalaabo/contract');
 		    		$item->setBaseProductId($contract['items']['id'][$i])
