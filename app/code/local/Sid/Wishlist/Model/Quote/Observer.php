@@ -84,6 +84,7 @@ class Sid_Wishlist_Model_Quote_Observer extends Mage_Core_Model_Abstract
 	
 		$lifetimes = Mage::getConfig()->getStoresConfigByPath('sidwishlist/general/delete_quote_after');
 		foreach ($lifetimes as $storeId=>$lifetime) {
+            /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
 			$lifetime *= 86400;
 	
 			/* @var $quotes Sid_Wishlist_Model_Resource_Quote_Collection */

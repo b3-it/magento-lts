@@ -75,10 +75,11 @@ class Sid_Haushalt_Model_Export_Type_Lg04_Format extends Sid_Haushalt_Model_Expo
 		{
 			$this->_FieldsAsAssoc = array();
 			$head = array('nr','name','art','headline','posline','textline','laenge','von','bis','text');
+            $iMax = count($head);
 			foreach($this->_getFieldDescription() as  $idx => $field)
 			{
 				$line = array();
-				for($i =0; $i < count($head);$i++)
+				for($i =0; $i < $iMax; $i++)
 				{
 					$line[$head[$i]] = $field[$i];
 				}

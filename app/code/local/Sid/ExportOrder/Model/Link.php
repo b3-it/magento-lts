@@ -40,7 +40,7 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     public static function create($vendorId)
     {
     	$model = Mage::getModel('exportorder/link');
-    	$random = rand(1,100)."";
+    	$random = mt_rand(1,100)."";
     	$res = self::getRandomString(10);
     	$res .= time()."";
     	$res .= $vendorId."";
@@ -100,7 +100,9 @@ class Sid_ExportOrder_Model_Link extends Mage_Core_Model_Abstract
     	try
     	{
     		if(!file_exists($dir)){
-    			mkdir($dir);
+                if (!mkdir($dir) && !is_dir($dir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+                }
     		}
     
     	}catch (Exception $ex){

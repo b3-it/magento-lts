@@ -476,8 +476,7 @@ class Sid_Checkout_MultishippingController extends Mage_Checkout_Controller_Acti
     	$qty = $this->getRequest()->getParam('qty');
     	$this->_getCheckout()->takeItems($id,$adr,$qty);
     	$this->getResponse()
-    	 	->setBody($this->getLayout()->createBlock('sidcheckout/multishipping_quoteitems')->toHtml());  	 	
-    	 	return;
+    	 	->setBody($this->getLayout()->createBlock('sidcheckout/multishipping_quoteitems')->toHtml());
     }
     
     public function putbackItemAction()
@@ -487,8 +486,7 @@ class Sid_Checkout_MultishippingController extends Mage_Checkout_Controller_Acti
     	$qty = $this->getRequest()->getParam('qty');
     	$this->_getCheckout()->putbackItems($id,$adr,$qty);
     	$this->getResponse()
-    	 	->setBody($this->getLayout()->createBlock('sidcheckout/multishipping_quoteitems')->toHtml());  	 	
-    	 	return;
+    	 	->setBody($this->getLayout()->createBlock('sidcheckout/multishipping_quoteitems')->toHtml());
     }
     
     

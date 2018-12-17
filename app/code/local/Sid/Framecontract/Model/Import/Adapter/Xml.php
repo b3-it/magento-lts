@@ -158,8 +158,6 @@ class Sid_Framecontract_Model_Import_Adapter_Xml extends Mage_ImportExport_Model
     
     public function translateColNames()
     {
-    	return;
-    	
     }
 
     public function current()
