@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -71,7 +71,6 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
              * backward compatibility with db argument (option is @deprecated after 1.12.0.2)
              */
             case 'db':
-                $moduleName = 'user';
                 /* @var $sessionResource Mage_Core_Model_Resource_Session */
                 $sessionResource = Mage::getResourceSingleton('core/session');
                 $sessionResource->setSaveHandler();
@@ -87,9 +86,9 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
                 }
             default:
                 session_save_path($this->getSessionSavePath());
+                session_module_name($moduleName);
                 break;
         }
-        session_module_name($moduleName);
 
         $cookie = $this->getCookie();
         if (Mage::app()->getStore()->isAdmin()) {
@@ -574,6 +573,11 @@ class Mage_Core_Model_Session_Abstract_Varien extends Varien_Object
         }
 
         $parts[self::VALIDATOR_SESSION_EXPIRE_TIMESTAMP] = time() + $this->getCookie()->getLifetime();
+
+        if (isset($this->_data['visitor_data']['customer_id'])) {
+            $parts[self::VALIDATOR_PASSWORD_CREATE_TIMESTAMP] =
+                Mage::helper('customer')->getPasswordTimestamp($this->_data['visitor_data']['customer_id']);
+        }
 
         return $parts;
     }

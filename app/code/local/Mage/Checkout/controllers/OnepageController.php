@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Checkout
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -59,9 +59,11 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
         parent::preDispatch();
         $this->_preDispatchValidateCustomer();
 
+        // Disable flat for product collection
+        Mage::helper('catalog/product_flat')->disableFlatCollection(true);
+
         //warenkorb begrenzung
-        try
-        {
+        try {
         	$quote = $this->getOnepage()->getQuote();
         
         	Mage::dispatchEvent('checkout_entry_before', array('quote'=>$quote));
@@ -369,10 +371,6 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
     {
     	$this->setFlag('', 'no_regenerate_id', true);
         if ($this->_expireAjax()) {
-            return;
-        }
-
-        if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
             return;
         }
 

@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -222,15 +222,21 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
     }
     
     protected function _flatTree($tree) {
-    	$_new = array();
+    	$_new = [[]];
     	foreach ($tree as $key => $sub) {
     		if (is_array($sub)) {
     			$_subNew = $this->_flatTree($sub);
-    			$_new = array_merge($_new, $_subNew);
+    			$_new[] = $_subNew;
     		} else {
     			$_new[$key] = $sub;
     		}
     	}
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $_new = array_merge(...$_new);
+        } else {
+            /* PHP below 5.6 */
+            $_new = call_user_func_array('array_merge', $_new);
+        }
     	return $_new;
     }
     
