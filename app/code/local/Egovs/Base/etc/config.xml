@@ -730,9 +730,9 @@
             </invoice>
         </sales_email>
         <customer>
-        	<create_account>
-        		<register_user_on_login>1</register_user_on_login>
-        	</create_account>
+            <create_account>
+                <register_user_on_login>1</register_user_on_login>
+            </create_account>
             <guestrequired>
                 <prefix>opt</prefix>
                 <firstname>req</firstname>
@@ -778,6 +778,12 @@
                 <country_id>req</country_id>
             </shippingrequired>
         </customer>
+        <contacts>
+            <email>
+                <recipient_email><![CDATA[kontakt@testshop.org]]></recipient_email>
+                <sender_email_identity>eGov-Mustershop Kontakt</sender_email_identity>
+            </email>
+        </contacts>
     </default>
 
     <crontab>
