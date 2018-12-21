@@ -686,6 +686,12 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         Mage::helper('paymentbase');
         // Stop store emulation process
         $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+        /*
+         * #3257
+         * das Event sales_order_save_commit_after zum Aufruf von setLinkStatus in downloadable/observer wird
+         * für die Scopes adminhtml und frontend aufgerufen. Diese Scopes sind im CronJob aber standardmäßig nicht aktiv.
+         */
+        Mage::app()->loadAreaPart(Mage_Core_Model_App_Area::AREA_ADMINHTML, Mage_Core_Model_App_Area::PART_EVENTS);
 
         try {
             $paymentbase = Mage::getModel('paymentbase/paymentbase');
