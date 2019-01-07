@@ -115,7 +115,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		$collection = Mage::getModel('eventmanager/participant')->getCollection();
 		$collection->getSelect()
 		->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','created_at','base_grand_total','base_currency_code','base_total_paid'))
-		->join(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
+		->joinLeft(array('customer'=>$collection->getTable('customer/entity')),'order.customer_id = customer.entity_id',array('group_id'))
 		->columns(array('company'=>"TRIM(CONCAT(company,' ',company2,' ',company3))"))
 		->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
 		->columns(array('balance'=> new Zend_Db_Expr('base_grand_total - ifnull(base_total_paid, 0)')))
