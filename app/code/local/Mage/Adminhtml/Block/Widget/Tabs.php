@@ -222,19 +222,17 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
     }
     
     protected function _flatTree($tree) {
-    	$_new = [[]];
-    	foreach ($tree as $key => $sub) {
-    		if (is_array($sub)) {
-    			$_subNew = $this->_flatTree($sub);
-    			$_new[] = $_subNew;
-    		} else {
-    			$_new[$key] = $sub;
-    		}
-    	}
-        //The problem is that the "splat" operator (array unpacking operator or ...) does not work with associative arrays.
-        $_new = call_user_func_array('array_merge', $_new);
-
-    	return $_new;
+        $_new = array();
+        foreach ($tree as $key => $sub) {
+            if (is_array($sub)) {
+                $_subNew = $this->_flatTree($sub);
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $_new = array_merge($_new, $_subNew);
+            } else {
+                $_new[$key] = $sub;
+            }
+        }
+        return $_new;
     }
     
     protected function _buildDependsTabsTree(&$temp, &$keys, &$tree) {
