@@ -41,7 +41,9 @@ abstract class Egovs_Paymentbase_Model_Attributes_Source_Abstract extends Mage_E
  			}
 
             if ($withEmpty) {
-                $options = array('' => Mage::helper('paymentbase')->__("-- Bitte wählen --")) + $options;
+                $this->_options = array_reverse($this->_options, true);
+                $this->_options[''] = Mage::helper('paymentbase')->__("-- Bitte wählen --");
+                $this->_options = array_reverse($this->_options, true);
             }
         }
         return $this->_options;
