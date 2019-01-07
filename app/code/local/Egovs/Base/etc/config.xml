@@ -570,6 +570,13 @@
                     </pending_payment>
                 </statuses>
             </order>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <short_description/>
+                    </product_attributes>
+                </item>
+            </quote>
         </sales>
         <customer>
             <address_templates>

@@ -17,6 +17,9 @@ $_productname = $this->escapeHtml($this->getProductName());
             <div class="product-cart-sku">
                 <span class="label"><?php echo $this->__('SKU'); ?>:</span> <?php echo $this->escapeHtml($_item->getSku()); ?>
             </div>
+            <div class="short-description">
+                <?php echo $_item->getProduct()->getShortDescription(); ?>
+            </div>
         </div>
 
         <?php if ($_options = $this->getOptionList()):?>
