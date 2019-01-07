@@ -20,11 +20,11 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<table style="width:100%;">
+<table cellspacing="0" cellpadding="8" width="100%">
     <tbody>
         <?php echo $this->renderTotals(); ?>
         <?php echo $this->renderTotals('footer'); ?>
@@ -34,7 +34,7 @@
 <div class="order-totals-bottom">
     <p>
         <label for="notify_customer" class="normal"><?php echo Mage::helper('sales')->__('Append Comments') ?></label>
-        <input type="checkbox" id="notify_customer" name="order[comment][customer_note_notify]" value="1" <?php if($this->getNoteNotify()): ?>checked="checked"<?php endif; ?>/>
+        <input type="checkbox" id="notify_customer" name="order[comment][customer_note_notify]" value="1" <?php if($this->getNoteNotify()): ?>checked="true"<?php endif; ?>/>
     </p>
     <?php if ($this->canSendNewOrderConfirmationEmail()): ?>
     <p>

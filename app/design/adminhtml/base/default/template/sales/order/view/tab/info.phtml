@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -101,11 +101,44 @@
         </div>
     </div>
     <div class="box-right entry-edit">
-        <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order Totals') ?></h4></div>
-        <div class="order-totals"><?php echo $this->getChildHtml('order_totals') ?></div>
+        <div class="entry-edit-head"><h4><?php echo $this->__('Printing Notes') ?></h4></div>
+            <fieldset>
+                <form id="printing_note" method="POST" action="<?php echo $this->getUrl('adminhtml/sales_invoice_printingnote/save');?>">
+                    <input type="hidden" value="<?php echo $this->getOrder()->getId()?>" name="order_id" />
+                    <span class="field-row">
+                        <label class="normal" for="printnote1"><?php echo Mage::helper('sales')->__('Printing Note 1') ?></label>
+                        <input type="text" id="printnote1" name="printnote1" value="<?php echo $this->escapeHtml($this->getOrder()->getPrintnote1());?>" style="width:99%;" />
+                    </span>
+    
+                    <span class="field-row">
+                        <label class="normal" for="printnote2"><?php echo Mage::helper('sales')->__('Printing Note 2') ?></label>
+                        <input type="text" id="printnote2" name="printnote2" value="<?php echo $this->escapeHtml($this->getOrder()->getPrintnote2());?>" style="width:99%;" />
+                    </span>
+                    <div class="f-right">
+                        <button class="scalable save" type="button" id="submit_printingnote_button">
+                            <span><?php echo Mage::helper('sales')->__('Submit Notes') ?></span>
+                        </button>
+                        <script type="text/javascript">
+                            var msg_print_data_saved = "<?php echo Mage::helper('sales')->__('Data saved.') ?>";
+                            var msg_print_data_fail  = "<?php echo Mage::helper('sales')->__('Data saved failed.') ?>";
+                            var msg_print_data_200   = "<?php echo Mage::helper('sales')->__('Ok.') ?>";
+                            var msg_print_data_401   = "<?php echo Mage::helper('sales')->__('Unauthorized Request.') ?>";
+                            var msg_print_data_403   = "<?php echo Mage::helper('sales')->__('Access Forbidden.') ?>";
+                            var msg_print_data_404   = "<?php echo Mage::helper('sales')->__('Page nor Found.') ?>";
+                        </script>
+                        <script type="text/javascript" src="<?php echo $this->getJsUrl('lib/jquery/jquery-1.10.2.min.js'); ?>"></script>
+                        <script type="text/javascript" src="<?php echo $this->getJsUrl('lib/jquery/noconflict.js'); ?>"></script>
+                        <script type="text/javascript" src="<?php echo $this->getJsUrl('egovs/jquery.PrintingNote.js'); ?>"></script>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="box-right entry-edit">
+            <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order Totals') ?></h4></div>
+            <div class="order-totals"><?php echo $this->getChildHtml('order_totals') ?></div>
+        </div>
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
-</div>
 
 <?php echo $this->getChildHtml('popup_window');?>
 <script type="text/javascript">

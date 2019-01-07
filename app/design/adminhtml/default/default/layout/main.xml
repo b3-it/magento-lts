@@ -80,7 +80,7 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>mage/adminhtml/product.js</script></action>
 
                 <!-- jQuery per default into AdminHTML -->
-                <action method="addJs"><script>lib/jquery/jquery-1.10.2.js</script></action>
+                <action method="addJs"><script>lib/jquery/jquery-1.12.4.js</script></action>
                 <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
 
                 <action method="addCss"><name>reset.css</name></action>

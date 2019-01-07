@@ -20,14 +20,14 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 <?php $_shippingCarrier = $this->getOrder()->getShippingCarrier(); ?>
 <?php if ($_shippingCarrier && $_shippingCarrier->isTrackingAvailable()): ?>
 <span class="field-row" id="order_tracking_info">
-<table style="width:100%;">
+<table cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td><label for="tracking_number"><?php echo Mage::helper('sales')->__('Tracking Number') ?></label></td>
         <td width="100%">
