@@ -231,12 +231,9 @@ class Mage_Adminhtml_Block_Widget_Tabs extends Mage_Adminhtml_Block_Widget
     			$_new[$key] = $sub;
     		}
     	}
-        if (version_compare(PHP_VERSION, '5.6', '>=')) {
-            $_new = array_merge(...$_new);
-        } else {
-            /* PHP below 5.6 */
-            $_new = call_user_func_array('array_merge', $_new);
-        }
+        //The problem is that the "splat" operator (array unpacking operator or ...) does not work with associative arrays.
+        $_new = call_user_func_array('array_merge', $_new);
+
     	return $_new;
     }
     
