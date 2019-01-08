@@ -68,12 +68,17 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
                 $data['transfer']['client_ca'] = null;
             }
 
+            $_useClientCertCa = false;
+            if (isset($data['use_clientcert_ca'])) {
+                $_useClientCertCa = (bool)$data['use_clientcert_ca'];
+            }
+
             if(isset($_FILES['client_certificate']['name']) && $_FILES['client_certificate']['name'] != '') {
                 try {
                     $uploader = new Varien_File_Uploader('client_certificate');
-                    // Any extention would work
-                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
-                    $uploader->setValidMimeTypes(array('application/octet-stream', 'text/plain'));
+                    // Any extension would work
+                    $uploader->setAllowedExtensions(array('p12', 'pfx'));
+                    $uploader->setValidMimeTypes(array('application/x-pkcs12', 'application/octet-stream', 'text/plain'));
                     $uploader->setAllowRenameFiles(false);
                     $uploader->setFilesDispersion(true);
                     $uploader->setAllowCreateFolders(true);
@@ -81,8 +86,17 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
                     $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
                     $uploader->save($path);
 
+                    $_result = Mage::helper('exportorder')->convertPkcs12ToPem($uploader->getUploadedFileName(), $data['transfer']['client_certificate_pwd'], $_useClientCertCa);
+
+                    @unlink($uploader->getUploadedFileName());
+
                     //this way the name is saved in DB
-                    $data['transfer']['client_certificate'] = $uploader->getUploadedFileName();
+                    if (isset($_result['key'])) {
+                        $data['transfer']['client_certificate'] = $_result['key'];
+                    }
+                    if (isset($_result['ca'])) {
+                        $data['transfer']['client_ca'] = $_result['ca'];
+                    }
                 } catch (Exception $e) {
                     $msg = Mage::helper('framecontract')->__("Can't save client certificate! Error Message was: ");
                     $msg .= Mage::helper('framecontract')->__($e->getMessage());
