@@ -50,9 +50,11 @@ Default layout, loads most of the pages
         </reference>
     </default>
 
-    <checkout_cart_index>
+    <checkout_cart_index translate="label">
         <remove name="right"/>
-		<remove name="breadcrumbs"/>		
+		<remove name="breadcrumbs"/>
+
+		<label>SiD Checkout Cart Index</label>
   
         <!-- Mage_Checkout -->
         <reference name="root">
@@ -95,8 +97,9 @@ Multi address shipping checkout main layout,
 will be rendered on all checkout pages
 -->
 
-    <checkout_multishipping>
+    <checkout_multishipping translate="label">
         <!-- Mage_Checkout -->
+        <label>SiD Checkout Multishipping</label>
         <remove name="right"/>
         <remove name="left"/>
 
@@ -120,7 +123,8 @@ will be rendered on all checkout pages
 Multi address shipping checkout selection of address per item page
 -->
 
-    <checkout_multishipping_address_select>
+    <checkout_multishipping_address_select translate="label">
+        <label>SiD Checkout Multishipping Address select</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -128,7 +132,8 @@ Multi address shipping checkout selection of address per item page
         </reference>
     </checkout_multishipping_address_select>
 
-    <checkout_multishipping_address_selectbilling>
+    <checkout_multishipping_address_selectbilling translate="label">
+        <label>SiD Checkout Multishipping Address select billing</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -172,7 +177,8 @@ Multi address shipping checkout selection of address per item page
 Multi address shipping checkout address page
 -->
 
-    <checkout_multishipping_addresses>
+    <checkout_multishipping_addresses translate="label">
+        <label>SiD Checkout Multishipping Addresses</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -188,7 +194,8 @@ Multi address shipping checkout address page
 Multi address shipping checkout shipping information
 -->
 
-    <checkout_multishipping_shipping>
+    <checkout_multishipping_shipping translate="label">
+        <label>SiD Checkout Multishipping Shipping</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -210,7 +217,8 @@ Multi address shipping checkout shipping information
 Multi address shipping checkout billing information
 -->
 
-    <checkout_multishipping_billing>
+    <checkout_multishipping_billing translate="label">
+        <label>SiD Checkout Multishipping Billing</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -231,7 +239,8 @@ Multi address shipping checkout billing information
 Multi address shipping checkout overview
 -->
 
-    <checkout_multishipping_overview>
+    <checkout_multishipping_overview translate="label">
+        <label>SiD Checkout Multishipping Overview</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
@@ -252,7 +261,8 @@ Multi address shipping checkout overview
 Multi address shipping checkout success
 -->
 
-    <checkout_multishipping_success>
+    <checkout_multishipping_success translate="label">
+        <label>SiD Checkout Multishipping Success</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">

@@ -23,6 +23,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 		$buyRequest->setData('periode',$aboitem->getPeriodId());
 		$buyRequest->setData('station',$aboitem->getStationId());
 		
+		$product->setAboItem($aboitem);
 		$item = $quote->addProduct($product, $buyRequest);
 		$item->setQty(1);
 		
@@ -32,6 +33,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         $item->addOption(array('code'=>'periode_id','value'=>$aboitem->getPeriodId()));
         $item->addOption(array('code'=>'station_id','value'=>$aboitem->getStationId()));
         $item->addOption(array('code'=>'previous_periode_end','value'=>$aboitem->getStopDate()));
+      
        
         $p = Mage::getModel('periode/periode')->load($aboitem->getPeriodId());
         $item->setPeriode($p);
@@ -171,7 +173,6 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 				        		$orderItem->save();
 		        			}
 	        			}
-		        		
 	        		}
 	        	}
 	        	
@@ -188,7 +189,8 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
         }
         catch (Exception $ex)
         {
-        	$this->onFailure($order,$quote);
+        	$this->onFailure($order,$quote, $ex);
+        	Mage::logException($ex);
         }
         $quote->setIsActive(false)->save();
         
@@ -289,7 +291,8 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
      * @param Mage_Sales_Model_Quote $quote
      * @return Dwd_Abo_Model_Order_Abstract
      */
-    public function onFailure($order,$quote)
+   
+    public function onFailure($order,$quote, $ex = null)
     {
     	
     	
@@ -297,11 +300,13 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
     	if(!$quote->getIsBatchOrder()){
     		return $this;
     	}
-    	
-    	
-    	$order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED,"Fehler bei der Aboverlängerung",false);
-    	$order->save();
+
+    	if($order) {
+            $order->setState(Mage_Sales_Model_Order::STATE_CANCELED, Mage_Sales_Model_Order::STATE_CANCELED, "Fehler bei der Aboverlängerung", false);
+            $order->save();
+        }
     	$aboIds = array();
+
     	foreach ($quote->getAllItems() as $quoteitem)
     	{
     	
@@ -309,8 +314,13 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
     		$aboIds[] = $a->getId();
     	}
     	$msg = "Die Abo(s) mit den Id(s) ". implode(',', $aboIds)." konnte(n) nicht verlängert werden." ;
-    	$msg .= " Die Bestellung " . $order->getIncrementId() ." wurde storniert.";
-    	$msg .= " Meldung: " . $ex->getMessage();
+    	
+    	if($order) {
+            $msg .= " Die Bestellung " . $order->getIncrementId() . " wurde storniert.";
+        }
+    	if($ex) {
+            $msg .= " Meldung: " . $ex->getMessage();
+        }
     	$this->sendMailToAdmin($msg);
     }
     

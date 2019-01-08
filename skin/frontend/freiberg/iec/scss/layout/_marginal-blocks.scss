@@ -1,0 +1,128 @@
+//
+// @category    design
+// @package     freiberg_iec
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Marginal-Block
+ * ============================================ */
+.block {
+	border: $global-active-border solid $global-border-color;
+	margin-bottom: $global-boxmargin;
+	display: block;
+	background-color: $global-wrapper-color;
+
+	.block-title {
+	    color: $global-fontcolor-light;
+	    font-size: $global-fontsize-big;
+	    font-weight: normal;
+        background-color: $global-box-title-backgroundcolor;
+        border-bottom: $global-box-border-bottom solid $global-box-bordercolor;
+        padding-top: $global-box-title-padding-top;
+        padding-right: $global-box-title-padding-right;
+        padding-bottom: $global-box-title-padding-bottom;
+        padding-left: $global-box-title-padding-left;
+
+        @include bp(max-width, $bp-medium) {
+            padding: 0;
+            margin-top: 0;
+            border-bottom: none;
+            border-top: none;
+            margin-bottom: 0;
+
+            > strong {
+                @include accordionDtBase('right', $global-border-color);
+                display: block;
+                width: 100%;
+                cursor: pointer;
+                border-bottom: 0;
+            }
+
+            &.active {
+                > strong {
+                    @include accordionDtBase('down', $global-border-color);
+                }
+            }
+        }
+	}
+
+	.block-content {
+	    margin-top: $blobal-blockcontent-margintop;
+        margin-bottom: $blobal-blockcontent-marginbottom;
+        margin-left: $blobal-blockcontent-marginleft;
+        margin-right: $blobal-blockcontent-marginright;
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            margin: 0;
+        }
+
+        input[type="checkbox"].validation-passed {
+            outline: 2px solid $global-warning-color;
+        }
+
+        li {
+            margin-top: $box-spacing;
+            margin-bottom: 0;
+
+            input {
+                width: auto;
+                float: left;
+            }
+        }
+
+        li.item {
+            margin: 0 0 $box-spacing 9px;
+        }
+        li.item:last-child {
+            margin-bottom: 0;
+        }
+
+        .validation-advice {
+            display: block;
+            margin: 10px 0px;
+            color: $global-warning-color;
+            font-weight: bold;
+        }
+
+        .sub-items {
+            li {
+                margin: 0;
+            }
+            a, div, span {
+                display: inline-block;
+            }
+
+            .price {
+                float: right;
+            }
+        }
+
+        &.unpad {
+            padding: 0;
+        }
+
+        @include bp(max-width, $bp-medium) {
+            padding: $box-spacing;
+            margin-top: 0;
+            border-width: 0 $global-box-border;
+            border-style: solid;
+            border-color: $global-border-color;
+        }
+	}
+
+	&:last-of-type {
+	    margin-bottom: 0;
+
+	    @include bp(max-width, $bp-medium) {
+	        border-bottom: $global-box-border solid $global-border-color;
+	    }
+	}
+}
+
+
+.block-subscribe, #is_subscribed, #is-subscribed, .newsletter-manage-index .my-account {
+    display: none !important;
+}

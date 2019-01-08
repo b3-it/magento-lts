@@ -26,39 +26,48 @@ $sql = array(
 		'deleteLog' => array(
 				1  => array(
 						'action' => 'log_customer',
-						'query'  => 'DELETE IGNORE FROM `log_customer`;'
+						'query'  => 'TRUNCATE `log_customer`;',
+                        'after'  => 'ALTER TABLE `log_customer` AUTO_INCREMENT=1;',
 				),
 				2  => array(
 						'action' => 'log_quote',
-						'query'  => 'DELETE IGNORE FROM `log_quote`;'
+						'query'  => 'TRUNCATE `log_quote`;',
+                        'after'  => 'ALTER TABLE `log_quote` AUTO_INCREMENT=1;',
 				),
 				3  => array(
 						'action' => 'log_summary',
-						'query'  => 'DELETE IGNORE FROM `log_summary`;'
+						'query'  => 'TRUNCATE `log_summary`;',
+                        'after'  => 'ALTER TABLE `log_summary` AUTO_INCREMENT=1;',
 				),
 				4  => array(
 						'action' => 'log_summary_type',
-						'query'  => 'DELETE IGNORE FROM `log_summary_type`;'
+						'query'  => 'TRUNCATE `log_summary_type`;',
+                        'after'  => 'ALTER TABLE `log_summary_type` AUTO_INCREMENT=1;',
 				),
 				5  => array(
 						'action' => 'log_url',
-						'query'  => 'DELETE IGNORE FROM `log_url`;'
+						'query'  => 'TRUNCATE `log_url`;',
+                        'after'  => 'ALTER TABLE `log_url` AUTO_INCREMENT=1;',
 				),
 				6  => array(
 						'action' => 'log_url_info',
-						'query'  => 'DELETE IGNORE FROM `log_url_info`;'
+						'query'  => 'TRUNCATE `log_url_info`;',
+                        'after'  => 'ALTER TABLE `log_url_info` AUTO_INCREMENT=1;',
 				),
 				7  => array(
 						'action' => 'log_visitor',
-						'query'  => 'DELETE IGNORE FROM `log_visitor`;'
+						'query'  => 'TRUNCATE `log_visitor`;',
+                        'after'  => 'ALTER TABLE `log_visitor` AUTO_INCREMENT=1;',
 				),
 				8  => array(
 						'action' => 'log_visitor_info',
-						'query'  => 'DELETE IGNORE FROM `log_visitor_info`;'
+						'query'  => 'TRUNCATE `log_visitor_info`;',
+                        'after'  => 'ALTER TABLE `log_visitor_info` AUTO_INCREMENT=1;',
 				),
 				9  => array(
 						'action' => 'log_visitor_online',
-						'query'  => 'DELETE IGNORE FROM `log_visitor_online`;'
+						'query'  => 'TRUNCATE `log_visitor_online`;',
+                        'after'  => 'ALTER TABLE `log_visitor_online` AUTO_INCREMENT=1;',
 				),
 		),
 		'anonUser' => array(
@@ -175,6 +184,236 @@ $sql = array(
 						'query'  => "UPDATE `dataflow_batch_import` SET `batch_data` = ''"
 				),
 		),
+        'cleanCustomer' => array(
+        		1 => array(
+                        'action' => 'clean_customer_address_entity',
+                        'query'  => 'TRUNCATE `customer_address_entity`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                2 => array(
+                        'action' => 'clean_customer_address_entity_datetime',
+                        'query'  => 'TRUNCATE `customer_address_entity_datetime`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity_datetime` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                3 => array(
+                        'action' => 'clean_customer_address_entity_decimal',
+                        'query'  => 'TRUNCATE `customer_address_entity_decimal`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity_decimal` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                4 => array(
+                        'action' => 'clean_customer_address_entity_int',
+                        'query'  => 'TRUNCATE `customer_address_entity_int`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity_int` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                5 => array(
+                        'action' => 'clean_customer_address_entity_text',
+                        'query'  => 'TRUNCATE `customer_address_entity_text`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity_text` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                6 => array(
+                        'action' => 'clean_customer_address_entity_varchar',
+                        'query'  => 'TRUNCATE `customer_address_entity_varchar`;',
+                        'after'  => 'ALTER TABLE `customer_address_entity_varchar` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                7 => array(
+                        'action' => 'clean_customer_entity',
+                        'query'  => 'TRUNCATE `customer_entity`;',
+                        'after'  => 'ALTER TABLE `customer_entity` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                8 => array(
+                        'action' => 'clean_customer_entity_datetime',
+                        'query'  => 'TRUNCATE `customer_entity_datetime`;',
+                        'after'  => 'ALTER TABLE `customer_entity_datetime` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                9 => array(
+                        'action' => 'clean_customer_entity_decimal',
+                        'query'  => 'TRUNCATE `customer_entity_decimal`;',
+                        'after'  => 'ALTER TABLE `customer_entity_decimal` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                10 => array(
+                        'action' => 'clean_customer_entity_int',
+                        'query'  => 'TRUNCATE `customer_entity_int`;',
+                        'after'  => 'ALTER TABLE `customer_entity_int` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                11 => array(
+                        'action' => 'clean_customer_entity_text',
+                        'query'  => 'TRUNCATE `customer_entity_text`;',
+                        'after'  => 'ALTER TABLE `customer_entity_text` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                12 => array(
+                        'action' => 'clean_customer_entity_varchar',
+                        'query'  => 'TRUNCATE `customer_entity_varchar`;',
+                        'after'  => 'ALTER TABLE `customer_entity_varchar` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                13 => array(
+                        'action' => 'clean_sales_flat_order',
+                        'query'  => 'TRUNCATE `sales_flat_order`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                14 => array(
+                        'action' => 'clean_sales_flat_order_address',
+                        'query'  => 'TRUNCATE `sales_flat_order_address`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order_address` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                15 => array(
+                        'action' => 'clean_sales_flat_order_grid',
+                        'query'  => 'TRUNCATE `sales_flat_order_grid`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order_grid` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                16 => array(
+                        'action' => 'clean_sales_flat_order_item',
+                        'query'  => 'TRUNCATE `sales_flat_order_item`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order_item` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                17 => array(
+                        'action' => 'clean_sales_flat_order_status_history',
+                        'query'  => 'TRUNCATE `sales_flat_order_status_history`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order_status_history` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                18 => array(
+                        'action' => 'clean_sales_flat_quote',
+                        'query'  => 'TRUNCATE `sales_flat_quote`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                19 => array(
+                        'action' => 'clean_sales_flat_quote_address',
+                        'query'  => 'TRUNCATE `sales_flat_quote_address`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote_address` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                20 => array(
+                        'action' => 'clean_sales_flat_quote_address_item',
+                        'query'  => 'TRUNCATE `sales_flat_quote_address_item`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote_address_item` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                21 => array(
+                        'action' => 'clean_sales_flat_quote_item',
+                        'query'  => 'TRUNCATE `sales_flat_quote_item`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote_item` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                22 => array(
+                        'action' => 'clean_sales_flat_quote_item_option',
+                        'query'  => 'TRUNCATE `sales_flat_quote_item_option`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote_item_option` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                23 => array(
+                        'action' => 'clean_sales_flat_order_payment',
+                        'query'  => 'TRUNCATE `sales_flat_order_payment`;',
+                        'after'  => 'ALTER TABLE `sales_flat_order_payment` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                24 => array(
+                        'action' => 'clean_sales_flat_quote_payment',
+                        'query'  => 'TRUNCATE `sales_flat_quote_payment`;',
+                        'after'  => 'ALTER TABLE `sales_flat_quote_payment` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                25 => array(
+                        'action' => 'clean_sales_flat_shipment',
+                        'query'  => 'TRUNCATE `sales_flat_shipment`;',
+                        'after'  => 'ALTER TABLE `sales_flat_shipment` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                26 => array(
+                        'action' => 'clean_sales_flat_shipment_item',
+                        'query'  => 'TRUNCATE `sales_flat_shipment_item`;',
+                        'after'  => 'ALTER TABLE `sales_flat_shipment_item` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                27 => array(
+                        'action' => 'clean_sales_flat_shipment_grid',
+                        'query'  => 'TRUNCATE `sales_flat_shipment_grid`;',
+                        'after'  => 'ALTER TABLE `sales_flat_shipment_grid` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                28 => array(
+                        'action' => 'clean_sales_flat_invoice',
+                        'query'  => 'TRUNCATE `sales_flat_invoice`;',
+                        'after'  => 'ALTER TABLE `sales_flat_invoice` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                29 => array(
+                        'action' => 'clean_sales_flat_invoice_grid',
+                        'query'  => 'TRUNCATE `sales_flat_invoice_grid`;',
+                        'after'  => 'ALTER TABLE `sales_flat_invoice_grid` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                30 => array(
+                        'action' => 'clean_sales_flat_invoice_item',
+                        'query'  => 'TRUNCATE `sales_flat_invoice_item`;',
+                        'after'  => 'ALTER TABLE `sales_flat_invoice_item` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                31 => array(
+                        'action' => 'clean_sendfriend_log',
+                        'query'  => 'TRUNCATE `sendfriend_log`;',
+                        'after'  => 'ALTER TABLE `sendfriend_log` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                32 => array(
+                        'action' => 'clean_tag',
+                        'query'  => 'TRUNCATE `tag`;',
+                        'after'  => 'ALTER TABLE `tag` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                33 => array(
+                        'action' => 'clean_tag_relation',
+                        'query'  => 'TRUNCATE `tag_relation`;',
+                        'after'  => 'ALTER TABLE `tag_relation` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                34 => array(
+                        'action' => 'clean_tag_summary',
+                        'query'  => 'TRUNCATE `tag_summary`;',
+                        'after'  => 'ALTER TABLE `tag_summary` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                35 => array(
+                        'action' => 'clean_wishlist',
+                        'query'  => 'TRUNCATE `wishlist`;',
+                        'after'  => 'ALTER TABLE `wishlist` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                36 => array(
+                        'action' => 'clean_log_quote',
+                        'query'  => 'TRUNCATE `log_quote`;',
+                        'after'  => 'ALTER TABLE `log_quote` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                37 => array(
+                        'action' => 'clean_report_event',
+                        'query'  => 'TRUNCATE `report_event`;',
+                        'after'  => 'ALTER TABLE `report_event` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+                38 => array(
+                        'action' => 'clean_eav_entity_store',
+                        'query'  => 'TRUNCATE `eav_entity_store`;',
+                        'after'  => 'ALTER TABLE `eav_entity_store` AUTO_INCREMENT=1;',
+                        'secure' => TRUE
+                ),
+        ),
 );
 
 
@@ -188,19 +427,19 @@ $sql = array(
 function get_xml_data()
 {
 	global $config_xml, $data_xml;
-	
+
 	$fp   = fopen($config_xml, "r");
 	$data = fread($fp, filesize($config_xml));
 	fclose($fp);
-	
+
 	$xml_parser = xml_parser_create();
 	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, 0);
 	xml_parse_into_struct($xml_parser, $data, $vals, $index);
 	xml_parser_free($xml_parser);
-	
+
 	$params = array();
 	$level  = array();
-	
+
 	foreach ( $vals AS $xml_elem )
 	{
 		if ( $xml_elem['type'] == 'open' )
@@ -214,27 +453,27 @@ function get_xml_data()
 				$level[$xml_elem['level']] = $xml_elem['tag'];
 			}
 		}
-		
+
 		if ($xml_elem['type'] == 'complete')
 		{
 			$start_level = 1;
 			$php_stmt    = '$params';
-			
+
 			while( $start_level < $xml_elem['level'] )
 			{
 				$php_stmt .= '[$level['.$start_level.']]';
 				$start_level++;
 			}
-			
+
 			if ( isset($xml_elem['level']) AND isset($xml_elem['tag']) )
 			{
 				$php_stmt .= '[$xml_elem[\'tag\']] = $xml_elem[\'value\'];';
 			}
-			
+
 			eval($php_stmt);
 		}
 	}
-	
+
 	// DB-Verbindungs-Informationen zurückgeben
 	$data_xml = $params['config']['global']['resources']['default_setup']['connection'];
 }
@@ -247,22 +486,22 @@ function connect()
 {
 	// http://kushellig.de/prepared-statements-php-data-objects-pdo/
 	// http://culttt.com/2012/10/01/roll-your-own-pdo-php-class/
-	
+
 	global $data_xml;
-	
+
 	$host   = $data_xml['host'];
 	$dbname = $data_xml['dbname'];
 	$dbuser = $data_xml['username'];
 	$dbpw   = $data_xml['password'];
-	
+
 	$pdo = null;
-	
+
 	try
 	{
 		$pdo = new PDO("mysql:host=$host; dbname=$dbname", $dbuser, $dbpw);
 		$pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pdo -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		
+
 		return $pdo;
 	}
 	catch(PDOException $err)
@@ -279,14 +518,14 @@ function connect()
 function get_sql($query = '')
 {
 	$query = trim($query);
-	
+
 	if ( $query == '' )
 	{
 		$return = 'keine Abfrage!';
 	}
-	
+
 	$link = connect();
-	
+
 	if ( is_object($link) )
 	{
 		// Erfolg => PDO erzeugen und ausf�hren
@@ -313,11 +552,11 @@ function get_sql($query = '')
 function set_sql($query = '', $param = '', $value = '', $affected = false)
 {
 	global $last_err;
-	
+
 	$query = trim($query);
 	$param = trim($param);
 	$value = trim($value);
-	
+
 	if ( ($query == '') OR ($param == '') OR ($value == '') )
 	{
 		if ( is_null($value) OR !strlen($value) ) {
@@ -326,21 +565,21 @@ function set_sql($query = '', $param = '', $value = '', $affected = false)
 		else {
 			$last_err = 'Fehler bei der Daten&uuml;bergabe!';
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	$link = connect();
 	if ( is_object($link) )
 	{
 		// Erfolg => PDO erzeugen und ausführen
 		// http://www.mustbebuilt.co.uk/php/insert-update-and-delete-with-pdo/
-		
+
 		$return = array('error' => FALSE);
-		
+
 		// Damit das leeren auch durchläuft, FK-Check abschalten
 		$link -> exec("SET foreign_key_checks=0");
-		
+
 		try {
 			$result = $link -> prepare($query);
 			$result -> bindParam($param, $value, PDO::PARAM_STR);
@@ -351,7 +590,7 @@ function set_sql($query = '', $param = '', $value = '', $affected = false)
 			$last_err = $Exception -> getMessage();
 			$return['error']   = $Exception -> getCode();
 			$return['message'] = $Exception -> getMessage();
-			
+
 			return $return;
 		}
 
@@ -385,7 +624,7 @@ function transformToHtml($string)
 function extractTableName($query)
 {
 	$query_structure = explode(' ', strtolower( $query));
-	$key_words = array('table', 'update', 'from');
+	$key_words = array('table', 'update', 'from', 'truncate');
 	foreach( $query_structure AS $key => $val ) {
 		if ( in_array($val, $key_words) ) {
 			return str_replace(array('`', ';'), '', $query_structure[$key + 1]);
@@ -406,7 +645,7 @@ if ( isset($_POST['action']) ) {
 			$return['tables']['count'] = count($sql[$_POST['what']]);
 			$return['tables']['first'] = 1;
 			$return['tables']['init']  = transformToHtml($sql[$_POST['what']][1]['action']);
-			
+
 			foreach( $sql[$_POST['what']] AS $key => $val) {
 				$return['tables']['action'][] = array(
 													'name' => transformToHtml($val['action']),
@@ -419,7 +658,7 @@ if ( isset($_POST['action']) ) {
 			$return['tables']['count'] = count($tables);
 			$return['tables']['first'] = 1;
 			$return['tables']['init']  = transformToHtml($tables[0][0]);
-			
+
 			foreach( $tables AS $key => $table) {
 				$return['tables']['action'][] = array(
 													'name'  => transformToHtml($table[0]),
@@ -442,7 +681,7 @@ if ( isset($_POST['action']) ) {
     	$position = intval($_POST['start']);
     	$action   = trim($_POST['what']);
     	$next     = $position + 1;
-    	
+
     	if ( array_key_exists($_POST['what'], $sql) ) {
     		if ( ( $position > 0 ) AND ( $position <= count($sql[$_POST['what']]) ) ) {
     			$query = $sql[$_POST['what']][$position]['query'];
@@ -450,8 +689,20 @@ if ( isset($_POST['action']) ) {
     			$table = extractTableName($query);
 
     			if ( ( $resticted_host === FALSE ) OR ($_POST['what'] == 'deleteLog') ) {
+                    if ( array_key_exists('secure', $sql[$_POST['what']][$position]) ) {
+                        set_sql('SET FOREIGN_KEY_CHECKS=0;', 1, 1, true);
+                    }
+
     				// Aktionen ausführen
     				$err = set_sql($query, 1, 1, true);
+
+                    if ( array_key_exists('after', $sql[$_POST['what']][$position]) ) {
+                        $err1 = set_sql($sql[$_POST['what']][$position]['after'], 1, 1, true);
+                    }
+
+                    if ( array_key_exists('secure', $sql[$_POST['what']][$position]) ) {
+                        set_sql('SET FOREIGN_KEY_CHECKS=1;', 1, 1, true);
+                    }
     			}
     			else {
     				// Aktion blockieren weil produktive Systeme
@@ -472,6 +723,13 @@ if ( isset($_POST['action']) ) {
     									'size'  => getUserSize($new[0]['Data_length']),
 					   					'init'  => ( ($next <= count($sql[$_POST['what']])) ? transformToHtml($sql[$_POST['what']][$next]['action']) : '' )
 					    			);
+
+                if ( is_array($err1) ) {
+                    $return['html'] .= ( ($err1['error'] == FALSE) ? '; Affected: ' . $err1['rows'] : $err1['message']);
+                    $return['tables']['error'] = ( ($err1['error'] == FALSE) ? 'okay' : 'fail' );
+                    $return['tables']['code']  = ( ($err1['error'] == FALSE) ? 1      : $err1['error']);
+                }
+
     		}
     		else {
     			// hier stimmt was nicht!
@@ -481,7 +739,7 @@ if ( isset($_POST['action']) ) {
     	}
     	elseif ( $_POST['what'] == 'clearAllTables' ) {
     		// Alle Tabellen bearbeiten
-    		$tableName = htmlentities(trim($_POST['act']), ENT_QUOTES, "UTF-8");    		
+    		$tableName = htmlentities(trim($_POST['act']), ENT_QUOTES, "UTF-8");
 
     		if ( $resticted_host === FALSE ) {
     			// Aktionen ausführen
@@ -492,7 +750,7 @@ if ( isset($_POST['action']) ) {
     			$err['error']   = true;
     			$err['message'] = 'Restricted Host!!';
     		}
-    		
+
     		$return['html'] = ( ($err['error'] == FALSE) ? 'Return-Code: ' . $err['status'] : $err['message']);
     		$return['tables'] = array(
     								'error' => ( ($err['error'] == FALSE) ? 'okay' : 'fail' ),
@@ -513,7 +771,7 @@ if ( isset($_POST['action']) ) {
     }
 
     echo json_encode($return);
-	
+
 	exit;
 }
 
@@ -524,7 +782,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         <title>Magento - DB-Tool</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.15/css/theme.default.min.css" />
         <style type="text/css">
-            html            {background-color:#DCDCDC; width:750px; margin: 0 auto;}
+            html            {background-color:#DCDCDC; width:800px; margin: 0 auto;}
             table           {margin:20px 0px 20px 20px; width:100%;}
             input           {width:300px;}
             hr              {width:500px;}
@@ -535,7 +793,9 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
             .copy           {font-size:9px;}
             #status-msg     {display:block; margin:10px 0; width:98.5%; border:1px solid #000; padding:5px; background-color:#FFF; overflow-y:scroll; height:100px;}
             .status-div     {display:inline-block;}
-            button          {width:17.5%; padding:10px; margin:10px 25px; cursor:pointer;}
+            button          {width:14.4%; padding:10px; margin:10px 25px; cursor:pointer;}
+            button:first-child {margin-left: 0;}
+            button:last-child  {margin-right: 0;}
             button:disabled {cursor:no-drop;}
 			.alert          {background-color: #ff0000; color: #ffffff;}
             .start          {background-color: #008000; color: #ffffff;}
@@ -559,7 +819,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
                 // damit keiner Blödsinn macht :)
                 $("#action-start").prop("disabled", true);
             });
-			
+
 			function resetForAction(outClear) {
                 action     = "empty";
                 action_cnt = 0;
@@ -681,7 +941,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
                         alert( "Fehler!\n\n" + action_pos + ":" + action_cnt );
                     }
                 }
-                else { 
+                else {
                     alert("unbekannte Aktion: " + action);
                 }
             }
@@ -691,6 +951,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
         <h3>Server: ' . $_SERVER['SERVER_NAME']. ' <i>(' . $data_xml['dbname']. ')</i></h3>
         <div id="status-msg"></div>
         <div id="aktionen">
+            <button onclick="setAction(\'cleanCustomer\');"' . ( ($resticted_host === TRUE) ? ' disabled="disabled"' : ' class="alert"' ) . '>Kunden &amp; Best. l&ouml;schen</button>
             <button onclick="setAction(\'anonUser\');"' . ( ($resticted_host === TRUE) ? ' disabled="disabled"' : '' ) . '>Kundendaten anonymisieren</button>
             <button onclick="setAction(\'deleteLog\');">LOG-Tabellen leeren</button>
             <button onclick="setAction(\'clearAllTables\');"' . ( ($resticted_host === TRUE) ? ' disabled="disabled"' : ' class="alert"' ) . '>alle Tabellen l&ouml;schen</button>

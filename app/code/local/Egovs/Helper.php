@@ -23,6 +23,7 @@ class Egovs_Helper
 	const CUSTOMER_LOG = "egovs_customer.log";
 	const PRODUCT_LOG = "egovs_product.log";
 	const BACKEND_TRACE_LOG = "egovs_backend_trace.log";
+	const EXCEPTION_CODE_PUBLIC = 100000;
 	
 	private static $lastMem = 0;
 	private static $maxMem = 0;
@@ -156,12 +157,40 @@ class Egovs_Helper
 				$rev = file_get_contents($revFile);
 				self::$__vcsVersion = substr($rev, 0, 8);
 			}
-			//Höchste Priorität
-			$revFile = Mage::getBaseDir() .DS.'.git'.DS.'refs'.DS.'remotes'.DS.'origin'.DS.'master';
+			//Höhere Priorität
+            $revFile = Mage::getBaseDir() .DS.'.git'.DS.'HEAD';
+			//$revFile = Mage::getBaseDir() .DS.'.git'.DS.'refs'.DS.'remotes'.DS.'origin'.DS.'master';
 			if (file_exists($revFile)) {
-				$rev = file_get_contents($revFile);
-				self::$__vcsVersion = substr($rev, 0, 8);
+			    $rev = file_get_contents($revFile);
+                $rev = explode(':', $rev);
+                if ($rev && isset($rev[1])) {
+                    $revFile = trim($rev[1]);
+                    $revFile = Mage::getBaseDir() .DS.'.git'.DS.$revFile;
+                    if (file_exists($revFile)) {
+                        $rev = file_get_contents($revFile);
+                        self::$__vcsVersion = substr($rev, 0, 8).sprintf('{%s}', basename($revFile));
+                    }
+                }
 			}
+			$os = php_uname('s');
+			if (strpos(strtolower($os), 'windows') !== false) {
+			    return;
+            }
+            //Funktioniert aktuell nur mit Linux-Shell-Hooks
+			//Höchste Priorität
+            $revFile = Mage::getBaseDir() .DS.'version.json';
+            if (file_exists($revFile)) {
+                $versionInfo = file_get_contents($revFile);
+                $versionInfo = json_decode($versionInfo, true);
+                $rev = '';
+                if (isset($versionInfo['version'])) {
+                    $rev = substr($versionInfo['version'], 0, 8);
+                }
+                if (isset($versionInfo['branch'])) {
+                    $rev .= sprintf('{%s}', $versionInfo['branch']);
+                }
+                self::$__vcsVersion = $rev;
+            }
 		}
 		
 		return self::$__vcsVersion;

@@ -817,6 +817,11 @@ class Sid_Checkout_Model_Type_Multishipping extends Sid_Checkout_Model_Type_Abst
             foreach ($orders as $order) {
                 $order->place();
                 $order->save();
+                if($order->getContract() == null){
+                    if($order->getFramecontract()) {
+                        $order->setContract(Mage::getModel('framecontract/contract')->load($order->getFramecontract()));
+                    }
+                }
                 if ($order->getCanSendNewEmailFlag()){
                     $order->sendNewOrderEmail();
                 }

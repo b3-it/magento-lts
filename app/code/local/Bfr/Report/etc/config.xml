@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Bfr_Report>
+            <version>0.1.0.0</version>
+        </Bfr_Report>
+    </modules>
+    <global>
+        <helpers>
+            <bfr_report>
+                <class>Bfr_Report_Helper</class>
+            </bfr_report>
+        </helpers>
+        <resources>
+            <bfr_report_setup>
+                <setup>
+                    <module>Bfr_Report</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bfr_report_setup>
+        </resources>
+        <blocks>
+          <bfr_report>
+              <class>Bfr_Report_Block</class>
+          </bfr_report>
+        </blocks>
+        <models>
+            <bfr_report>
+                <class>Bfr_Report_Model</class>
+                <resourceModel>bfr_report_resource</resourceModel>
+            </bfr_report>
+            <bfr_report_resource>
+                <class>Bfr_Report_Model_Resource</class>
+                <entities>
+                  <export_exported>
+                    <table>bfr_report_export_exported</table>
+                  </export_exported>
+
+                </entities>
+            </bfr_report_resource>
+        </models>
+    </global>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Bfr_Report_Adminhtml after="Mage_Adminhtml">Bfr_Report_Adminhtml</Bfr_Report_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <report>
+              <children>
+              <salesroot>
+              <children>
+                  <bfrreport_export_exported module="bfr_report">
+                      <title>Order Export</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/report_export_exported/index</action>
+                  </bfrreport_export_exported>
+
+              </children>
+              </salesroot>
+              </children>
+          </report>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <report>
+                          <children>
+                                 <salesroot>
+	                          <children>
+	                                <bfrreport_export_exported module="bfr_report">
+	                                  <title>Order Export</title>
+	                                  <sort_order>10</sort_order>
+	                              </bfrreport_export_exported>
+                          </children>
+                          </salesroot>
+                          </children>
+                      </report>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Bfr_Report>
+                    <files>
+                        <default>Bfr_Report.csv</default>
+                    </files>
+                </Bfr_Report>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <bfrreport>
+              <file>bfr/report.xml</file>
+            </bfrreport>
+          </updates>
+        </layout>
+    </adminhtml>
+</config>

@@ -1,0 +1,16 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2018 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.google-recaptcha {
+    display: block;
+    margin: 20px 0;
+}
+
+.account-login .col2-set .col-2 .content,
+.egovs-checkout-multipage-login .col2-set .col-2 .content{
+    height: auto !important;
+}

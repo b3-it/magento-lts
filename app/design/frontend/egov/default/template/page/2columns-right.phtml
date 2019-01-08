@@ -30,11 +30,11 @@
         <?php echo $this->getChildHtml('after_body_start') ?>
         <div class="wrapper">
             <div class="page">
+                <?php echo $this->getChildHtml('global_notices') ?>
                 <?php echo $this->getChildHtml('header') ?>
 
-                <?php echo $this->getChildHtml('global_notices') ?>
-
                 <div class="main-container col2-right-layout">
+                    <?php echo $this->getChildHtml('breadcrumbs') ?>
                   <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 1 ) : ?>
                     <?php echo $this->getChildHtml('banner'); ?>
                   <?php endif; ?>
@@ -43,7 +43,6 @@
                             <?php /* Das muß hier rein, da es im 2-Spaltig-Rechts-Layout keine Navigation o.Ä. gibt => Mobil wird unbedienbar! */ ?>
                             <?php echo $this->getChildHtml('left') ?>
                         </div>
-                        <?php echo $this->getChildHtml('breadcrumbs') ?>
                         <div class="col-main">
                             <div class="col-right sidebar">
                                 <?php echo $this->getChildHtml('right') ?>

@@ -24,7 +24,7 @@
 			</updates>
 		</layout>
 		<events>
-			<egovs_base_customer_reject_address_editing>
+			<egovs_base_frontend_customer_reject_address_editing>
 				<observers>
 					<egovs_informationservice_customer_reject_address_editing>
 						<type>singleton</type>
@@ -32,7 +32,7 @@
 						<method>rejectAddressEditing</method>
 					</egovs_informationservice_customer_reject_address_editing>
 				</observers>
-			</egovs_base_customer_reject_address_editing>
+			</egovs_base_frontend_customer_reject_address_editing>
 		</events>
 	</frontend>
 	<admin>

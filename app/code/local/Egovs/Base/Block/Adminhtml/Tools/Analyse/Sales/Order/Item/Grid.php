@@ -30,25 +30,13 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->setCollection($collection);
         
        	$collection->getSelect()
-       	->join(array('order'=>$collection->getTable('sales/order')),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
+       	    ->join(array('order'=>$collection->getTable('sales/order')),'main_table.order_id = order.entity_id',array('increment_id'=>'increment_id','orderstatus'=>'status','customer_id','customer_email'));
        	
        	//StoreIsolation
-       	if(Mage::helper('egovsbase')->isModuleEnabled('Egovs_Isolation'))
+       	if(Mage::helper('egovsbase')->isModuleEnabled('Egovs_Isolation') && !Mage::helper('isolation')->getUserIsAdmin())
        	{
-
-
-            $storeGroups = Mage::helper('isolation')->getUserStoreGroups();
-            $storeViews = Mage::helper('isolation')->getUserStoreViews();
-            if(($storeGroups) && (count($storeGroups) > 0) || ($storeViews) && (count($storeViews) > 0))
-       		{
-       			//$collection->getSelect()->where('store_group IN ('.implode(',',$stores).')');
-                $collection->getSelect()->where("order_id in (?)", Mage::helper('isolation')->getOrderIdsDbExpr());
-       		}
-
-
-
-            //die($collection->getSelect()->__toString());
-        }
+            $collection->getSelect()->where("order_id in (?)", Mage::helper('isolation')->getOrderIdsDbExpr());
+       	}
         
         //die($collection->getSelect()->__toString());
         return parent::_prepareCollection();
@@ -94,7 +82,6 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
             'filter_index' => 'order.created_at',
             'type' => 'datetime',
             'width' => '100px',
-        
         ));
         
         $this->addColumn('type',
@@ -189,12 +176,6 @@ class Egovs_Base_Block_Adminhtml_Tools_Analyse_Sales_Order_Item_Grid extends Mag
         $this->setCountTotals(true);
         return parent::_prepareColumns();
     }
-
-    
-   
-    
-    
-
    
     protected function _prepareMassaction() {
     	$this->setMassactionIdField('entity_id');

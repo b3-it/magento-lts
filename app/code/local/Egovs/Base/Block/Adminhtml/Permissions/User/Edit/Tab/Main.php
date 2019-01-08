@@ -91,7 +91,7 @@ class Egovs_Base_Block_Adminhtml_Permissions_User_Edit_Tab_Main extends Mage_Adm
       $fieldset->addField('phone', 'text', array(
             'name'  => 'phone',
             'label' => Mage::helper('egovsbase')->__('Telephone'),
-            'id'    => 'customer_email',
+            'id'    => 'phone',
             'title' => Mage::helper('egovsbase')->__('Telephone')
         ));
       

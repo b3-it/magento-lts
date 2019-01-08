@@ -7,11 +7,6 @@
 		</Egovs_Checkout>
 	</modules>
 	<frontend>
-		<secure_url>
-			<checkout>/checkout/cart</checkout>
-			<checkout_cart>/checkout/cart</checkout_cart>
-			<checkout_cart_add>/checkout/cart/add</checkout_cart_add>
-        </secure_url>
 		<routers>
 			<egovs_checkout>
 				<use>standard</use>

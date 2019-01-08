@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <tabs>
+        <sid translate="label" module="localepackde">
+            <label>SID</label>
+            <sort_order>120</sort_order>
+        </sid>
+    </tabs>
+</config>

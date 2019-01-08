@@ -6,15 +6,14 @@
  * @package			Egovs
  * @name           	Egovs_Ready_Block_Catalog_Product_Price
  * @author 			Frank Rochlitzer <f.rochlitzer@b3-it.de>
- * @copyright      	Copyright (c) 2010 - 2016 B3 IT Systeme GmbH - http://www.b3-it.de
+ * @copyright      	Copyright (c) 2010 - 2017 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license        	http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */
-?>
-<?php
+
 /** 
  * @var $this Mage_Core_Block_Template
- * @see Egovs_Ready_Block_Catalog_Product_Price
+ * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
 ?>
 <?php $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl() ?>
@@ -47,11 +46,7 @@
 	        </span>
         </span>
     <?php elseif( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
-        <?php if( $this->getIsIncludingShippingCosts() ): ?>
-            <span class="tax-details"><?php echo $this->__('incl. <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?></span>
-        <?php else: ?>
-            <span class="tax-details"><?php echo $this->__('excl. <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?></span>
-        <?php endif ?>
+            <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?></span>
     <?php endif ?>
 <?php else: ?>
 	<?php if ($this->getFormattedTaxRate() !== false): ?>
@@ -63,6 +58,12 @@
 	        <span class="tax-details"><?php echo $this->__( 'Incl. %s Tax', $this->getFormattedTaxRate() ) ?></span>    
 	    <?php endif ?>
     <?php endif ?>
+    <?php if ( $this->getProduct()->isVirtual() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+        <?php if ($this->getFormattedTaxRate() !== false): ?>
+            <span class="tax-separator">, </span>
+        <?php endif ?>
+        <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
+    <?php endif; ?>
 <?php endif ?>
 <?php if ($this->getDisplayProductWeight()): ?>
         <br/> (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)

@@ -108,6 +108,15 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     public function processOrder(Mage_Sales_Model_Order $order)
     {
     	$storeId = $order->getStoreId();
+    	
+    	if($this->getStatus() != Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING){
+    		return $this;
+    	}
+    	
+    	
+    			
+    	$this->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PROCESSING);
+    	$this->getResource()->saveField($this, 'status');
     	try {
 	    	$format = $this->getVendor()->getExportFormatModel();
 	    	$transfer = $this->getVendor()->getTransferModel();
@@ -124,7 +133,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    	$data = array();
 	    	$data['contract'] = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
 	    	$data['order'] = $order;
-	    	$msg = $transfer->send($content,$order,$data);
+	    	$msg = $transfer->send($content,$order,$data,$storeId);
 	    	
 	    	if($msg === false)
 	    	{
@@ -136,6 +145,8 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
 	    		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_SUCCESS)
 	    		->save();
 	    	
+	    	$this->setLog(sprintf("--------- finish Order: %s --------------", $order->getId()));
+	    		
     	}
     	catch (Exception $ex)
     	{
@@ -143,6 +154,8 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     		->setUpdateTime(now())
     		->setStatus(Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_ERROR)
     		->save();
+    		
+    		$this->setLog(sprintf("Error Order: %s, %s", $order->getId(),$ex->getMessage()));
     		
     		$recipients = array();
     		$recipients[] = array('name' => Mage::getStoreConfig("framecontract/email/sender_name", $storeId),
@@ -160,8 +173,9 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     {
     	$collection = Mage::getResourceModel('sales/order_collection');
     	$collection->getSelect()
-    	->join(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('vendor_id'))
-    	->where('export.status = ' .Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PENDING)
+    	->join(array('export'=>$collection->getTable('exportorder/order')),'main_table.entity_id = export.order_id',array('vendor_id','contract_id'))
+    	->where('export.status = ' .Sid_ExportOrder_Model_Syncstatus::SYNCSTATUS_PROCESSING)
+    	->where("export.transfer = ?" ,$transfer)
     	->where("main_table.status IN ('processing','complete')")
     	//->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120))
     	->where("export.transfer =?", $transfer)
@@ -172,8 +186,15 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	$orderIds = array();
     	$allOrderIds = array();
     	$skip = false;
+    	$contract = null;
     	foreach($collection as $order)
     	{
+    		if($contract == null)
+    		{
+    			$contract = Mage::getModel('framecontract/contract')->load( $order->getContractId());
+    			$contract->setOrder($order);
+    		}
+    		
     		if($vendorId != $order->getVendorId()){
     			$vendorId = $order->getVendorId();
     			$vendor = Mage::getModel('framecontract/vendor')->load($vendorId);
@@ -184,7 +205,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     				$skip = !Mage::helper('exportorder')->canSchedule($expr);
     			}
     			if(count($content) > 0){	
-    				$res = $transfer->sendOrders($content, $format, $orderIds, $vendor);
+    				$res = $transfer->sendOrders($content, $format, $orderIds, $vendor, $contract);
 	    			if($res === false){
 			    			$this->setLog(sprintf("error send pendingOrders: %s", implode(',',$orderIds)));
 			    		}
@@ -211,7 +232,7 @@ class Sid_ExportOrder_Model_Order extends Mage_Core_Model_Abstract
     	
     	
     	if(count($content) > 0){
-    		$res = $transfer->sendOrders($content, $format, $orderIds, $vendor);
+    		$res = $transfer->sendOrders($content, $format, $orderIds, $vendor, $contract);
     		if($res === false){
     			$this->setLog(sprintf("error send pendingOrders: %s", implode(',',$orderIds)));
     		}

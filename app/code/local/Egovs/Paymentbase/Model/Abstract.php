@@ -295,43 +295,26 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			// Mail an Webmaster senden
 			$sMailText = "Während der Kommunikation mit dem ePayment-Server trat folgender Fehler auf:\n\n";
 			$sMailText .= sprintf("Shop Name: %s\n", Mage::getStoreConfig('general/imprint/shop_name'));
-			$sMailText .= sprintf("Store Name: %s\n", Mage::getStoreConfig('general/store_information/name'));
+			$sMailText .= sprintf("Store Name: %s\n\n", Mage::getStoreConfig('general/store_information/name'));
 			if ($this->_getOrder()->getId()) {
 				$sMailText .= "Order ID: {$this->_getOrder()->getId()}\n";
 			}
 			$sMailText .= "Order #: {$this->_getOrder()->getIncrementId()}\n";
 			$sMailText .= "Quote ID: {$this->_getOrder()->getQuoteId()}\n";
-			
-			/** @var $_adminHelper Mage_Adminhtml_Helper_Data */
-			$_adminHelper = Mage::helper('adminhtml');
-			
-			foreach ($this->_getOrder()->getAllItems() as $item) {
-				/* @var $item Mage_Sales_Model_Order_Item */
-				$sMailText .= "Order item ID: {$item->getId()}\n";
-				$sMailText .= "Base Discount: {$item->getBaseDiscountAmount()}\n";
-				$sMailText .= "Hidden Tax Amount: {$item->getBaseHiddenTaxAmount()}\n";
-				$sMailText .= "Row total: {$item->getBaseRowTotal()}\n";
-				$sMailText .= "MwSt: {$item->getBaseTaxAmount()}\n\n";
-			}
 				
-			if ($objResult instanceof SoapFault) {
-				$sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
-			} elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
-				$sMailText .= "Error: No result returned\n";
-			} else {
-				$sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
-			}
+			/** @var $_adminHelper Mage_Adminhtml_Helper_Data */
+            $_adminHelper = Mage::helper('adminhtml');
 
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
-			if ($customer = $this->_getOrder()->getCustomer()) {
+			if (($customer = $this->_getOrder()->getCustomer()) && $customer->getId() > 0) {
 				$backendUrl = $_adminHelper->getUrl('adminhtml/customer/edit', array('id' => $this->_getCustomerId()));
 				$sMailText .= "Kundennummer: {$this->_getCustomerId()} $backendUrl\n";
-				$sMailText .= "Name: {$this->_getOrder()->getCustomer()->getFirstname()} {$this->_getOrder()->getCustomer()->getLastname()}\n\n";
+				$sMailText .= "Name: {$customer->getFirstname()} {$customer->getLastname()}\n\n";
 			} else {
 				$customer = $this->_getCustomerId();
 				if ($customer > 0) {
 					$customer = Mage::getModel('customer/customer')->load($customer);
-					if ($customer instanceof Mage_Customer_Model_Customer) {
+					if ($customer instanceof Mage_Customer_Model_Customer && !$customer->isEmpty()) {
 						$sMailText .= "Name: {$customer->getFirstname()} {$customer->getLastname()}\n\n";
 					} else {
 						$customer = false;
@@ -344,6 +327,25 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 					$sMailText .= "Name: Unbekannt\n\n";
 				}
 			}
+
+            if ($objResult instanceof SoapFault) {
+                $sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
+            } elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
+                $sMailText .= "Error: No result returned\n";
+            } else {
+                $sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
+            }
+
+            $sMailText .= "Order Items:\n";
+            foreach ($this->_getOrder()->getAllItems() as $item) {
+                /* @var $item Mage_Sales_Model_Order_Item */
+                $sMailText .= "Order item ID: {$item->getId()}\n";
+                $sMailText .= "Base Discount: {$item->getBaseDiscountAmount()}\n";
+                $sMailText .= "Hidden Tax Amount: {$item->getBaseHiddenTaxAmount()}\n";
+                $sMailText .= "Row total: {$item->getBaseRowTotal()}\n";
+                $sMailText .= "MwSt: {$item->getBaseTaxAmount()}\n\n";
+            }
+
 			$sMailText .= "Liste der Produkte:\n";
 			foreach ($this->_getOrder()->getAllVisibleItems() as $item) {
 				/** @var $item Mage_Sales_Model_Order_Item */

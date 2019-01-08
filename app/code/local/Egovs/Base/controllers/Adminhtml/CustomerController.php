@@ -11,18 +11,18 @@ require_once 'Mage/Adminhtml/controllers/CustomerController.php';
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -41,20 +41,20 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
     {
         $data = $this->getRequest()->getPost();
         if ($data) {
-            $redirectBack   = $this->getRequest()->getParam('back', false);
+            $redirectBack = $this->getRequest()->getParam('back', false);
             $this->_initCustomer('customer_id');
 
-            /* @var $customer Mage_Customer_Model_Customer */
+            /** @var $customer Mage_Customer_Model_Customer */
             $customer = Mage::registry('current_customer');
 
-            /* @var $customerForm Mage_Customer_Model_Form */
+            /** @var $customerForm Mage_Customer_Model_Form */
             $customerForm = Mage::getModel('customer/form');
             $customerForm->setEntity($customer)
                 ->setFormCode('adminhtml_customer')
                 ->ignoreInvisible(false)
             ;
 
-            $formData   = $customerForm->extractData($this->getRequest(), 'account');
+            $formData = $customerForm->extractData($this->getRequest(), 'account');
 
             // Handle 'disable auto_group_change' attribute
             if (isset($formData['disable_auto_group_change'])) {
@@ -76,9 +76,9 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
             }
 
             if (!is_array($errors)) {
-            	$errors     = $customerForm->validateData($formData);
+                $errors = $customerForm->validateData($formData);
             }
-            
+
             if ($errors !== true) {
                 foreach ($errors as $error) {
                     $this->_getSession()->addError($error);
@@ -90,21 +90,21 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
 
             $customerForm->compactData($formData);
 
-            // unset template data
+            // Unset template data
             if (isset($data['address']['_template_'])) {
                 unset($data['address']['_template_']);
             }
 
             $modifiedAddresses = array();
             if (!empty($data['address'])) {
-                /* @var $addressForm Mage_Customer_Model_Form */
+                /** @var $addressForm Mage_Customer_Model_Form */
                 $addressForm = Mage::getModel('customer/form');
                 $addressForm->setFormCode('adminhtml_customer_address')->ignoreInvisible(false);
 
                 foreach (array_keys($data['address']) as $index) {
                     $address = $customer->getAddressItemById($index);
                     if (!$address) {
-                        $address   = Mage::getModel('customer/address');
+                        $address = Mage::getModel('customer/address');
                     }
 
                     $requestScope = sprintf('address/%s', $index);
@@ -118,8 +118,11 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                     $isDefaultShipping = isset($data['account']['default_shipping'])
                         && $data['account']['default_shipping'] == $index;
                     $address->setIsDefaultShipping($isDefaultShipping);
+                    $isBaseAddress = isset($data['account']['base_address'])
+                        && $data['account']['base_address'] == $index;
+                    $address->setIsDefaultBaseAddress($isBaseAddress);
 
-                    $errors   = $addressForm->validateData($formData);
+                    $errors = $addressForm->validateData($formData);
                     if ($errors !== true) {
                         foreach ($errors as $error) {
                             $this->_getSession()->addError($error);
@@ -144,28 +147,31 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                 }
             }
 
-            // default billing and shipping
+            // Default billing and shipping
             if (isset($data['account']['default_billing'])) {
                 $customer->setData('default_billing', $data['account']['default_billing']);
             }
             if (isset($data['account']['default_shipping'])) {
                 $customer->setData('default_shipping', $data['account']['default_shipping']);
             }
+            if (isset($data['account']['base_address'])) {
+                $customer->setData('base_address', $data['account']['base_address']);
+            }
             if (isset($data['account']['confirmation'])) {
                 $customer->setData('confirmation', $data['account']['confirmation']);
             }
 
-            // not modified customer addresses mark for delete
+            // Mark not modified customer addresses for delete
             foreach ($customer->getAddressesCollection() as $customerAddress) {
                 if ($customerAddress->getId() && !in_array($customerAddress->getId(), $modifiedAddresses)) {
                     $customerAddress->setData('_deleted', true);
                 }
             }
 
-            if (Mage::getSingleton('admin/session')->isAllowed('customer/newsletter') && isset($data['subscription'])) {
-                $customer->setIsSubscribed(true);
-            } else {
-                $customer->setIsSubscribed(false);
+            if (Mage::getSingleton('admin/session')->isAllowed('customer/newsletter')
+                && !$customer->getConfirmation()
+            ) {
+                $customer->setIsSubscribed(isset($data['subscription']));
             }
 
             if (isset($data['account']['sendemail_store_id'])) {
@@ -175,9 +181,10 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
             $isNewCustomer = $customer->isObjectNew();
             try {
                 $sendPassToEmail = false;
-                // force new customer active
+                // Force new customer confirmation
                 if ($isNewCustomer) {
                     $customer->setPassword($data['account']['password']);
+                    $customer->setPasswordCreatedAt(time());
                     $customer->setForceConfirmed(true);
                     if ($customer->getPassword() == 'auto') {
                         $sendPassToEmail = true;
@@ -192,14 +199,13 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
 
                 $customer->save();
 
-                // send welcome email
+                // Send welcome email
                 if ($customer->getWebsiteId() && (isset($data['account']['sendemail']) || $sendPassToEmail)) {
                     $storeId = $customer->getSendemailStoreId();
                     if ($isNewCustomer) {
                         $customer->sendNewAccountEmail('registered', '', $storeId);
-                    }
-                    // confirm not confirmed customer
-                    else if ((!$customer->getConfirmation())) {
+                    } elseif ((!$customer->getConfirmation())) {
+                        // Confirm not confirmed customer
                         $customer->sendNewAccountEmail('confirmed', '', $storeId);
                     }
                 }
@@ -223,8 +229,8 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
 
                 if ($redirectBack) {
                     $this->_redirect('*/*/edit', array(
-                        'id'    => $customer->getId(),
-                        '_current'=>true
+                        'id' => $customer->getId(),
+                        '_current' => true
                     ));
                     return;
                 }

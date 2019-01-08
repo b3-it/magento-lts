@@ -296,10 +296,82 @@
                         </banner_image_style>
                     </fields>
                 </banner>
+                <login translate="label" module="egovsbase">
+                    <label>Login and registration settings</label>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <ssl_logo_use translate="label comment" module="egovsbase">
+                            <label>Show SSL-Logo at login</label>
+                            <comment>Select "Yes" to always display the SSL logo on the login page.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsbase/system_config_design_ssllogo_modes</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ssl_logo_use>
+                        <ssl_logo>
+                            <label>SSL-Logo Image</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">ssl_logo</upload_dir>
+                            <base_url type="media" scope_info="1">ssl_logo</base_url>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Allowed file types: jpg, jpeg, gif, png.</comment>
+                        </ssl_logo>
+                        <ssl_logo_style translate="label" module="egovsbase">
+                            <label>Custome Style Definition</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Example: position:relative; top:-10px; right:30px;</comment>
+                        </ssl_logo_style>
+                        <ssl_logo_alt>
+                            <label>ALT-text for SSL-Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This text is used by the translation function. You must therefore add an appropriate translation.</comment>
+                        </ssl_logo_alt>
+                        <ssl_logo_title>
+                            <label>TITLE-text for SSL-Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This text is used by the translation function. You must therefore add an appropriate translation.</comment>
+                        </ssl_logo_title>
+                    </fields>
+                </login>
             </groups>
         </design>
         <customer>
             <groups>
+            	<create_account>
+                    <fields>
+                        <register_user_on_login translate="label comment">
+                            <label>Show Register-Option on Login Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>If "No", the logon of the users in the frontend is not displayed.</comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </register_user_on_login>
+                    </fields>
+                </create_account>
                 <address>
                     <fields>
                         <base_address_info_block translate="label">
@@ -711,7 +783,7 @@
             <show_in_store>0</show_in_store>
             <groups>
                 <ident_admin translate="label">
-                    <label>Administrator E-Mail</label>
+                    <label>Application-Management-E-Mail</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>40</sort_order>
                     <show_in_default>1</show_in_default>

@@ -251,30 +251,39 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 				}
 				
 				foreach ($orders->getAllIds() as $id) {
-					/** @var $item Mage_Sales_Model_Order */
-					$item = Mage::getModel('sales/order')->load($id);
+					/** @var $order Mage_Sales_Model_Order */
+					$order = Mage::getModel('sales/order')->load($id);
 					
-					if ($item->isEmpty()) {
+					if ($order->isEmpty()) {
 						continue;
 					}
-					
-					if ($item->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
+
+                    // Start store emulation process
+                    $appEmulation = Mage::getSingleton('core/app_emulation');
+                    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($order->getStoreId());
+                    //Dealing with uninitialized translator!
+                    Mage::app()->getTranslator()->init('frontend', true);
+                    $translateHelper = Mage::helper('paymentbase');
+                    // Stop store emulation process
+                    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+
+					if ($order->getState() == Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
 						//Girosolution Besonderheiten
-						if ($item->hasInvoices()) {
+						if ($order->hasInvoices()) {
 							//Rechnungen werden bei Girosolution erst nach der Bestätigung bei Girosolution erstellt
 							continue;
 						}
 						
 						//Im State STATE_PAYMENT_REVIEW ist kein Cancel möglich!
-						$item->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, false, Mage::helper('paymentbase')->__('Modifying state for further processing.'), false);
+						$order->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT, false, $translateHelper->__('Modifying state for further processing.'), false);
 					}
 					/* @var $item Mage_Sales_Model_Order */
-					if ($item->canCancel()) {
+					if ($order->canCancel()) {
 					    try {
-                            $item->cancel();
+                            $order->cancel();
                             //Der Kunde muss nicht benachrichtigt werden, da er noch keine Mail über die Bestellung erhalten hat!
-                            $item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired.')) .
-                            $item->save();
+                            $order->addStatusHistoryComment($translateHelper->__('Payment session has expired.'));
+                            $order->save();
                         } catch (Exception $e) {
 					        Mage::logException($e);
                         }
@@ -282,21 +291,22 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					}
 					
 					//Falls nicht storniert werden kann
-					if ($item->canUnhold()) {  // $this->isPaymentReview()
+					if ($order->canUnhold()) {  // $this->isPaymentReview()
 						continue;
 					}
 					
-					$state = $item->getState();
-					if ($item->isCanceled() || $state === Mage_Sales_Model_Order::STATE_COMPLETE || $state === Mage_Sales_Model_Order::STATE_CLOSED) {
+					$state = $order->getState();
+					if ($order->isCanceled() || $state === Mage_Sales_Model_Order::STATE_COMPLETE || $state === Mage_Sales_Model_Order::STATE_CLOSED) {
 						continue;
 					}
 						
-					if ($item->getActionFlag(Mage_Sales_Model_Order::ACTION_FLAG_CANCEL) === false) {
+					if ($order->getActionFlag(Mage_Sales_Model_Order::ACTION_FLAG_CANCEL) === false) {
 						continue;
 					}
 					
 					$allCanceled = true;
-					foreach ($item->getAllItems() as $orderItem) {
+					foreach ($order->getAllItems() as $orderItem) {
+					    /** @var Mage_Sales_Model_Order_Item $orderItem */
 						if ($orderItem->getStatusId() != Mage_Sales_Model_Order_Item::STATUS_CANCELED) {
 							$allCanceled = false;
 							break;
@@ -304,43 +314,43 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 					}
 					if (!$allCanceled) {
 						//Irgendetwas stimmt nicht
-						if ($item->canHold()) {
-							$item->hold();
-							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, but an unknown error occured. Please contact support!'));
+						if ($order->canHold()) {
+							$order->hold();
+							$order->addStatusHistoryComment($translateHelper->__('Payment session has expired, but an unknown error occured. Please contact support!'));
 						} else {
-							$item->addStatusHistoryComment(Mage::helper('paymentbase')->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!'));
+							$order->addStatusHistoryComment($translateHelper->__('Payment session has expired, hold is not possible an unknown error occured. Please contact support!'));
 						}
-						$item->save();
+						$order->save();
 						continue;
 					}
 					//Mage_Sales_Model_Order::cancel()
-					$item->getPayment()->cancel();
+					$order->getPayment()->cancel();
 					
 					//Mage_Sales_Model_Order::registerCancellation()
-					$item->setSubtotalCanceled($item->getSubtotal() - $item->getSubtotalInvoiced());
-					$item->setBaseSubtotalCanceled($item->getBaseSubtotal() - $item->getBaseSubtotalInvoiced());
+					$order->setSubtotalCanceled($order->getSubtotal() - $order->getSubtotalInvoiced());
+					$order->setBaseSubtotalCanceled($order->getBaseSubtotal() - $order->getBaseSubtotalInvoiced());
 					
-					$item->setTaxCanceled($item->getTaxAmount() - $item->getTaxInvoiced());
-					$item->setBaseTaxCanceled($item->getBaseTaxAmount() - $item->getBaseTaxInvoiced());
+					$order->setTaxCanceled($order->getTaxAmount() - $order->getTaxInvoiced());
+					$order->setBaseTaxCanceled($order->getBaseTaxAmount() - $order->getBaseTaxInvoiced());
 					
-					$item->setShippingCanceled($item->getShippingAmount() - $item->getShippingInvoiced());
-					$item->setBaseShippingCanceled($item->getBaseShippingAmount() - $item->getBaseShippingInvoiced());
+					$order->setShippingCanceled($order->getShippingAmount() - $order->getShippingInvoiced());
+					$order->setBaseShippingCanceled($order->getBaseShippingAmount() - $order->getBaseShippingInvoiced());
 					
-					$item->setDiscountCanceled(abs($item->getDiscountAmount()) - $item->getDiscountInvoiced());
-					$item->setBaseDiscountCanceled(abs($item->getBaseDiscountAmount()) - $item->getBaseDiscountInvoiced());
+					$order->setDiscountCanceled(abs($order->getDiscountAmount()) - $order->getDiscountInvoiced());
+					$order->setBaseDiscountCanceled(abs($order->getBaseDiscountAmount()) - $order->getBaseDiscountInvoiced());
 					
-					$item->setTotalCanceled($item->getGrandTotal() - $item->getTotalPaid());
-					$item->setBaseTotalCanceled($item->getBaseGrandTotal() - $item->getBaseTotalPaid());
+					$order->setTotalCanceled($order->getGrandTotal() - $order->getTotalPaid());
+					$order->setBaseTotalCanceled($order->getBaseGrandTotal() - $order->getBaseTotalPaid());
 					
-					$item->setState(
+					$order->setState(
 							Mage_Sales_Model_Order::STATE_CANCELED,
 							false,
-							Mage::helper('paymentbase')->__('Payment session has expired.'),
+							$translateHelper->__('Payment session has expired.'),
 							false
 					);
-					Mage::dispatchEvent('order_cancel_after', array('order' => $item));
+					Mage::dispatchEvent('order_cancel_after', array('order' => $order));
 					
-					$item->save();
+					$order->save();
 				}
 			}
 		}
@@ -594,4 +604,113 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 		}
 		restore_error_handler();
 	}
+
+	public function onSalesOrderInvoicePay(Varien_Event_Observer $observer) {
+        /** @var \Mage_Sales_Model_Order_Invoice $invoice */
+	    $invoice = $observer->getEvent()->getInvoice();
+        if (is_null($invoice)) {
+            return null;
+        }
+
+        if (!$invoice->getOrder()) {
+            return null;
+        }
+        $payment = $invoice->getOrder()->getPayment();
+
+        if (!$payment) {
+            return null;
+        }
+
+        if(!$invoice->getOrderId()){
+            return null;
+        }
+
+        /** @var \Mage_Sales_Model_Resource_Order_Invoice_Comment_Collection $comments */
+        $comments = $invoice->getCommentsCollection();
+        $msg = null;
+        if ($comments) {
+            /** @var \Mage_Sales_Model_Order_Invoice_Comment $lastItem */
+            $lastItem = $comments->getLastItem();
+            if ($lastItem) {
+                $msg = $lastItem->getComment();
+            }
+        }
+
+        $incomingPayment = Mage::getModel('paymentbase/incoming_payment');
+        $incomingPayment->saveIncomingPayment($invoice->getOrderId(),$invoice->getOrder()->getBaseTotalPaid(),$invoice->getOrder()->getTotalPaid(), $msg);
+
+        $payment->setEpayblCaptureDate(Varien_Date::now());
+        $payment->getResource()->saveAttribute($payment, Egovs_Paymentbase_Helper_Data::ATTRIBUTE_EPAYBL_CAPTURE_DATE);
+    }
+
+    public function runAutomaticPaymentRetrieval($schedule) {
+        if (!Mage::getStoreConfigFlag('payment_services/paymentbase/enable_apr')) {
+            return;
+        }
+
+        $lockKey = 'egovs_paymentbase_apr_cron_mutex' . $schedule->getId();
+
+        $lockResult = Mage::helper('egovsbase/lock')->getLock($lockKey, 300);
+        if ($lockResult === null) {
+            Mage::log("egovs_paymentbase::apr:LOCK $lockKey couldn't be obtained!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            throw new Mage_Cron_Exception("LOCK $lockKey couldn't be obtained!");
+        }
+
+        if ($lockResult == 0) {
+            Mage::log("egovs_paymentbase::apr:LOCK $lockKey already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            return true;
+        }
+
+        $lastRun = date("Y-m-d H:i:s", (time() - (60 * 60)));
+        $statusRun = Mage_Cron_Model_Schedule::STATUS_RUNNING;
+
+        $collection = $schedule->getCollection();
+        $collection->addFieldToFilter('job_code', $schedule->getJobCode())
+            ->addFieldToFilter($schedule->getIdFieldName(), array('neq' => $schedule->getId()))
+            ->addFieldToSelect('status')
+            ->getSelect()->where("(executed_at >'" . $lastRun . "'  AND status = '" . $statusRun . "')");
+
+        if ($collection->count() > 0) {
+            $message = Mage::helper('paymentbase')->__('Service is still running');
+            Mage::log($message, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+            throw new Mage_Cron_Exception($message);
+        }
+
+        // Start store emulation process for translation while running by cron
+        $appEmulation = Mage::getSingleton('core/app_emulation');
+        $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation(Mage::app()->getDefaultStoreView());
+        //Dealing with uninitialized translator!
+        Mage::app()->getTranslator()->init('frontend', true);
+        //init helper
+        Mage::helper('paymentbase');
+        // Stop store emulation process
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+        /*
+         * #3257
+         * das Event sales_order_save_commit_after zum Aufruf von setLinkStatus in downloadable/observer wird
+         * für die Scopes adminhtml und frontend aufgerufen. Diese Scopes sind im CronJob aber standardmäßig nicht aktiv.
+         */
+        Mage::app()->loadAreaPart(Mage_Core_Model_App_Area::AREA_ADMINHTML, Mage_Core_Model_App_Area::PART_EVENTS);
+
+        try {
+            $paymentbase = Mage::getModel('paymentbase/paymentbase');
+            $paymentbase->getZahlungseingaenge();
+
+            if ($paymentbase->hasIncomingPayments()) {
+                $paymentbase->sendMailForNewPayments();
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+            Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+        }
+        Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+        if (isset($e)) {
+            throw $e;
+        }
+
+        return true;
+    }
+
+
 }

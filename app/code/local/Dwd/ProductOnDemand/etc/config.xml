@@ -326,6 +326,7 @@
                 <hash_algorithm>sha1</hash_algorithm>
                 <ca_path><![CDATA[/etc/ssl/certs]]></ca_path>
                 <verify_peer>1</verify_peer>
+                <send_back_url>1</send_back_url>
             </dwd_pod>
         </catalog>
     </default>

@@ -8,6 +8,32 @@
     @include default-form;
 }
 
+#context-help-popup {
+    position: fixed;
+    background-color: $global-wrapper-color;
+    border: $global-active-border solid $global-linkcolor-hover;
+    top: 20px;
+    box-shadow: 0px 0px 30px 20px rgba(0,0,0,0.5);
+    left: 20%;
+    width: 60%;
+    height: 95vh;
+    z-index: -1;
+
+    #context-help-popup-head {
+        padding: $global-boxpadding;
+        background-color: $global-linkcolor-hover;
+        color: $global-fontcolor-light;
+    }
+    #context-help-popup-head a span {
+        color: $global-fontcolor-light;
+        float: right;
+    }
+
+    #context-help-popup-body {
+        height: 96.5%;
+    }
+}
+
 .egov-base-table {
     width: 100%;
     font-family: $base-font-family;
@@ -79,7 +105,7 @@
         td:nth-child(5), td:nth-child(6) {
             text-align: right;
         }
-        
+
         @include bp(max-width, $bp-medium) {
         	td:nth-child(2), td:nth-child(3) , td:nth-child(4)
             td:nth-child(5), td:nth-child(6), td:nth-child(7) {

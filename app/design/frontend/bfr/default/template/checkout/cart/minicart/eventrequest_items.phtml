@@ -75,7 +75,7 @@ if(empty($_cartQty)) {
 
         <div class="minicart-actions">
             <button class="button egov-float-left"
-                    onclick="window.open('<?php echo $this->getUrl('checkout/cart', array('_forced_secure' => true)); ?>','_self');">
+                    onclick="window.open('<?php echo $this->getUrl('checkout/cart', array('_secure' => $this->getRequest()->isSecure())); ?>','_self');">
                 <?php echo $this->__('View Shopping Cart'); ?>
             </button>
         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>

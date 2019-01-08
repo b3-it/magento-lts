@@ -9,6 +9,7 @@
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
 
+/* @var $this Mage_Catalog_Model_Resource_Setup */
 $installer = $this;
 
 $installer->startSetup();
@@ -114,7 +115,8 @@ if (!$installer->tableExists($installer->getTable('bkgviewer/composit_layer')))
 	  		`pos` smallint unsigned default 0,
 	  		`visual_pos` smallint unsigned default 0,
 	  		`service_layer_id` int(11) unsigned ,
-	  		PRIMARY KEY (`id`)
+	  		PRIMARY KEY (`id`),
+	  		 FOREIGN KEY (`composit_id`) REFERENCES `{$this->getTable('bkgviewer/composit_composit')}`(`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 			");

@@ -47,6 +47,64 @@ class Bkg_MapSeries_Block_Product_View_Type_Mapseries_Map extends Mage_Catalog_B
 		return $this;
 	}
 	
+	/**
+	 *
+	 * @return array
+	 */
+	public function getSelectionTools() {
+	    $composit = $this->getComposit();
+	    if ($composit) {
+	        return Mage::getModel('bkgviewer/composit_selectiontools')->getOptions4Product($composit->getId());
+	    }
+	    return array();
+	}
+	
+	public function getESPGfromTool() {
+	    foreach ($this->getSelectionTools() as $tool) {
+	        /**
+	         * @var Bkg_Viewer_Model_Composit_Selectiontools $tool 
+	         */
+	        $service = $tool->getService();
+	        
+	        // currently only works for wfs tools
+	        if ($service->getFormat() != "wfs") {
+	            continue;
+	        }
+	        
+	        /**
+	         * @var Bkg_Viewer_Helper_Data $helper
+	         */
+	        $helper = Mage::helper("bkgviewer");
+	        
+	        $data = $helper->fetchData($service->getUrl());
+	        if (empty($data)) {
+	            continue;
+	        }
+	        
+	        $name = $tool->getServiceLayer()->getName();
+	        
+	        $dom = new DOMDocument();
+	        
+	        $dom->loadXML($data);
+	        $xpath = new DOMXPath($dom);
+	        
+	        // check for DefaultSRS value, need to use namespace in query
+	        $r = $xpath->query("//wfs:FeatureType[wfs:Name = '".$name."']/wfs:DefaultSRS");
+	        if ($r->length < 1) {
+	            continue;
+	        }
+	        
+	        /** @var DOMNode $n */
+	        $n = $r->item(0);
+	        
+	        // grep ending number for EPSG code
+	        $treffer = array();
+	        if (preg_match("/\d+$/", $n->textContent, $treffer)) {
+	            return $treffer[0];
+	        }
+	    }
+	    return null;
+	}
 	
     /**
      * 

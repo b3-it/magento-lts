@@ -13,19 +13,42 @@
  */
 /** @var $this Mage_Customer_Block_Form_Login */
 ?>
-<div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
+
+<?php
+$_allowedRegister = Mage::getStoreConfig('customer/create_account/register_user_on_login', $this->getStoreId());
+
+$_use_ssl_logo  = Mage::getStoreConfig('design/login/ssl_logo_use', Mage::app()->getStore());
+$_ssl_image     = Mage::getStoreConfig('design/login/ssl_logo', Mage::app()->getStore());
+$_ssl_image_css = Mage::getStoreConfig('design/login/ssl_logo_style', Mage::app()->getStore());
+$_ssl_alt       = $this->__( Mage::getStoreConfig('design/login/ssl_logo_alt', Mage::app()->getStore()) );
+$_ssl_title     = $this->__( Mage::getStoreConfig('design/login/ssl_logo_title', Mage::app()->getStore()) );
+
+$_is_https   = Mage::app()->getFrontController()->getRequest()->isSecure();
+$_show_image = ( strlen($_ssl_image) ? Mage::getBaseUrl('media') . 'ssl_logo/' . $_ssl_image : $this->getSkinUrl('images/litessl_tl_trans.gif') );
+
+$_show_ssl = false;
+if ( ($_use_ssl_logo == 0) || ($_use_ssl_logo == 2 && $_is_https) ) {
+    $_show_ssl = true;
+}
+$show_css = '';
+if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
+    $show_css = ' style="' . $this->escapeHtml($_ssl_image_css) . '"';
+}
+?>
+
+<div class="account-login<?php if (!$_allowedRegister) echo ' login-only' ?>">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
         <div class="col2-set egov-account-login">
 
             <div class="page-title">
-                <h1><?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+                <h1><?php if ($_allowedRegister): ?>
                         <?php echo $this->__('Login or Create an Account') ?>
                     <?php else: ?>
                         <?php echo $this->__('Login'); ?>
                     <?php endif; ?></h1>
             </div>
 
-            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+            <?php if ($_allowedRegister): ?>
             <div class="col-1 new-users">
                 <form action="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>" method="get" id="register-form" class="scaffold-form">
                     <h2><?php echo $this->__('New Here?') ?></h2>
@@ -49,15 +72,15 @@
             <?php endif; ?>
 
             <?php // This column should be col-1 if the registration column is not displayed ?>
-            <div class="<?php if ($this->helper('customer')->isRegistrationAllowed()): ?>col-2<?php else: ?>col-1<?php endif; ?> registered-users">
+            <div class="<?php if ($this->helper('customer')->isRegistrationAllowed()): ?>col-2<?php else: ?>col-1<?php endif; ?> registered-users"<?php if (!$_allowedRegister): ?> style="margin:0 auto; float:none;"<?php endif; ?>>
                 <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" class="scaffold-form">
                     <?php echo $this->getBlockHtml('formkey'); ?>
                     <h2><?php echo $this->__('Already registered?') ?></h2>
-                    <div class="content fieldset">
+                    <div class="content fieldset" style="position:relative;">
                         <p class="form-instructions">
                             <?php echo $this->__('If you have an account with us, please log in.') ?>
                         </p>
-			            
+
                         <ul class="form-list">
                             <li>
                                 <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
@@ -72,19 +95,17 @@
                                 </div>
                             </li>
                             <?php echo $this->getChildHtml('form.additional.info'); ?>
-                            <li>
-                            </li>
                             <?php echo $this->getChildHtml('persistent.remember.me'); ?>
                         </ul>
+                        <?php if ($_show_ssl): ?>
+                            <span class="securityLabel"<?php echo $show_css; ?>>
+                                <img src="<?php echo $_show_image; ?>" alt="<?php echo $this->__($_ssl_alt); ?>" title="<?php echo $this->__($_ssl_title); ?>" />
+                            </span>
+                        <?php endif; ?>
                         <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
                         <span class="required">
                             <?php echo $this->__('* Required Fields') ?>
                         </span>
-                        <span class="securityLabel">
-			              <?php if( Mage::app()->getFrontController()->getRequest()->isSecure() ): ?>
-				            <img src="<?php echo $this->getSkinUrl('images/litessl_tl_trans.gif'); ?>" alt="<?php echo $this->__('Certified safety - Positive SSL Label'); ?>" title="<?php echo $this->__('Positive SSL'); ?>" />
-			              <?php endif; ?>
-			            </span>
                     </div>
                     <div class="buttons-set">
                         <a class="button" href="<?php echo $this->getForgotPasswordUrl() ?>">

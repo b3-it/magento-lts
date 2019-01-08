@@ -30,16 +30,15 @@
     <?php echo $this->getChildHtml('after_body_start') ?>
         <div class="wrapper">
             <div class="page">
+                <?php echo $this->getChildHtml('global_notices') ?>
                 <?php echo $this->getChildHtml('header') ?>
 
-                <?php echo $this->getChildHtml('global_notices') ?>
-
                 <div class="main-container col3-layout">
+                    <?php echo $this->getChildHtml('breadcrumbs') ?>
                   <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 1 ) : ?>
                     <?php echo $this->getChildHtml('banner'); ?>
                   <?php endif; ?>
                     <div class="main">
-                        <?php echo $this->getChildHtml('breadcrumbs') ?>
                         <div class="col-wrapper">
                         <?php if ($_leftContent = $this->getChildHtml('left_first')): ?>
                             <div class="col-left sidebar col-left-first"><?php echo $_leftContent; ?></div>

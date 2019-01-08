@@ -24,7 +24,7 @@
 		'markerBig' : SKIN_PATH + 'geomap/images/map2_point4.png',
 		'markerSmall' : SKIN_PATH + 'geomap/images/map2_point4.gif',
 		'jsonUrl' : '',
-		'tileUrl' : 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		'tileUrl' : 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		'extent' : [],
 		'mapProjection' : 'EPSG:900913',
 		'cordProjection' : 'EPSG:4326',
@@ -70,10 +70,9 @@
 		 */
 		'_init' : function() {
 			plugin = this;
-			// console.log(this.container);
 			controls = ol.control.defaults({
 				zoom : false
-			}).extend([ new ol.control.PanZoom({
+			}).extend([ new olpz.control.PanZoom({
 				imgPath : SKIN_PATH + 'geomap/js/img',
 				slider : true
 			// enables the slider
@@ -82,7 +81,6 @@
 				projection : this.options.cordProjection
 			}), new ol.control.ScaleLine ]);
 
-
 			this.mapLayer = new ol.layer.Tile({
 				source : new ol.source.OSM({
 					attributions : [ ol.source.OSM.ATTRIBUTION ],
@@ -90,14 +88,6 @@
 				})
 			});
 			
-			if (this.options.extent.length === 4) {
-				extent = ol.proj.transformExtent(this.options.extent,
-						this.options.cordProjection, this.options.mapProjection);
-
-				console.log(extent);
-				this.mapLayer.setExtent(extent);
-			}
-
 			this.jsonLayer = new ol.layer.Vector({
 				source : jsonSource = new ol.source.Vector({
 					url : this.options.jsonUrl,
@@ -106,7 +96,14 @@
 				style : this.jsonStyleFunction
 			});
 
-			//overlayElement = $j(this.options.overlayData);
+			// after loading of the GeoJSON, set the extent of the map to the extent of the sources
+			// currently with 1% of the Height Buffer
+			this.jsonLayer.once("change", function(e) {
+				var oldExtent = e.target.getSource().getExtent();
+				var buffer = ol.extent.getHeight(oldExtent) / 100;
+				var newExtent = ol.extent.buffer(oldExtent, buffer);
+				plugin.mapLayer.setExtent(newExtent);
+			});
 
 			this.jsonOverlay = new ol.Overlay.Popup();
 

@@ -49,6 +49,14 @@ class Bkg_Viewer_Block_Adminhtml_Composit_Composit_Edit extends Mage_Adminhtml_B
 				
 			}	
         	
+        	function setTitle()
+			{
+				var data = \$j('#service_layers option:selected').text();
+        		\$j('#layer_title').val(data);
+			}	
+        	
+        	
+        	
         ";
     }
     

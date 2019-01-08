@@ -211,10 +211,14 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
     		$this->_getState()->setCompleteStep(Sid_Wishlist_Model_State::STEP_ADD_SELECT);
     		
     	} catch (Sid_Wishlist_Model_Quote_NoProductException $e) {
-    		Mage::getSingleton('core/session')->addError($e->getMessage());
-    		$this->getSession()->unsParams();
-    		//redirect to Startpage
-    		$this->_redirect('', array('_secure'=>true));
+            Mage::getSingleton('core/session')->addError($e->getMessage());
+            $this->getSession()->unsParams();
+            if ($e->getRefererUrl() !== NULL && $this->_isUrlInternal($e->getRefererUrl())) {
+                $this->_redirectUrl($e->getRefererUrl());
+            } else {
+                //redirect to Startpage
+                $this->_redirect('', array('_secure' => true));
+            }
     		return;
     	} catch (Mage_Core_Exception $e) {
     		Mage::logException($e);
@@ -304,6 +308,8 @@ class Sid_Wishlist_IndexController extends Sid_Wishlist_Controller_Abstract
         $error   = false;
         if (empty($emails)) {
             $error = $this->__('Email address can\'t be empty.');
+        } elseif (count($emails) > 5) {
+            $error = $this->__('Please enter no more than 5 email addresses.');
         } else {
             foreach ($emails as $index => $email) {
                 $email = trim($email);

@@ -5,37 +5,22 @@
 "Please select item(s)","Bite wählen Sie mindesten einen Eintrag aus!"
 "Total of %d record(s) were successfully deleted","Es wurden %d Einträge gelöscht."
 "Total of %d record(s) were successfully updated","Es wurden %d Einträge aktualisiert."
-<br />
-<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Notice: Undefined index: fields in D:\develweb\moduleGenerator\lib\tabelle.php on line <i>19</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0000</td><td bgcolor='#eeeeec' align='right'>177232</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='D:\develweb\moduleGenerator\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1024768</td><td bgcolor='#eeeeec'>file->createFile(  )</td><td title='D:\develweb\moduleGenerator\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>43</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1025128</td><td bgcolor='#eeeeec'>file->_getContent(  )</td><td title='D:\develweb\moduleGenerator\lib\file.php' bgcolor='#eeeeec'>...\file.php<b>:</b>21</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1047840</td><td bgcolor='#eeeeec'>Smarty_Internal_TemplateBase->display(  )</td><td title='D:\develweb\moduleGenerator\lib\file.php' bgcolor='#eeeeec'>...\file.php<b>:</b>48</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>5</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1047968</td><td bgcolor='#eeeeec'>Smarty_Internal_TemplateBase->_execute(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_templatebase.php' bgcolor='#eeeeec'>...\smarty_internal_templatebase.php<b>:</b>114</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>6</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1067656</td><td bgcolor='#eeeeec'>Smarty_Internal_Template->render(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_templatebase.php' bgcolor='#eeeeec'>...\smarty_internal_templatebase.php<b>:</b>199</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>7</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1070248</td><td bgcolor='#eeeeec'>Smarty_Template_Compiled->render(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_template.php' bgcolor='#eeeeec'>...\smarty_internal_template.php<b>:</b>184</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>8</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1078384</td><td bgcolor='#eeeeec'>Smarty_Template_Resource_Base->getRenderedTemplateCode(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_template_compiled.php' bgcolor='#eeeeec'>...\smarty_template_compiled.php<b>:</b>170</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>9</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1078648</td><td bgcolor='#eeeeec'>content_585a4fd6e4f116_34348686(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_template_resource_base.php' bgcolor='#eeeeec'>...\smarty_template_resource_base.php<b>:</b>128</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>10</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1080288</td><td bgcolor='#eeeeec'>tabelle->getFields(  )</td><td title='D:\develweb\moduleGenerator\temp\templates_c\03f44978fd9b809341a2399452e12150d5f23b26_0.file.locale.tmpl.php' bgcolor='#eeeeec'>...\03f44978fd9b809341a2399452e12150d5f23b26_0.file.locale.tmpl.php<b>:</b>36</td></tr>
-</table></font>
-<br />
-<font size='1'><table class='xdebug-error xe-warning' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Warning: Invalid argument supplied for foreach() in D:\develweb\moduleGenerator\lib\tabelle.php on line <i>19</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0000</td><td bgcolor='#eeeeec' align='right'>177232</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='D:\develweb\moduleGenerator\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1024768</td><td bgcolor='#eeeeec'>file->createFile(  )</td><td title='D:\develweb\moduleGenerator\index.php' bgcolor='#eeeeec'>...\index.php<b>:</b>43</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1025128</td><td bgcolor='#eeeeec'>file->_getContent(  )</td><td title='D:\develweb\moduleGenerator\lib\file.php' bgcolor='#eeeeec'>...\file.php<b>:</b>21</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1047840</td><td bgcolor='#eeeeec'>Smarty_Internal_TemplateBase->display(  )</td><td title='D:\develweb\moduleGenerator\lib\file.php' bgcolor='#eeeeec'>...\file.php<b>:</b>48</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>5</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1047968</td><td bgcolor='#eeeeec'>Smarty_Internal_TemplateBase->_execute(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_templatebase.php' bgcolor='#eeeeec'>...\smarty_internal_templatebase.php<b>:</b>114</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>6</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1067656</td><td bgcolor='#eeeeec'>Smarty_Internal_Template->render(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_templatebase.php' bgcolor='#eeeeec'>...\smarty_internal_templatebase.php<b>:</b>199</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>7</td><td bgcolor='#eeeeec' align='center'>1.7850</td><td bgcolor='#eeeeec' align='right'>1070248</td><td bgcolor='#eeeeec'>Smarty_Template_Compiled->render(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_internal_template.php' bgcolor='#eeeeec'>...\smarty_internal_template.php<b>:</b>184</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>8</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1078384</td><td bgcolor='#eeeeec'>Smarty_Template_Resource_Base->getRenderedTemplateCode(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_template_compiled.php' bgcolor='#eeeeec'>...\smarty_template_compiled.php<b>:</b>170</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>9</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1078648</td><td bgcolor='#eeeeec'>content_585a4fd6e4f116_34348686(  )</td><td title='D:\develweb\moduleGenerator\lib\smarty\libs\sysplugins\smarty_template_resource_base.php' bgcolor='#eeeeec'>...\smarty_template_resource_base.php<b>:</b>128</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>10</td><td bgcolor='#eeeeec' align='center'>1.8150</td><td bgcolor='#eeeeec' align='right'>1080288</td><td bgcolor='#eeeeec'>tabelle->getFields(  )</td><td title='D:\develweb\moduleGenerator\temp\templates_c\03f44978fd9b809341a2399452e12150d5f23b26_0.file.locale.tmpl.php' bgcolor='#eeeeec'>...\03f44978fd9b809341a2399452e12150d5f23b26_0.file.locale.tmpl.php<b>:</b>36</td></tr>
-</table></font>
-
-
+"Item Manager","Element-Manager"
+"Composit","Composit"
+"Service","Service"
+"Bkg Viewer","Bkg Viewer"
+"virtualgeo components","VirtualGEO Komponenten"
+"Rename","Umbenennen"
+"Root node","Wurzelknoten"
+"Node Element is null and root node can not be deleted","Knotenelement ist null und der Wurzelknoten kann nicht gelöscht werden."
+"Node Element is not selected and root node can not be renamed","Knotenelement ist nicht markiert und der Wurzelknoten kann nicht umbenannt werden."
+"New node","neuer Knoten"
+"You must be select an element","Sie müssen ein Element auswählen."
+"You must select a node to insert","Sie müssen einen Knoten auswählen zum einfügen von"
+"-- please Select --","-- bitte Auswählen --"
+"Layers available","verfügbare Ebenen"
+"Layer","Ebenen"
+"permanent","statisch"
+"entity layer","Element Ebene"
+"visual position","sichtbare Position"
+"Copy selected Layer to Navigation","Ausgewählte Ebene in die Navigation kopieren"

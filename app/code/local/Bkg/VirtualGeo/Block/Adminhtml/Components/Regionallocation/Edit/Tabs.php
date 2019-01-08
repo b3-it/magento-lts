@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @category   	Bkg Virtualgeo
- * @package    	Bkg_Virtualgeo
- * @name       	Bkg_Virtualgeo_Block_Adminhtml_Components_Regionallocation_Edit_Tabs
+ * @category   	Bkg
+ * @package    	Bkg_VirtualGeo
+ * @name       	Bkg_VirtualGeo_Block_Adminhtml_Components_Regionallocation_Edit_Tabs
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Virtualgeo_Block_Adminhtml_Components_Regionallocation_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
+class Bkg_VirtualGeo_Block_Adminhtml_Components_Regionallocation_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
 {
 
   public function __construct()

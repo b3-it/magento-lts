@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @category   	Bkg Virtualgeo
- * @package    	Bkg_Virtualgeo
- * @name       	Bkg_Virtualgeo_Block_Adminhtml_Components_Formatentity_Edit
+ * @category   	Bkg
+ * @package    	Bkg_VirtualGeo
+ * @name       	Bkg_VirtualGeo_Block_Adminhtml_Components_Formatentity_Edit
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Virtualgeo_Block_Adminhtml_Components_Format_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Bkg_VirtualGeo_Block_Adminhtml_Components_Format_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
     {

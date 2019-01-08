@@ -31,4 +31,16 @@ class Sid_ExportOrder_Model_Resource_Order extends Mage_Core_Model_Resource_Db_A
     	return Mage::helper('exportorder')->getSemaphor();
     }
     
+    public function saveField($object, $field)
+    {
+    	if ($object->getId() && !empty($field))
+    	{
+    		$table = $this->getMainTable();
+    		$data = array($field => $object->getData($field));
+    		$this->_getWriteAdapter()->update($table, $data, 'id ='. (int) $object->getId());
+    
+    	}
+    
+    	return $this;
+    }
 }

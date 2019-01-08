@@ -1,0 +1,22 @@
+		<table class="massaction">
+			<tbody style="background:none;">
+				<tr>
+					<td>
+						<div class="right select-button-container">
+							<div class="entry-edit">
+								<select>
+									<?php foreach($this->getValues() as $opt):?>
+										<option value="<?php echo $opt['value']?>"><?php echo $opt['label']?></option>
+									<?php endforeach;?>
+								</select>
+								<button class="scalable add" onclick="addTableRow( $j(this) );" type="button" title="<?php echo Mage::helper('egovsbase')->__('Add')?>">
+									<span>
+										<?php echo Mage::helper('egovsbase')->__('Add')?>
+									</span>
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>

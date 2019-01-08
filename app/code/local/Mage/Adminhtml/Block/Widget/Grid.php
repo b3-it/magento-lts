@@ -1696,5 +1696,10 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
         $res = parent::getRowUrl($item);
         return ($res ? $res : '#');
     }
+    
+    public function getIsExport()
+    {
+    	return $this->_isExport;
+    }
 
 }

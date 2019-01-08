@@ -29,7 +29,7 @@ class Bfr_EventManager_Block_Adminhtml_Participant_Edit_Tab_Form extends Mage_Ad
       $data = Mage::registry('participant_data');
       if($data)
       {
-      	if(intval($data->getOrderId()) > 0){
+      	if((intval($data->getOrderId()) > 0) || (intval($data->getEventId()) > 0)){
       		$lock = true;
       		//dupliziieren wg. disabled selectbox und hidden
       		$data->setEventId1($data->getEventId());

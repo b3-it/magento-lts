@@ -110,7 +110,7 @@ class Sid_ExportOrder_Model_Cron extends Mage_Core_Model_Abstract
   			->where('export.semaphor < ' .Mage::helper('exportorder')->getSemaphor(-120))
   			->where("main_table.status IN ('processing','complete')");
 		
-  		//$this->setLog(($oderCollection->getSelect()->__toString()));  		
+  		//die(($oderCollection->getSelect()->__toString()));  		
   		
   		foreach($oderCollection as $order){
   			if(!$order->getFramecontract())

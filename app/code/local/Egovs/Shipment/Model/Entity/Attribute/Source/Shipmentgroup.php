@@ -62,7 +62,10 @@ class Egovs_Shipment_Model_Entity_Attribute_Source_Shipmentgroup extends Mage_Ea
      */
     public function getOptionArray()
     {
-        $_options = array();
+        $_options[] = array(
+            'value' => '',
+            'label' => Mage::helper('adminhtml')->__('-- Please Select --')
+        );
         foreach ($this->getAllOptions() as $option) {
             $_options[$option['value']] = $option['label'];
         }
@@ -97,7 +100,7 @@ class Egovs_Shipment_Model_Entity_Attribute_Source_Shipmentgroup extends Mage_Ea
     {
         switch ($value) {
             case self::VALUE_YES:
-                return 'Yesz';
+                return 'Yes';
             case self::VALUE_NO:
                 return 'No';
         }

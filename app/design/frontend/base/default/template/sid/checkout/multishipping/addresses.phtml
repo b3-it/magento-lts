@@ -34,7 +34,9 @@
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
 <div class="page-title title-buttons">
     <h2><?php echo $this->__('Ship to Multiple Addresses') ?></h2>
-    <button type="submit" class="button" onclick="$('add_new_address_flag').value=1"><span><?php echo $this->__('Enter a New Address') ?></span></button>
+    <button id="checkout-new-address" type="submit" class="button" onclick="$('add_new_address_flag').value=1">
+        <span><?php echo $this->__('Enter a New Address') ?></span>
+    </button>
 </div>
 
 
@@ -43,7 +45,7 @@
 <fieldset class="multiple-checkout" style="display:block; clear:left;">
     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
-    
+
 	<div id="quoteitems">
 	<?php echo $this->getChildHtml('items');?>
 	</div>

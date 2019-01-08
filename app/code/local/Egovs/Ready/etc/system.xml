@@ -72,6 +72,14 @@
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</including_shipping_costs>
+						<without_shipping_costs_text>
+							<label>Text for "Without Shipping Costs"</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>41</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</without_shipping_costs_text>
 						<display_product_weight translate="label,comment" module="egovsready">
 							<label>Display Product Weight below Price</label>
 							<frontend_type>select</frontend_type>

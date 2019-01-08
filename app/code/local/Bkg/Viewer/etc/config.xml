@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Bkg_Viewer>
-			<version>0.1.0.0</version>
+			<version>0.1.3.0</version>
 		</Bkg_Viewer>
 	</modules>
 	<global>
@@ -51,6 +51,21 @@
 					<service_crs>
 						<table>bkg_viewer_service_crs</table>
 					</service_crs>
+					<service_tile>
+						<table>bkg_viewer_service_tile</table>
+					</service_tile>
+					<service_tile_system>
+						<table>bkg_viewer_service_tile_system</table>
+					</service_tile_system>
+					<service_vg>
+						<table>bkg_viewer_service_vg</table>
+					</service_vg>
+					<service_vg_group>
+						<table>bkg_viewer_service_vg_group</table>
+					</service_vg_group>
+					<composit_selectiontools>
+						<table>bkg_viewer_composit_selectiontools</table>
+					</composit_selectiontools>
 				</entities>
 			</bkgviewer_resource>
 		</models>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <!--
 /**
  * Magento
@@ -235,7 +234,7 @@
             </depends>
         </Mage_Log>
         <Mage_Backup>
-            <active>true</active>
+            <active>false</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Core/>
@@ -276,7 +275,7 @@
             <active>true</active>
             <codePool>core</codePool>
             <depends>
-                <Mage_Uploader/>
+                <Mage_Core/>
             </depends>
         </Mage_Cms>
         <Mage_Reports>
@@ -373,7 +372,7 @@
             </depends>
         </Mage_Dataflow>
         <Mage_Rss>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
              <depends>
                 <Mage_Catalog/>
@@ -398,12 +397,5 @@
                 <Mage_Core/>
             </depends>
         </Mage_Index>
-        <Mage_Uploader>
-            <active>true</active>
-            <codePool>core</codePool>
-            <depends>
-                <Mage_Core/>
-            </depends>
-        </Mage_Uploader>
     </modules>
 </config>

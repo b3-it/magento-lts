@@ -1,6 +1,6 @@
 ﻿//
 // @category    design
-// @package     chemnitz_default
+// @package     freiberg_default
 // @copyright   Copyright (c) 2017 B3-it System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -27,6 +27,7 @@
 @import "../../../egov/default/scss/egov/checkiban";
 @import "../../../egov/default/scss/egov/silver-track";
 @import "../../../egov/default/scss/egov/credit-cards";
+@import "../../../egov/default/scss/egov/mobile-switch";
 
 
 // ----------------------------------------------
@@ -43,7 +44,7 @@
 @import "../../../egov/default/scss/layout/button-set";
 @import "../../../egov/default/scss/layout/buttons";
 @import "../../../egov/default/scss/layout/global";
-@import "../../../egov/default/scss/layout/header";
+@import "layout/header";
 @import "../../../egov/default/scss/layout/header-nav";
 @import "../../../egov/default/scss/layout/header-search";
 @import "../../../egov/default/scss/layout/header-account";
@@ -60,7 +61,7 @@
 //  2. Selectors of equal weight get applied based on which appears last in the stylesheet,
 //     so we should try not to change this order once it is in place
 @import "../../../egov/default/scss/module/select-language";
-@import "../../../egov/default/scss/module/product-list";
+@import "module/product-list";
 @import "../../../egov/default/scss/module/catalog-product";
 @import "../../../egov/default/scss/module/catalog-msrp";
 @import "../../../egov/default/scss/module/catalog-seo-sitemap-category";
@@ -100,6 +101,7 @@
 @import "../../../egov/default/scss/module/my-recent-tags";
 @import "../../../egov/default/scss/module/sid-wishlist";
 @import "../../../egov/default/scss/module/grid-table";
+@import "../../../egov/default/scss/module/sales-order-printshipment";
 
 // ----------------------------------------------
 // Override

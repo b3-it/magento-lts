@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * @category    design
  * @package     egov_default
@@ -25,16 +25,18 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
-            <col width="50" />
-            <col />
-            <col width="70" />
-            <col width="70" />
-            <col width="10" />
-            <col width="20" />
-        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col width="70" />
-            <col width="20" />
-        <?php endif; ?>
+            <colset>
+                <col width="50" />
+                <col />
+                <col width="70" />
+                <col width="70" />
+                <col width="10" />
+                <col width="20" />
+            <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                <col width="70" />
+                <col width="20" />
+            <?php endif; ?>
+            </colset>
             <thead>
                 <tr>
                     <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
@@ -124,6 +126,8 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <?php echo $this->getChildHtml('totals'); ?>
             <?php if(!$this->hasError()): ?>
             <button class="button btn-proceed-checkout btn-checkout"
+                    id="btn-proceed-checkout"
+                    name="btn-proceed-checkout"
                     onclick="window.location='<?php echo $this->getCheckoutUrl();?>';"
                     title="<?php echo $this->__('Proceed to checkout'); ?>"
                     type="button">

@@ -23,7 +23,7 @@
 
 .cart .button {
     white-space: normal;
-    
+
     @include bp(max-width, $bp-small) {
         float: left;
         width: 100%;
@@ -84,12 +84,12 @@
 
     .cart-empty {
         @extend .egov-default-message;
-        
+
         .button {
             display: block;
             float: none;
             width: 25%;
-            
+
             @include bp(max-width, $bp-small) {
                 width: 100%;
             }
@@ -111,7 +111,7 @@
                 position: relative;
                 top: 0 - $global-boxmargin;
             }
-           
+
             @include bp(max-width, $bp-medium) {
            	    width: 100%;
            	    background: none;
@@ -324,7 +324,7 @@
         .item-options{
             font-size: $global-fontsize-small;
         }
-        
+
         a.egov-delete {
             display: none;
             @include bp(max-width, $bp-small) {
@@ -384,13 +384,18 @@
         padding-left: 0;
         padding-right: 0;
 
-        .product-image img {
-            max-width: 100%;
-            width: 100%;
-        }
-
         a.cart-edit {
             display: none;
+        }
+    }
+
+    .product-image {
+        top: 0;
+
+        img {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
         }
     }
 
@@ -410,7 +415,7 @@
     }
     tbody td.product-cart-price {
         text-align: right;
-        
+
         @include bp(max-width, $bp-small) {
             text-align: left;
         }
@@ -672,7 +677,7 @@
             span.or {
                 display: none;
             }
-            
+
             .button {
             	padding: 3px 5px;
             }
@@ -946,7 +951,7 @@
         @include bp(max-width, $bp-small) {
             width: 100%;
         }
-            
+
         button {
             padding: 6px;
             margin-top: 5px;
@@ -958,7 +963,7 @@
         height: 30px;
         margin: 4px 10px 0 0;
         width: 190px;
-        
+
         @include bp(max-width, $bp-small) {
             width: 100%;
         }

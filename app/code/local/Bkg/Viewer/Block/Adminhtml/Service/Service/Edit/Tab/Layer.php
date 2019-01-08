@@ -14,10 +14,11 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Edit_Tab_Layer extends Mage_Adm
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setId('Service\LayerGrid');
-		$this->setDefaultSort('Service\Layer_id');
+		$this->setId('ServiceLayerGrid');
+		$this->setDefaultSort('layer_id');
 		$this->setDefaultDir('ASC');
 		$this->setSaveParametersInSession(true);
+		$this->setUseAjax(true);
 	}
 	
 	protected function _prepareCollection()
@@ -137,7 +138,7 @@ class Bkg_Viewer_Block_Adminhtml_Service_Service_Edit_Tab_Layer extends Mage_Adm
 		if (!isset($params['_current'])) {
 			$params['_current'] = true;
 		}
-		return $this->getUrl('*/*/*', $params);
+		return $this->getUrl('*/*/layerGrid', $params);
 	
 	}
 	

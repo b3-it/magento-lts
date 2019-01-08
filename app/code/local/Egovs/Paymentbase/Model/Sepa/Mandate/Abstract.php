@@ -196,8 +196,8 @@
  * 
  * @category	Egovs
  * @package		Egovs_Paymentbase
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2013 EDV Beratung Hempel
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2013-2018 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 abstract class Egovs_Paymentbase_Model_Sepa_Mandate_Abstract
@@ -249,8 +249,8 @@ extends Varien_Object
 	
 	public function __get($var) {
 		if ($this->getAdapteeMandate()) {
-			if (isset($this->_mandate->$key)) {
-				return  $this->_mandate->$key;
+			if (isset($this->_mandate->$var)) {
+				return  $this->_mandate->$var;
 			}
 		}
 		return parent::__get($var);
@@ -395,7 +395,7 @@ extends Varien_Object
 		if ($AllowOneof && $payment->getAdditionalInformation('sequence_type') == Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF) {
 			$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_OOFF);
 		} else {
-			$this->setSequenceType(Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_FRST);
+			$this->setSequenceType($this->getSequenceTypeForMultiUsage());
 		}
 		$this->setType($payment->getAdditionalInformation('mandate_type'));
 		
@@ -577,4 +577,8 @@ extends Varien_Object
 	public function getDebitorSurname() {
 		return null;
 	}
+
+    public function getSequenceTypeForMultiUsage() {
+	    return Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::SEQUENCE_TYPE_RCUR;
+    }
 }

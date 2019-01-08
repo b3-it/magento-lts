@@ -429,12 +429,12 @@
                 </entities>
             </isolation_mysql4>
             <!--
-      <catalog_resource>
-      <rewrite>
-      <product_collection>Egovs_Isolation_Model_Resource_Catalog_Product_Collection</product_collection>
-      </rewrite>
-      </catalog_resource>
-      -->
+            <catalog_resource>
+            <rewrite>
+            <product_collection>Egovs_Isolation_Model_Resource_Catalog_Product_Collection</product_collection>
+            </rewrite>
+            </catalog_resource>
+            -->
             <adminhtml>
                 <rewrite>
                     <system_store>Egovs_Isolation_Model_System_Store</system_store>

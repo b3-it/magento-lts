@@ -20,6 +20,16 @@ $_product = $this->getProduct();
 // Attribut-Konfiguration ermitteln
 $_attributes = new Varien_Object();
 $_attributes->setData($_product->getAttributes());
+
+$_hidePrice = false;
+if (Mage::helper('core')->isModuleEnabled('Egovs_B2b')) {
+    $_hidePrice = Mage::helper('egovs_b2b')->hidePrice();
+}
+
+$_isLoggedIn = false;
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $_isLoggedIn = true;
+}
 ?>
 
 <script type="text/javascript">
@@ -31,7 +41,7 @@ $_attributes->setData($_product->getAttributes());
 </div>
 <div class="product-view">
     <div class="product-essential">
-        <form action="<?php echo $this->getSubmitUrl($_product, array('_forced_secure' => true)) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
@@ -50,9 +60,9 @@ $_attributes->setData($_product->getAttributes());
                     </div>
                   <?php endif; ?>
                     <div class="price-info">
-                        <?php echo $this->getPriceHtml($_product); ?>
-                        <?php echo $this->getChildHtml('bundle_prices'); ?>
-                        <?php echo $this->getTierPriceHtml(); ?>
+                        <?php if(!$_hidePrice) echo $this->getPriceHtml($_product); ?>
+                        <?php if(!$_hidePrice) echo $this->getChildHtml('bundle_prices'); ?>
+                        <?php if(!$_hidePrice) echo $this->getTierPriceHtml(); ?>
                     </div>
 
                     <div class="extra-info">
@@ -65,8 +75,14 @@ $_attributes->setData($_product->getAttributes());
                     <?php echo $this->getChildHtml('extrahint') ?>
 
                   <?php if (!$this->hasOptions()):?>
-                    <?php if($_product->isSaleable()): ?>
-                      <?php echo $this->getChildHtml('addtocart') ?>
+                    <?php if ($_product->isSaleable() ): ?>
+                        <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
+                                <?php if(!$_hidePrice): ?>
+                                      <?php echo $this->getChildHtml('addtocart') ?>
+                                <?php endif; ?>
+                        <?php else: ?>
+                            <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                   <?php elseif (!$_product->isSaleable()): ?>
                     <?php echo $this->getChildHtml('addto') ?>
@@ -83,7 +99,7 @@ $_attributes->setData($_product->getAttributes());
             <div class="product-additional-information">
                 <?php if ($_product->getShortDescription()):?>
                     <div class="short-description">
-                        <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                        <div class="std"><?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?></div>
                     </div>
                 <?php endif;?>
 

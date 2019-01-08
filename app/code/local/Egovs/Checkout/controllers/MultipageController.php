@@ -75,16 +75,16 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
         } catch (Mage_Core_Exception $e) {
             Mage::getSingleton('checkout/session')->addError($e->getMessage());
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         } catch(Exception $ex) {
         	Mage::getSingleton('checkout/session')->addException(
                 $ex,
                 $ex->getMessage()
             );
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
 
@@ -131,15 +131,15 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
         $quote = $this->_getCheckout()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
         if (!$quote->validateMinimumAmount()) {
             $error = Mage::getStoreConfig('sales/minimum_order/error_message');
             Mage::getSingleton('checkout/session')->addError($error);
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
-            return;
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
+            return $this;
         }
 
         return $this;
@@ -586,27 +586,36 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     		return;
     	}
 
-        $shippingMethods = $this->getRequest()->getPost('shipping_method');
+        $shippingMethod = $this->getRequest()->getPost('shipping_method');
+        if (is_array($shippingMethod)) {
+            $shippingMethod = array_shift($shippingMethod);
+        }
+        $path = '*/*/shippingmethod';
         try {
-            Mage::dispatchEvent(
-                'checkout_controller_multishipping_shipping_post',
-                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
-            );
-            if (is_array($shippingMethods)) $shippingMethods = array_shift($shippingMethods);
-            $this->_getCheckout()->saveShippingMethod($shippingMethods);
+            /* Liefert leeres Array bei Erfolg */
+            $result = $this->_getCheckout()->saveShippingMethod($shippingMethod);
+            if (!$result) {
+                Mage::dispatchEvent(
+                    'checkout_controller_multishipping_shipping_post',
+                    array(
+                        'request' => $this->getRequest(),
+                        'quote' => $this->_getCheckout()->getQuote()
+                    )
+                );
 
-            $this->_getState()->setActiveStep(
-                Egovs_Checkout_Model_State::STEP_BILLING
-            );
-            $this->_getState()->setCompleteStep(
-                Egovs_Checkout_Model_State::STEP_SHIPPING_DETAILS
-            );
-            $this->_redirect('*/*/billing', array('_secure'=>true));
-        }
-        catch (Exception $e){
+                $this->_getState()->setActiveStep(
+                    Egovs_Checkout_Model_State::STEP_BILLING
+                );
+                $this->_getState()->setCompleteStep(
+                    Egovs_Checkout_Model_State::STEP_SHIPPING_DETAILS
+                );
+                $path = '*/*/billing';
+            }
+        } catch (Exception $e){
             Mage::getSingleton('checkout/session')->addError($e->getMessage());
-            $this->_redirect('*/*/shippingmethod', array('_secure'=>true));
         }
+        $this->_getCheckout()->getQuote()->collectTotals()->save();
+        $this->_redirect($path, array('_secure'=>true));
     }
 
     /**
@@ -706,12 +715,27 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
             return $this;
         }
 
+        $catched = false;
+        try {
+            $this->loadLayout();
+            $this->_initLayoutMessages('customer/session');
+            $this->_initLayoutMessages('checkout/session');
+            $this->renderLayout();
+        } catch (Egovs_Paymentbase_Exception_Validation $ve) {
+            $this->_getCheckout()->getCheckoutSession()->addMessages($ve->getMessages());
+            $catched = true;
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $this->_getCheckout()->getCheckoutSession()->addError($this->__('Internal server error occurred, please try again later.'));
+            $catched = true;
+        }
 
+        if ($catched) {
+            $this->_redirect('*/*/billing', array('_secure'=>true));
+            return $this;
+        }
 
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->_initLayoutMessages('checkout/session');
-        $this->renderLayout();
+        return $this;
     }
 
 
@@ -802,7 +826,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     	$quote = $this->_getCheckout()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->_redirect('checkout/cart', array('_forced_secure' => true));
+            $this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
             return;
         }
 
@@ -853,16 +877,20 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     			$this->_redirect('*/*/successview', array('_secure'=>true));
 	        }
         }
-        catch (Mage_Core_Exception $e){
+        catch (Mage_Core_Exception $e) {
             Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-page');
-            Mage::logException($e);
-            Mage::getSingleton('checkout/session')->addError($this->__("Internal server error occurred, please try again later."));
+            if ($e->getCode() == Egovs_Helper::EXCEPTION_CODE_PUBLIC) {
+                Mage::getSingleton('checkout/session')->addError($this->__($e->getMessage()));
+            } else {
+                Mage::logException($e);
+                Mage::getSingleton('checkout/session')->addError($this->__("Internal server error occurred, please try again later."));
+            }
             $this->_redirect('*/*/overview', array('_secure'=>true));
         }
-        catch (Exception $e){
-            Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-page');
+        catch (Exception $e) {
             Mage::logException($e);
             Mage::getSingleton('checkout/session')->addError($this->__("Internal server error occurred, please try again later."));
+            Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-page');
             $this->_redirect('*/*/overview', array('_secure'=>true));
         }
     }
@@ -883,7 +911,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
     	if (!$lastQuoteId || !$lastOrderId) {
     		$this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(false);
-    		$this->_redirect('checkout/cart', array('_forced_secure' => true));
+    		$this->_redirect('checkout/cart', array('_secure' => $this->getRequest()->isSecure()));
     		return;
     	}
 

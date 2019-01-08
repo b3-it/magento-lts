@@ -2,7 +2,13 @@
 <!DOCTYPE layout>
 <layout>
     <default>
-
+        <reference name="footer">
+		   <block type="cms/block" name="cms_footer_links" before="footer_links">
+		      <action method="setBlockId">
+		         <block_id>footer_links</block_id>
+		      </action>
+		   </block>
+		</reference>
     </default>
 
 </layout>

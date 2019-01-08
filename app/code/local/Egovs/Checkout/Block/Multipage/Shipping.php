@@ -46,7 +46,7 @@ class Egovs_Checkout_Block_Multipage_Shipping extends Egovs_Checkout_Block_Multi
     protected function _prepareLayout()
     {
         if ($headBlock = $this->getLayout()->getBlock('head')) {
-            $headBlock->setTitle(Mage::helper('checkout')->__('Shipping Methods'));
+            $headBlock->setTitle(Mage::helper('checkout')->__('Shipping Address'));
         }
         return parent::_prepareLayout();
     }

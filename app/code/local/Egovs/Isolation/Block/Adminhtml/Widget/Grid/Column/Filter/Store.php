@@ -52,6 +52,10 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
         $helper  = Mage::helper('isolation');
         $storeGroups = $helper->getUserStoreGroups();
 
+        if ($storeGroups == null) {
+            $storeGroups = array();
+        }
+
         $admin = $helper->getUserIsAdmin();
         $allShow = $this->getColumn()->getStoreAll();
 
@@ -73,7 +77,6 @@ class Egovs_Isolation_Block_Adminhtml_Widget_Grid_Column_Filter_Store
                 if(!$admin) {
                     if (array_search($group->getId(), $storeGroups) === false) {
                         continue;
-
                     }
                 }
                 $groupShow = false;

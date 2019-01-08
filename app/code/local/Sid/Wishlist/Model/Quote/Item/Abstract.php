@@ -106,6 +106,31 @@ abstract class Sid_Wishlist_Model_Quote_Item_Abstract extends Sid_Wishlist_Model
     	if (!$this->_getSalesQuoteItem()) {
     		return false;
     	}
+
+        $itemProduct = $this->_getSalesQuoteItem()->getProduct();
+    	if (!($product instanceof Varien_Object)) {
+    	    Mage::log(
+    	        sprintf(
+    	            "representProduct: No product set!\nproduct:%s",
+                    var_export($product, true)
+                ),
+                 Zend_Log::ERR
+            );
+    	    return false;
+        }
+        if (!($itemProduct instanceof Varien_Object)) {
+            Mage::log(
+                sprintf(
+                    "representProduct: No product set!\nitemProduct:%s",
+                    var_export($itemProduct, true)
+                ),
+                Zend_Log::ERR
+            );
+            return false;
+        }
+        if (!$product || !$itemProduct || $itemProduct->getId() != $product->getId()) {
+            return false;
+        }
     	
     	return $this->_getSalesQuoteItem()->representProduct($product);
     }

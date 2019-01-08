@@ -69,26 +69,32 @@ class Sid_ExportOrder_Adminhtml_ExportOrder_ExportController extends Mage_Adminh
 	public function resendAction() {
 		$id     = $this->getRequest()->getParam('id');
 	
-		$order = Mage::getModel('sales/order')->load(intval($id));
+		$order = Mage::getModel('sales/order')->load((int)$id);
 		$contract = Mage::getModel('framecontract/contract')->load($order->getFramecontract());
 		$vendor = Mage::getModel('framecontract/vendor')->load($contract->getFramecontractVendorId());
+		/** @var \Sid_ExportOrder_Model_Transfer $transfer */
 		$transfer = $vendor->getTransferModel();
-		$export =  Mage::getModel('exportorder/order')->load(intval($id),'order_id');
+		$export =  Mage::getModel('exportorder/order')->load((int)$id,'order_id');
 		$format = $vendor->getExportFormatModel();
 		$content = $format->processOrder($order);
-		
-		if($transfer instanceof Sid_ExportOrder_Model_Transfer_Link )
-		{
-			$content = array($order->getIncrementId() => $content);
-			$orderIds = array($order->getId());
-			$msg = $transfer->sendOrders($content, $format, $orderIds, $vendor->getId());
-		}else {
-			$transfer->setFormatModel($format);
-			$data = array();
-			$data['contract'] = $contract;
-			$data['order']	= $order;
-			$msg = $transfer->send($content,$order, $data);
-		}
+
+		$msg = false;
+		try {
+            if ($transfer instanceof Sid_ExportOrder_Model_Transfer_Link) {
+                $content = array($order->getIncrementId() => $content);
+                $orderIds = array($order->getId());
+                $msg = $transfer->sendOrders($content, $format, $orderIds, $vendor->getId(), $contract);
+            } else {
+                $transfer->setFormatModel($format);
+                $data = array();
+                $data['contract'] = $contract;
+                $data['order'] = $order;
+                $msg = $transfer->send($content, $order, $data);
+            }
+        } catch (Exception $e) {
+		    Mage::logException($e);
+        }
+
 		if($msg === false)
 		{
 			$export->setMessage("Die Bestellung konnte nicht versendet werden!")

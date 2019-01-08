@@ -1,24 +1,23 @@
 <script type="text/javascript">
 //<![CDATA[
-           
+
 //]]>
 </script>
 
 <div class="entry-edit">
-
-    
     <div class="entry-edit-head">
         <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('virtualgeo')->__('Content Settings') ?></h4>
     </div>
-    <fieldset class="a-right">
-    	<div class="columns sidcms-columns">
-        <div class="sidcms-side-col"   id="virtualgeo_content_layer">
-        	<?php echo $this->getLayerHtml() ?>
-        </div>
-        
-        <div class="sidcms-main-col" id="virtualgeo_content_form">
-            <?php echo $this->getFormHtml()?>
-        </div>
+    <fieldset >
+        <div class="columns sidcms-columns">
+            <div class="sidcms-side-col" id="virtualgeo_content_layer">
+                <?php echo $this->getLayerHtml() ?>
+
+            </div>
+            <div id="hidden_content_layer" > </div>
+            <div class="sidcms-main-col" id="virtualgeo_content_form">
+                <?php echo $this->getFormHtml()?>
+            </div>
         </div>
     </fieldset>
 </div>

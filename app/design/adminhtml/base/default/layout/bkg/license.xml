@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <adminhtml_license_master_index>
+        <reference name="content">
+            <block type="bkg_license/adminhtml_master" name="entity" />
+        </reference>
+    </adminhtml_license_master_index>
+    <adminhtml_license_master_edit>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+        </reference>
+    </adminhtml_license_master_edit>
+
+    <adminhtml_license_copy_index>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="bkg_license/adminhtml_copy" name="copy" />
+        </reference>
+    </adminhtml_license_copy_index>
+
+    <adminhtml_license_copy_edit>
+        <reference name="head">
+            <action method="addJs"><file>lib/uploader/flow.min.js</file></action>
+            <action method="addJs"><file>lib/uploader/fusty-flow.js</file></action>
+            <action method="addJs"><file>lib/uploader/fusty-flow-factory.js</file></action>
+            <action method="addJs"><file>mage/adminhtml/uploader/instance.js</file></action>
+            <action method="addJs"><file>bkg/license.copy.uploader.js</file></action>
+        </reference>
+    </adminhtml_license_copy_edit>
+</layout>

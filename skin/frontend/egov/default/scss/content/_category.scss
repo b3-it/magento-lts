@@ -51,6 +51,10 @@
     .category-image {
         width: $global-content-3col-percent;
     }
+
+    .product-view .add-to-cart .qty-wrapper {
+        float: none;
+    }
 }
 
 .category-title {

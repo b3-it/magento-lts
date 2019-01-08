@@ -2,10 +2,10 @@
 /**
  */
 ?>
-<div class="content-header">
-  <?php if($this->getTitle()): ?>
-    <h3><?php echo $this->getTitle() ?></h3>
-  <?php endif ?>
+<div class="entry-edit">
+<div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('bkgviewer')->__('Navigation') ?></h4>
+
     <p class="form-buttons">
         <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
             <?php echo Mage::helper('bkgviewer')->__('New')?>
@@ -18,10 +18,12 @@
         </button>
     </p>
 </div>
-
+<div class="fieldset">
 <div id="jstree_layer" class="demo"></div>
+</div>
+</div>
 
-
+<div id="jstree-data"></div>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -36,8 +38,11 @@ var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must b
 <script type="text/javascript" src="<?php echo $this->getJsUrl() ?>bkg/viewer/composit/init.tree.admin.js"></script>
 <script type="text/javascript">
 //<![CDATA[
+
 function init_db_nodes() {
+	var data = 'data';
 <?php foreach ($this->getNodes() as $node):
+
 	$parent = $node->getParentId();
 	if($node->getParentId())
 	{
@@ -46,10 +51,11 @@ function init_db_nodes() {
 	else{
 		$parent = '"root"';
 	}
-	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);"
+	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);\n"
 ?>
 <?php endforeach;?>
 	nodeOptions.open_all();
+	
 }
 
 //]]>

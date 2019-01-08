@@ -132,8 +132,7 @@ class Dwd_ProductOnDemand_Model_Product_Type_Ondemand extends Mage_Downloadable_
 	    	);
     		$linksCollectionById = array();
     		foreach ($_linkCollection as $link) {
-    			/* @var Dwd_ProductOnDemand_Model_Extendedlink $link */
-    
+    			/* @var Dwd_ConfigurableDownloadable_Model_Extendedlink $link */
     			$link->setProduct($product);
     			$linksCollectionById[$link->getId()] = $link;
     		}
@@ -151,14 +150,9 @@ class Dwd_ProductOnDemand_Model_Product_Type_Ondemand extends Mage_Downloadable_
 	    		return Mage::helper('prondemand')->__('Product is misconfigured.');
 	    	}
 	    	
-	    	/* @var $urlModel Mage_Core_Model_Url */
-	    	$urlModel = Mage::getModel('core/url');
-	    	$backUrl = $urlModel->getUrl('prondemand/ondemand/processWesteData');
-	    	
 	    	Mage::getSingleton('customer/session')->setPodTargetUrl($url);
 	    	Mage::getSingleton('customer/session')->setPodAvailibilityUrl($availUrl);
 	    	Mage::getSingleton('customer/session')->setPodTypeId($podTypeId);
-	    	Mage::getSingleton('customer/session')->setPodBackUrl($backUrl);
 	    	
 	    	$url = 'prondemand/ondemand/redirectToWeste';
 	    	$this->getProduct($product)->setRequestPath($url);

@@ -179,23 +179,77 @@ Onepage Checkout Review Page
 
     <egovs_checkout_multipage_successview>
         <reference name="checkout_successview">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/multipage/review/item.phtml</template></action>    
+            <action method="addItemRender"><type>virtualgeo</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/multipage/review/item.phtml</template></action>
         </reference>
     </egovs_checkout_multipage_successview>
- 
+
 
 <!--
 Additional block for bundle product type
 -->
 
     <PRODUCT_TYPE_virtualgeo translate="label" module="virtualgeo">
-        <label>Catalog Product View (EventBundle)</label>
+        <label>Catalog Product View (VirtualGeo)</label>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
+            <action method="addItem"><type>js</type><name>bkg/ol.tooglectrl.js</name></action>
+            <action method="addItem"><type>js</type><name>bkg/helper.js</name></action>
+            <action method="addItem"><type>js</type><name>lib/jquery/loadingoverlay.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bkg/color.js</name></action>
+            <action method="addJs"><script>bkg/virtual_geo.js</script></action>
         </reference>
         <reference name="product.info">
-            <block type="bundle/catalog_product_view_type_bundle" name="product.info.bundle" as="product_type_data" template="bundle/catalog/product/view/type/bundle.phtml">
-                <action method="addPriceBlockType"><type>virtualgeo</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
+            <block type="virtualgeo/catalog_product_view_virtualgeo" name="product.info.virtualgeo" as="product_type_data" template="virtualgeo/catalog/product/view/virtualgeo.phtml">
+                <action method="addComponentsBlock">
+                    <type>georef</type>
+                    <block>virtualgeo/catalog_product_view_components_georef</block>
+                    <template>virtualgeo/catalog/product/view/components/georef.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>format</type>
+                    <block>virtualgeo/catalog_product_view_components_format</block>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>content</type>
+                    <block>virtualgeo/catalog_product_view_components_content</block>
+                    <template>virtualgeo/catalog/product/view/components/content.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>resolution</type>
+                    <block>virtualgeo/catalog_product_view_components_resolution</block>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>structure</type>
+                    <block>virtualgeo/catalog_product_view_components_structure</block>
+                    <template>virtualgeo/catalog/product/view/components/structure.phtml</template>
+                </action>
+                 <action method="addComponentsBlock">
+                    <type>map</type>
+                    <block>virtualgeo/catalog_product_view_components_map</block>
+                    <template>virtualgeo/catalog/product/view/components/map.phtml</template>
+                </action>
+                 <action method="addComponentsBlock">
+                    <type>storage</type>
+                    <block>virtualgeo/catalog_product_view_components_storage</block>
+                    <template>virtualgeo/catalog/product/view/components/storage.phtml</template>
+                </action>
+                 <action method="addComponentsBlock">
+                    <type>toll</type>
+                    <block>virtualgeo/catalog_product_view_components_toll</block>
+                    <template>virtualgeo/catalog/product/view/components/toll.phtml</template>
+                </action>
+                <action method="addComponentsBlock">
+                    <type>accounting</type>
+                    <block>virtualgeo/catalog_product_view_components_accounting</block>
+                    <template>virtualgeo/catalog/product/view/components/default.phtml</template>
+                </action>
+                <action method="addPriceBlockType">
+                    <type>virtualgeo</type>
+                    <block>bundle/catalog_product_price</block>
+                    <template>bundle/catalog/product/price.phtml</template>
+                </action>
                 <block type="bundle/catalog_product_price" name="bundle.prices" as="bundle_prices" template="bundle/catalog/product/view/price.phtml">
                     <action method="setMAPTemplate"><tmpl>catalog/product/price_msrp_item.phtml</tmpl></action>
                 </block>
@@ -209,8 +263,8 @@ Additional block for bundle product type
                 <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block></action>
             </block>
             <action method="insert"><block>product.info.bundle.options</block></action>
-          
-            
+
+
         </reference>
         <reference name="product.info.options.wrapper.bottom">
             <remove name="product.tierprices" />
@@ -218,30 +272,50 @@ Additional block for bundle product type
             <block type="cataloginventory/qtyincrements" name="product.info.extrahint" as="extrahint" template="cataloginventory/qtyincrements.phtml"/>
         </reference>
         <reference name="product.clone_prices">
-            <action method="addPriceBlockType"><type>virtualgeo</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/view/price.phtml</template></action>
+            <action method="addPriceBlockType">
+                <type>virtualgeo</type>
+                <block>bundle/catalog_product_price</block>
+                <template>bundle/catalog/product/view/price.phtml</template>
+            </action>
         </reference>
     </PRODUCT_TYPE_virtualgeo>
 
     <sales_order_view>
         <reference name="order_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_view>
     <sales_order_invoice>
         <reference name="invoice_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/invoice/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/invoice/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_invoice>
 
     <sales_order_shipment>
         <reference name="shipment_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/shipment/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/shipment/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_shipment>
 
     <sales_order_creditmemo>
         <reference name="creditmemo_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/creditmemo/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_creditmemo>
 
@@ -251,25 +325,41 @@ Print pages
 
     <sales_order_print>
         <reference name="sales.order.print">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_print>
 
     <sales_order_printinvoice>
         <reference name="sales.order.print.invoice">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/invoice/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/invoice/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_printinvoice>
 
     <sales_order_printshipment>
         <reference name="sales.order.print.shipment">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/shipment/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/shipment/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_printshipment>
 
     <sales_order_printcreditmemo>
         <reference name="sales.order.print.creditmemo">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/creditmemo/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_order_printcreditmemo>
 
@@ -278,49 +368,81 @@ For guests
 -->
     <sales_guest_view>
         <reference name="order_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_view>
 
     <sales_guest_invoice>
         <reference name="invoice_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/invoice/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/invoice/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_invoice>
 
     <sales_guest_shipment>
         <reference name="shipment_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/shipment/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/shipment/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_shipment>
 
     <sales_guest_creditmemo>
         <reference name="creditmemo_items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/creditmemo/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_creditmemo>
 
     <sales_guest_print>
         <reference name="sales.order.print">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_print>
 
     <sales_guest_printinvoice>
         <reference name="sales.order.print.invoice">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/invoice/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/invoice/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_printinvoice>
 
     <sales_guest_printshipment>
         <reference name="sales.order.print.shipment">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/shipment/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/shipment/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_printshipment>
 
     <sales_guest_printcreditmemo>
         <reference name="sales.order.print.creditmemo">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/sales/order/creditmemo/items/renderer.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
         </reference>
     </sales_guest_printcreditmemo>
 
@@ -329,26 +451,42 @@ Emails
 -->
     <sales_email_order_items>
         <reference name="items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/email/order/items/order/default.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/email/order/items/order/default.phtml</template>
+            </action>
         </reference>
     </sales_email_order_items>
 
     <sales_email_order_invoice_items>
         <reference name="items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/email/order/items/invoice/default.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/email/order/items/invoice/default.phtml</template>
+            </action>
         </reference>
     </sales_email_order_invoice_items>
 
 
     <sales_email_order_shipment_items>
         <reference name="items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/email/order/items/shipment/default.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/email/order/items/shipment/default.phtml</template>
+            </action>
         </reference>
     </sales_email_order_shipment_items>
 
     <sales_email_order_creditmemo_items>
         <reference name="items">
-            <action method="addItemRender"><type>virtualgeo</type><block>bundle/sales_order_items_renderer</block><template>bundle/email/order/items/creditmemo/default.phtml</template></action>
+            <action method="addItemRender">
+                <type>virtualgeo</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>bundle/email/order/items/creditmemo/default.phtml</template>
+            </action>
         </reference>
     </sales_email_order_creditmemo_items>
 
@@ -357,20 +495,32 @@ RSS
 -->
     <rss_catalog_category>
         <reference name="rss.catalog.category">
-            <action method="addPriceBlockType"><type>virtualgeo</type><block>bundle/catalog_product_price</block><template>bundle/rss/catalog/product/price.phtml</template></action>
+            <action method="addPriceBlockType">
+                <type>virtualgeo</type>
+                <block>bundle/catalog_product_price</block>
+                <template>bundle/rss/catalog/product/price.phtml</template>
+            </action>
         </reference>
     </rss_catalog_category>
     <rss_catalog_new>
         <reference name="rss.catalog.new">
-            <action method="addPriceBlockType"><type>virtualgeo</type><block>bundle/catalog_product_price</block><template>bundle/rss/catalog/product/price.phtml</template></action>
+            <action method="addPriceBlockType">
+                <type>virtualgeo</type>
+                <block>bundle/catalog_product_price</block>
+                <template>bundle/rss/catalog/product/price.phtml</template>
+            </action>
         </reference>
     </rss_catalog_new>
     <rss_catalog_tag>
         <reference name="rss.catalog.tag">
-            <action method="addPriceBlockType"><type>virtualgeo</type><block>bundle/catalog_product_price</block><template>bundle/rss/catalog/product/price.phtml</template></action>
+            <action method="addPriceBlockType">
+                <type>virtualgeo</type>
+                <block>bundle/catalog_product_price</block>
+                <template>bundle/rss/catalog/product/price.phtml</template>
+            </action>
         </reference>
     </rss_catalog_tag>
-   
-    
-    
+
+
+
 </layout>

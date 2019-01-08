@@ -2,10 +2,14 @@
 <!DOCTYPE layout>
 <layout>
     <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/app_egov.js</name></action>
         </reference>
-        
+
         <reference name="left">
             <remove name="left.newsletter" />
             <remove name="catalog.leftnav" />
@@ -13,6 +17,10 @@
 
         <reference name="top.links">
             <action method="removeLinkByUrl"><url helper="customer/getRegisterUrl"/></action>
+        </reference>
+        
+        <reference name="footer_links2">
+        	<action method="removeLinkBlock"><name>return_link</name></action>
         </reference>
     </default>
 

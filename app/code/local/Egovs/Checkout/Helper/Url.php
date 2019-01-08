@@ -38,7 +38,7 @@ class Egovs_Checkout_Helper_Url extends Mage_Core_Helper_Url
      */
     public function getCartUrl()
     {
-        return $this->_getUrl('checkout/cart', array('_forced_secure' => true));
+        return $this->_getUrl('checkout/cart', array('_secure' => $this->_getRequest()->isSecure()));
     }
 
 

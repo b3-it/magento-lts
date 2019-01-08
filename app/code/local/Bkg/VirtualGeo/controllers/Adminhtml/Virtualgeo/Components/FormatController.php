@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @category   	Bkg Virtualgeo
- * @package    	Bkg_Virtualgeo
- * @name        Bkg_Virtualgeo_Adminhtml_Virtualgeo_Components_FormatentityController
+ * @category   	Bkg
+ * @package    	Bkg_VirtualGeo
+ * @name        Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_FormatentityController
  * @author 		Holger Kögel <h.koegel@b3-it.de>
  * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bkg_Virtualgeo_Adminhtml_Virtualgeo_Components_FormatController extends Mage_Adminhtml_Controller_action
+class Bkg_VirtualGeo_Adminhtml_Virtualgeo_Components_FormatController extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
@@ -105,7 +105,7 @@ class Bkg_Virtualgeo_Adminhtml_Virtualgeo_Components_FormatController extends Ma
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
-				$model = Mage::getModel('virtualgeo/componentsformatentity');
+				$model = Mage::getModel('virtualgeo/components_format');
 
 				$model->setId($this->getRequest()->getParam('id'))
 					->delete();

@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_action
+class Sid_Cms_Adminhtml_Cms_NaviController extends Mage_Adminhtml_Controller_Action
 {
 
 	protected function _initAction() {

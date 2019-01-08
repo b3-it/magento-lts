@@ -60,15 +60,15 @@
 	        <?php foreach ($_methods as $_method): $_code = $_method->getCode() ?>
 	            <dt>
 	                <?php if ($_methodsCount > 1): ?>
-	                <input type="radio" id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" <?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+	                <input type="radio" id="<?php echo $_code; ?>" value="<?php echo $_code ?>" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" <?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
 	                <?php else :?>
-	                <span class="no-display"><input type="radio" id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" checked="checked" class="radio" /></span>
+	                <span class="no-display"><input type="radio" id="<?php echo $_code ?>" value="<?php echo $_code ?>" name="payment[method]" checked="checked" class="radio" /></span>
 	                <?php endif;?>
 	                <label for="p_method_<?php echo $_code ?>"><?php echo $_method->getTitle() ?></label>
 	            </dt>
-	            
+
 	        <?php endforeach; ?>
-	        <?php if($_methodsCount == 0) 
+	        <?php if($_methodsCount == 0)
 	        	echo '<div class="error-msg">'.$this->__('Sorry,an Error occurs:<br/>Maybe you have exceeded the payment limits or you can not buy this products together. Please contact the Owner of the Webshop!').'</div>'?>
 	        </dl>
         <?php echo $this->getChildHtml('checkout_billing_items') ?>
@@ -76,9 +76,8 @@
     </div>
 </div>
    <div class="buttons-set">
-        <a href="<?php echo $this->getBackUrl() ?>" class="button"><?php echo $this->__('Back') ?></a>
-       <a class="button" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
-       <button  class="button" type="submit"><span><?php echo $this->__('Continue') ?></span></button>
+        <a href="<?php echo $this->getBackUrl() ?>" id="paymentMethodBack" class="button"><?php echo $this->__('Back') ?></a>
+       <a class="button" id="paymentMethodContinueShopping" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
+       <button id="paymentMethodContinue" class="button" type="submit"><span><?php echo $this->__('Continue') ?></span></button>
     </div>
 </form>
-

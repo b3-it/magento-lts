@@ -1,0 +1,58 @@
+//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2018 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Print-Preview Shipment
+ * ============================================ */
+
+.sales-order-printshipment {
+    .logo {
+        top: 0;
+        left: 0;
+    }
+
+    .order-date {
+        margin: 20px 0;
+    }
+
+    address, .order-date {
+        line-height: 1;
+    }
+
+    .data-table {
+        @extend .egov-base-totals;
+        @extend .egov-base-table;
+
+        thead th, tbody td {
+            text-align: left !important;
+            padding: $global-tdpadding;
+        }
+
+        tbody td {
+            background-color: $global-checkout-tdbackground;
+        }
+
+        td.last {
+            text-align: right;
+        }
+
+        .option-label {
+            margin-left: $box-spacing;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .option-value {
+            margin-left: $box-spacing * 2;
+        }
+
+        tr.bundle:not(:last-child) td {
+            border-bottom: none;
+            border-top: none;
+        }
+    }
+}

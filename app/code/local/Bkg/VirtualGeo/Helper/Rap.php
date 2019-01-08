@@ -13,7 +13,7 @@ class Bkg_VirtualGeo_Helper_Rap extends Mage_Core_Helper_Abstract
 	/**
 	 * Eine Relation eines RegionallocationProdukt aus einer Liste finden
 	 * @param array $items
-	 * @param unknown $rapId RegionallocationProductId
+	 * @param Bkg_RegionAllocation_Model_Product_Observer $rapId RegionallocationProductId
 	 * @param string $FeeIdent Entgelt
 	 * @param string $usage Nutzung
 	 * @param boolean $returnNewObject soll ein neues Object zurückgegeben werden

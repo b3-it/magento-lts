@@ -23,6 +23,7 @@
             <div class="page">
                 <?php echo $this->getChildHtml('header') ?>
                 <div class="main-container col1-layout">
+                    <?php echo $this->getChildHtml('breadcrumbs') ?>
                   <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 1 ) : ?>
                     <?php echo $this->getChildHtml('banner'); ?>
                   <?php endif; ?>
@@ -31,7 +32,6 @@
                             <?php /* Das muß hier rein, da es im 1-Spaltigen-Layout keine Navigation o.Ä. gibt => Mobil wird unbedienbar! */ ?>
                             <?php echo $this->getChildHtml('left') ?>
                         </div>
-                        <?php echo $this->getChildHtml('breadcrumbs') ?>
                         <div class="col-main">
                           <?php if ( $_showBannerActive == 1 AND $_showBannerOn == 2 ) : ?>
                             <?php echo $this->getChildHtml('banner'); ?>

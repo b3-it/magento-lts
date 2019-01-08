@@ -1,11 +1,11 @@
 <?php
 /**
- * Oberserver für gemeinsam genutzte Methoden zur ePayment-Kommunikation.
+ * Class Egovs_SepaDebitSax_Model_Observer
  *
  * @category	Egovs
- * @package		Egovs_Paymentbase
+ * @package		Egovs_SepaDebitSax
  * @author		Holger Kögel <h.koegel@edv-beratung-hempel.de>
- * @copyright	Copyright (c) 2011 EDV Beratung Hempel
+ * @copyright	Copyright (c) 2011 - 2018 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  *
  */

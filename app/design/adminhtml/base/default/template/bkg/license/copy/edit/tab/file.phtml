@@ -1,0 +1,91 @@
+                <tr><td>
+                <div id="messages"><ul class="messages"><li class="notice-msg"><ul><li><span> <?php echo $this->__("max. Upload Size: ").  $this->getDataMaxSize();?></span></li></ul></li></ul></div>
+                
+                
+                
+               </td></tr>
+                <tr>
+                    <td>
+                        <div class="grid">
+                            <table cellspacing="0" class="data border" id="table-<?php echo $this->getHtmlId() ?>_grid" width="100%">
+                                <colgroup>
+                                    <col style="" />
+                                    <col style="width: 150px;" />
+                                    <col style="width: 150px;" />
+                                    <col style="width: 100px;" />
+                                    <col style="width: 30px;" />
+                                </colgroup>
+                                <thead>
+                                    <tr class="headings">
+                                        <th><?php echo $this->__('Original Filename'); ?></th>
+                                        <th><?php echo $this->__('Document Type'); ?></th>
+                                        <th><?php echo $this->__('Created At'); ?></th>
+                                        <th><?php echo $this->__('Download'); ?></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="<?php echo $this->getHtmlId() ?>_list">
+                                <template id="<?php echo $this->getHtmlId() ?>_template">
+                                   <tr id="row-{{elementId}}-{{db_id}}">
+                                        <td class="cell-label">
+                                            {{filename}}
+                                            </td>
+                                            <td>
+                                            <select id="doctype-{{db_id}}" name="doctype[{{db_id}}]" class="doctype-select">
+                                              <?php foreach ($this->getDocTypes() as $k=>$v):?>
+                                                <option value="<?php echo $k?>"><?php echo $v?></option>
+                                              <?php endforeach;?>
+                                            </select>
+                                        </td>
+                                        <td class="cell-date">{{created}}</td>
+                                        <td class="cell-download"><a href="__download__"><?php echo $this->__('Download'); ?></a></td>
+                                        <td class="cell-delete position-sorting">
+                                        <button class="scalable delete add-widget position-delete" type="button" title="<?php echo $this->__('Delete'); ?>" onclick="LicenseCopyInstance<?php echo $this->getHtmlId()?>.deleteRow({{db_id}})"><span></span></button>
+                                        	<input name="file_deleted[{{db_id}}]" id="file-deleted-{{db_id}}" value="0" type="hidden" />
+                                        </td>
+                                        </tr>
+                                    </template>
+                                  <?php foreach ($this->getFiles() AS $key => $file):?>
+                                    <tr id="row-<?php echo $this->getHtmlId() ?>-<?php echo $file->getId(); ?>">
+                                        <td class="cell-label">
+                                            <?php echo $file->getOrigFilename();?>
+                                        </td>
+                                        <td class="cell-label">
+                                            <select id="doctype-<?php echo $file->getId(); ?>" name="doctype[<?php echo $file->getId(); ?>]" class="doctype-select">
+                                              <?php foreach ($this->getDocTypes() as $k=>$v):?>
+                                              <?php if($k == $file->getUsage()):?>
+                                              	<option selected="selected" value="<?php echo $k?>"><?php echo $v?></option>
+                                              <?php else:?>
+                                                <option value="<?php echo $k?>"><?php echo $v?></option>
+                                               <?php endif;?>
+                                              <?php endforeach;?>
+                                            </select>
+                                        </td>
+                                        <td class="cell-date"><?php echo $file->getCreated();?></td>
+                                        <td class="cell-download"><a href="<?php echo $file->getDownloadUrl();?>"><?php echo $this->__('Download'); ?></a></td>
+                                        <td class="cell-delete position-sorting">
+                                        	<button class="scalable delete add-widget position-delete" type="button"  title="<?php echo $this->__('Delete'); ?>" onclick="LicenseCopyInstance<?php echo $this->getHtmlId()?>.deleteRow(<?php echo $file->getId(); ?>)"><span></span></button>
+                                        	<input name="file_deleted[<?php echo $file->getId()?>]" id="file-deleted-<?php echo $file->getId()?>" value="0" type="hidden" />
+                                        </td>
+                                    </tr>
+                                  <?php endforeach;?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="100" class="last" style="padding:8px">
+                                            <?php echo $this->getUploaderHtml(); ?>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                         
+                            <script type="text/javascript">
+                                var LicenseCopyInstance<?php echo $this->getHtmlId()?> = new LicenseCopy('<?php echo $this->getHtmlId() ?>');
+                                document.on('uploader:fileSuccess', function(event) {
+                                    var memo = event.memo;
+                                    LicenseCopyInstance<?php echo $this->getHtmlId()?>.UploadComplete([{response: memo.response}]);
+                                });
+                            </script>
+                        </div>
+                    </td>
+                </tr>

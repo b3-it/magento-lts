@@ -18,6 +18,9 @@ class Bkg_Viewer_Model_Service_Type_Wfs110 extends Bkg_Viewer_Model_Service_Type
 	
 	protected function _fetchData($url)
 	{
+	    /**
+	     * @var Bkg_Viewer_Helper_Data $helper
+	     */
 		$helper = Mage::helper('bkgviewer');
 		//try
 		{
@@ -25,8 +28,22 @@ class Bkg_Viewer_Model_Service_Type_Wfs110 extends Bkg_Viewer_Model_Service_Type
 			$fetchUrl = $url . "?Request=GetCapabilities&SERVICE=".$this->_type."&VERSION=".$this->_version;
 			$xml = $helper->fetchData($fetchUrl);
 			
+			if (empty($xml)) {
+			    throw new Exception("fetch data empty");
+			}
 			$dom = new DOMDocument();
 			$dom->loadXML($xml);
+			
+			$root = $dom->documentElement;
+			if ($root == null) {
+			    throw new Exception("no root");
+			}
+			if ($root->tagName !== "wfs:WFS_Capabilities") {
+			    throw new Exception("wrong xml data");
+			}
+			if ($root->getAttribute('version') !== $this->_version) {
+			    throw new Exception("wrong version");
+			}
 			
 			$xpath = new DOMXPath($dom);
 			

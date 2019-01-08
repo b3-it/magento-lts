@@ -228,6 +228,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
 	   	try
 	   	{
 	   		if (count($items) > 0) {
+	   			/** @var $order Dwd_Abo_Model_Order_Order */
 	   			$order = Mage::getModel('dwd_abo/order_order');
 	   			$order->createOrders($items);   				
 	   			

@@ -6,72 +6,134 @@
 <div id="map">
 
 </div>
+	<script>
+	var tools = [];
+   
    <?php 
-   //var_dump($this->getComposit());
-   //$this->getComposit()->getOpenLayer();
-   //die();
+        echo Mage::helper("virtualgeo/data")->getProj4();
    ?>
-   <script>
-   jQuery(function() {
-     <?php echo $this->getComposit()->getOpenLayer(); ?>
+	$j(function() {
+		epsg = "<?php echo $this->getESPGfromTool(); ?>";
+        <?php echo $this->getComposit()->getOpenLayer("epsg"); ?>
+    <?php
+        /**
+         * @var Bkg_Viewer_Model_Resource_Composit_Selectiontools_Collection $tools
+         */
+        $tools = $this->getSelectionTools();
+        foreach ($tools as $tool) {
+            /**
+            * @var Bkg_Viewer_Model_Composit_Selectiontools $tool
+            */
+            echo ($tool->getOpenLayers("epsg"));
+        }
+    ?>
+    
+     // set style
+     tools[0].setVisible(true);
+
+     // set style depending function depending on the state of the feature
+     tools[0].setStyle(function(feature, resolution) {
+          j = $j('#qty-' + feature.get('sku'));
+          return j.length == 0 ? mapseries_missing : j.val() == 0 ? mapseries_available : mapseries_selected;
+      });
+
+     // when loaded use SKU as ID for the features there
+     tools[0].getSource().once('change', function(e) {
+		e.target.getFeatures().forEach(function(y) {
+ 			y.setId(y.get('sku'));
+		});
+	});
+     
+     layers_0.push(new ol.layer.Group({
+         //title: 'Tools',
+         layers: tools
+       }));
 
       var map = new ol.Map({
-        layers: layers,
+        layers: layers_0,
         controls: ol.control.defaults(),
         target: document.getElementById('map'),
-        view: new ol.View({
-          center: ol.proj.fromLonLat([13.73836, 51.049259]),
-          //projection: ol.proj.get("EPSG:31467"),
-          //maxZoom: 19,
-          zoom: 6
-        })
+        view: makeview(epsg)
       });
+      
+       var select = new ol.interaction.Select({
+    	   multi: true,
+    	   filter: function(f, l) {
+    		   var sku = f.get('sku');
+               var j = $j("#qty-" + sku);
+               return j.length != 0;
+    	   }
+       });
+       
+       select.on('select', function(e) {
+    	   var list = e.selected;
+    	   e.target.getFeatures().clear();
+    	   if (list.length <= 0) {
+               return;
+           }
+    	   dialogFunction(list);
+       });
 
-      var select = new ol.interaction.Select();
-      select.on('select', function(e) {
-        var f = e.target.getFeatures().item(0);
-        var sku = f.get('sku');
-        var j = jQuery("#qty-" + sku);
-        if (j.length == 0) {
-          alert("no item with " + sku);
-        } else {
-          jQuery("#confirmSelectPrice").text(jQuery("#price-" + sku + " .price").text());
-          jQuery("#confirmSelectName").text(jQuery("#name-" + sku).text()); // f.get('name')
-          jQuery("#confirmSelectDialog").dialog({
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            buttons: {
-              Confirm: function() {
-                j.val(function(i, oldval) {
-                  return parseInt( oldval, 10) + 1;
-                });
-                f.changed();
-                jQuery( this ).dialog( "close" );
-              },
-              Cancel: function() {
-                jQuery( this ).dialog( "close" );
-              }
-            }
-          });
-        }
-        e.target.getFeatures().clear();
-      });
       map.addInteraction(select);
       
-      map.addControl(new ol.control.OverviewMap()); // TODO lol? 
+      var dragBox = new ol.interaction.DragBox();
+      map.addInteraction(dragBox);
+      dragBox.on('boxend', function(e) {
+
+          var extent = e.target.getGeometry().getExtent();
+          var list = [];
+          tools[0].getSource().forEachFeatureIntersectingExtent(extent, function(f) {
+        	  var sku = f.get('sku');
+              var j = $j("#qty-" + sku);
+              if (j.length != 0) {
+              	list.push(f);
+              }
+          });
+
+          if (list.length <= 0) {
+              return;
+          }
+          dialogFunction(list);
+      });
+      // clear selection when drawing a new box and when clicking on the map
+      dragBox.on('boxstart', function() {
+        //selectedFeatures.clear();
+      });
+
+      map.addControl(new ol.control.OverviewMap({view: makeview(epsg)})); // TODO lol? 
       map.addControl(new ol.control.ZoomSlider());
       map.addControl(new ol.control.ScaleLine());
+
+      map.addControl(new buttonCtrl({
+    	  text: "+",
+    	  classname: "ol-addall",
+    	  callback: function(b) {
+        	  qty = $j('#super-product-table .qty');
+        	  qty.val(function(i, oldval) {
+            	  // increase value by one
+                  return parseInt(oldval, 10) + 1;
+              });
+              qty.change();
+    	  }
+      }));
+      map.addControl(new buttonCtrl({
+    	  text: "C",
+    	  classname: "ol-clearall",
+    	  callback: function(b) {
+        	  qty = $j('#super-product-table .qty');
+        	  qty.val('0');
+              qty.change();
+    	  }
+      }));
       //map.addControl(new ol.control.MousePosition({
       //  coordinateFormat: function(coord) { return ol.coordinate.toStringHDMS(ol.proj.toLonLat(coord),1); }
       //}));
 
-      jQuery('#super-product-table').delegate('input.qty', 'change', function( e ) {
+      $j('#super-product-table').delegate('input.qty', 'change', function( e ) {
           sku = e.target.id.slice(4);
-    	  vector.getSource().forEachFeature(function(f) {
+          tools[0].getSource().forEachFeature(function(f) {
         	  if (f.get("sku") == sku) {
-            	  f.changed();
+            	  f.changed(); // invalidate to redraw again
             	  return true;
         	  }
         	  return false;
@@ -79,9 +141,3 @@
       });
     });
     </script>
-    
-    <div id="confirmSelectDialog" title="Füge hinzu?">
-    <p>
-        Füge Kachel '<span id="confirmSelectName"></span>' für <span id="confirmSelectPrice"></span> hinzu?
-    </p>
-    </div>

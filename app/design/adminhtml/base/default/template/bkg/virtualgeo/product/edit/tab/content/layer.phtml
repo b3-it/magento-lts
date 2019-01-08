@@ -1,57 +1,47 @@
-<?php
-/**
- */
-?>
-<div class="content-header">
-  <?php if($this->getTitle()): ?>
-    <h3><?php echo $this->getTitle() ?></h3>
-  <?php endif ?>
-    <p class="form-buttons">
-        <button class="scalable" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
-            <?php echo Mage::helper('bkgviewer')->__('New')?>
+<div class="entry-edit-head entry-edit">
+ <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('virtualgeo')->__('Navigation') ?></h4>
+    <div class="form-buttons">
+        <!--
+        <button class="scalable add" onclick="nodeOptions.add();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('New')?>">
+            <span><?php echo Mage::helper('bkgviewer')->__('New')?></span>
         </button>
-        <button class="scalable btn btn-warning btn-sm" onclick="nodeOptions.edit();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Rename')?>">
-            <?php echo Mage::helper('bkgviewer')->__('Rename')?>
+        -->
+        <button class="scalable delete btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Delete')?>">
+            <span><?php echo Mage::helper('bkgviewer')->__('Delete')?></span>
         </button>
-        <button class="scalable btn btn-danger btn-sm" onclick="nodeOptions.remove();" type="button" title="<?php echo Mage::helper('bkgviewer')->__('Delete')?>">
-            <?php echo Mage::helper('bkgviewer')->__('Delete')?>
-        </button>
-    </p>
+    </div>
 </div>
 
-<div id="jstree_layer" class="demo"></div>
-
-
+<div id="jstree-info"></div>
+<div id="jstree_layer"></div>
+<div id="jstree-data">
+    <input type="hidden" name="virtualgeo_content_layer_deleted" id="virtualgeo_content_layer_deleted" value="" />
+</div>
 
 <script type="text/javascript">
-//<![CDATA[
-var root_node_title = "<?php echo Mage::helper('bkgviewer')->__('Root node')?>";
-var node_element_is_null = "<?php echo Mage::helper('bkgviewer')->__('Node Element is null and root node can not be deleted')?>";
-var node_element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('Node Element is not selected and root node can not be renamed')?>";
-var element_default_title = "<?php echo Mage::helper('bkgviewer')->__('New node')?>";
-var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must be select an element')?>";
-//]]>
+    var root_node_title = "<?php echo Mage::helper('bkgviewer')->__('Root node'); ?>";
+    var node_element_is_null = "<?php echo Mage::helper('bkgviewer')->__('Node Element is null and root node can not be deleted'); ?>";
+    var node_element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('Node Element is not selected and root node can not be renamed'); ?>";
+    var element_default_title = "<?php echo Mage::helper('bkgviewer')->__('New node'); ?>";
+    var element_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must be select an element'); ?>";
+    var node_not_selected = "<?php echo Mage::helper('bkgviewer')->__('You must select a node to insert'); ?>"
+    var url_for_refresh = "<?php echo $this->getRefeshComponentContentUrl()?>";
 </script>
 
 <script type="text/javascript" src="<?php echo $this->getJsUrl() ?>bkg/virtualgeo/components/content/init.tree.admin.js"></script>
 <script type="text/javascript">
-//<![CDATA[
 function init_db_nodes() {
-<?php foreach ($this->getNodes() as $node):
-	$parent = $node->getParentId();
-	if($node->getParentId())
-	{
-		$parent = 'node_'.$node->getParentId();
+<?php
+foreach ($this->getNodes() AS $node){
+	if($node->getParent()){
+		$parent = 'node_'.$node->getParent();
 	}
 	else{
 		$parent = '"root"';
 	}
-	echo "var node_".$node->getId()." = nodeOptions.add(".$node->toJson().",$parent);"
+	echo "    var node_".$node->getId()." = nodeOptions.add(".$node->toJson()."," . $parent . ");\n";
+}
 ?>
-<?php endforeach;?>
 	nodeOptions.open_all();
 }
-
-//]]>
 </script>
-

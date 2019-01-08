@@ -9,30 +9,23 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Georef_Form extend
 		$fieldset = $form->addFieldset('periode_form', array(
 				'legend' => Mage::helper('virtualgeo')->__('Georef')
 		));
-		
-		$fieldset->addField('use_georef', 'select', array(
-				'label'     => Mage::helper('regionallocation')->__('Use Georef'),
-				//'class'     => 'required-entry',
-				//'required'  => true,
-				'name'      => 'product[use_georef]',
-				'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray()
-		));
 
-		$field = $fieldset->addField('georef', 'multiselect', array(
-				'label'     => Mage::helper('virtualgeo')->__('Verwendung'),
-				'name'      => 'product[georef][]',
-				'defaultname'  => 'product[georef_default][]',
+		
+
+		$fieldset->addType('componentparts','Bkg_VirtualGeo_Block_Adminhtml_Widget_Form_Componentparts');
+		$field = $fieldset->addField('georef', 'componentparts', array(
+				'label'     => Mage::helper('virtualgeo')->__('Usage'),
+				'name'      => 'product[georef]',
 				'values'    => Mage::getModel('virtualgeo/components_georef')->getCollectionAsOptions($this->getProduct()->getId()),
-				'value'		=> Mage::getModel('virtualgeo/components_georefproduct')->getValue4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
-				'default'	=> Mage::getModel('virtualgeo/components_georefproduct')->getDefaul4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId())
-				
+				'value'		=> Mage::getModel('virtualgeo/components_georefproduct')->getComponents4Product($this->getProduct()->getId(),$this->getProduct()->getStoreId()),
+
 		));
 	if ($field) {
 			$field->setRenderer(
 					$this->getLayout()->createBlock('virtualgeo/adminhtml_catalog_product_edit_tab_renderer_list')
 					);
 		}
-	
+
 
 		return parent::_prepareForm();
 	}
@@ -50,6 +43,6 @@ class Bkg_VirtualGeo_Block_Adminhtml_Catalog_Product_Edit_Tab_Georef_Form extend
 		return $this->_productInstance;
 	}
 
-	
+
 
 }

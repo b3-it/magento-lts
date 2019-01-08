@@ -32,24 +32,51 @@ $_class   = $_element->getFieldsetHtmlClass();
 ?>
 <?php if (!$_element->getNoDisplay()): ?>
 <tr<?php if($_trId): ?> id="<?php echo $_trId ?>"<?php endif; ?>>
-    
+
     <td class="label<?php echo $_class ? " {$_class}-label" : ''?>"><?php echo trim($_element->getLabelHtml()) ?></td>
     <td class="<?php echo $_element->hasValueClass() ? $_element->getValueClass() : 'value' ?><?php echo $_class ? " {$_class}-value" : ''?>">
-    	<div style="width:100%">
-    		<div style="display:table-cell; width:30px">Use</div>
-    		<div style="display:table-cell; width:50px">Default</div>
-    		<div style="display:table-cell">Label</div> 
+    	<div class="div-table-head">
+    		<div style="width:4%;"><?php echo $this->__('Use'); ?></div>
+    		<div style="width:5%;"><?php echo $this->__('Default'); ?></div>
+    		<div style="width:5%;"><?php echo $this->__('Admin <br/> Only'); ?></div>
+    		<div style="width:5%;"><?php echo $this->__('Pos'); ?></div>
+    		<div style="width:79%;"><?php echo $this->__('Label'); ?></div>
     	</div>
     	<?php foreach ($_element->getValues() as $value): $value = new Varien_Object($value);?>
-    	<div style="width:100%">
-    		<div style="display:table-cell; width:30px"><input type="checkbox" name="<?php echo $_element->getName();?>" value="<?php echo $value->getValue()?>" <?php if(in_array($value->getValue(), $_element->getValue())) echo 'checked="checked"'; ?>></div>
-    		<div style="display:table-cell; width:50px"><input type="radio" name="<?php echo $_element->getDefaultname();?>" value="<?php echo $value->getValue()?>" <?php if($value->getValue() ==  $_element->getDefault()) echo 'checked="checked"'; ?> ></div>
-    		<div style="display:table-cell"><?php echo $value->getLabel();?></div> 
+    	<div class="div-table-body">
+    		<div style="width:4%;">
+                <input type="checkbox"
+                       name="<?php echo $_element->getName();?>"
+                       value="<?php echo $value->getValue()?>"
+                       <?php if(in_array($value->getValue(), $_element->getValue())) echo 'checked="checked"'; ?>
+                />
+            </div>
+    		<div style="width:5.5%;">
+                <input type="radio"
+                       name="<?php echo $_element->getDefaultname();?>"
+                       value="<?php echo $value->getValue()?>"
+                       <?php if($value->getValue() ==  $_element->getDefault()) echo 'checked="checked"'; ?>
+                />
+            </div>
+            <div style="width:4%;">
+                <input type="checkbox"
+                       name="<?php echo $_element->getIsVisibleOnlyInAdmin();?>"
+                       value="<?php echo $value->getValue()?>"
+                       <?php //if(in_array($value->getValue(), $_element->getIsVisibleOnlyInAdmin())) echo 'checked="checked"'; ?>
+                />
+            </div>
+    		<div style="width:5%;">
+                <input type="text"
+                       name="<?php echo $_element->getPos();?>"
+                       value="<?php echo $value->getValue()?>"
+                />
+            </div>
+    		<div style="width:84%;">
+                <?php echo $value->getLabel();?>
+            </div>
     	</div>
     	<?php endforeach; ?>
-       
-        
-        
+
         <?php if ($_note): ?>
             <p class="note<?php echo $_class ? " {$_class}-note" : ''?>" id="note_<?php echo $_element->getId()?>"><span><?php echo $_note ?></span></p>
         <?php endif ?>

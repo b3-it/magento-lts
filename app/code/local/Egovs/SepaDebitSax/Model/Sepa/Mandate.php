@@ -445,7 +445,6 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface
 		$res->ortUnterschrift = $this->getLocationSigned();
 		//TODO Länge klären
 		$res->referenz = $this->getReference();
-		$res->referenz = $this->getReference();
 		$res->sequenceType = $this->getSequenceType();
 		$res->type = Egovs_Paymentbase_Model_Webservice_Types_SepaMandat::TYPE_SDD_CORE_BASE;
 		

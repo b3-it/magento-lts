@@ -272,6 +272,13 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             }
         }
 
+        foreach ($customer->getAttributes() as $attribute) {
+            if ($attribute->getReadonly()) {
+                $element = $form->getElement($attribute->getAttributeCode());
+                $element->setReadonly(true, true);
+            }
+        }
+
         $form->setValues($customer->getData());
         $this->setForm($form);
         return $this;

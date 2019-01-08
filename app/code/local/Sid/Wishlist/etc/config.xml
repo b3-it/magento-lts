@@ -53,7 +53,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Sid_Cms_Adminhtml after="Mage_Adminhtml">Sid_Wishlist_Adminhtml</Sid_Cms_Adminhtml>
+                        <Sid_Wishlist_Adminhtml after="Mage_Adminhtml">Sid_Wishlist_Adminhtml</Sid_Wishlist_Adminhtml>
                     </modules>
                 </args>
             </adminhtml>

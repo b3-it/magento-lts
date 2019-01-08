@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <adminhtml_shapefile_file_index>
+        <reference name="content">
+            <block type="bkg_shapefile/adminhtml_file" name="bkgshapefile" />
+        </reference>
+    </adminhtml_shapefile_file_index>
+    <adminhtml_shapefile_file_new>
+        <reference name="content">
+            <block type="bkg_shapefile/adminhtml_file_new" name="bkgshapefile" />
+        </reference>
+    </adminhtml_shapefile_file_new>
+    <adminhtml_shapefile_file_edit>
+        <reference name="content">
+            <block type="bkg_shapefile/adminhtml_file_edit" name="bkgshapefile" />
+        </reference>
+    </adminhtml_shapefile_file_edit>
+</layout>

@@ -229,6 +229,24 @@ class Bkg_Viewer_Adminhtml_Viewer_Service_ServiceController extends Mage_Adminht
 		return Mage::getSingleton('admin/session')->isAllowed('');
 	}
 
+
+	public function layerGridAction()
+    {
+        $id     = $this->getRequest()->getParam('id');
+        $model  = Mage::getModel('bkgviewer/service_service')->load($id);
+
+        if ($model->getId()) {
+
+
+            Mage::register('serviceservice_data', $model);
+
+            $this->loadLayout(false);
+            $this->getResponse()->setBody(
+                $this->getLayout()->createBlock('bkgviewer/adminhtml_service_service_edit_tab_layer')->toHtml()
+            );
+        }
+    }
+
 	protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
 	{
 		$response = $this->getResponse();

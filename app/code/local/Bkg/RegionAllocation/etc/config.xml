@@ -11,7 +11,7 @@
 			<catalog>
 			<children>
 			<bkgregionallocation_koenigsteinerschluessel_kst module="regionallocation">
-                      <title>Koenigsteinerschluessel</title>
+                      <title>Kingstone key</title>
                       <sort_order>10</sort_order>
                       <action>adminhtml/regionallocation_koenigsteinerschluessel_kst/index</action>
                   </bkgregionallocation_koenigsteinerschluessel_kst>
@@ -22,7 +22,7 @@
             <modules>
                 <Bkg_RegionAllocation>
                     <files>
-                        <default>Bkg_RegionAllocation.csv</default>
+                        <default>Bkg/RegionAllocation.csv</default>
                     </files>
                 </Bkg_RegionAllocation>
             </modules>
@@ -44,7 +44,7 @@
             </updates>
         </layout>
         <events>
-        <!-- 
+        <!--
             <catalog_product_prepare_save>
                 <observers>
                     <regionallocation_observer>
@@ -63,7 +63,7 @@
                 </observers>
             </catalog_product_edit_action>
         </events>
-        		<acl>			
+        		<acl>
 			<resources>
 				<all>
 					<title>Allow Everything</title>
@@ -78,16 +78,16 @@
                               </bkgregionallocation_koenigsteinerschluessel_kst>
 					        </children>
 					    </catalog>
-					 
+
 					</children>
 				</admin>
 			</resources>
 		</acl>
-                   
+
     </adminhtml>
-    
+
     <global>
-		<regions>
+		<regions_de>
 			<BW>
 				<label>Baden-Württemberg</label>
 			</BW>
@@ -136,7 +136,7 @@
 			<TH>
 				<label>Thüringen</label>
 			</TH>
-		</regions>
+		</regions_de>
         <sales>
             <quote>
                 <item>
@@ -154,7 +154,7 @@
                         <model>regionallocation/product_type_regionallocation</model>
                         <composite>0</composite>
                         <price_model>regionallocation/product_price</price_model>
-                       
+
                     </regionallocation>
                     <configurable>
                     <allow_product_types>
@@ -162,8 +162,8 @@
                     </allow_product_types>
                 </configurable>
                 </type>
-                
-                
+
+
                 <grouped>
                     <allow_product_types>
                         <regionallocation/>
@@ -188,7 +188,7 @@
             </regionallocation>
             <regionallocation_resource>
                 <class>Bkg_RegionAllocation_Model_Resource</class>
-                <entities>                    
+                <entities>
                     <purchased>
                         <table>bkg_rap_purchased</table>
                     </purchased>
@@ -209,7 +209,7 @@
                 </setup>
             </regionallocation_setup>
         </resources>
-    <events>   
+    <events>
         <!--
             <sales_order_item_save_commit_after>
                 <observers>
@@ -218,8 +218,8 @@
                         <method>saveOrderItem</method>
                     </regionallocation_product_observer>
                 </observers>
-            </sales_order_item_save_commit_after>  
-            
+            </sales_order_item_save_commit_after>
+
             <sales_order_item_save_before>
               <observers>
                     <regionallocation_product_save_orderitem_before>
@@ -227,7 +227,7 @@
                         <method>onBeforeSaveOrderItem</method>
                     </regionallocation_product_save_orderitem_before>
                 </observers>
-            
+
             </sales_order_item_save_before>
             -->
             <sales_quote_item_set_product>
@@ -237,7 +237,7 @@
                         <method>onSalesQuoteItemSetProduct</method>
                     </regionallocation_product_observer>
                 </observers>
-            </sales_quote_item_set_product>  
+            </sales_quote_item_set_product>
             <!--
             <sales_order_save_after>
             <observers>
@@ -249,11 +249,11 @@
         </sales_order_save_after>
         -->
         </events>
-       
+
     </global>
-    
+
     <frontend>
-        
+
         <layout>
             <updates>
                 <regionallocation module="Bkg_RegionAllocation">
@@ -261,9 +261,9 @@
                 </regionallocation>
             </updates>
         </layout>
-        
+
     </frontend>
-    
+
     <admin>
         <fieldsets>
             <catalog_product_dataflow>
@@ -273,15 +273,15 @@
                     </product_type>
                 </manage_stock>
             </catalog_product_dataflow>
-        </fieldsets>      
+        </fieldsets>
         <routers>
-		<adminhtml>	
+		<adminhtml>
 			<args>
 				<modules>
 					<Bkg_RegionAllocation_Adminhtml after="Mage_Adminhtml">Bkg_RegionAllocation_Adminhtml</Bkg_RegionAllocation_Adminhtml>
 				</modules>
 			</args>
 		</adminhtml>
-	</routers>        
+	</routers>
     </admin>
 </config>

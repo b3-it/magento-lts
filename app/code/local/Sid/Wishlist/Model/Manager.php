@@ -174,7 +174,9 @@ class Sid_Wishlist_Model_Manager extends Varien_Object
 			$result = $quote->addProduct($product, $params);
 			
 			if (is_string($result)) {
-				throw new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
+			    $e = new Sid_Wishlist_Model_Quote_NoProductException($this->__($result));
+			    $e->setRefererUrl($product->getProductUrl());
+			    throw $e;
 			}
 			if (!empty($related)) {
 				$this->addProductsByIds($quote, explode(',', $related));

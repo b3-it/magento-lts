@@ -1,14 +1,14 @@
 <?php
  /**
   *
-  * @category   	Bkg Virtualgeo
-  * @package    	Bkg_Virtualgeo
-  * @name       	Bkg_Virtualgeo_Block_Adminhtml_Components_Georefentity_Grid
+  * @category   	Bkg
+  * @package    	Bkg_VirtualGeo
+  * @name       	Bkg_VirtualGeo_Block_Adminhtml_Components_Georefentity_Grid
   * @author 		Holger Kögel <h.koegel@b3-it.de>
   * @copyright  	Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
   * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
   */
-class Bkg_Virtualgeo_Block_Adminhtml_Components_Georef_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bkg_VirtualGeo_Block_Adminhtml_Components_Georef_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
@@ -35,12 +35,14 @@ class Bkg_Virtualgeo_Block_Adminhtml_Components_Georef_Grid extends Mage_Adminht
           'index'     => 'id',
       ));
 
-      $this->addColumn('georef', array(
+      $this->addColumn('code', array(
           'header'    => Mage::helper('virtualgeo')->__('Georef'),
           //'align'     =>'left',
           //'width'     => '150px',
-          'index'     => 'georef',
+          'index'     => 'code',
       ));
+
+      
       $this->addColumn('epsg_code', array(
           'header'    => Mage::helper('virtualgeo')->__('EPSG Code'),
           //'align'     =>'left',

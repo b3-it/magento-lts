@@ -6,7 +6,7 @@
  *  @package  Bkg_VirtualGeo
  *  @author Frank Rochlitzer <​f.rochlitzer@b3-it.de>
  *  @author Holger Kögel <​h.koegel@b3-it.de>
- *  @copyright Copyright (c) 2014 B3 IT Systeme GmbH
+ *  @copyright Copyright (c) 2018 B3 IT Systeme GmbH
  *  @license ​http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block_Checkout_Cart_Item_Renderer
@@ -21,7 +21,7 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
      */
     public function getOptionList()
     {
-        return $this->getOptions($this->getItem());
+        return array_merge($this->getOptions($this->getItem()), $this->getProductOptions());
     }
 
 	public function getOptions(Mage_Catalog_Model_Product_Configuration_Item_Interface $item)
@@ -103,7 +103,12 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
             		
             		
             		$value = $helper->getLabelForUsage($child->getOptionByCode('usage')->getValue());
-            		$currentfeelabel[$feelabel][] =  $value . ' ' .  Mage::helper('core')->currency($child->getCalculationPrice());
+            		$text = $value . ' ' .  Mage::helper('core')->currency($child->getCalculationPrice());
+            		if($child->getTaxAmount()){
+            			$tax = Mage::helper('core')->currency($child->getTaxAmount());
+            			$text .= " (Mwst. {$child->getTaxPercent()}% {$tax})";
+            		}
+            		$currentfeelabel[$feelabel][] = $text ;
             		
             	}
             }
@@ -146,10 +151,11 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
     	foreach($childs as $child)
     	{
     		$id = $child->getOptionByCode('selection_id');
-    		if($id->getValue() == $selectionId)
-    		{
-    			return $child;
-    		}
+    		if($id) {
+                if ($id->getValue() == $selectionId) {
+                    return $child;
+                }
+            }
     	}
        
         return null;
@@ -162,6 +168,18 @@ class Bkg_VirtualGeo_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Block
             return $selectionQty->getValue();
         }
         return 0;
+    }
+
+    /**
+     * Get product customize options
+     *
+     * @return array || false
+     */
+    public function getProductOptions()
+    {
+        /* @var $helper Mage_Catalog_Helper_Product_Configuration */
+        $helper = Mage::helper('virtualgeo/catalog_product_configuration');
+        return $helper->getCustomOptions($this->getItem());
     }
     
 }

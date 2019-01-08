@@ -66,7 +66,7 @@ class Dwd_ProductOnDemand_Model_Observer extends Varien_Object
         $orderItemStatusToEnable = Mage::getStoreConfig(
             Mage_Downloadable_Model_Link_Purchased_Item::XML_PATH_ORDER_ITEM_STATUS, $order->getStoreId()
         );
-        $linksToDelete = array();
+        $linksToDelete = array(array());
 
         if ($order->getState() == Mage_Sales_Model_Order::STATE_HOLDED) {
             $status = $linkStatuses['pending'];
@@ -86,7 +86,7 @@ class Dwd_ProductOnDemand_Model_Observer extends Varien_Object
                         $downloadableItemsStatuses[$item->getId()] = $linkStatuses['expired'];
                     } else {
                         $downloadableItemsStatuses[$item->getId()] = $linkStatuses['avail'];
-                        $linksToDelete = array_merge($linksToDelete, $item->getProductOptionByCode('links'));
+                        $linksToDelete[] = $item->getProductOptionByCode('links');
                     }
                 }
             }
@@ -102,11 +102,13 @@ class Dwd_ProductOnDemand_Model_Observer extends Varien_Object
                 ) {
                     if (in_array($item->getStatusId(), $availableStatuses)) {
                         $downloadableItemsStatuses[$item->getId()] = $linkStatuses['avail'];
-                        $linksToDelete = array_merge($linksToDelete, $item->getProductOptionByCode('links'));
+                        $linksToDelete[] = $item->getProductOptionByCode('links');
                     }
                 }
             }
         }
+        $linksToDelete = call_user_func_array('array_merge', $linksToDelete);
+
         if (!$downloadableItemsStatuses && $status) {
             foreach ($order->getAllItems() as $item) {
                 if ($item->getProductType() == Dwd_ProductOnDemand_Model_Product_Type_Ondemand::TYPE_DOWNLOAD_ON_DEMAND

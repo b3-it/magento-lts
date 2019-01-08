@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Egovs_Base>
-            <version>2.0.1.3</version>
+            <version>2.0.2.0</version>
         </Egovs_Base>
     </modules>
     <admin>
@@ -35,6 +35,15 @@
             </modules>
         </translate>
         <menu>
+            <cms>
+                <children>
+                    <media_gallery module="egovsbase">
+                        <title>Upload media</title>
+                        <sort_order>900</sort_order>
+                        <action>adminhtml/cms_wysiwyg_media</action>
+                    </media_gallery>
+                </children>
+            </cms>
             <sales>
                 <children>
                     <egovs_base_order_item module="egovsbase">
@@ -114,8 +123,12 @@
 	                                        </printingnote>
 	                                        </children>
 	                                    </actions>
+
                                     </children>
                                 </order>
+                                <egovs_base_order_item module="egovsbase">
+                                    <title>Produkte pro Bestellung</title>
+                                </egovs_base_order_item>
                             </children>
                         </sales>
                     </children>
@@ -177,7 +190,24 @@
                     </egovs_base_security_trace_observer>
                 </observers>
             </core_config_data_save_commit_after>
+            <cms_wysiwyg_images_static_urls_allowed>
+                <observers>
+                    <egovs_wysiwyg>
+                        <class>egovsbase/observer</class>
+                        <method>mediaCheckIsUsingStaticUrlsAllowed</method>
+                    </egovs_wysiwyg>
+                </observers>
+            </cms_wysiwyg_images_static_urls_allowed>
         </events>
+        <cms>
+            <browser>
+                <extensions>
+                    <doc_allowed>
+                        <pdf>1</pdf>
+                    </doc_allowed>
+                </extensions>
+            </browser>
+        </cms>
     </adminhtml>
     <frontend>
         <translate>
@@ -197,10 +227,35 @@
                 </egovsbase>
             </updates>
         </layout>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <general before="Mage_Customer">Egovs_Base</general>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <egovs_base_core_block_abstract_to_html_after>
+                        <class>egovsbase/observer</class>
+                        <method>replaceTemplateAbbr</method>
+                    </egovs_base_core_block_abstract_to_html_after>
+                </observers>
+            </controller_front_send_response_before>
+        </events>
     </frontend>
 
     <global>
         <models>
+            <adminhtml>
+                <rewrite>
+                    <!--  -->
+                    <customer_renderer_region>Egovs_Base_Model_Customer_Renderer_Region</customer_renderer_region>
+                </rewrite>
+            </adminhtml>
             <egovsbase>
                 <class>Egovs_Base_Model</class>
                 <resourceModel>egovsbase_resource</resourceModel>
@@ -213,6 +268,11 @@
                     </mail_attachment>
                 </entities>
             </egovsbase_resource>
+            <cms>
+                <rewrite>
+                    <wysiwyg_images_storage>Egovs_Base_Model_Cms_Wysiwyg_Media_Storage</wysiwyg_images_storage>
+                </rewrite>
+            </cms>
             <customer>
                 <rewrite>
                     <address_config>Egovs_Base_Model_Customer_Address_Config</address_config>
@@ -221,6 +281,8 @@
             <customer_resource>
                 <rewrite>
                     <address>Egovs_Base_Model_Resource_Customer_Address</address>
+                    <!-- To prevent the Org addresses from being deleted by customer save -->
+                    <customer>Egovs_Base_Model_Resource_Customer</customer>
                 </rewrite>
             </customer_resource>
             <core>
@@ -230,6 +292,11 @@
                     <email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
                 </rewrite>
             </core>
+            <core_resource>
+                <rewrite>
+                    <email_queue>Egovs_Base_Model_Resource_Core_Email_Queue</email_queue>
+                </rewrite>
+            </core_resource>
             <newsletter>
                 <rewrite>
                     <template>Egovs_Base_Model_Newsletter_Template</template>
@@ -315,6 +382,14 @@
             </egovsbase_setup>
         </resources>
         <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <egovs_controller_action_layout_load_before>
+                        <class>egovsbase/observer</class>
+                        <method>checkShopState</method>
+                    </egovs_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <page_block_html_topmenu_gethtml_before>
                 <observers>
                     <catalog_add_topmenu_items>
@@ -341,14 +416,6 @@
                     </germantax_checkout_type_onepage_save_order>
                 </observers>
             </checkout_type_onepage_save_order>
-            <core_block_abstract_to_html_after>
-                <observers>
-                    <egovs_base_core_block_abstract_to_html_after>
-                        <class>egovsbase/observer</class>
-                        <method>replaceTemplateAbbr</method>
-                    </egovs_base_core_block_abstract_to_html_after>
-                </observers>
-            </core_block_abstract_to_html_after>
             <customer_save_before>
                 <observers>
                     <egovs_base_customer_save_observer>
@@ -596,6 +663,11 @@
             <footer>
                 <copyright><![CDATA[&copy; 2017 Magento Egov Sachsen.]]></copyright>
             </footer>
+            <login>
+                <ssl_logo_use>2</ssl_logo_use>
+                <ssl_logo_alt><![CDATA[Certified safety - Positive SSL Label]]></ssl_logo_alt>
+                <ssl_logo_title><![CDATA[Positive SSL]]></ssl_logo_title>
+            </login>
         </design>
         <system>
             <smtp>
@@ -657,6 +729,9 @@
             </invoice>
         </sales_email>
         <customer>
+        	<create_account>
+        		<register_user_on_login>1</register_user_on_login>
+        	</create_account>
             <guestrequired>
                 <prefix>opt</prefix>
                 <firstname>req</firstname>

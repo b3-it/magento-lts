@@ -41,7 +41,11 @@
                          alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
                 </a>
 
-                <?php // More-Link ?>
+                <?php
+                // More-Link
+                $_productNameStripped = $this->stripTags($_product->getName(), null, true);
+                ?>
+
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn">
                     <?php echo $this->__('Learn More') ?>
                 </a>
@@ -195,7 +199,7 @@
                     </h2>
                     <div class="product_sku">
                         <?php
-                        $_sku = $_sku_full = $this->htmlEscape($_product->getSku());
+                        $_sku = $_sku_full = $this->escapeHtml($_product->getSku());
 
                         if ( strlen($_sku) > $sku_limit ) {
                             $_sku = mb_substr($_sku, 0, $sku_limit) . '...';

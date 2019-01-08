@@ -15,6 +15,7 @@ class Sid_ExportOrder_Model_Syncstatus extends Varien_Object
     const SYNCSTATUS_SUCCESS			= 2;
     const SYNCSTATUS_ERROR				= 3;
     const SYNCSTATUS_PERMANENTERROR		= 4;
+    const SYNCSTATUS_PROCESSING		= 5;
 
     static public function getOptionArray()
     {
@@ -22,6 +23,7 @@ class Sid_ExportOrder_Model_Syncstatus extends Varien_Object
             self::SYNCSTATUS_PENDING    => Mage::helper('exportorder')->__('Pending'),
             self::SYNCSTATUS_SUCCESS   => Mage::helper('exportorder')->__('Success'),
         	self::SYNCSTATUS_ERROR   => Mage::helper('exportorder')->__('Error'),
+        	self::SYNCSTATUS_PROCESSING   => Mage::helper('exportorder')->__('Processing'),
         	//self::SYNCSTATUS_PERMANENTERROR   => Mage::helper('exportorder')->__('Permanent Error')
         );
     }

@@ -19,7 +19,7 @@
     </admin>
     <frontend>
         <events>
-        	<egovs_base_customer_reject_address_editing>
+        	<egovs_base_frontend_customer_reject_address_editing>
 				<observers>
 					<stala_abo_customer_reject_address_editing>
 						<type>singleton</type>
@@ -27,7 +27,7 @@
 						<method>rejectAddressEditing</method>
 					</stala_abo_customer_reject_address_editing>
 				</observers>
-			</egovs_base_customer_reject_address_editing>
+			</egovs_base_frontend_customer_reject_address_editing>
         </events>
         <layout>
             <updates>

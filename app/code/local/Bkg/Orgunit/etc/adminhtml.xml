@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+	<menu>
+          <customer module="bkg_orgunit">
+              <children>
+                  <bkgorgunit_unit module="bkg_orgunit">
+                      <title>Organisation</title>
+                      <sort_order>110</sort_order>
+                      <action>adminhtml/orgunit_unit/index</action>
+                  </bkgorgunit_unit>
+              </children>
+          </customer>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <customer>
+                          <children>
+                                <bkgorgunit_unit module="bkg_orgunit">
+                                  <title>Organisation</title>
+                                  <sort_order>110</sort_order>
+                              </bkgorgunit_unit>
+                          </children>
+                      </customer>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+</config>

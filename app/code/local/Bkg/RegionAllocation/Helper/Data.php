@@ -5,7 +5,7 @@ class Bkg_RegionAllocation_Helper_Data extends Mage_Core_Helper_Data
 	 * ein oder zwei Regionallocation Produkte 
 	 * @param int $rapId
 	 * @param int $rapIdTax
-	 * @param decimal $price
+	 * @param float $price
 	 * @param boolean $KstId Id des Königsteiner-Schlüssels, falls null wird der gegenwärtig Aktive verwendet
 	 * @return Bkg_RegionAllocation_Model_Product_Type_Regionallocation[] mit 
 	 */
@@ -32,6 +32,7 @@ class Bkg_RegionAllocation_Helper_Data extends Mage_Core_Helper_Data
 		foreach($kst->getPortions() as $portion)
 		{
 			$d = $price * $portion->getPortion();
+			$d /= 100.0;
 			$portion->setPrice($d);
 			$sum += $d;
 			//Beträge aufspalten falls mehrere Produkte Rap's konfiguriert wurden

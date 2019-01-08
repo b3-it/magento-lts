@@ -126,35 +126,39 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		;		
 		$col = null;
 		$coalesce = array();
-		
+
+		$i  = 0;
 		foreach($this->getOptions() as $option)
 		{
 	      foreach($this->getSelections($option) as $product){
-	      	$col = 'col_'.$product->getId();
+	          $i++;
+	      	$col = 'col_'.$i.'_'.$product->getId();
 	      	$coalesce[] = $col.'.product_id';
 	      	$collection->getSelect()
 	      	->joinleft(array( $col=>$collection->getTable('sales/order_item')), $col.'.order_id = order.entity_id AND '.$col.'.product_id='.$product->getId(), array($col =>'qty_ordered'));
 	      	
 	      }
 		}
-      
+
       $coalesce[] = '0';
       
       $collection->getSelect()
       ->distinct()
       ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      ->where(new Zend_Db_Expr('coalesce('.implode(',', $coalesce).') > 0'));
+      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
       
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
-      	$collection->getSelect()->where('entity_id=0');
+      	$collection->getSelect()->where('order.entity_id=0');
       }
       
-  
-      //die( $collection->getSelect()->__toString());  
+     // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
+
       $this->setCollection($collection);
-     
+
+
       parent::_prepareCollection();
+      //die( $collection->getSelect()->__toString());
       //$this->_prepareTotals();
       return $this;
   }
@@ -203,6 +207,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       		'header'    => Mage::helper('eventmanager')->__('Created at'),
       		'align'     =>'left',
       		'index'     => 'created_at',
+      		'filter_index'     => 'order.created_at',
       		'type'	=> 'Date',
       		'width'     => '100px',
       ));
@@ -458,18 +463,22 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       
 
       $columns = array();
+      $i = 0;
       foreach($this->getOptions() as $option)
       {
       	foreach($this->getSelections($option) as $col)
 		{
+            $i++;
+            $colname = 'col_'.$i.'_'.$col->getId();
 			$columns[] = 'op_col_'.$col->getId();
-			$this->addColumn('op_col_'.$col->getId(), array(
+			$this->addColumn('op_col_'.$i.'_'.$col->getId(), array(
 					'header'    => $col->getName(),
 					'align'     =>'left',
-					'index'     => 'col_'.$col->getId(),
+					'index'     => $colname,
 					'total'		=> 'sum',
 					'type'      => 'number',
 					//'total_label'=> 'xxx',
+                    'filter_index'     => $colname.".qty_ordered",
 					'width'     => '100px',
 					'filter_condition_callback' => array($this, '_filterDynamicCondition'),
 			));
@@ -554,7 +563,27 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   	if (!$value = $column->getFilter()->getValue()) {
   		return;
   	}
-  
+
+
+      if($column->getType() == 'number'){
+
+
+          $filter = $column->getFilter()->getValue();
+          $select = $this->getCollection()->getSelect();
+          $index = $column->getFilterIndex();
+          if(isset($filter['from']) && isset($filter['to'])){
+              $select->where("{$index} >=".$filter['from']." AND {$index}<=".$filter['to'] );
+          }elseif (isset($filter['from'])){
+              $select->where("{$index} >=".$filter['from']);
+          }elseif (isset($filter['to'])){
+              $select->where("{$index}<=".$filter['to'] );
+          }
+
+
+          return;
+      }
+
+
   	$condition = $column->getIndex().'.name like ?';
   	$collection->getSelect()->where($condition, "%$value%");
   }

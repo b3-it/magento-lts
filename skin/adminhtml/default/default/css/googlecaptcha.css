@@ -1,0 +1,11 @@
+.account-login .col2-set .col-2 .content {
+    height: auto !important
+}
+
+.login-form .input-right {
+    float: none;
+}
+
+#google-recaptcha {
+    margin: 1em 0em;
+}

@@ -20,11 +20,11 @@
 // Prevent button overlapping when buttons have long text, such as non-English translations
 .products-grid .actions .button {
     width: 100%;
-    
+
     &.egov-cart {
         font-size: 1.0rem;
     }
-    
+
     span {
         font-family: $base-font-family;
         font-size: 1.0rem;
@@ -45,7 +45,6 @@ p.product-name {
     font-family: $base-font-family;
     font-weight: bold;
     line-height: $global-lineheight;
-    max-height: $global-lineheight * 2.8;
     height: auto;
     overflow: hidden;
 
@@ -62,11 +61,18 @@ p.product-name {
 .products-grid .product-name,
 .products-list .product-name {
     margin-bottom: 5px;
-    font-size: $base-font-family;
-    font-family: $global-fontsize;
+    font-size: $global-fontsize;
+    font-family: $base-font-family;
 
     a {
     }
+}
+
+.products-grid .product-name {
+    height: $global-lineheight * $catalog-product-name-max-lines;
+}
+.products-list .product-name {
+    max-height: $global-lineheight * $catalog-product-name-max-lines;
 }
 
 /* ============================================ *
@@ -323,7 +329,7 @@ p.product-name {
         button.button, a.button {
             font-size: $global-fontsize;
             width: 25%;
-            
+
             @include bp(max-width, $bp-medium) {
                 width: 50%;
             }
@@ -370,11 +376,11 @@ p.product-name {
                     font-size: $global-fontsize;
                 }
             }
-            
+
             .price-box, .tax-details {
                 display: inline-block;
                 width: 45%;
-                
+
                 @include bp(max-width, $bp-small) {
                     display: block;
                 }
@@ -419,7 +425,7 @@ p.product-name {
         .product-primary {
             height: 45%;
             overflow: hidden;
-            
+
             @include bp(max-width, $bp-small) {
                 height: 40%;
             }
@@ -428,7 +434,7 @@ p.product-name {
             height: 27%;
             overflow: hidden;
             margin-bottom: 15px;
-            
+
             @include bp(max-width, $bp-medium) {
                 margin-bottom: 0;
             }
@@ -503,15 +509,20 @@ p.product-name {
 
     .product-image {
         min-width: 50px;
+        top: 0;
     }
     .product-details {
         display: inline-block;
-        width: 70%;
+        width: 80%;
         vertical-align: top;
-        
+
         // Vertically center product name
-        .product-name {
-    	    padding-top: 10px;
+        p.product-name {
+    	    padding-top: 0;
+    	    height: auto !important;
+	    }
+	    div.truncated {
+	        display: none;
 	    }
     }
 
@@ -523,16 +534,14 @@ p.product-name {
             @include clearfix();
         }
     }
-    
+
     .product {
         padding-left: 22px;
-        
+
         .product-image {
             margin-right: 5px;
         }
         .product-details {
-            margin-left: 85px;
-            
             .product-name {
                 padding: 0;
             }
