@@ -86,9 +86,9 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
                     $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
                     $uploader->save($path);
 
-                    $_result = Mage::helper('exportorder')->convertPkcs12ToPem($uploader->getUploadedFileName(), $data['transfer']['client_certificate_pwd'], $_useClientCertCa);
+                    $_result = Mage::helper('exportorder')->convertPkcs12ToPem($path.$uploader->getUploadedFileName(), $data['transfer']['client_certificate_pwd'], $_useClientCertCa);
 
-                    @unlink($uploader->getUploadedFileName());
+                    @unlink($path.$uploader->getUploadedFileName());
 
                     //this way the name is saved in DB
                     if (isset($_result['key'])) {
@@ -165,7 +165,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
 				if ($this->getRequest()->getParam('back')) {
-					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+				    $_args = array('id' => $model->getId());
+				    if ($_tab = $this->getRequest()->getParam('tab')) {
+				        $_args['tab'] = $_tab;
+                    }
+					$this->_redirect('*/*/edit', $_args);
 					return;
 				}
 				$this->_redirect('*/*/');
