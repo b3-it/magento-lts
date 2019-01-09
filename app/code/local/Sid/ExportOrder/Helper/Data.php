@@ -311,7 +311,7 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
         if (!file_put_contents($_pemFile, $_data)) {
             throw new RuntimeException($this->__("Can't write new client certificate file!"));
         }
-        $_result['key'] = $_pemFile;
+        $_result['key'] = str_replace(Mage::helper('exportorder')->getBaseStorePathForCertificates(), '', $_pemFile);
 
         if ($useCaInfo && isset($_certInfo['extracerts'])) {
             $_caFile = $_path.DS.$_caFileName;
@@ -319,6 +319,7 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
             if (!file_put_contents($_caFile, $_data)) {
                 throw new RuntimeException($this->__("Can't write new CA certificate file!"));
             }
+            $_caFile = str_replace(Mage::helper('exportorder')->getBaseStorePathForCertificates(), '', $_caFile);
             $_result['ca'] = $_caFile;
         }
 

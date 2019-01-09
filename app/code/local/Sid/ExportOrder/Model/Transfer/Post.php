@@ -26,6 +26,7 @@
  *  @method string getField()
  *  @method setField(string $value)
  *  @method string getClientCertificate()
+ *  @method string getClientCertificatePwd()
  *  @method string getClientCa()
  *  @method bool getClientcertAuth()
  *
@@ -226,7 +227,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             if ($this->getClientCertificate()) {
                 $key = $cert = Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCertificate();
                 $request
-                    ->authenticateWithCert($cert, $key)
+                    ->authenticateWithCert($cert, $key, $this->getClientCertificatePwd())
                     ->withStrictSSL();
             }
             if ($this->getClientCa()) {

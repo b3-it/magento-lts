@@ -77,7 +77,7 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
             'class' => '',
             'name' => 'client_ca',
             'required' => false,
-            'note'     => Mage::helper('catalog')->__('Optional CA to validate the server certificate'),
+            'note'     => Mage::helper('catalog')->__('Optional CA to validate the server certificate. If empty global system CA list is used.'),
             'after_element_html' => $transfer->getClientCa() ? "<span>{$transfer->getClientCa()}</span><span style='margin-left:3em'><input type='checkbox' name='client_ca_delete'/><span style='margin-left:1em'>{$deleteText}</span></span>" : "",
         ));
 
@@ -127,8 +127,10 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
         );
 
         $form->setValues(Mage::registry('transfer')->getData());
-        //Workaround to set it to yes
-        $_useClientcertCa->setValue(1);
+        $_useClientcertCa->setValue(
+            Mage::registry('transfer')->getClientCa() !== null || (Mage::registry('transfer')->getClientCa() === null && Mage::registry('transfer')->getClientCertificate() !== null)
+                ? 0 : 1
+        );
         return parent::_prepareForm();
     }
 }
