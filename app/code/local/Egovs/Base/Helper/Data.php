@@ -261,6 +261,10 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         if (empty($html)) {
             return $html;
         }
+
+        if(stripos($html,'encoding="UTF-8"')=== false) {
+            $html = '<?xml encoding="UTF-8">' . $html;
+        }
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->substituteEntities = false;
         //loadHTML macht mit UTF-8 Probleme
