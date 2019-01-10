@@ -2,6 +2,7 @@
 "Billingaddress","Rechnungsempfänger"
 "CA Certificate","CA-Zertifikat"
 "CA to validate the server certificate","CA zur Validierung des Serverzertifikats"
+"Can't parse certificate storage! Maybe the password is not correct?","Kann Zertifikatspeicher nicht lesen! BItte Passwort überprüfen."
 "Check Connection","Verbindung prüfen"
 "Client Certificate","Client-Zertifikat"
 "Client certificate for authentication on server","Client-Zertifikat zur Authentifizierung am Server"
