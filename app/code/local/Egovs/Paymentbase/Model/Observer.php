@@ -451,7 +451,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 		$order = $observer->getOrder();
 		
 		//Soll nur nach dem ersten Speichern aufgerufen werden
-		if (!$order || $order->isEmpty() || count($order->getOrigData()) > 0) {
+		if (!$order || $order->isEmpty() || ($order->getOrigData() && count($order->getOrigData()) > 0)) {
 			return;
 		}
 		

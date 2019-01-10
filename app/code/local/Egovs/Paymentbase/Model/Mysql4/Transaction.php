@@ -37,7 +37,7 @@ class Egovs_Paymentbase_Model_Mysql4_Transaction extends Mage_Core_Model_Mysql4_
 	 */
 	protected function _prepareDataForSave(Mage_Core_Model_Abstract $object)
 	{
-		if (count($object->getOrigData()) < 1) {
+		if ((!$object->getId() || $object->isObjectNew()) && !$object->getCreatedAt()) {
 			$object->setCreatedAt(now());
 		}
 		$object->setUpdatedAt(now());
