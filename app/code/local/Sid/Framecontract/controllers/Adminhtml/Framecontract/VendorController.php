@@ -63,12 +63,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
             $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
 
             if (isset($data['client_certificate_delete'])) {
-                @unlink($path . DS . $data['transfer']['client_certificate']);
                 $data['transfer']['client_certificate'] = null;
+                $data['transfer']['client_certificate_pwd'] = null;
             }
 
             if (isset($data['client_ca_delete'])) {
-                @unlink($path . DS . $data['transfer']['client_ca']);
                 $data['transfer']['client_ca'] = null;
             }
 
@@ -95,15 +94,9 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 
                     //this way the name is saved in DB
                     if (isset($_result['key'])) {
-                        if ($data['transfer']['client_certificate'] !== $_result['key'] && file_exists($path . DS . $data['transfer']['client_certificate'])) {
-                            @unlink($path . DS . $data['transfer']['client_certificate']);
-                        }
                         $data['transfer']['client_certificate'] = $_result['key'];
                     }
                     if (isset($_result['ca'])) {
-                        if ($data['transfer']['client_ca'] !== $_result['ca'] && file_exists($path . DS . $data['transfer']['client_ca'])) {
-                            @unlink($path . DS . $data['transfer']['client_ca']);
-                        }
                         $data['transfer']['client_ca'] = $_result['ca'];
                     }
                 } catch (Exception $e) {
@@ -126,9 +119,6 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
                     $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
                     $uploader->save($path);
 
-                    if ($data['transfer']['client_ca'] !== $uploader->getUploadedFileName() && file_exists($path . DS . $data['transfer']['client_ca'])) {
-                        @unlink($path . DS . $data['transfer']['client_ca']);
-                    }
                     //this way the name is saved in DB
                     $data['transfer']['client_ca'] = $uploader->getUploadedFileName();
                 } catch (Exception $e) {
