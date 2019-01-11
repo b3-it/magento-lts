@@ -233,6 +233,7 @@ class Sid_ExportOrder_Model_Transfer_Post extends Sid_ExportOrder_Model_Transfer
             if ($this->getClientCa()) {
                 $request
                     ->addOnCurlOption(CURLOPT_CAINFO, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
+                    ->addOnCurlOption(CURLOPT_CAPATH, Mage::helper('exportorder')->getBaseStorePathForCertificates() . $this->getClientCa())
                     ->withStrictSSL();
             }
         } elseif (isset($parsedUri['scheme']) && strtolower($parsedUri['scheme']) == 'https') {
