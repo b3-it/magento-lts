@@ -42,9 +42,11 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
             'name' => 'transfer[pwd]',
         ));
 
+
         $_clientcertAuth = $fieldset->addField('clientcert_auth', 'select', array(
             'label' => Mage::helper('exportorder')->__('Use authentication with client certificates'),
             'name' => 'transfer[clientcert_auth]',
+            'onchange'  => "canUseClientCertCa(event);",
             'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
         ));
 
@@ -53,8 +55,10 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
             'label' => Mage::helper('exportorder')->__('Client Certificate'),
             'class' => $transfer->getClientCertificate() ? '' : 'required-file',
             'name' => 'client_certificate',
-            'required' => $transfer->getClientCertificate() ? false : true,
-            'note'     => Mage::helper('catalog')->__('Client certificate for authentication on server'),
+            'onclick'   => "fileClicked(event);",
+            'onchange'  => "fileChanged(event);",
+            'required'  => $transfer->getClientCertificate() ? false : true,
+            'note'      => Mage::helper('catalog')->__('Client certificate for authentication on server'),
             'after_element_html' => $transfer->getClientCertificate() ? "<span>{$transfer->getClientCertificate()}</span><span style='margin-left:3em'><input type='checkbox' name='client_certificate_delete'/><span style='margin-left:1em'>{$deleteText}</span></span>" : "",
         ));
 
@@ -69,7 +73,8 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
             'label' => Mage::helper('exportorder')->__('Use CA information from client certificate to validate server?'),
             'name' => 'use_clientcert_ca',
             'values'    => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
-            'required' => true,
+            'note'      => Mage::helper('exportorder')->__('Only applies when the client certificate is uploaded for the first time.'),
+            'required'  => false,
         ));
 
         $_clientCa = $fieldset->addField('client_ca', 'file', array(
@@ -77,7 +82,7 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
             'class' => '',
             'name' => 'client_ca',
             'required' => false,
-            'note'     => Mage::helper('catalog')->__('Optional CA to validate the server certificate. If empty global system CA list is used.'),
+            'note'     => Mage::helper('exportorder')->__('Optional CA to validate the server certificate. If empty global system CA list is used.'),
             'after_element_html' => $transfer->getClientCa() ? "<span>{$transfer->getClientCa()}</span><span style='margin-left:3em'><input type='checkbox' name='client_ca_delete'/><span style='margin-left:1em'>{$deleteText}</span></span>" : "",
         ));
 
@@ -105,32 +110,19 @@ class Sid_ExportOrder_Block_Adminhtml_Transfer_Post_Form extends Mage_Adminhtml_
                 1
             )
             ->addFieldDependence(
-                $_clientCa->getName(),
-                $_clientcertAuth->getName(),
-                1
-            )
-            ->addFieldDependence(
                 $_pwdClientCert->getName(),
                 $_clientcertAuth->getName(),
                 1
             )
-            ->addFieldDependence(
+            /*->addFieldDependence(
                 $_useClientcertCa->getName(),
                 $_clientcertAuth->getName(),
                 1
-            )
-            ->addFieldDependence(
-                $_clientCa->getName(),
-                $_useClientcertCa->getName(),
-                0
-            )
+            )*/
         );
 
         $form->setValues(Mage::registry('transfer')->getData());
-        $_useClientcertCa->setValue(
-            Mage::registry('transfer')->getClientCa() !== null || (Mage::registry('transfer')->getClientCa() === null && Mage::registry('transfer')->getClientCertificate() !== null)
-                ? 0 : 1
-        );
+        $_useClientcertCa->setValue(0);
         return parent::_prepareForm();
     }
 }

@@ -31,6 +31,7 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tab_Transfer extends Mage_Ad
 							  onSuccess: function(transport) {
 							    var response = transport.responseText || "no response text";
 							    $("vendor_form_transfer_details").update(response);
+							    hideUseClientCertCa();
 							  },
 							  onFailure: function() { alert(\'Something went wrong...\'); }
 							});

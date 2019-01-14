@@ -18,6 +18,7 @@
 "History to Order '%s'","Verlauf für Bestellung '%s'"
 "Message","Nachricht"
 "Optional CA to validate the server certificate. If empty global system CA list is used.","Optional CA für Server-Validierung. Falls leer wird CA-Liste des Systems genutzt."
+"Only applies when the client certificate is uploaded for the first time.","Greift nur beim ersten Upload des Client-Zertifikats."
 "Order Information","Informationen zur Bestellung"
 "Order#","Bestellnummer"
 "Password","Passwort"
