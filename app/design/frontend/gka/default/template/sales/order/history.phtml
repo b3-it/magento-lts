@@ -71,9 +71,11 @@
                    href="<?php echo $this->getViewUrl($_order) ?>"
                    title="<?php echo $this->__('View Order') ?>"> </a>
                 <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
+                <!--
                     <a href="<?php echo $this->getReorderUrl($_order) ?>"
                        class="link-reorder egov-reorder"
                        title="<?php echo $this->__('Reorder') ?>"> </a>
+                       -->
                 <?php endif ?>
                 </span>
             </td>

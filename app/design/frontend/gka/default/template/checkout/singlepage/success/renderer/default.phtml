@@ -34,7 +34,7 @@
         <?php foreach ($_options as $_option) : ?>
             <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
             <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-            <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+            <dd><?php echo $_formatedOptionValue['value'] ?></dd>
         <?php endforeach; ?>
         </dl>
         <?php endif; ?>
