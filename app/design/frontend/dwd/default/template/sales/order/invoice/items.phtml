@@ -43,9 +43,23 @@
         <thead>
         <tr>
             <th><?php echo $this->__('Product Name') ?></th>
-            <th class="a-right"><?php echo $this->__('Price') ?></th>
+            <th class="a-right">
+                <?php echo $this->__('Price') ?>
+                <?php if (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
+                <?php else: ?>
+                    <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>
+                <?php endif; ?>
+            </th>
             <th class="a-center"><span class="nobr"><?php echo $this->__('Qty Invoiced') ?></span></th>
-            <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            <th class="a-right">
+                <?php echo $this->__('Subtotal') ?>
+                <?php if (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
+                <?php else: ?>
+                    <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>
+                <?php endif; ?>
+            </th>
         </tr>
         </thead>
         <tfoot>

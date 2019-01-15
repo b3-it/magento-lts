@@ -57,10 +57,10 @@
 	              <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
 	              <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
 	          <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						    <?php echo $_excl; ?>
+						    <?php echo sprintf('%s (%s)', $_excl, $this->__('Excl. Tax')); ?>
 					  <?php endif;?>
 					  <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						    <?php echo $_incl; ?>
+						    <?php echo sprintf('%s (%s)', $_incl, $this->__('Incl. Tax')); ?>
 					  <?php endif;?>
 					  <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
 						    <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
@@ -85,9 +85,27 @@
 			      <thead>
 			          <tr>
 			              <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-			              <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
-			              <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Qty') ?></th>
-			              <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
+			              <th colspan="<?php echo $colspan ?>" class="a-center">
+                              <?php echo $this->__('Price') ?><br />
+                              <?php if ($_address->getTaxAmount() <= 0.009): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Excl. Tax')); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Incl. Tax')); ?>
+                              <?php endif; ?>
+                          </th>
+			              <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+			              <th colspan="<?php echo $colspan ?>" class="a-center">
+                              <?php echo $this->__('Subtotal') ?>
+                              <?php if ($_address->getTaxAmount() <= 0.009): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Excl. Tax')); ?>
+                              <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                  <?php echo sprintf('(%s)', $this->__('Incl. Tax')); ?>
+                              <?php endif; ?>
+                          </th>
 			          </tr>
 			      <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 			          <tr>

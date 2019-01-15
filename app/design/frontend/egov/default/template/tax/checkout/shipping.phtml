@@ -28,10 +28,18 @@
  * @see Mage_Tax_Block_Checkout_Shipping
  */
 ?>
+<?php
+    $_withoutTax = ((int)Mage::getStoreConfig('tax/classes/shipping_tax_class')) == 0;
+    $_totals = $this->getTotals();
+    if (isset($_totals['tax']) && ((int)Mage::getStoreConfig('tax/classes/shipping_tax_class')) < 0 && $_totals['tax']->getValue() < 0.009) {
+        $_withoutTax = true;
+    }
+    $_withoutTaxLabel = $this->helper('tax')->__('Shipping Tax Free (%s)', $this->escapeHtml($this->getTotal()->getAddress()->getShippingDescription()));
+?>
 <?php if ($this->displayBoth()):?>
 <tr id="shipping-excl-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-excl-tax shipping-label" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getExcludeTaxLabel() ?>
+        <?php echo $this->escapeHtml($this->getExcludeTaxLabel()) ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-excl-tax shipping-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
@@ -39,16 +47,25 @@
 </tr>
 <tr id="shipping-incl-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-incl-tax shipping-label" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getIncludeTaxLabel() ?>
+        <?php echo $this->escapeHtml($this->getIncludeTaxLabel()) ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-incl-tax shipping-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
     </td>
 </tr>
+<?php elseif ($_withoutTax) : ?>
+<tr id="shipping-tax-free">
+    <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-label" colspan="<?php echo $this->getColspan(); ?>">
+        <?php echo $_withoutTaxLabel ?>
+    </td>
+    <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-value">
+        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+    </td>
+</tr>
 <?php elseif($this->displayIncludeTax()) : ?>
 <tr id="shipping-incl-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-incl-tax shipping-label" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getTotal()->getTitle() ?>
+        <?php echo $this->escapeHtml($this->getIncludeTaxLabel()) ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-incl-tax shipping-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
@@ -57,7 +74,7 @@
 <?php else:?>
 <tr id="shipping-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-label" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->escapeHtml($this->getTotal()->getTitle()) ?>
+        <?php echo $this->escapeHtml($this->getExcludeTaxLabel()) ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right shipping-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>

@@ -8,7 +8,7 @@
 /**
  * Ship to multiple address template
  *
- * @see Mage_Checkout_Block_Multishipping_Addresses
+ * @var $this Egovs_Checkout_Block_Multipage_Newaddress
  */
 ?>
 <?php $_egov_helper = Mage::helper('egovsbase/config'); ?>
@@ -50,7 +50,7 @@
                             <span class="required">*</span>
                             <?php echo $this->__('Email Address') ?>
                         </label>
-                        <input tabindex="5" type="text" id="billing:email" name="billing[email]" value="<?php echo $this->htmlEscape($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry" maxlength="64" />
+                        <input tabindex="5" type="text" id="billing:email" name="billing[email]" value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry" maxlength="64" />
                     </div>
                 </li>
               <?php endif ?>
@@ -68,10 +68,10 @@
                             <?php echo $_egov_helper->getFieldRequiredHtml('company', $_checkout_method) ?>
                             <?php echo $this->__('Company') ?>
                         </label>
-                        <input tabindex="6" type="text" id="billing:company" name="billing[company]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('company', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="27" />
+                        <input tabindex="6" type="text" id="billing:company" name="billing[company]" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('company', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="27" />
                       	<?php if($this->isAdditionalCompanyVisible()):?>
-	                        <input tabindex="6" type="text" id="billing:company2" name="billing[company2]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany2()) ?>" title="<?php echo $this->__('Company 2') ?>" class="input-text" maxlength="27" />
-	                        <input tabindex="6" type="text" id="billing:company3" name="billing[company3]" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany3()) ?>" title="<?php echo $this->__('Company 3') ?>" class="input-text" maxlength="27" />
+	                        <input tabindex="6" type="text" id="billing:company2" name="billing[company2]" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany2()) ?>" title="<?php echo $this->__('Company 2') ?>" class="input-text" maxlength="27" />
+	                        <input tabindex="6" type="text" id="billing:company3" name="billing[company3]" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany3()) ?>" title="<?php echo $this->__('Company 3') ?>" class="input-text" maxlength="27" />
                       	<?php endif; ?>
                     </div>
                 </li>
@@ -116,7 +116,7 @@
 		    		                <?php echo $_egov_helper->getFieldRequiredHtml('postcode', $_checkout_method) ?>
 		    		                <?php echo $this->__('Zip/Postal Code') ?>
 		    		            </label>
-		    		            <input tabindex="9" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international <?php echo $_egov_helper->isFieldRequired('postcode', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="10" />
+		    		            <input tabindex="9" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international <?php echo $_egov_helper->isFieldRequired('postcode', $_checkout_method) ? 'required-entry' : ''; ?>" maxlength="10" />
 		    		        </div>
 		    		    </li>
 	    		    <?php endif ?>
@@ -138,7 +138,7 @@
                             <?php echo $_egov_helper->getFieldRequiredHtml('telephone', $_checkout_method) ?>
                             <?php echo $this->__('Telephone') ?>
                         </label>
-                        <input tabindex="13" type="text" name="billing[telephone]" value="<?php echo $this->htmlEscape($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('telephone', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:telephone" maxlength="32" />
+                        <input tabindex="13" type="text" name="billing[telephone]" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('telephone', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:telephone" maxlength="32" />
                     </div>
                 </li>
               <?php endif ?>
@@ -153,7 +153,7 @@
 		    		                <?php echo $_egov_helper->getFieldRequiredHtml('city', $_checkout_method) ?>
 		    		                <?php echo $this->__('City') ?>
 		    		            </label>
-		    		            <input tabindex="10" type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('city', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:city" maxlength="22" />
+		    		            <input tabindex="10" type="text" title="<?php echo $this->__('City') ?>" name="billing[city]" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('city', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:city" maxlength="22" />
 		    		        </div>
 		    		    </li>
 		    		  <?php endif ?>
@@ -175,7 +175,7 @@
                             <?php echo $_egov_helper->getFieldRequiredHtml('fax', $_checkout_method) ?>
                             <?php echo $this->__('Fax') ?>
                         </label>
-                        <input tabindex="14" type="text" name="billing[fax]" value="<?php echo $this->htmlEscape($this->getAddress()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('fax', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:fax" maxlength="32" />
+                        <input tabindex="14" type="text" name="billing[fax]" value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>" title="<?php echo $this->__('Fax') ?>" class="input-text <?php echo $_egov_helper->isFieldRequired('fax', $_checkout_method) ? 'required-entry' : ''; ?>" id="billing:fax" maxlength="32" />
                     </div>
                 </li>
               <?php endif ?>

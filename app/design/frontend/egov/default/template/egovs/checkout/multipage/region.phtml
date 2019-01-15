@@ -1,0 +1,27 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * Ship to multiple address template
+ *
+ * @var $this Egovs_Checkout_Block_Multipage_Region
+ */
+
+$type = $this->getAddressType();
+?>
+<select id="<?php echo $type; ?>:region_id" name="<?php echo $type; ?>[region_id]" title="<?php echo Mage::helper('core')->quoteEscape($this->__('State/Province')) ?>" class="validate-select" style="display:none;">
+    <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+</select>
+<script type="text/javascript">
+//<![CDATA[
+    $j(document).ready(function(){
+        $j('#<?php echo $type; ?>:region_id').val("<?php echo $this->getAddress()->getRegionId() ?>");
+        new RegionUpdater('<?php echo $type; ?>:country_id', '<?php echo $type; ?>:region', '<?php echo $type; ?>:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, '<?php echo $type; ?>:postcode');
+    });
+//]]>
+</script>
+<input type="text" id="<?php echo $type; ?>:region" name="<?php echo $type; ?>[region]" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('State/Province')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" style="display:none;" />
