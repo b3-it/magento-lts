@@ -1,8 +1,8 @@
 ﻿<?php
 /**
- * @category   design_blank
+ * @category   dwd_default
  * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @copyright  Copyright (c) 2013 - 2018 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -13,37 +13,35 @@
 
 <?php $AccountInfo = $this->getNewAccountInfo();
 if(count($AccountInfo) > 0):?>
-<div class="credential-block" style="border: 4px solid #cc0000; padding: 5px;">
-    <p><br/></p>
-		<h2><?php echo $this->__('Use these credentials:') ?></h2>
-		<p><?php echo $this->__('You also find this information in the %s section of your account. Here you can also change the password according to your choice.', '<a href="'.Mage::getUrl('dwd_icd/index/view').'">'.$this->__('My Credentials').'</a>') ?></p>
-		<p><?php echo $this->__('Use the Url as shown below!'); ?></p>
-	 	<table class="data-table" id="checkout-review-table">
-	 	    <thead>
-	 	        <tr>
-	 	            <th ><?php echo $this->__('Product Name') ?></th>
-	 	            <th ><?php echo $this->__('Url') ?></th>
-	 	            <th ><?php echo $this->__('Login Name') ?></th>
-	 	            <th ><?php echo $this->__('Password') ?></th>
-			      </tr>
-			  </thead>
-			  <tbody>
-			  <?php foreach($AccountInfo as $_item): ?>
-			      <tr>
-			          <td><?php echo $_item->getName()?></td>
-			          <td><a href="<?php echo $_item->getApplicationUrl()?>" target="_blank"><?php echo $_item->getApplicationUrl()?></a></td>
-			          <td style="font-size: 1.1em; font-weight: bold; color: #cc0000;"><?php echo $_item->getLogin()?></td>
-			      <?php if($_item->getPassword() == ''):?>
-			          <td><?php echo $this->__('Use password you already known!')?></td>
-			      <?php else:?>
-			          <td style="font-size: 1.1em; font-weight: bold; color: #cc0000;"><?php echo $_item->getPassword()?></td>
-			      <?php endif;?>
-			      </tr>
-			  <?php endforeach ?>
-			  </tbody>
-		</table>
+<div class="credential-block">
+    <h2><?php echo $this->__('Use this credential(s):') ?></h2>
+	<p><?php echo $this->__('You can also see these info at your %s. The password can be changed at your customer account.', '<a href="'.Mage::getUrl('dwd_icd/index/view').'">'.$this->__('My Credentials').'</a>') ?></p>
+	<p><?php echo $this->__('Use the Url as shown below!'); ?></p>
+	<table class="data-table" id="checkout-review-table">
+	    <thead>
+	 	    <tr>
+	 	        <th><?php echo $this->__('Product Name') ?></th>
+	 	        <th><?php echo $this->__('Url') ?></th>
+	 	        <th><?php echo $this->__('Login Name') ?></th>
+	 	        <th><?php echo $this->__('Password') ?></th>
+			</tr>
+        </thead>
+		<tbody>
+          <?php foreach($AccountInfo as $_item): ?>
+			<tr>
+			    <td><?php echo $_item->getName()?></td>
+			    <td><a href="<?php echo $_item->getApplicationUrl()?>" target="_blank"><?php echo $_item->getApplicationUrl()?></a></td>
+			    <td class="login-info"><?php echo $_item->getLogin()?></td>
+			  <?php if($_item->getPassword() == ''):?>
+			    <td><?php echo $this->__('Use password you already known!')?></td>
+			  <?php else:?>
+			    <td class="login-info"><?php echo $_item->getPassword()?></td>
+			  <?php endif;?>
+			</tr>
+          <?php endforeach ?>
+        </tbody>
+    </table>
 </div>
-<br/>
 <?php endif;?>
 
 <h3>
@@ -86,22 +84,22 @@ if(count($AccountInfo) > 0):?>
         </div>
         <div class="col-2">
             <h4><?php echo $this->__('Shipping Method') ?> </h4>
-        <?php if($_rate=$this->getShippingAddressRate($_address)): ?>
-            <div class="successview_shipping">
-	              <?php echo $_rate->getCarrierTitle() ?> (<?php echo $_rate->getMethodTitle() ?>)
-	              <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
-	              <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
-	          <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						    <?php echo $_excl; ?>
-					  <?php endif;?>
-					  <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						    <?php echo $_incl; ?>
-					  <?php endif;?>
-					  <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-						    <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
-					  <?php endif; ?>
-            </div>
-        <?php endif; ?>
+            <?php if ($_rate = $this->getShippingAddressRate($_address)): ?>
+                <div class="successview_shipping">
+                    <?php echo $_rate->getCarrierTitle() ?> (<?php echo $_rate->getMethodTitle() ?>)
+                    <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
+                    <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
+                    <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()): ?>
+                        <?php echo $_excl; ?>
+                    <?php endif; ?>
+                    <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()): ?>
+                        <?php echo $_incl; ?>
+                    <?php endif; ?>
+                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                        <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>
