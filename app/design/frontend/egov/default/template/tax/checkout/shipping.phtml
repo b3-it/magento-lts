@@ -33,6 +33,8 @@
     $_totals = $this->getTotals();
     if (isset($_totals['tax']) && ((int)Mage::getStoreConfig('tax/classes/shipping_tax_class')) < 0 && $_totals['tax']->getValue() < 0.009) {
         $_withoutTax = true;
+    } elseif (!Mage::getStoreConfigFlag('tax/cart_display/zero_tax') && !isset($_totals['tax'])) {
+        $_withoutTax = true;
     }
     $_withoutTaxLabel = $this->helper('tax')->__('Shipping Tax Free (%s)', $this->escapeHtml($this->getTotal()->getAddress()->getShippingDescription()));
 ?>

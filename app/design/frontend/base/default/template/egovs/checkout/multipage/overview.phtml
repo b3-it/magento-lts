@@ -104,15 +104,19 @@
 					<br /> <strong><?php echo $this->__('Shipping charges') ?>:&nbsp;</strong>
 					<?php $_excl = $this->getShippingPriceExclTax($_address); ?>
 					<?php $_incl = $this->getShippingPriceInclTax($_address); ?>
-					<?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						<?php echo sprintf('%s (%s)', $_excl, $this->__('Excl. Tax')); ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						<?php echo sprintf('%s (%s)', $_incl, $this->__('Incl. Tax')); ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-						<?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
-					<?php endif; ?>
+                    <?php if ($_excl === $_incl): ?>
+                        <?php echo sprintf('%s (%s)',$_excl, $this->__('Tax Free')); ?>
+                    <?php else: ?>
+                        <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
+                            <?php echo sprintf('%s (%s)', $_excl, $this->__('Excl. Tax')); ?>
+                        <?php endif;?>
+                        <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
+                            <?php echo sprintf('%s (%s)', $_incl, $this->__('Incl. Tax')); ?>
+                        <?php endif;?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
 				</div>
 				<?php endif; ?>
 			</div>
