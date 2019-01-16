@@ -84,22 +84,22 @@ if(count($AccountInfo) > 0):?>
         </div>
         <div class="col-2">
             <h4><?php echo $this->__('Shipping Method') ?> </h4>
-        <?php if($_rate=$this->getShippingAddressRate($_address)): ?>
-            <div class="successview_shipping">
-	              <?php echo $_rate->getCarrierTitle() ?> (<?php echo $_rate->getMethodTitle() ?>)
-	              <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
-	              <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
-	          <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						    <?php echo $_excl; ?>
-					  <?php endif;?>
-					  <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						    <?php echo $_incl; ?>
-					  <?php endif;?>
-					  <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-						    <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
-					  <?php endif; ?>
-            </div>
-        <?php endif; ?>
+            <?php if ($_rate = $this->getShippingAddressRate($_address)): ?>
+                <div class="successview_shipping">
+                    <?php echo $_rate->getCarrierTitle() ?> (<?php echo $_rate->getMethodTitle() ?>)
+                    <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
+                    <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
+                    <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()): ?>
+                        <?php echo $_excl; ?>
+                    <?php endif; ?>
+                    <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()): ?>
+                        <?php echo $_incl; ?>
+                    <?php endif; ?>
+                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                        <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>
