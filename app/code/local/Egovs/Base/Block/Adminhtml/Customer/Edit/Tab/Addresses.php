@@ -64,6 +64,7 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
      */
     protected function _setFieldset($attributes, $fieldset, $exclude=array())
     {
+        /** @var \Egovs_Base_Helper_Config $egovsHelper */
     	$egovsHelper = null;
     	try {
     		if (Mage::helper('core')->isModuleEnabled('Egovs_Base')) {
@@ -72,8 +73,15 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
     			Mage::log("Helper 'egovsbase/config' not available!", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
     		}
     	} catch (Exception $e) {
-    		Mage::log("Helper 'egovsbase/config' not available!", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+    		Mage::log("Helper 'egovsbase/config' not available! Exception:\n{$e->getMessage()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
     	}
+
+    	/** @var \Mage_Customer_Model_Customer $customer */
+        $customer = Mage::registry('current_customer');
+    	$store = null;
+    	if ($customer->getId()) {
+    	    $store = $customer->getStore();
+        }
     	
         $this->_addElementTypes($fieldset);
         foreach ($attributes as $attribute) {
@@ -83,10 +91,9 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
             }
             
             if ( ($inputType = $attribute->getFrontend()->getInputType())
-                 && !in_array($attribute->getAttributeCode(), $exclude)
-                 && ('media_image' != $inputType)
-                 ) {
-
+                && ('media_image' !== $inputType)
+                && !in_array($attribute->getAttributeCode(), $exclude)
+            ) {
                 $fieldType      = $inputType;
                 $rendererClass  = $attribute->getFrontend()->getInputRendererClass();
                 if (!empty($rendererClass)) {
@@ -94,16 +101,28 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
                     $fieldset->addType($fieldType, $rendererClass);
                 }
 
-                $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
-                    array(
-                        'name'      => $attribute->getAttributeCode(),
-                        'label'     => $attribute->getFrontend()->getLabel(),
-                        'class'     => $attribute->getFrontend()->getClass(),
-                        'required'  => $egovsHelper != null ? $egovsHelper->isFieldRequired($attribute->getAttributeCode(), 'register') : $attribute->getIsRequired(),
-                        'note'      => $attribute->getNote(),
-                    )
-                )
-                ->setEntityAttribute($attribute);
+                try {
+                    $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
+                        array(
+                            'name' => $attribute->getAttributeCode(),
+                            'label' => $attribute->getFrontend()->getLabel(),
+                            'class' => $attribute->getFrontend()->getClass(),
+                            'required' => $egovsHelper !== NULL ? $egovsHelper->isFieldRequired($attribute->getAttributeCode(), 'register', $store) : $attribute->getIsRequired(),
+                            'note' => $attribute->getNote(),
+                        )
+                    )->setEntityAttribute($attribute);
+                } catch (Mage_Core_Model_Store_Exception $e) {
+                    Mage::logException($e);
+                    $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
+                        array(
+                            'name' => $attribute->getAttributeCode(),
+                            'label' => $attribute->getFrontend()->getLabel(),
+                            'class' => $attribute->getFrontend()->getClass(),
+                            'required' => $attribute->getIsRequired(),
+                            'note' => $attribute->getNote(),
+                        )
+                    )->setEntityAttribute($attribute);
+                }
 
                 $element->setAfterElementHtml($this->_getAdditionalElementHtml($element));
 
