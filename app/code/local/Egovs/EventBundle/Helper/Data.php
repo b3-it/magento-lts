@@ -22,4 +22,34 @@ class Egovs_EventBundle_Helper_Data extends Mage_Core_Helper_Abstract
  		}
  		return $product;
 	}
+
+    /**
+     * @param $item
+     *
+     * @return string
+     */
+	public function getAdditionalPriceInfo($item) {
+	    if (!($item instanceof Varien_Object)) {
+	        return '';
+        }
+
+        $text = '';
+
+        if (((float)$item->getPrice() > 0.009) || (Mage::getStoreConfig('eventbundle/display_prices/cart_sub_price_eq_null') == 1)) {
+            $text .= ' ( ' . Mage::helper('core')->currency($item->getPrice());
+            if (Mage::helper('core')->isModuleEnabled('Egovs_Ready')) {
+                $text .= sprintf(' + %s', Mage::helper('core')->currency($item->getTaxAmount()));
+                if (Mage::getStoreConfigFlag('catalog/price/display_formatted_tax_rate_below_price')) {
+                    $text .= sprintf(' (%s%%', number_format($item->getTaxPercent(), 2));
+                }
+                $text .= sprintf(' %s', $this->__('VAT'));
+            } elseif (Mage::getStoreConfig('tax/cart_display/zero_tax') == 1) {
+                $text .= ' + ' . Mage::helper('core')->currency($item->getTaxAmount())
+                    . ' (' . number_format($item->getTaxPercent(), 2) . "%)";
+            }
+            $text .= ')';
+        }
+
+        return $text;
+    }
 }

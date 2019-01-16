@@ -24,20 +24,43 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php  $_order = $this->getOrder() ?>
+<?php
+    /** @var \Mage_Sales_Model_Order $_order */
+    $_order = $this->getOrder();
+?>
 <table class="data-table linearize-table-large" id="my-orders-table" summary="<?php echo Mage::helper('core')->quoteEscape($this->__('Items Ordered')) ?>">
-    <col class="order-item-product" />
-    <col class="order-item-sku" width="1" />
-    <col class="order-item-price" width="1" />
-    <col class="order-item-qty" width="1" />
-    <col class="order-item-subtotal" width="1" />
+    <colgroup>
+        <col class="order-item-product" />
+        <col class="order-item-sku" width="60" />
+        <col class="order-item-price" width="80" />
+        <col class="order-item-qty" width="1" />
+        <col class="order-item-subtotal" width="80" />
+    </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->__('Product') ?></th>
             <th><?php echo $this->__('SKU') ?></th>
-            <th class="a-right"><?php echo $this->__('Price') ?></th>
+            <th class="a-right">
+                <?php echo $this->__('Price') ?>
+                <?php if ($_order->getTaxAmount() <= 0.009): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Tax Free')) ?>
+                <?php elseif (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
+                <?php else: ?>
+                    <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>
+                <?php endif; ?>
+            </th>
             <th class="a-center"><?php echo $this->__('Qty') ?></th>
-            <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            <th class="a-right">
+                <?php echo $this->__('Subtotal') ?>
+                <?php if ($_order->getTaxAmount() <= 0.009): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Tax Free')) ?>
+                <?php elseif (Mage::getStoreConfig('tax/sales_display/price') == 1): ?>
+                    <?php echo sprintf(' (%s)', $this->__('Excl. Tax')) ?>
+                <?php else: ?>
+                    <?php echo sprintf(' (%s)', $this->__('Incl. Tax')) ?>
+                <?php endif; ?>
+            </th>
         </tr>
     </thead>
     <tfoot>

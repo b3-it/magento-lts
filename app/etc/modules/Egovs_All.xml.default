@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -6,7 +6,7 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Acl>
-		<Egovs_B2b>
+        <Egovs_B2b>
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_B2b>
@@ -177,10 +177,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_ProductFile>
-        <Egovs_Ready>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Egovs_Ready>
         <Egovs_Saferpay>
             <active>true</active>
             <codePool>local</codePool>
@@ -250,5 +246,15 @@
                 <Egovs_Checkout/>
             </depends>
         </Egovs_EventBundle>
+        <!-- Egovs_ready muss nach Eventbundle stehen -->
+        <Egovs_Ready>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Bundle/>
+                <Mage_Catalog/>
+                <Mage_Sales/>
+            </depends>
+        </Egovs_Ready>
     </modules>
 </config>
