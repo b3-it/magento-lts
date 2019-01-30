@@ -254,5 +254,75 @@ class Sid_ExportOrder_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getBaseStorePathForCertificates() {
        return Mage::getBaseDir('var') . DS . 'transfer_post' . DS;
     }
-	
+
+    /**
+     * @param string  $p12file
+     * @param sring   $pwd
+     * @param boolean $useCaInfo
+     *
+     * @return array with resulting file names ['key'] for key file and ['ca'] for CA file if exsits
+     */
+    public function convertPkcs12ToPem($p12file, $pwd, $useCaInfo) {
+        $_certInfo = [];
+        $_certStore = null;
+        $_result = [];
+
+        if (!file_exists($p12file)) {
+            throw new RuntimeException($this->__("The file %s doesn't exists", $p12file));
+        }
+        if (!$_certStore = file_get_contents($p12file)) {
+            throw new RuntimeException($this->__("Can't open certificate store"));
+        }
+
+        if (!openssl_pkcs12_read($_certStore, $_certInfo, $pwd)) {
+            throw new RuntimeException($this->__("Can't parse certificate storage! Maybe the password is not correct?"));
+        }
+        if (!isset($_certInfo['cert'], $_certInfo['pkey'])) {
+            throw new RuntimeException($this->__("Can't locate public or private key from certificate storage"));
+        }
+
+        $_pemFileName = basename($p12file);
+        $_path = dirname($p12file);
+
+        $_posOfLastDot = mb_strripos($_pemFileName, '.');
+        if ($_posOfLastDot !== false) {
+            $_pemFileName = mb_substr($_pemFileName, 0, $_posOfLastDot);
+        }
+        $_caFileName = "ca".$_pemFileName.'.crt';
+        $_pemFileName .= '.cert';
+
+        $_pkey = '';
+        /**
+         * Die ordnungsgemäße Ausführung dieser Funktion setzt die Installation einer gültigen openssl.cnf-Datei voraus.
+         * Für Windows wichtig!
+         *  PHP verwendet folgende Logik um die Konfigurationsdatei openssl.cnf zu finden:
+         *  Die Umgebungsvariable OPENSSL_CONF wird, falls gesetzt, als Pfad zur Konfigurationsdatei benutzt (den Dateinamen mit eingeschlossen).
+         *  Die Umgebungsvariable SSLEAY_CONF wird, falls gesetzt, als Pfad zur Konfigurationsdatei benutzt (den Dateinamen mit eingeschlossen).
+         *  PHP sucht die Datei openssl.cnf an dem Ort, der bei der Kompilierung der openssl DLL als Speicherort für Zertifikate angegeben wurde. Üblicherweise ist der Standarddateiname c:\usr\local\ssl\openssl.cnf.
+         *
+         */
+        if (!openssl_pkey_export($_certInfo['pkey'], $_pkey, $pwd)) {
+            throw new RuntimeException($this->__("Can't convert private key!"));
+        }
+
+        $_data = sprintf("%s\n%s", $_pkey, $_certInfo['cert']);
+
+        $_pemFile = $_path.DS.$_pemFileName;
+        if (!file_put_contents($_pemFile, $_data)) {
+            throw new RuntimeException($this->__("Can't write new client certificate file!"));
+        }
+        $_result['key'] = str_replace(Mage::helper('exportorder')->getBaseStorePathForCertificates(), '', $_pemFile);
+
+        if ($useCaInfo && isset($_certInfo['extracerts'])) {
+            $_caFile = $_path.DS.$_caFileName;
+            $_data = implode("\n", $_certInfo['extracerts']);
+            if (!file_put_contents($_caFile, $_data)) {
+                throw new RuntimeException($this->__("Can't write new CA certificate file!"));
+            }
+            $_caFile = str_replace(Mage::helper('exportorder')->getBaseStorePathForCertificates(), '', $_caFile);
+            $_result['ca'] = $_caFile;
+        }
+
+        return $_result;
+    }
 }
