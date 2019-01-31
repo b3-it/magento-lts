@@ -51,6 +51,16 @@
                         <sort_order>20</sort_order>
                         <action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
                     </egovs_base_order_item>
+                    <recurring_profile>
+                        <depends>
+                            <module>HideMe</module>
+                        </depends>
+                    </recurring_profile>
+                    <billing_agreement>
+                        <depends>
+                            <module>HideMe</module>
+                        </depends>
+                    </billing_agreement>
                 </children>
             </sales>
             <system>
@@ -221,10 +231,12 @@
         </translate>
         <layout>
             <updates>
-                <egovsbase>
-                    <!-- z_ muss vorhanden sein, damit XML möglichst als letztes geparsed wird! -->
-                    <file>z_egovs_base.xml</file>
-                </egovsbase>
+                <sales_billing_agreement>
+                    <file>egovs/blank.xml</file>
+                </sales_billing_agreement>
+                <sales_recurring_profile>
+                    <file>egovs/blank.xml</file>
+                </sales_recurring_profile>
             </updates>
         </layout>
         <routers>
