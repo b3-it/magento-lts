@@ -104,7 +104,8 @@ class Egovs_Paymentbase_Model_Webservice_Types_Buchung extends Egovs_Paymentbase
 			case 'haushaltsstelle':
 			case 'objektnummer':
 				$length = self::LENGTH_HAUSHALT_OBJECT;
-				break;
+				// TODO Disabled bug fix for validate length till ZV_AM-1196 is implemented
+				//break;
 			case 'buchungstext':
 				$length = self::LENGTH_BUCHUNGSTEXT;
 				break;
