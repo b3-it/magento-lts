@@ -54,4 +54,11 @@
         <block name="wysiwyg_images.files" type="adminhtml/cms_wysiwyg_images_content_files"
                template="egovs/cms/browser/content/files.phtml" output="toHtml"/>
     </adminhtml_cms_wysiwyg_media_contents>
+
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <action method="removeTab"><name>customer_edit_tab_recurring_profile</name></action>
+            <action method="removeTab"><name>customer_edit_tab_agreements</name></action>
+        </reference>
+    </adminhtml_customer_edit>
 </layout>
