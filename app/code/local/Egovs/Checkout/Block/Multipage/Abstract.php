@@ -104,50 +104,19 @@ class Egovs_Checkout_Block_Multipage_Abstract extends Mage_Core_Block_Template
         return count($this->getCustomer()->getAddresses());
     }
 
-    public function getRegionCollection()
-    {
-        if (!$this->_regionCollection) {
-            $this->_regionCollection = Mage::getModel('directory/region')->getResourceCollection()
-                ->addCountryFilter('DE') //$this->getAddress()->getCountryId()
-                ->load();
-        }
-        return $this->_regionCollection;
-    }
-
-    public function getRegionCollectionAsOptionArray()
-    {
-    	$collection = $this->getRegionCollection();
-    	$options = array();
-        foreach ($collection->getItems() as $item) {
-            $options[] = array(
-               'value' => $item->getId(),
-               'label' => $item->getName()
-            );
-        }
-        if (count($options)>0) {
-            array_unshift($options, array('title'=>null, 'value'=>'', 'label'=>Mage::helper('mpcheckout')->__('Out of Germany')));
-        }
-        return $options;
-    }
-
     public function getRegionHtmlSelect($type)
     {
-        $require_class = ( Mage::helper('egovsbase/config')->isFieldRequired('region') ? 'required-entry ' : '' );
-    	
-    	$select = $this->getLayout()->createBlock('core/html_select')
-            ->setName($type.'[region]')
-            ->setId($type.':region')
-            ->setTitle(Mage::helper('checkout')->__('State/Province'))
-            ->setClass($require_class . 'validate-state')
-            ->setValue($this->getAddress()->getRegionId())
-            ->setOptions($this->getRegionCollectionAsOptionArray());
+        /**
+         * @var Egovs_Checkout_Block_Multipage_Region $select
+         */
+        $select = $this->getLayout()->createBlock('mpcheckout/multipage_region', $type.'[region]', [
+            'template'     => 'egovs/checkout/multipage/region.phtml',
+            'address'      => $this->getAddress(),
+            'address_type' => $type
+        ]);
 
-        return $select->getHtml();
+        return $select->toHtml();
     }
-
-
-
-
 
     public function isFieldRequired($key,$method = null)
     {

@@ -875,9 +875,9 @@
             border-top: 1px solid $global-checkout-total-border;
             border-bottom: 1px solid $global-checkout-total-border;
             td {
-                font-size: $global-fontsize-big;
                 font-weight: bold;
                 vertical-align: top;
+                font-size: 0.9rem;
             }
 
             strong span,
@@ -895,13 +895,6 @@
 
     .cart-totals {
         text-align: right;
-    }
-}
-
-@include bp(max-width, $bp-medium) {
-
-    .cart .cart-totals table tfoot td {
-        font-size: $f-size-xxl;
     }
 }
 

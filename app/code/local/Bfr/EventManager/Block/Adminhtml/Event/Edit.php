@@ -21,7 +21,16 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit extends Mage_Adminhtml_Block_W
         $this->_controller = 'adminhtml_event';
         
         $this->_updateButton('save', 'label', Mage::helper('eventmanager')->__('Save Item'));
-        $this->_updateButton('delete', 'label', Mage::helper('eventmanager')->__('Delete Item'));
+        $this->_updateButton('delete', 'label', Mage::helper('eventmanager')->__('Delete Event'));
+        $this->_updateButton('delete', 'onclick',
+            'deleteConfirm(\''
+                . Mage::helper('core')->jsQuoteEscape(
+                    Mage::helper('eventmanager')->__('Are you sure you want to delete the whole event?')
+                )
+                .'\', \''
+                . $this->getDeleteUrl()
+                . '\')'
+        );
 		
 			
         $this->_addButton('saveandcontinue', array(

@@ -352,6 +352,9 @@
 }
 
 .product-view {
+    .product-shop .tax-details {
+        display: block;
+    }
 
     .required {
         color: $global-warning-color;

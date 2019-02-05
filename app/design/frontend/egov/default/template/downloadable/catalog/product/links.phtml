@@ -47,6 +47,7 @@
                             <?php endif; ?>
                             <?php if ($_linksPurchasedSeparately): ?>
                                 <?php echo $this->getFormattedLinkPrice($_link); ?>
+                                <?php echo $this->getChildHtml('product_price_info'); ?>
                             <?php endif; ?>
                     </span>
                     <?php if ($_isRequired): ?>
@@ -85,11 +86,11 @@
                     }
                 });
                 try {
-                    //var _displayZeroPrice = optionsPrice.displayZeroPrice;
-                    optionsPrice.displayZeroPrice = true;
+                    var _displayZeroPrice = optionsPrice.displayZeroPrice;
+                    optionsPrice.displayZeroPrice = false;
                     optionsPrice.changePrice('downloadable', price);
                     optionsPrice.reload();
-                    //optionsPrice.displayZeroPrice = _displayZeroPrice;
+                    optionsPrice.displayZeroPrice = _displayZeroPrice;
                 } catch (e) {
 
                 }

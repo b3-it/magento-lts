@@ -155,6 +155,7 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     		);
     
     		$options = $optionCollection->appendSelections($selectionCollection, false, $_appendAllSelections);
+            /* the inner empty array covers cases when no loops were made */
             $selections = [[]];
     		foreach ($options as $option) {
     			if (($option->getRequired() == 1) && count($option->getSelections()) == 1) {
@@ -369,9 +370,9 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     	{
     		$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
     		$collection->getSelect()
-    		->where('product_id='.intval($this->getProduct()->getId()))
-    		->order('pos');
-    		$collection->setStoreId(intval($this->getProduct()->getStoreId()));
+    		    ->where('product_id='. (int)$this->getProduct()->getId())
+    		    ->order('pos');
+    		$collection->setStoreId((int)$this->getProduct()->getStoreId());
     		$this->_personalOptions = $collection->getItems();
     	}
     	

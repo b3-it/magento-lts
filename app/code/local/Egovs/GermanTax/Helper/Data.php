@@ -42,7 +42,7 @@ class Egovs_GermanTax_Helper_Data extends Mage_Tax_Helper_Data
             return $price;
         }
         $store = $this->_app->getStore($store);
-        if (!$this->needPriceConversion($store)) {
+        if (!$this->needPriceConversion($store) && $includingTax != true) {
             return $store->roundPrice($price);
         }
         if (is_null($priceIncludesTax)) {

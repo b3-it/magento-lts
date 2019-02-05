@@ -351,6 +351,9 @@
                         width: 20%;
                     }
                 }
+                .tax-details {
+                    display: block;
+                }
             }
 
             .add-to-cart-buttons {
@@ -619,6 +622,10 @@
         .label {
             font-size: 0.9rem;
         }
+    }
+
+    .product-shop .tax-details {
+        display: block;
     }
 
     .required {

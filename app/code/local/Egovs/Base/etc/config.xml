@@ -583,6 +583,13 @@
                     </pending_payment>
                 </statuses>
             </order>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <short_description/>
+                    </product_attributes>
+                </item>
+            </quote>
         </sales>
         <customer>
             <address_templates>
@@ -740,6 +747,20 @@
             <invoice>
                 <send_mail>1</send_mail>
             </invoice>
+            <order_additional>
+            	<show_thumbnail_in_email>0</show_thumbnail_in_email>
+            	<thumbnail_dimension>150</thumbnail_dimension>
+                <show_description_in_order>0</show_description_in_order>
+                <show_short_description_in_order>0</show_short_description_in_order>
+                <show_delivery_time_in_order>0</show_delivery_time_in_order>
+            </order_additional>
+            <invoice_additional>
+                <show_thumbnail_in_email>0</show_thumbnail_in_email>
+            	<thumbnail_dimension>150</thumbnail_dimension>
+                <show_description_in_invoice>0</show_description_in_invoice>
+                <show_short_description_in_invoice>0</show_short_description_in_invoice>
+                <show_delivery_time_in_invoice>0</show_delivery_time_in_invoice>
+            </invoice_additional>
         </sales_email>
         <customer>
             <create_account>

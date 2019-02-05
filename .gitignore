@@ -15,6 +15,8 @@
 
 # Debug-Files
 lib/Egovs/.localhost
+app/code/local/Egovs/Checkout/etc/debug.flag
+app/code/local/Gka/Checkout/etc/debug.flag
 
 # Magento-Config
 app/etc/local.xml
@@ -28,6 +30,7 @@ var/backups
 var/cache
 var/session
 var/log
+var/locks
 var/report
 var/resource_config.json
 var/tmp
@@ -41,6 +44,9 @@ ehthumbs.db
 
 # Zertifikate
 lib/ePayment
+
+# nützliches
+Hackathon*
 
 /app/etc_*
 /app/etc/etc.xml

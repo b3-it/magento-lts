@@ -27,6 +27,13 @@
  * @var $this Mage_Tax_Block_Checkout_Grandtotal
  * @see Mage_Tax_Block_Checkout_Grandtotal
  */
+
+$_tollerace = 0.009;
+$_totals = $this->getTotals();
+$_hasZeroTax = true;
+if (isset($_totals['tax'])) {
+    $_hasZeroTax = ($_totals['tax']->getValue() <= $_tollerace);
+}
 ?>
 <?php if ($this->includeTax() && $this->getTotalExclTax()>=0):?>
 <tr id="grandtotal-excl-tax">
@@ -49,7 +56,15 @@
 <?php else:?>
 <tr id="grandtotal-tax">
     <td style="<?php echo $this->getStyle() ?>" class="a-right grandtotal-label" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getTotal()->getTitle() ?>
+        <?php if ($_hasZeroTax): ?>
+            <?php echo $this->helper('tax')->__('Grand Total (Tax Free)'); ?>
+        <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+            <?php echo $this->helper('tax')->__('Grand Total (Excl. Tax)') ?>
+        <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+            <?php echo $this->helper('tax')->__('Grand Total (Incl. Tax)') ?>
+        <?php else: ?>
+            <?php echo $this->getTotal()->getTitle() ?>
+        <?php endif; ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right grandtotal-value">
         <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
