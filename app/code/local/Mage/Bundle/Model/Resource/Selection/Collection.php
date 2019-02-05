@@ -150,8 +150,4 @@ class Mage_Bundle_Model_Resource_Selection_Collection extends Mage_Catalog_Model
             ->order('selection.selection_id asc');
         return $this;
     }
-    
-    protected function _getItemId(Varien_Object $item) {
-    	return $item->getId();
-    }
 }
