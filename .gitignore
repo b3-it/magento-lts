@@ -13,8 +13,13 @@
 .idea/
 .tern-project
 
+Hackathon
+Hackathon*
+hackathon*
+
 # Debug-Files
 lib/Egovs/.localhost
+app/code/local/Gka/Checkout/etc/debug.flag
 
 # Magento-Config
 app/etc/local.xml
@@ -28,6 +33,7 @@ var/backups
 var/cache
 var/session
 var/log
+var/locks
 var/report
 var/resource_config.json
 var/tmp
