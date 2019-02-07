@@ -2,7 +2,7 @@
 /**
  * @category    design
  * @package     dwd_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2018 B3 IT System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -14,20 +14,26 @@
 ?>
 
 <?php
+$shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
 $_cartQty = $this->getSummaryCount();
 if(empty($_cartQty)) {
     $_cartQty = 0;
 }
+if ( Mage::getStoreConfig('catalog/price/including_shipping_costs') ) {
+    $_sIncludingShippingCosts = 'incl.';
+} else {
+    $_sIncludingShippingCosts = 'excl.';
+}
 ?>
+<div id="minicart-error-message" class="minicart-message"></div>
+<div id="minicart-success-message" class="minicart-message"></div>
+
 <div class="minicart-wrapper">
     <div id="minicart-top-block">
-	    <a class="close skip-link-close" href="javascript:void(0);" title="<?php echo $this->quoteEscape($this->__('Close')); ?>" onclick="$j('#header-cart').removeClass('skip-active')">&times;</a>
-
-	    <div id="minicart-error-message" class="minicart-message"></div>
-	    <div id="minicart-success-message" class="minicart-message"></div>
-	    <p class="block-subtitle">
-	        <?php echo $this->__('Recently added item(s)') ?>
-	    </p>
+        <p class="block-subtitle">
+            <?php echo $this->__('Recently added item(s)') ?>
+            <a class="close skip-link-close" href="javascript:void(0);" title="<?php echo $this->quoteEscape($this->__('Close')); ?>" onclick="$j('#header-cart').removeClass('skip-active')">&times;</a>
+        </p>
     </div>
     <?php $_items = $this->getRecentItems() ?>
     <?php $countItems = count($_items); ?>
@@ -39,6 +45,18 @@ if(empty($_cartQty)) {
                 <?php endforeach; ?>
             </ul>
         </div>
+        <script type="text/javascript">
+            truncateOptions();
+            decorateList('cart-sidebar', 'none-recursive');
+            $j('document').ready(function() {
+                var minicartOptions  = {
+                    formKey:           "<?php echo $this->getFormKey();?>"
+                }
+                var Mini = new Minicart(minicartOptions);
+                Mini.init();
+            });
+        </script>
+
         <div id="minicart-widgets">
             <?php echo $this->getChildHtml('cart_promotion') ?>
         </div>
@@ -49,16 +67,28 @@ if(empty($_cartQty)) {
                     <?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
                 </span>
                 <?php else: ?>
-                <span class="label">
-                    <?php echo $this->__('Cart Subtotal:') ?>
-                </span>
-                <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
-                <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
-                <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                    <?php if (Mage::getStoreConfigFlag('checkout/sidebar/show_subtotal')): ?>
+                        <span class="label">
+                            <?php echo $this->__('Cart Subtotal:') ?>
+                        </span>
+                        <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+                        <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
             </p>
+            <div class="shipping-cost-details">
+        		* <?php echo $this->__($_sIncludingShippingCosts . ' <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?>
+        	</div>
+            <div class="shipping-cost-details">
+                <?php
+                $text = $this->escapeHtml(Mage::getStoreConfig('catalog/price/without_shipping_costs_text'));
+                ?>
+                ** <?php echo $this->__($text) ?>
+            </div>
         </div>
+
 
         <div class="minicart-actions">
             <button class="button egov-float-left"
@@ -67,24 +97,12 @@ if(empty($_cartQty)) {
             </button>
         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
             <button class="button egov-float-right"
-                    onclick="window.open('<?php echo $this->getCheckoutUrl() ?>','_self');"
+                    onclick="window.open('<?php echo $this->getCheckoutUrl(); ?>','_self');"
                     title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>">
                 <?php echo $this->__('Checkout') ?>
             </button>
         <?php endif ?>
         </div>
-
-        <script type="text/javascript">
-            truncateOptions();
-            decorateList('cart-sidebar', 'none-recursive');
-            $j('document').ready(function() {
-                var minicartOptions  = {
-                    formKey: "<?php echo $this->getFormKey();?>"
-                }
-                var Mini = new Minicart(minicartOptions);
-                Mini.init();
-            });
-        </script>
 
     <?php else: ?>
         <p class="empty"><?php echo $this->__('You have no items in your shopping cart.') ?></p>
