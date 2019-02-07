@@ -2,7 +2,7 @@
 /**
  * @category    design
  * @package     egov_adlerwarte
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -14,9 +14,22 @@
 ?>
 
 <?php
+$_tolerance = 0.009;
+$_totals = $this->getTotals();
+$_hasZeroTax = true;
+if (isset($_totals['tax'])) {
+    $_hasZeroTax = ($_totals['tax']->getValue() <= $_tolerance);
+}
+
+$shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
 $_cartQty = $this->getSummaryCount();
 if(empty($_cartQty)) {
     $_cartQty = 0;
+}
+if ( Mage::getStoreConfig('catalog/price/including_shipping_costs') ) {
+    $_sIncludingShippingCosts = 'incl.';
+} else {
+    $_sIncludingShippingCosts = 'excl.';
 }
 ?>
 <div id="minicart-error-message" class="minicart-message"></div>
@@ -61,15 +74,34 @@ if(empty($_cartQty)) {
                     <?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
                 </span>
                 <?php else: ?>
-                <span class="label">
-                    <?php echo $this->__('Subtotal in Cart:') ?>
-                </span>
-                <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
-                <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
-                <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
-                <?php endif; ?>
+                    <?php if (Mage::getStoreConfigFlag('checkout/sidebar/show_subtotal')): ?>
+                        <span class="label">
+                            <?php echo $this->__('Cart Subtotal:') ?>
+                        </span>
+                        <?php $priceSubtotal = Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <?php if ($_hasZeroTax): ?>
+                            <?php echo sprintf('%s (%s)', $priceSubtotal, $this->helper('tax')->__('Tax Free')); ?>
+                        <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') !== Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX ): ?>
+                            <?php //Excluding or both?>
+                            <?php echo sprintf('%s %s', $priceSubtotal, $this->getIncExcTax(false)); ?>
+                            <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+                                <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <?php echo sprintf('%s %s', $priceSubtotal, $this->getIncExcTax(true)); ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
             <?php endif; ?>
             </p>
+            <div class="shipping-cost-details">
+        		* <?php echo $this->__($_sIncludingShippingCosts . ' <a href="%s">Shipping Cost</a>', $shippingCostUrl) ?>
+        	</div>
+            <div class="shipping-cost-details">
+                <?php
+                $text = $this->escapeHtml(Mage::getStoreConfig('catalog/price/without_shipping_costs_text'));
+                ?>
+                ** <?php echo $this->__($text) ?>
+            </div>
         </div>
 
 
@@ -80,18 +112,11 @@ if(empty($_cartQty)) {
             </button>
         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
             <button class="button egov-float-right"
-                    onclick="window.open('<?php echo $this->getCheckoutUrl() ?>','_self');"
+                    onclick="window.open('<?php echo $this->getCheckoutUrl(); ?>','_self');"
                     title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>">
                 <?php echo $this->__('Checkout') ?>
             </button>
         <?php endif ?>
-               <!--
-                <ul class="checkout-types minicart">
-                    <?php echo $this->getChildHtml('extra_actions') ?>
-                    <li>
-                    </li>
-                </ul>
-                -->
         </div>
 
     <?php else: ?>
