@@ -20,5 +20,10 @@
         <reference name="content">
             <block type="eventmanager/adminhtml_translate" name="eventmanager" />
         </reference>
-    </adminhtml_eventmanager_translate_index>   
+    </adminhtml_eventmanager_translate_index>
+    <adminhtml_eventmanager_options_index>
+        <reference name="content">
+            <block type="eventmanager/adminhtml_options" name="eventmanager" />
+        </reference>
+    </adminhtml_eventmanager_options_index>
 </layout>
