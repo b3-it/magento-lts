@@ -18,8 +18,8 @@
  * versions in the future. If you wish to customize Magento for your
  * needs please refer to http://www.magentocommerce.com for more information.
  *
- * @category    Mage
- * @package     Mage_Checkout
+ * @category    Gka
+ * @package     Gka_Checkout
  * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -31,7 +31,8 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     
     
     /**
-     * 
+     * aktuelle Bestellung
+     *
      * @return Mage_Sales_Model_Order
      */
     protected function getOrder()
@@ -46,8 +47,7 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     	}
     	return $this->_order;
     }
-    
-    
+
     /**
      * Retrieve identifier of created order
      *
@@ -77,18 +77,32 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
     	return $this->getUrl('sales/order/view/', array('order_id'=> $this->getOrder()->getId(), '_secure' => true));
     }
-    
-    
+
+    /**
+     * alle Elemente der Bestellung
+     *
+     * @return array
+     */
     public function getOrderItems()
     {
     	return $this->getOrder()->getAllItems();
     }
-    
+
+    /**
+     * Kundenadresse in der Bestellung
+     *
+     * @return \Mage_Sales_Model_Order_Address
+     */
     public function getBillingAddress()
     {
-    	return $this->getOrder()->getAllItems();
+    	return $this->getOrder()->getBillingAddress();
     }
-    
+
+    /**
+     * Logo aus der Konfiguration
+     *
+     * @return string|null
+     */
     public function getLogoPath()
     {
     	$logo =  Mage::getStoreConfig('gka_checkout/invoice/logo_src');
@@ -98,7 +112,7 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     	
     	return null;
     }
-    
+
     /**
      * Get current day of week and current date
      *
@@ -106,10 +120,9 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
      */
     public function getOrderTime()
     {
-        $format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
-        $date = strtotime($this->getOrder()->getUpdatedAt());
-        
-        return Mage::app()->getLocale()->date($date, null, null, false)->toString($format);
+        $date = Mage::app()->getLocale()->date( strtotime($this->getOrder()->getUpdatedAt() ), null, null, true);
+
+        return Mage::helper('core')->formatDate($date, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM, true );
     }
     
     /**
@@ -131,11 +144,12 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     {
         return $this->getOrder()->getPayment()->getData('kassenzeichen');
     }
-    
 
-    
     /**
      * der Name der Zahlart
+     *
+     * @return string    Mage_Payment_Model_Method_Abstract::Title
+     * @throws \Mage_Core_Exception
      */
     public function getPaymentTitle()
     {
@@ -143,7 +157,12 @@ class Gka_Checkout_Block_Singlepage_Success extends Mage_Core_Block_Template
     	
     	return $info->getTitle();
     }
-    
+
+    /**
+     * URL für "Zurück-Link"
+     *
+     * @return string
+     */
     public function getContinueUrl()
     {
     	return $this->getUrl('/');
