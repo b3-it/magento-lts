@@ -30,9 +30,9 @@ if ( Mage::getStoreConfig('catalog/price/including_shipping_costs') ) {
 
 <div class="minicart-wrapper">
     <div id="minicart-top-block">
+        <a class="close skip-link-close" href="javascript:void(0);" title="<?php echo $this->quoteEscape($this->__('Close')); ?>" onclick="$j('#header-cart').removeClass('skip-active')">&times;</a>
         <p class="block-subtitle">
             <?php echo $this->__('Recently added item(s)') ?>
-            <a class="close skip-link-close" href="javascript:void(0);" title="<?php echo $this->quoteEscape($this->__('Close')); ?>" onclick="$j('#header-cart').removeClass('skip-active')">&times;</a>
         </p>
     </div>
     <?php $_items = $this->getRecentItems() ?>
