@@ -148,6 +148,10 @@
 </form>
 
 <script type="text/javascript">
+$j("#review-button").on("click", function(){
+    $j("#loading-mask").toggle();
+});
+
 if(Validation) {
 	Validation.addAllThese([
     	['validate-givenamount', '<?php echo $this->__('Change Amount not plausible!'); ?>', function(v) {

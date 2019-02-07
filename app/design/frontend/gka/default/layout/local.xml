@@ -126,4 +126,10 @@
             <action method="addBodyClass"><classname>mp-checkout</classname></action>
         </reference>
     </checkout_multishipping>
+
+    <checkout_singlepage_overview>
+        <reference name="header">
+            <block type="egovsbase/loadingmask" name="loading.mask" as="loadingMask" template="egovs/base/loading-mask.phtml" />
+        </reference>
+    </checkout_singlepage_overview>
 </layout>
