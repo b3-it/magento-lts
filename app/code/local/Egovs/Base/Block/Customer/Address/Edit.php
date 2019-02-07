@@ -21,6 +21,11 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
 		}
 	}
 	
+	/**
+	 * @deprecated not used anymore and doesn't work with ajax
+	 * {@inheritDoc}
+	 * @see Mage_Directory_Block_Data::getRegionCollection()
+	 */
 	public function getRegionCollection() {
 		if (!$this->_regionCollection) {
 			$this->_regionCollection = Mage::getModel('directory/region')->getResourceCollection()
@@ -30,6 +35,10 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
 		return $this->_regionCollection;
 	}
 	 
+	/**
+	 * @deprecated not used anymore and doesn't work with ajax
+	 * @return NULL[][]
+	 */
 	public function getRegionCollectionAsOptionArray() {
 		$collection = $this->getRegionCollection();
 		$options = array();

@@ -58,9 +58,9 @@ if (isset($_totals['tax'])) {
     <td style="<?php echo $this->getStyle() ?>" class="a-right grandtotal-label" colspan="<?php echo $this->getColspan(); ?>">
         <?php if ($_hasZeroTax): ?>
             <?php echo $this->helper('tax')->__('Grand Total (Tax Free)'); ?>
-        <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 1 ): ?>
+        <?php elseif ( $this->getTotal()->getValue() - $this->getTotalExclTax() <= $_tollerace ): ?>
             <?php echo $this->helper('tax')->__('Grand Total (Excl. Tax)') ?>
-        <?php elseif ( Mage::getStoreConfig('tax/cart_display/subtotal') == 2 ): ?>
+        <?php elseif ( $this->getTotal()->getValue() > $this->getTotalExclTax() ): ?>
             <?php echo $this->helper('tax')->__('Grand Total (Incl. Tax)') ?>
         <?php else: ?>
             <?php echo $this->getTotal()->getTitle() ?>
