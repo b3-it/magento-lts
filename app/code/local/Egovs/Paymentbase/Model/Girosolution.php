@@ -621,11 +621,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING
     ) {
         //=======================================================================================================
-        if (function_exists('microtime')) {
-            $startTime = microtime(true);
-        } else {
-            $startTime = time();
-        }
+        $startTime = $this->_getTimeStamp();
+        $globalStartTime = $startTime;
 
         $order = $this->_getOrder();
         // If order was not found, return false
@@ -668,14 +665,20 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             //dauert ca. 1msec
             //TTL = 180s = 3Min
             $apcAdded = apcu_add($lockKey, true, 180);
-            $this->_logLockTimeDiff($startTime, 'apcu');
+            $this->_logLockTimeDiff($startTime, 'apcu', $globalStartTime);
         }
 
         $lockResult = $this->_getDbLock($lockKey);
-        $this->_logLockTimeDiff($startTime, 'DB:get_lock');
         if ($lockResult == 0) {
-            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-            $updateOrderState = false;
+            if (!Mage::helper('egovsbase/lock')->isFreeLock($lockKey)) {
+                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+                $updateOrderState = false;
+            } else {
+                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:Timed out, can not obtain lock", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+                $this->_logLockTimeDiff($startTime, 'DB:get_lock', $globalStartTime);
+            }
+        } else {
+            $this->_logLockTimeDiff($startTime, 'DB:get_lock', $globalStartTime);
         }
 
         $paymentSuccessful = isset($paymentSuccessful) ? (is_bool($paymentSuccessful) ? $paymentSuccessful : false) : false;
@@ -947,17 +950,27 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		return $this;
 	}
 
-	protected function _logLockTimeDiff($startTime, $lockMethod = '') {
+	protected function _logLockTimeDiff($startTime, $lockMethod = '', $globalStartTime = null) {
         if (function_exists('microtime')) {
             $endTime = microtime(true);
         } else {
             $endTime = time();
         }
         $runTime = $endTime - $startTime;
-        if ($runTime > 8) {
-            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:Server seems to be under heavy load! It took $runTime seconds until the lock ($lockMethod) was set!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        $totalRunTime = false;
+        if ($globalStartTime !== null) {
+            $totalRunTime = $endTime - $globalStartTime;
+        }
+
+        if ($totalRunTime > 0) {
+            $totalRunTimeMsg = "Total run time is $totalRunTime seconds.";
         } else {
-            Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for LOCK ($lockMethod) was %s seconds.", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+            $totalRunTimeMsg = '';
+        }
+        if ($runTime > 8) {
+            Mage::log("{$this->getCode()}::modifyOrderAfterPayment:Server seems to be under heavy load! It took $runTime seconds until the lock ($lockMethod) was set! $totalRunTimeMsg", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        } else {
+            Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for LOCK ($lockMethod) was %s seconds. $totalRunTimeMsg", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         }
     }
 
@@ -1009,5 +1022,18 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         }
 
         return $lockResult;
+    }
+
+    /**
+     * @return int|mixed
+     */
+    protected function _getTimeStamp() {
+        if (function_exists('microtime')) {
+            $startTime = microtime(true);
+        } else {
+            $startTime = time();
+        }
+
+        return $startTime;
     }
 }
