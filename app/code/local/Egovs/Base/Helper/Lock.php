@@ -13,13 +13,17 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
 {
     protected static $dbLockResult = array();
 
+    protected static $dbVersion = null;
+
     protected function _getDbLock($lockKey, $ttl=300) {
         $lockResult = null;
         $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
         /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
         try {
-            $dbVersion = $adapter->fetchOne("SELECT @@version;");
-            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
+            if (self::$dbVersion === null) {
+                self::$dbVersion = $adapter->fetchOne("SELECT @@version;");
+            }
+            if (version_compare(self::$dbVersion, '10.0.2', '>=') || version_compare(self::$dbVersion, '5.7.5', '>=')) {
                 Mage::log("egovsbase::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
                 /*
                  * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
