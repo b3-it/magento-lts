@@ -15,16 +15,50 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
 
     protected static $dbVersion = null;
 
-    protected function _getDbLock($lockKey, $ttl=300) {
+    protected static $cgiMode = null;
+
+    /**
+     * @return bool
+     */
+    public function isCgiMode() {
+        if (static::$cgiMode === null) {
+            $cgiMode = false;
+            $sapiType = php_sapi_name();
+            if (strtolower(substr($sapiType, 0, 3)) === 'cgi') {
+                Mage::log("egovs_paymentbase::get lock in CGI mode", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                $cgiMode = true;
+            }
+            static::$cgiMode = $cgiMode;
+        }
+
+        return static::$cgiMode;
+    }
+
+    public function canUseDbLock() {
+        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
+        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
+
+        if (static::$dbVersion === NULL) {
+            try {
+                static::$dbVersion = $adapter->fetchOne("SELECT @@version;");
+            } catch (Exception $e) {
+                Mage::logException($e);
+            }
+        }
+        if (version_compare(static::$dbVersion, '10.0.2', '>=') || version_compare(static::$dbVersion, '5.7.5', '>=')) {
+            Mage::log("egovsbase::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getDbLock($lockKey, $ttl=300) {
         $lockResult = null;
         $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
         /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
         try {
-            if (self::$dbVersion === null) {
-                self::$dbVersion = $adapter->fetchOne("SELECT @@version;");
-            }
-            if (version_compare(self::$dbVersion, '10.0.2', '>=') || version_compare(self::$dbVersion, '5.7.5', '>=')) {
-                Mage::log("egovsbase::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+            if ($this->canUseDbLock()) {
                 /*
                  * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
                  * (for example, because another client has previously locked the name),
@@ -51,7 +85,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      *
      * @return null|bool
      */
-    protected function _releaseDbLock($lockKey) {
+    public function releaseDbLock($lockKey) {
         $lockResult = null;
 
         if (!static::$dbLockResult || !isset(static::$dbLockResult[$lockKey])) {
@@ -60,8 +94,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
         $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
         /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
         try {
-            $dbVersion = $adapter->fetchOne("SELECT @@version;");
-            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
+            if ($this->canUseDbLock()) {
                 /*
                  * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
                  * (for example, because another client has previously locked the name),
@@ -69,6 +102,9 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
                  * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
                  */
                 $lockResult = (bool)$adapter->fetchOne("SELECT RELEASE_LOCK(':id') as 'lock_result';", array('id' => $lockKey));
+                if ($lockResult == true) {
+                    unset(static::$dbLockResult[$lockKey]);
+                }
             }
         } catch (Exception $e) {
             Mage::logException($e);
@@ -86,8 +122,8 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      *
      * @return bool|null
      */
-    protected function _getApcLock($lockKey, $ttl=300) {
-        if (function_exists('apc_add') && function_exists('apc_fetch')) {
+    public function getApcLock($lockKey, $ttl=300) {
+        if (!$this->isCgiMode() && function_exists('apc_add') && function_exists('apc_fetch')) {
             if (apc_fetch($lockKey)) {
                 return false;
             }
@@ -98,20 +134,13 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Returns 1 if the lock was obtained, 0 if the lock was already obtained,
-     * and NULL if the lock function did not exist.
-     *
-     * @param     $lockKey
-     * @param int $ttl
+     * @param string $lockKey
      *
      * @return bool|null
      */
-    protected function _getApcuLock($lockKey, $ttl=300) {
-        if (function_exists('apcu_add') && function_exists('apcu_fetch')) {
-            if (apcu_fetch($lockKey)) {
-                return false;
-            }
-            return apcu_add($lockKey, true, $ttl);
+    public function releaseApcLock($lockKey) {
+        if (!$this->isCgiMode() && function_exists('apc_delete') && function_exists('apc_fetch') && apc_fetch($lockKey)) {
+            return (bool)apc_delete($lockKey);
         }
 
         return null;
@@ -126,29 +155,63 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      *
      * @return bool|null
      */
-    public function getLock($lockKey, $ttl=300) {
-        $cgiMode = false;
-        $sapiType = php_sapi_name();
-        if (strtolower(substr($sapiType, 0, 3)) == 'cgi') {
-            Mage::log("egovs_paymentbase::get lock in CGI mode", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-            $cgiMode = true;
+    public function getApcuLock($lockKey, $ttl=300) {
+        if (!$this->isCgiMode() && function_exists('apcu_add') && function_exists('apcu_fetch')) {
+            if (apcu_fetch($lockKey)) {
+                return false;
+            }
+            return apcu_add($lockKey, true, $ttl);
         }
+
+        return null;
+    }
+
+    /**
+     * @param string $lockKey
+     *
+     * @return bool|null
+     */
+    public function releaseApcuLock($lockKey) {
+        if (!$this->isCgiMode() && function_exists('apcu_delete') && function_exists('apcu_fetch') && apcu_fetch($lockKey)) {
+            return (bool)apcu_delete($lockKey);
+        }
+
+        return null;
+    }
+
+    /**
+     * Try to get a lock, returning first working lock.
+     * Starts with APC than DB
+     *
+     * Returns 1 if the lock was obtained, 0 if the lock was already obtained,
+     * and NULL if the lock function did not exist.
+     *
+     * @param     $lockKey
+     * @param int $ttl
+     *
+     * @return bool|null
+     */
+    public function getLock($lockKey, $ttl=300) {
+        $cgiMode = $this->isCgiMode();
         $lockResult = null;
         if (!$cgiMode) {
-            $lockResult = $this->_getApcuLock($lockKey, $ttl);
+            $lockResult = $this->getApcuLock($lockKey, $ttl);
             if ($lockResult === null) {
-                $lockResult = $this->_getApcLock($lockKey, $ttl);
+                $lockResult = $this->getApcLock($lockKey, $ttl);
             }
         }
 
         if ($lockResult === null) {
-            $lockResult = $this->_getDbLock($lockKey, $ttl);
+            $lockResult = $this->getDbLock($lockKey, $ttl);
         }
 
         return $lockResult;
     }
 
     /**
+     * Try to release a lock, returning first released lock.
+     * Starts with APC than DB
+     *
      * Returns 1 if the lock was released, 0 if the lock was not released,
      * and NULL if the named lock did not exist.
      *
@@ -157,17 +220,16 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      * @return bool|null
      */
     public function releaseLock($lockKey) {
-        $lockResult = $this->_releaseDbLock($lockKey);
+        $lockResult = $this->releaseDbLock($lockKey);
 
         if ($lockResult !== null) {
             return $lockResult;
         }
-        if (function_exists('apc_delete') && function_exists('apc_fetch') && apc_fetch($lockKey)) {
-            return (bool)apc_delete($lockKey);
+        $lockResult = $this->releaseApcLock($lockKey);
+        if ($lockResult !== null) {
+            return $lockResult;
         }
-        if (function_exists('apcu_delete') && function_exists('apcu_fetch') && apc_fetch($lockKey)) {
-            return (bool)apcu_delete($lockKey);
-        }
-        return $lockResult;
+
+        return $this->releaseApcuLock($lockKey);;
     }
 }
