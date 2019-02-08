@@ -374,7 +374,7 @@ class Dwd_AutoFileAssignment_Model_Assigner extends Mage_Core_Model_Abstract
 			$this->_patternTreeIsBuild = true;
 		} elseif ($this->_useTreeForAssignment && !$this->_patternTreeIsBuild) {
 			Mage::log("Pattern tree was not build without errors! Pattern tree can't be used!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
-			$this->_patternTreeIsBuild = true;
+			$this->_patternTreeIsBuild = false;
 		}
 
 		Mage::log(
