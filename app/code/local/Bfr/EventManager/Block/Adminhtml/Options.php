@@ -16,7 +16,7 @@ class Bfr_EventManager_Block_Adminhtml_Options extends Mage_Adminhtml_Block_Widg
     {
         $this->_controller = 'adminhtml_options';
         $this->_blockGroup = 'eventmanager';
-        $this->_headerText = Mage::helper('eventmanager')->__('Event Options');
+        $this->_headerText = Mage::helper('eventmanager')->__('Custom Options');
 
         parent::__construct();
 

@@ -16,11 +16,18 @@ class Bfr_EventManager_Block_Adminhtml_Options_List extends Mage_Adminhtml_Block
     {
         $this->_controller = 'adminhtml_options_list';
         $this->_blockGroup = 'eventmanager';
-        $this->_headerText = Mage::helper('eventmanager')->__('Event Options');
+
+        $this->_headerText =  Mage::registry('event_data')->getTitle();
 
         parent::__construct();
 
+
         $this->removeButton('add');
+        $url = $this->getUrl('*/eventmanager_options/index');
+        $this->addButton('send_notification', array(
+            'label'     => Mage::helper('eventmanager')->__('Back'),
+            'onclick'   => "location='".$url ."'",
+        ));
 
     }
 }

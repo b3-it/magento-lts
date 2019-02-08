@@ -17,7 +17,7 @@ class Bfr_EventManager_Adminhtml_Eventmanager_OptionsController extends Mage_Adm
 		$this->loadLayout()
 			->_setActiveMenu('bfr_eventmanager/eventmanager_options')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-        $this->_title(Mage::helper('eventmanager')->__('Event Options'));
+        $this->_title(Mage::helper('eventmanager')->__('Custom Options'));
 		return $this;
 	}
 
@@ -27,7 +27,7 @@ class Bfr_EventManager_Adminhtml_Eventmanager_OptionsController extends Mage_Adm
 	}
 
 	public function editAction() {
-		$id     = $this->getRequest()->getParam('id');
+		$id     = (int)$this->getRequest()->getParam('id');
 		$model  = Mage::getModel('eventmanager/event')->load($id);
 
 		if ($model->getId() || $id == 0) {
@@ -52,9 +52,51 @@ class Bfr_EventManager_Adminhtml_Eventmanager_OptionsController extends Mage_Adm
 
 
 
+    public function exportCsvAction()
+    {
+        $id     = (int)$this->getRequest()->getParam('id');
+        $model  = Mage::getModel('eventmanager/event')->load($id);
 
-    
+        if ($model->getId() || $id == 0) {
+            Mage::register('event_data', $model);
+        }
+        $fileName   = 'options.csv';
+        $content    = $this->getLayout()->createBlock('eventmanager/adminhtml_options_list_grid')
+            ->getCsv();
 
+        $this->_sendUploadResponse($fileName, $content);
+    }
+
+    public function exportXmlAction()
+    {
+        $id     =(int)$this->getRequest()->getParam('id');
+        $model  = Mage::getModel('eventmanager/event')->load($id);
+
+        if ($model->getId() || $id == 0) {
+            Mage::register('event_data', $model);
+        }
+        $fileName   = 'options.xml';
+        $content    = $this->getLayout()->createBlock('eventmanager/adminhtml_options_list_grid')
+            ->getXml();
+
+        $this->_sendUploadResponse($fileName, $content);
+    }
+
+    protected function _sendUploadResponse($fileName, $content, $contentType='application/octet-stream')
+    {
+        $response = $this->getResponse();
+        $response->setHeader('HTTP/1.1 200 OK','');
+        $response->setHeader('Pragma', 'public', true);
+        $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
+        $response->setHeader('Content-Disposition', 'attachment; filename='.$fileName);
+        $response->setHeader('Last-Modified', date('r'));
+        $response->setHeader('Accept-Ranges', 'bytes');
+        $response->setHeader('Content-Length', strlen($content));
+        $response->setHeader('Content-type', $contentType);
+        $response->setBody($content);
+        $response->sendResponse();
+        die;
+    }
 
 
     protected function _isAllowed() {
