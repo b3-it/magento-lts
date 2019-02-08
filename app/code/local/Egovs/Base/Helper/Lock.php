@@ -270,6 +270,6 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
             return $lockResult;
         }
 
-        return $this->releaseApcuLock($lockKey);;
+        return $this->releaseApcuLock($lockKey);
     }
 }
