@@ -337,7 +337,7 @@
              </depends>
         </Mage_GiftMessage>
         <Mage_Sendfriend>
-            <active>false</active>
+            <active>true</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Catalog/>

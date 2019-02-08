@@ -13,7 +13,9 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
 {
     protected $_abbrData = array(
         'inkl.'  => 'inklusive',
+        'Inkl.'  => 'inklusive',
         'zzgl.'  => 'zuzüglich',
+        'Zzgl.'  => 'zuzüglich',
         'MwSt.'  => 'Mehrwertsteuer',
         'USt.'   => 'Umsatzsteuer',
         'etc.'   => 'und so weiter',

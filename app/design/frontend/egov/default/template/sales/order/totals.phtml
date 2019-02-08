@@ -1,0 +1,59 @@
+<?php
+/**
+ * @category   design
+ * @package    Egov
+ * @copyright  Copyright (c) 2018 B3 IT Systeme GmbH (http://www.b3-it.de)
+ */
+
+/**
+ * @var $this Mage_Sales_Block_Order_Totals
+ * @see Mage_Sales_Block_Order_Totals
+ */
+
+$_tollerace = 0.009;
+$_totals    = $this->getTotals();
+$_taxAmount = $this->getOrder()->getTaxAmount();
+$_zeroTax   = $_taxAmount <= $_tollerace;
+?>
+<?php foreach ($this->getTotals() as $_code => $_total): ?>
+    <?php if ($_total->getBlockName()): ?>
+        <?php echo $this->getChildHtml($_total->getBlockName(), false); ?>
+    <?php else:?>
+    <tr class="<?php echo $_code?>">
+        <td <?php echo $this->getLabelProperties()?>>
+            <?php if ($_total->getStrong()):?><strong><?php endif?>
+            <?php $_taxPostfix = ''; ?>
+            <?php if($_code == 'subtotal'): ?>
+                <?php if($_zeroTax): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Tax Free)'); ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 1 ): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 2 ): ?>
+                    <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
+                <?php else: ?>
+                    <?php echo $this->escapeHtml($_total->getLabel());?>
+                <?php endif?>
+            <?php elseif($_code == 'shipping'): ?>
+                <?php if($_zeroTax): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Tax Free').')'; ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 1 ): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Excl. Tax').')' ?>
+                <?php elseif( Mage::getStoreConfig('tax/sales_display/subtotal') == 2 ): ?>
+                    <?php $_taxPostfix = ' ('.$this->helper('tax')->__('Incl. Tax').')' ?>
+                <?php endif?>
+                <?php echo $this->escapeHtml($_total->getLabel().$_taxPostfix);?>
+            <?php else: ?>
+                <?php echo $this->escapeHtml($_total->getLabel());?>
+            <?php endif?>
+            <?php if ($_total->getStrong()):?></strong><?php endif?>
+        </td>
+        <td <?php echo $this->getValueProperties()?>>
+            <?php if ($_total->getStrong()):?>
+                <strong><?php echo $this->formatValue($_total) ?></strong>
+            <?php else:?>
+                <?php echo $this->formatValue($_total) ?>
+            <?php endif?>
+        </td>
+    </tr>
+    <?php endif?>
+<?php endforeach?>

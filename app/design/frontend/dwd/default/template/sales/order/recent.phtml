@@ -1,10 +1,20 @@
-﻿﻿<?php
+﻿<?php
 /**
  * @category    design
  * @package     dwd_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015-2018 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+/**
+ * GrandTotal der Order enthält immer den Gesamtpreis inkl. MwSt.
+ */
+
+/**
+ * Annahme: Falls tax/sales_display/full_summary false dann ist Shop MwSt befreit
+ */
+$_taxPostfix = Mage::getStoreConfigFlag('tax/sales_display/full_summary') ?
+    $this->__('(Incl. Tax)') : $this->__('(Tax Free)');
 ?>
 <div class="box-account box-recent">
 <?php $_orders = $this->getOrders(); ?>
@@ -17,7 +27,7 @@
            title="<?php echo $this->__('View All') ?>"> </a>
         <?php endif; ?>
     </div>
-<?php if( sizeof($_orders->getItems()) > 0 ): ?>
+<?php if ($_orders->getSize()) : ?>
     <table class="data-table orders" id="my-orders-table">
     <col width="80" />
     <col width="80" />
@@ -30,13 +40,16 @@
                 <th class="space number"><?php echo $this->__('Order #') ?></th>
                 <th class="space date"><?php echo $this->__('Date') ?></th>
                 <th class="space ship"><?php echo $this->__('Ship To') ?></th>
-                <th class="space total"><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
+                <th class="space total">
+                    <span class="nobr"><?php echo $this->__('Order Total') ?> <?php echo $_taxPostfix; ?></span>
+                </th>
                 <th class="space status"><?php echo $this->__('Status') ?></th>
                 <th class="space view">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($_orders as $_order): ?>
+                <?php /** @var $_order \Mage_Sales_Model_Order */ ?>
                 <tr>
                     <td class="number">
                         <a class=""

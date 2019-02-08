@@ -259,17 +259,16 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
 			if (isset ( $data ['year'] ) && isset ( $data ['month'] ) && isset ( $data ['day'] )) {
 				$data ['dob'] = $data ['year'] . '-' . $data ['month'] . '-' . $data ['day'];
 			}
-			$address->addData ( $data );
-			// scheint sinnlos - loest aber die regionid in einen namen auf
-			$address->unsRegionId ();
-			if (isset ( $data ['region'] ))
-				$address->getRegionId ();
-			if (($data ['country_id'] != 'DE') && ($address->getRegion () != null)) {
-				$address->setRegion ( '' );
-			}
+
+			// try to reset with new address object
+			$address->importCustomerAddress(Mage::getModel('customer/address'));
+			$address->setEmail(null);
+			$address->setSaveInAddressBook(null);
+
+			$address->addData($data);
 		}
 		
-		$address->implodeStreetAddress ();
+		$address->implodeStreetAddress();
 		
 		if (! $this->getQuote ()->getCustomerId () && Mage_Sales_Model_Quote::CHECKOUT_METHOD_REGISTER == $this->getQuote ()->getCheckoutMethod ()) {
 			if ($this->_customerEmailExists ( $address->getEmail (), Mage::app ()->getWebsite ()->getId () )) {
@@ -475,7 +474,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     		) {
     			/* @var $customerHelper Mage_Customer_Helper_Data */
 				$customerHelper = Mage::helper('customer');
-		
+
 				$result = $customerHelper->checkVatNumber(
 						$address->getCountryId(),
 						$address->getVatId()
@@ -519,8 +518,7 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
         }
         */
         $address = $this->getQuote()->getShippingAddress();
-        
-       
+
 		if (!empty($customerAddressId)) {
             $customerAddress = Mage::getModel('customer/address')->load($customerAddressId);
             if ($customerAddress->getId()) {
@@ -551,30 +549,17 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
              if ($addressValidation !== true) {
                 Mage::throwException($addressValidation);
             }
-            
-            if(isset($data['region']))
-            {
-            	$data['region_id'] = $data['region'];
-            	unset($data['region']); 
-            }
-            
-            
-            
-            
+
+            // try to reset with new address object
+            $address->importCustomerAddress(Mage::getModel('customer/address'));
+            $address->setEmail(null);
+            $address->setSaveInAddressBook(null);
+
             $address->addData($data);
-          
         }
         $address->implodeStreetAddress();
         $address->setCollectShippingRates(true);
 
-        if(isset($data['country_id']))
-        {
-	        if(($data['country_id']!='DE') && ($address->getRegion()!= null))
-	        {
-	            	$address->setRegion('');
-	        }
-        }
-        
         /*
         if (($validateRes = $address->validate())!==true) {
           if(is_array($validateRes)) $validateRes = implode(',',$validateRes);
@@ -1050,7 +1035,12 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	// ein Gast hat keine ID und muß daher eine gültige eMail eingeben
     	$customer = $this->getQuote()->getCustomer();
     	$customer_id = ( $customer->getId() ? $customer->getId() : 0 );
-    	
+
+        /**
+         * @var Mage_Directory_Helper_Data $directoryHelper
+         */
+        $directoryHelper = Mage::helper("directory");
+
     	if($method == null){
     		$method = $this->getQuote()->getCheckoutMethod();
     	}
@@ -1094,14 +1084,15 @@ class Egovs_Checkout_Model_Multipage extends Mage_Checkout_Model_Type_Abstract
     	
     	if(!$this->isValid($data,'company',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter company.');
     	if(!$this->isValid($data,'fax',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter fax.');
-    	if((isset($data['country_id'])) && ($this->isFieldRequired('region',$method)))
-    	{
-    		if(($data['country_id']=='DE') && ($data['region'] == ''))	$errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
-    	}   	
-    	if((isset($data['country_id'])) && (isset($data['region'])))
-    	{
-    		if($data['country_id']!='DE') unset($data['region']);
-    	}
+        if((isset($data['country_id'])) && ($this->isFieldRequired('region',$method)))
+        {
+            // directory says that region is required for Country
+            if ($directoryHelper->isRegionRequired($data['country_id']) && $data['region'] == '') {
+                $errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
+            }
+        }
+
+        // zip code valid only for germany for now
     	if((isset($data['country_id'])) && ($data['country_id']=='DE'))
     	{
     		if(isset($data['postcode']) && (strlen($data['postcode'])>0))

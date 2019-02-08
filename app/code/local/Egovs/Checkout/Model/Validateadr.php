@@ -4,7 +4,12 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 	public function validateShippingAddress(&$data) {
 		$method = 'shipping';
 		$errors = array();
-		 
+
+		/**
+		 * @var Mage_Directory_Helper_Data $directoryHelper
+		 */
+		$directoryHelper = Mage::helper("directory");
+
 		if (!$this->__testShipping($data,'firstname'))
 			$errors[] = Mage::helper('mpcheckout')->__('Please enter first name or company name.');
 		if (!$this->__testShipping($data,'lastname'))
@@ -31,10 +36,10 @@ class Egovs_Checkout_Model_Validateadr extends Varien_Object
 		if (!$this->__isValid($data,'company',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter company.');
 		if (!$this->__isValid($data,'fax',$method))$errors[] = Mage::helper('mpcheckout')->__('Please enter fax.');
 		if ((isset($data['country_id'])) && ($this->__isFieldRequired('region',$method))) {
-			if(($data['country_id']=='DE') && ($data['region'] == ''))	$errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
-		}
-		if ((isset($data['country_id'])) && (isset($data['region']))) {
-			if($data['country_id']!='DE') unset($data['region']);
+		    // directory says that region is required for Country
+		    if ($directoryHelper->isRegionRequired($data['country_id']) && $data['region'] == '') {
+		        $errors[] = Mage::helper('mpcheckout')->__('Please enter region.');
+		    }
 		}
 		if ((isset($data['country_id'])) && ($data['country_id']=='DE')) {
 			if (isset($data['postcode']) && (strlen($data['postcode'])>0)) {

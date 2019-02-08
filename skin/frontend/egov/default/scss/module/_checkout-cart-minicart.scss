@@ -48,6 +48,7 @@
         clear: both;
         position: relative;
         background-color: $global-minicart-background;
+        line-height: normal;
     }
 
     .block-cart {
@@ -80,7 +81,6 @@
     .mini-products-list {
         padding: $box-spacing;
         padding-top: 0px;
-        margin-bottom: 20px;
 
         li {
             padding: 8px 5px 8px 11px;
@@ -129,16 +129,40 @@
 
     .info-wrapper {
         margin-bottom: 0.5em;
+        width: 90%;
         position: absolute;
-        right: 0px;
+        right: 0;
 
-        th {
-            text-transform: uppercase;
-            padding-right: $gap;
-        }
         td {
             color: $global-fontcolor-dark;
             clear: right;
+        }
+
+        .mini-cart-first {
+            td:last-child {
+                text-align: right;
+                padding-left: 5px;
+            }
+        }
+
+        .mini-cart-secound {
+            td {
+                text-align: center;
+
+                &:first-child {
+                    padding-right: 10px;
+                    text-align: left;
+                }
+
+                .price, .shipping-cost-details {
+                    display: inline-block;
+                    float: right;
+                }
+
+                .shipping-cost-details {
+                    margin-left: 5px;
+                }
+            }
         }
 
         .qty-wrapper {
@@ -176,7 +200,7 @@
 
     .subtotal {
         background-color: $global-minicart-background;
-        line-height: $global-minicart-lineheight;
+        line-height: 1.1rem;
         padding-right: $global-boxpadding * 2;
 
         .label {

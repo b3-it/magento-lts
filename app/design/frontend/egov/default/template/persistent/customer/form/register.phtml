@@ -322,11 +322,23 @@
             $j('#adress-new-region label').prepend('<span class="required">*</span>');
         }
 
+        function setFirstRegionForDe(element) {
+            if ( element.val() == 'DE' ) {
+                $j('#region_id').children('option:first').text( pleaseSelect );
+            }
+        }
+
+        $j('#country').on('change', function(){
+            setFirstRegionForDe( $j(this) );
+        });
+
+        var pleaseSelect = '<?php echo $this->__('-- Please Select --'); ?>';
         var TabData = {'prefix': 1, 'firstname': 2, 'middlename': 3, 'lastname': 4, 'suffix': 5, 'country': 13};
         setTabIndex(TabData);
 
         $j(document).ready(function(){
             $j('#firstname').focus();
+            setFirstRegionForDe( $j('#country') );
         });
     </script>
 </div>

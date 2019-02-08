@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
     <modules>
@@ -6,7 +6,7 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Acl>
-		<Egovs_B2b>
+        <Egovs_B2b>
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_B2b>

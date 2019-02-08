@@ -121,6 +121,8 @@ class Mage_Bundle_Model_Resource_Selection_Collection extends Mage_Catalog_Model
     {
         if (!empty($optionIds)) {
             $this->getSelect()->where('selection.option_id IN (?)', $optionIds);
+        } else {
+            $this->getSelect()->where('selection.option_id is null');
         }
         return $this;
     }
@@ -149,9 +151,5 @@ class Mage_Bundle_Model_Resource_Selection_Collection extends Mage_Catalog_Model
         $this->getSelect()->order('selection.position asc')
             ->order('selection.selection_id asc');
         return $this;
-    }
-    
-    protected function _getItemId(Varien_Object $item) {
-    	return $item->getId();
     }
 }

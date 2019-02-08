@@ -24,7 +24,8 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit extends Mage_Adminhtml_Block
 		
         $this->_addButton('saveandcontinue', array(
             'label'     => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick'   => 'saveAndContinueEdit()',
+            //'onclick'   => 'saveAndContinueEdit()',
+            'onclick'   => 'saveAndContinueEdit(\''.$this->getSaveAndContinueUrl().'\')',
             'class'     => 'save',
         ), -100);
 
@@ -36,11 +37,28 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit extends Mage_Adminhtml_Block
                     tinyMCE.execCommand('mceRemoveControl', false, 'vendor_content');
                 }
             }
-
-            function saveAndContinueEdit(){
-                editForm.submit($('edit_form').action+'back/edit/');
+            "
+        ;
+        $this->_formScripts[] = 'var vendorTemplateSyntax = /(^|.|\r|\n)({{(\w+)}})/;';
+        $this->_formScripts[] = "
+            function saveAndContinueEdit(urlTemplate) {
+                var template = new Template(urlTemplate, vendorTemplateSyntax);
+                var url = template.evaluate({tab_id:vendor_tabsJsTabs.activeTab.id});
+                editForm.submit(url);
             }
-        ";              
+        ";
+        $this->_formScripts[] = "
+            Event.observe(window, 'load', function() {
+            var objName = '{$this->getSelectedTabId()}';
+            if (objName) {
+                obj = $(objName);
+                //IE fix (bubbling event model)
+                vendor_tabsJsTabs.setSkipDisplayFirstTab();
+                vendor_tabsJsTabs.showTabContent(obj);
+            }
+        });
+        "
+        ;
         
     }
 
@@ -52,6 +70,19 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit extends Mage_Adminhtml_Block
             return Mage::helper('framecontract')->__('Add Vendor');
         }
     }
-	
-	
+
+    public function getSaveAndContinueUrl()
+    {
+        return $this->getUrl('*/*/save', array(
+            '_current'   => true,
+            'back'       => 'edit',
+            'tab'        => '{{tab_id}}',
+            'active_tab' => null
+        ));
+    }
+
+    public function getSelectedTabId()
+    {
+        return addslashes(htmlspecialchars($this->getRequest()->getParam('tab')));
+    }
 }
