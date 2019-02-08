@@ -53,6 +53,17 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
         return false;
     }
 
+    /**
+     * Tries to obtain a lock with a name given by the string $lockKey, using a timeout of timeout seconds.
+     * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out (for example,
+     * because another client has previously locked the name), or NULL if an error occurred
+     * (such as running out of memory or the thread was killed with mysqladmin kill).
+     *
+     * @param     $lockKey
+     * @param int $ttl
+     *
+     * @return string|null
+     */
     public function getDbLock($lockKey, $ttl=300) {
         $lockResult = null;
         $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
@@ -67,6 +78,35 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
                  */
                 $lockResult = $adapter->fetchOne("SELECT GET_LOCK(':id', $ttl) as 'lock_result';", array('id' => $lockKey));
                 static::$dbLockResult[$lockKey] = $lockResult;
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+        return $lockResult;
+    }
+
+    /**
+     *
+     * Checks whether the lock named $lockKey is free to use (that is, not locked).
+     * Returns 1 if the lock is free (no one is using the lock), 0 if the lock is in use,
+     * and NULL if an error occurs (such as an incorrect argument, like an empty string or NULL).
+     * $lockKey is case insensitive.
+     *
+     * @param $lockKey
+     *
+     * @return bool|null
+     */
+    public function isFreeLock($lockKey) {
+        $lockResult = null;
+        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
+        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
+        try {
+            if ($this->canUseDbLock()) {
+                $lockResult = $adapter->fetchOne("SELECT IS_FREE_LOCK(':id') as 'lock_result';", array('id' => $lockKey));
+                if ($lockResult !== null) {
+                    $lockResult = (bool) $lockResult;
+                }
             }
         } catch (Exception $e) {
             Mage::logException($e);
