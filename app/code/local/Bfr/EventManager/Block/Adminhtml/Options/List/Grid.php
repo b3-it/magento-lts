@@ -40,6 +40,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
 
   protected function _prepareCollection()
   {
+      $eav = Mage::getResourceModel('eav/entity_attribute');
       /** @var Bfr_EventManager_Model_Event $event */
       $event = $this->getEvent();
       $productId = $event->getProductId();
@@ -47,9 +48,18 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
 //      $collection->setStoreId(0);
       $collection->getSelect()
       	->join(array('quote_item'=>$collection->getTable('sales/quote_item')),'main_table.entity_id = quote_item.quote_id',array('sku','entity_id'=>'item_id'))
-      	->join(array('adr'=>$collection->getTable('sales/quote_address')),"main_table.entity_id = adr.quote_id AND adr.address_type='billing'",array('firstname','lastname','email','company'))
-      	->where('quote_item.product_id = ? ', $productId);
+        ->joinleft(array('customer'=>$collection->getTable('customer/entity')),'main_table.customer_id = customer.entity_id',array('email'))
+        ->joinleft(array('adr'=>$collection->getTable('customer/entity').'_int'),'main_table.customer_id = adr.entity_id AND adr.attribute_id='. $eav->getIdByCode('customer', 'default_billing'))
+        ->joinleft(array('first'=>$collection->getTable('customer/address_entity').'_varchar'), 'first.entity_id = adr.value AND first.attribute_id = '. $eav->getIdByCode('customer_address', 'firstname') ,array('firstname'=>'value'))
+        ->joinleft(array('last'=>$collection->getTable('customer/address_entity').'_varchar'), 'last.entity_id = adr.value AND last.attribute_id = '. $eav->getIdByCode('customer_address', 'lastname') ,array('lastname'=>'value'))
+        ->joinleft(array('company'=>$collection->getTable('customer/address_entity').'_varchar'), 'company.entity_id = adr.entity_id AND company.attribute_id = '. $eav->getIdByCode('customer_address', 'company') ,array('company'=>'value'))
+
+          ->where('quote_item.product_id = ? ', $productId);
       ;
+
+
+
+     //die($collection->getSelect()->__toString());
 
       if(Mage::helper('eventmanager')->isModuleEnabled('Bfr_EventRequest')) {
           $collection->getSelect()
@@ -102,8 +112,29 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       'header'    => Mage::helper('eventmanager')->__('Sku'),
       'align'     =>'left',
       'index'     => 'sku',
-      'width'     => '150px',
+      //'width'     => '150px',
         ));
+
+      $this->addColumn('firstname', array(
+          'header'    => Mage::helper('eventmanager')->__('Firstname'),
+          'align'     =>'left',
+          'index'     => 'firstname',
+          //'width'     => '150px',
+      ));
+
+      $this->addColumn('lastname', array(
+          'header'    => Mage::helper('eventmanager')->__('Lastname'),
+          'align'     =>'left',
+          'index'     => 'lastname',
+         // 'width'     => '150px',
+      ));
+
+      $this->addColumn('company', array(
+          'header'    => Mage::helper('eventmanager')->__('Company'),
+          'align'     =>'left',
+          'index'     => 'company',
+          //'width'     => '150px',
+      ));
 
       $this->addColumn('email', array(
           'header'    => Mage::helper('eventmanager')->__('E-Mail'),
@@ -124,19 +155,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
           ));
       }
 
-      $this->addColumn('firstname', array(
-          'header'    => Mage::helper('eventmanager')->__('Firstname'),
-          'align'     =>'left',
-          'index'     => 'firstname',
-          'width'     => '150px',
-      ));
 
-      $this->addColumn('lastname', array(
-          'header'    => Mage::helper('eventmanager')->__('Lastname'),
-          'align'     =>'left',
-          'index'     => 'lastname',
-          'width'     => '150px',
-      ));
       
 
     $options = $this->getEvent()->getProduct()->getOptions();
