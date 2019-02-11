@@ -632,16 +632,6 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         }
 
         /*
-         * 20150122::Frank Rochlitzer
-         * Setzen des "mutex" via APC schlägt mit CGI fehl
-         */
-        $cgiMode = false;
-        $sapiType = php_sapi_name();
-        if (strtolower(substr($sapiType, 0, 3)) == 'cgi') {
-            Mage::log("{$this->getCode()}::modifyOrderAfterPayment in CGI mode", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-            $cgiMode = true;
-        }
-        /*
          * 20110804:Frank Rochlitzer
          * Die parallele Ausführung dieser Funktion muss verhindert werden (Kritischer Abschnitt)!
          * Durch die BSI-Restriktionen kann die Session ID nicht an die NOTIFY URL angehängt werden,
@@ -656,28 +646,36 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
          * Die konsequente Lösung wäre die Benutzung eines Semaphores, diese sind in PHP aber nur unter Linux/Unix
          * verfügbar und sind standarmäßig deaktiviert.
          */
-        $lockKey = 'roi_mutex'.$this->_getOrder()->getId();
-        if (function_exists('apcu_add') && function_exists('apcu_fetch') && !$cgiMode) {
-            if (apcu_fetch($lockKey)) {
-                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:APC_FETCH:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        $lockKey = 'girosolution_mutex'.$this->_getOrder()->getId();
+        $lockHelper = Mage::helper('egovsbase/lock');
+        $lockAlreadyObtainedMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:modifyOrderAfterPayment already called, disabling update order state!";
+        $lockNotObtainableMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:Timed out, can not obtain lock";
+        $isLockedFlag = false;
+        //APCU lock is optional
+        if (!$lockHelper->getApcuLock($lockKey)) {
+            if ($lockHelper->isFreeLockApcu($lockKey) === false) {
+                Mage::log(sprintf($lockAlreadyObtainedMsg, 'APCU_FETCH'), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
                 $updateOrderState = false;
+                $isLockedFlag = true;
+            } else {
+                Mage::log(sprintf($lockNotObtainableMsg, 'APCU_LOCK'), Zend_Log::INFO, Egovs_Helper::LOG_FILE);
             }
-            //dauert ca. 1msec
-            //TTL = 180s = 3Min
-            $apcAdded = apcu_add($lockKey, true, 180);
+        } else {
+            $isLockedFlag = true;
             $this->_logLockTimeDiff($startTime, 'apcu', $globalStartTime);
         }
 
-        $lockResult = $this->_getDbLock($lockKey);
-        if ($lockResult == 0) {
-            if (!Mage::helper('egovsbase/lock')->isFreeLock($lockKey)) {
-                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+        //DB lock is mandatory
+        if (!$lockHelper->getDbLock($lockKey)) {
+            if (!$lockHelper->isFreeLockDb($lockKey)) {
+                Mage::log(sprintf($lockAlreadyObtainedMsg, 'DB_LOCK'), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
                 $updateOrderState = false;
+                $isLockedFlag = true;
             } else {
-                Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:Timed out, can not obtain lock", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-                $this->_logLockTimeDiff($startTime, 'DB:get_lock', $globalStartTime);
+                Mage::log(sprintf($lockNotObtainableMsg, 'DB_LOCK').' Timed out!', Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             }
         } else {
+            $isLockedFlag = true;
             $this->_logLockTimeDiff($startTime, 'DB:get_lock', $globalStartTime);
         }
 
@@ -694,25 +692,27 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             $msg = "Kassenzeichen stimmt nicht mit Kassenzeichen aus Girosolutiondaten überein!";
             $msg .= "\r\nTKonnekt:$extKassenzeichen != {$order->getPayment()->getKassenzeichen()}:Webshop";
             Mage::log("{$this->getCode()}::$msg", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            $lockHelper->releaseAllLocks($lockKey);
             return false;
         }
 
+        $orderState = $order->getState();
         //If order was already updated, do not update again.
-        if($order->getState() != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
+        if($orderState != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
             Mage::log("{$this->getCode()}::modifyOrderAfterPayment:modifyOrderAfterPayment already called, omitting! State was: {$this->_getOrder()->getState()}", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             $updateOrderState = false;
         } else {
             // Modify payment
             $order->setState(
                 Mage_Sales_Model_Order::STATE_PENDING_PAYMENT,
-                false,
+                true,
                 $this->__("Modifying state for further processing."),
                 false
             );
             //Schnelles Speichern um Bereich zu verriegeln!
             $orderResource = $order->getResource();
             $orderResource->saveAttribute($order, 'state');
-            $this->_logLockTimeDiff($startTime, 'state');
+            $this->_logLockTimeDiff($startTime, 'DB_STATE', $globalStartTime);
 
             //update transaction
             $payment = $order->getPayment();
@@ -753,14 +753,17 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         if($paymentSuccessful == false) {
             // If no update was required, return true, because the order was found
             if($updateOrderState == false) {
+                $lockHelper->releaseAllLocks($lockKey);
                 return true;
             }
 
-            $order->cancel();
-            $order->addStatusHistoryComment($orderStateComment);
-            $order->save();
-            Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
-            $this->_releaseDbLock($lockKey);
+            if ($order->canCancel()) {
+                $order->cancel();
+                $order->addStatusHistoryComment($orderStateComment);
+                $order->save();
+                Mage::getSingleton('checkout/session')->addNotice($orderStateComment);
+            }
+            $lockHelper->releaseAllLocks($lockKey);
             return true;
         } // end failed payment
 
@@ -773,7 +776,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $quote->setIsActive(false)->save();
 
         // If no update was required, return true, because the order was found
-        if($updateOrderState == false) {
+        if($isLockedFlag && $updateOrderState === false) {
+            $lockHelper->releaseAllLocks($lockKey);
             return true;
         }
 
@@ -793,7 +797,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         } else {
             $order->setState(Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW, false, $this->__('Could not activate Kassenzeichen! See log files for further informations.'), false);
             $order->save();
-            $this->_releaseDbLock($lockKey);
+            $lockHelper->releaseAllLocks($lockKey);
             return true;
         }
 
@@ -815,8 +819,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
                 $sendEmail
         );
 
-        if($createInvoice == true) {
-            if($order->canInvoice()) {
+        if ($createInvoice == true) {
+            if ($order->canInvoice()) {
                 $invoice = $order->prepareInvoice();
                 $invoice->addComment($invoiceComment);
                 $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
@@ -838,7 +842,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
         Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        $this->_releaseDbLock($lockKey);
+        $lockHelper->releaseAllLocks($lockKey);
         return true;
 	}
 	
@@ -972,56 +976,6 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         } else {
             Mage::log(sprintf("{$this->getCode()}::modifyOrderAfterPayment:Measured runtime for LOCK ($lockMethod) was %s seconds. $totalRunTimeMsg", $runTime), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
         }
-    }
-
-    protected function _getDbLock($lockKey) {
-        $lockResult = null;
-        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
-        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
-        try {
-            $dbVersion = $adapter->fetchOne("SELECT @@version;");
-            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
-                Mage::log("{$this->getCode()}::dbLock:DB Lock is callable...", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-                /*
-                 * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
-                 * (for example, because another client has previously locked the name),
-                 * or NULL if an error occurred (such as running out of memory or the thread was killed with mysqladmin kill).
-                 * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
-                 */
-                $lockResult = $adapter->fetchOne("SELECT GET_LOCK(':id', 10) as 'lock_result';", array('id' => $lockKey));
-                static::$dbLockResult = $lockResult;
-            }
-        } catch (Exception $e) {
-            Mage::logException($e);
-        }
-
-        return $lockResult;
-    }
-
-    protected function _releaseDbLock($lockKey) {
-        $lockResult = null;
-
-        if (!static::$dbLockResult) {
-            return false;
-        }
-        $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
-        /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
-        try {
-            $dbVersion = $adapter->fetchOne("SELECT @@version;");
-            if (version_compare($dbVersion, '10.0.2', '>=') || version_compare($dbVersion, '5.7.5', '>=')) {
-                /*
-                 * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out
-                 * (for example, because another client has previously locked the name),
-                 * or NULL if an error occurred (such as running out of memory or the thread was killed with mysqladmin kill).
-                 * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
-                 */
-                $lockResult = $adapter->fetchOne("SELECT RELEASE_LOCK(':id') as 'lock_result';", array('id' => $lockKey));
-            }
-        } catch (Exception $e) {
-            Mage::logException($e);
-        }
-
-        return $lockResult;
     }
 
     /**
