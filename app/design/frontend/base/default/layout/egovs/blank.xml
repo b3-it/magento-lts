@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout>
+<!--
+    Blank layout xml to override existing layouts
+    https://stackoverflow.com/questions/11803624/how-to-disable-magento-recurring-profiles-and-billing-agreements
+-->
+<layout version="0.1.0">
+    <default>
+    </default>
+</layout>

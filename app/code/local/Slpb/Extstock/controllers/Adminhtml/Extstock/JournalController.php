@@ -244,7 +244,7 @@ class Slpb_Extstock_Adminhtml_Extstock_JournalController extends Slpb_Extstock_C
 
 		try
 		{
-			for($i = 0; $i < count($journals);$i++)
+			for($i = 0, $iMax = count($journals); $i < $iMax; $i++)
 			{
 				$journal = $journals[$i];	
 				$amount = $amounts[$i];

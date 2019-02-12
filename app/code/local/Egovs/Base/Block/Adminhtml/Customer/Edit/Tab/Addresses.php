@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -62,17 +62,17 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
      * 
      * @see Stala_CustomerAddressBulks_Block_Adminhtml_Customer_Edit_Tab_Addresses
      */
-    protected function _setFieldset($attributes, $fieldset, $exclude=array())
-    {
+	protected function _setFieldset($attributes, $fieldset, $exclude=array())
+	{
         /** @var \Egovs_Base_Helper_Config $egovsHelper */
-    	$egovsHelper = null;
-    	try {
-    		if (Mage::helper('core')->isModuleEnabled('Egovs_Base')) {
-    			$egovsHelper = Mage::helper('egovsbase/config');
-    		} else {
-    			Mage::log("Helper 'egovsbase/config' not available!", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
-    		}
-    	} catch (Exception $e) {
+	    $egovsHelper = null;
+	    try {
+	        if (Mage::helper('core')->isModuleEnabled('Egovs_Base')) {
+	            $egovsHelper = Mage::helper('egovsbase/config');
+	        } else {
+	            Mage::log("Helper 'egovsbase/config' not available!", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+	        }
+	    } catch (Exception $e) {
     		Mage::log("Helper 'egovsbase/config' not available! Exception:\n{$e->getMessage()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
     	}
 
@@ -81,25 +81,25 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
     	$store = null;
     	if ($customer->getId()) {
     	    $store = $customer->getStore();
-        }
-    	
-        $this->_addElementTypes($fieldset);
-        foreach ($attributes as $attribute) {
-            /* @var $attribute Mage_Eav_Model_Entity_Attribute */
-            if (!$attribute || ($attribute->hasIsVisible() && !$attribute->getIsVisible())) {
-                continue;
-            }
-            
-            if ( ($inputType = $attribute->getFrontend()->getInputType())
+	    }
+
+	    $this->_addElementTypes($fieldset);
+	    foreach ($attributes as $attribute) {
+	        /* @var $attribute Mage_Eav_Model_Entity_Attribute */
+	        if (!$attribute || ($attribute->hasIsVisible() && !$attribute->getIsVisible())) {
+	            continue;
+	        }
+
+	        if ( ($inputType = $attribute->getFrontend()->getInputType())
                 && ('media_image' !== $inputType)
-                && !in_array($attribute->getAttributeCode(), $exclude)
-            ) {
-                $fieldType      = $inputType;
-                $rendererClass  = $attribute->getFrontend()->getInputRendererClass();
-                if (!empty($rendererClass)) {
-                    $fieldType  = $inputType . '_' . $attribute->getAttributeCode();
-                    $fieldset->addType($fieldType, $rendererClass);
-                }
+	            && !in_array($attribute->getAttributeCode(), $exclude)
+	            ) {
+	                $fieldType      = $inputType;
+	                $rendererClass  = $attribute->getFrontend()->getInputRendererClass();
+	                if (!empty($rendererClass)) {
+	                    $fieldType  = $inputType . '_' . $attribute->getAttributeCode();
+	                    $fieldset->addType($fieldType, $rendererClass);
+	                }
 
                 try {
                     $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
@@ -113,14 +113,14 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
                     )->setEntityAttribute($attribute);
                 } catch (Mage_Core_Model_Store_Exception $e) {
                     Mage::logException($e);
-                    $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
-                        array(
-                            'name' => $attribute->getAttributeCode(),
-                            'label' => $attribute->getFrontend()->getLabel(),
-                            'class' => $attribute->getFrontend()->getClass(),
+	                $element = $fieldset->addField($attribute->getAttributeCode(), $fieldType,
+	                    array(
+	                        'name'      => $attribute->getAttributeCode(),
+	                        'label'     => $attribute->getFrontend()->getLabel(),
+	                        'class'     => $attribute->getFrontend()->getClass(),
                             'required' => $attribute->getIsRequired(),
-                            'note' => $attribute->getNote(),
-                        )
+	                        'note'      => $attribute->getNote(),
+	                    )
                     )->setEntityAttribute($attribute);
                 }
 
@@ -130,15 +130,21 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Addresses extends Mage_Adminh
                     $element->setValues($attribute->getSource()->getAllOptions(true, true));
                 } else if ($inputType == 'multiselect') {
                     $element->setValues($attribute->getSource()->getAllOptions(false, true));
+                    $element->setCanBeEmpty(true);
                 } else if ($inputType == 'date') {
                     $element->setImage($this->getSkinUrl('images/grid-cal.gif'));
+                    $element->setFormat(Mage::app()->getLocale()->getDateFormatWithLongYear());
+                } else if ($inputType == 'datetime') {
+                    $element->setImage($this->getSkinUrl('images/grid-cal.gif'));
+                    $element->setTime(true);
+                    $element->setStyle('width:50%;');
                     $element->setFormat(
-                        Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT)
-                    );
+                        Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT)
+                        );
                 } else if ($inputType == 'multiline') {
                     $element->setLineCount($attribute->getMultilineCount());
                 }
             }
-        }
-    }
+	    }
+	}
 }

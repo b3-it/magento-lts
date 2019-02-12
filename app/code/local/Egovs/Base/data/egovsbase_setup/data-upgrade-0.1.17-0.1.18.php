@@ -19,7 +19,7 @@ $content = '<div class="block block-links" id="jumptargetherausgeberboxwidget">
 </div>
 ';
 //if you want one block for each store view, get the store collection
-$stores = Mage::getModel('core/store')->getCollection()->addFieldToFilter('store_id', array('gt'=>0))->getAllIds();
+//$stores = Mage::getModel('core/store')->getCollection()->addFieldToFilter('store_id', array('gt'=>0))->getAllIds();
 //if you want one general block for all the store viwes, uncomment the line below
 $stores = array(0);
 foreach ($stores as $store){

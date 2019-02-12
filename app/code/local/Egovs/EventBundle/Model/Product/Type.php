@@ -161,14 +161,16 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     			if (($option->getRequired() == 1) && count($option->getSelections()) == 1) {
     				$selections[] = $option->getSelections();
     			} else {
-                    $selections = [[]];
+    				$selections = [[]];
     				break;
     			}
     		}
-            /* PHP below 5.6 */
-            $selections = call_user_func_array('array_merge', $selections);
-            /* PHP 5.6+: more friendly to refactoring as less magic involved */
-    		//$selections = array_merge(...$selections);
+            if (version_compare(PHP_VERSION, '5.6', '>=')) {
+                $selections = array_merge(...$selections);
+            } else {
+                /* PHP below 5.6 */
+                $selections = call_user_func_array('array_merge', $selections);
+            }
     	}
     	if (count($selections) > 0 || !$isStrictProcessMode) {
     		$uniqueKey = array($product->getId());
@@ -368,8 +370,8 @@ class Egovs_EventBundle_Model_Product_Type extends Mage_Bundle_Model_Product_Typ
     	{
     		$collection = Mage::getModel('eventbundle/personal_option')->getCollection();
     		$collection->getSelect()
-    		->where('product_id='. (int)$this->getProduct()->getId())
-    		->order('pos');
+    		    ->where('product_id='. (int)$this->getProduct()->getId())
+    		    ->order('pos');
     		$collection->setStoreId((int)$this->getProduct()->getStoreId());
     		$this->_personalOptions = $collection->getItems();
     	}

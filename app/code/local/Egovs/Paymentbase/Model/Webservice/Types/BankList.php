@@ -20,10 +20,9 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BankList(
+	public function __construct(
 			$bank = null
 	) {
-		$args = func_get_args();
 		Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 		
 		if (!is_array($bank)) {
@@ -31,7 +30,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 		}
 		$this->bank = $bank;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

@@ -23,7 +23,8 @@ class Sid_Framecontract_Model_Cron extends Mage_Core_Model_Abstract
 		
 		//ablufdatum der Links setzen
 		$collection = Mage::getModel('framecontract/los')->getCollection();
-		$collection->getSelect()
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
+        $collection->getSelect()
 			->where("link_valid_to_modified < '". date('Y-m-d',time() - (24 * 60 * 60))."'")
 			->orwhere('link_valid_to_modified is null');
 		

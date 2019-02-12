@@ -20,18 +20,30 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 <meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>"/>
+<?php if($this->getCanLoadTinyMce()): ?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<?php else : ?>
+	<?php $userAgent = Mage::helper('core/http')->getHttpUserAgent() ?>
+	<?php if(strpos($userAgent, "MSIE 8.") !== false): ?>
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<?php endif; ?>
+	<?php if(strpos($userAgent, "MSIE 9.") !== false): ?>
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+	<?php endif; ?>
+	<?php if(strpos($userAgent, "MSIE 10.") !== false): ?>
+		<meta http-equiv="X-UA-Compatible" content="IE=10" />
+	<?php endif; ?>
+<?php endif; ?>
 <title><?php echo htmlspecialchars(html_entity_decode($this->getTitle())) ?></title>
 <link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
 <link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
 
 <script type="text/javascript">
-    var JS_URL = '<?php echo $this->getJsUrl() ?>';
     var BLANK_URL = '<?php echo $this->getJsUrl() ?>blank.html';
     var BLANK_IMG = '<?php echo $this->getJsUrl() ?>spacer.gif';
     var BASE_URL = '<?php echo $this->getUrl('*') ?>';

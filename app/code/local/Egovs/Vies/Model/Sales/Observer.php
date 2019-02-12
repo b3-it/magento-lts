@@ -22,8 +22,7 @@ class Egovs_Vies_Model_Sales_Observer extends Mage_Sales_Model_Observer
 	 */
 	protected function _getVatRequiredSalesAddress($salesModel, $store = null) {
 		$configAddressType = Mage::helper('customer/address')->getTaxCalculationAddressType($store);
-		$requiredAddress = null;
-		
+
 		$requiredAddress = $salesModel->getBaseAddress();
 		if (!$requiredAddress || $requiredAddress->isEmpty()) {
 			switch ($configAddressType) {

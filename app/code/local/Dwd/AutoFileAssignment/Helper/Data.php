@@ -90,6 +90,7 @@ class Dwd_AutoFileAssignment_Helper_Data extends Mage_Core_Helper_Abstract
 	public function unlock() {
 		$storagePath = $this->getConfigStorage();
 		if (!file_exists($storagePath)) {
+            /** @noinspection MkdirRaceConditionInspection */
 			if (!mkdir($storagePath, 0777, true)) {
 				Mage::throwException(Mage::helper('dwdafa')->__("Can't create %s directory.", $storagePath));
 			}

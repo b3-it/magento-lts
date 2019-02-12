@@ -145,9 +145,7 @@ class Stala_Extcustomer_Model_Observer extends Mage_Core_Model_Abstract
 			$calcPrice = $quoteItem->getRowTotal();
 			$calcBasePrice = $quoteItem->getBaseRowTotal();
 			
-			if (!Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) && Mage::helper('tax')->discountTax($quoteItem->getStore())
-				//Wird ignoriert, wenn 'Steuer nach Rabatt berechnen' aktiv ist
-				|| (Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) == false && Mage::helper('tax')->discountTax($quoteItem->getStore()))) {
+			if (!Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) && Mage::helper('tax')->discountTax($quoteItem->getStore())) {
 				$calcPrice = round($calcPrice + Mage::helper('extcustomer')->getCalcTaxAmount($quoteItem), 2);
 				$calcBasePrice = round($calcBasePrice + Mage::helper('extcustomer')->getCalcBaseTaxAmount($quoteItem), 2);
 			}

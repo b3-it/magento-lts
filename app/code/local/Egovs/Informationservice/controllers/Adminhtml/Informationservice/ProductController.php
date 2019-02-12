@@ -9,8 +9,7 @@ class Egovs_Informationservice_Adminhtml_Informationservice_ProductController ex
 		$res = "<h4>Master Product not found</h4>";
 		if($data)
 		{
-			if(intval($data['result_master'] != 0))
-			{
+			if ( ((int)$data['result_master']) != 0) {
 				$product = Mage::getModel('catalog/product')->load($data['result_master']);
 				$stockitem = $product->getStockItem();
 				$sku = $product->getSku();

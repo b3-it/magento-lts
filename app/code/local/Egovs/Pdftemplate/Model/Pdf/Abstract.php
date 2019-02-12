@@ -58,7 +58,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     	$m = $this->Mode;
     	$this->Mode = self::MODE_STANDARD;
     	$stream = $this->render();
-    	$f = fopen($path, "w");
+    	$f = fopen($path, 'wb');
     	fwrite($f, $stream);
     	fclose($f);
     	$this->Mode = $m;

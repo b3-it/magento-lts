@@ -32,7 +32,7 @@ class Egovs_Paymentbase_Model_Curl extends Mage_Payment_Model_Method_Abstract
 			$cs = curl_init($url);
 			if ($useSSL) {
 				curl_setopt($cs, CURLOPT_PORT, 443);
-				curl_setopt($cs, CURLOPT_SSL_VERIFYPEER, false); // ignore SSL-certificate-check - session still SSL-safe
+				curl_setopt($cs, CURLOPT_SSL_VERIFYPEER, true); // ignore SSL-certificate-check - session still SSL-safe
 			} else {
 				curl_setopt($cs, CURLOPT_PORT, 80);
 			}
@@ -55,7 +55,7 @@ class Egovs_Paymentbase_Model_Curl extends Mage_Payment_Model_Method_Abstract
 			if (Mage::getStoreConfig('web/proxy/use_proxy') == true && Mage::getStoreConfig('web/proxy/use_proxy_saferpay_payments') == true) {
 				$host = Mage::getStoreConfig('web/proxy/proxy_name');
 				$port = 8080;
-				if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')>0)) {
+				if (strlen(Mage::getStoreConfig('web/proxy/proxy_port')) > 0) {
 					$port =  Mage::getStoreConfig('web/proxy/proxy_port');
 				}
 				curl_setopt($cs, CURLOPT_PROXY, $host . ":" . $port);

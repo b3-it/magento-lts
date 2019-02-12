@@ -103,36 +103,6 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Address
         parent::__construct(array('Strasse'=>$_strasse,'Plz'=>$_plz,'Stadt'=>$_stadt,'Land'=>$_land,'Postfach'=>$_postfach),false);
     }
     
-  
-    
-    public function Egovs_SepaDebitSax_Model_Webservice_Types_Adresse() {
-    	Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-    
-    	$adresse = func_get_args();
-    
-    	if (count($adresse) <= 1) {
-    		if (isset($adresse[0])) {
-    			$adresse = $adresse[0];
-    		} else {
-    			$adresse = array();
-    		}
-    	}
-    	if ($adresse instanceof Varien_Object) {
-    		$adresse = $adresse->getData();
-    	}
-    
-    	if (is_array($adresse)) {
-    		foreach ($adresse as $key => $value) {
-    			if (!is_string($key)) {
-    				continue;
-    			}
-    			$this->$key = $value;
-    		}
-    			
-    		return;
-    	}
-    }
-    
     /**
      * Get Strasse value
      * @return string
@@ -245,18 +215,7 @@ implements Egovs_Paymentbase_Model_Sepa_Mandate_Interface_Address
     {
         return ($this->Postfach = $_postfach);
     }
-    /**
-     * Method called when an object has been exported with var_export() functions
-     * It allows to return an object instantiated with the values
-     * @see Egovs_SepaDebitSax_Model_Webservice_WsdlClass::__set_state()
-     * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::__set_state()
-     * @param array $_array the exported values
-     * @return Egovs_SepaDebitSax_Model_Webservice_Types_Adresse
-     */
-    public static function __set_state(array $_array,$_className = __CLASS__)
-    {
-        return parent::__set_state($_array,$_className);
-    }
+
     /**
      * Method returning the class name
      * @return string __CLASS__

@@ -192,9 +192,6 @@ class Bfr_Mach_Block_Adminhtml_History_Grid extends Mage_Adminhtml_Block_Widget_
   		return;
   	}
   	
-  	$col = null;
-  	
-  	
   	$col = 'DATE('.$column->getFilterIndex().')';
   	if ($col == null) return $this;
   	

@@ -23,7 +23,8 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 		$this->setDefaultSort('order_date');
 		$this->setDefaultDir('desc');
 		//Die letzten 30 Tage anzeigen 
-		$fromDate = Mage::getModel('core/date')->timestamp(time() - (3600 * 24 * 30));
+        /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
+        $fromDate = Mage::getModel('core/date')->timestamp(time() - (3600 * 24 * 30));
 		$fromDate = Mage::app()->getLocale()->date($fromDate);
 		$now = Mage::app()->getLocale()->date();
 		$this->setDefaultFilter(

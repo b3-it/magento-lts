@@ -41,8 +41,6 @@ class B3it_Subscription_IndexController extends Mage_Core_Controller_Front_Actio
     	$this->_cancelSubscription($subscription);
     	
     	$this->_redirect('b3it_subscription/index/view');
-    	return;
-    	
     }
     
    

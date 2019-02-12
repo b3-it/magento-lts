@@ -38,7 +38,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter extends Eg
 	 * 
 	 * @throws Exception Bei fehlenden Namen oder fehlerhaftem Wert (kein String oder > 300)
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter ($name, $wert) {
+	public function __construct ($name, $wert) {
 		if (empty($name) || !is_string($name) || strlen($name) > 100) {
 			throw new Exception("Name can't be empty or longer than 100 characters", self::MISSING_NAME);
 		}
@@ -49,7 +49,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameter extends Eg
 		 
 		$this->name = $name;
 		$this->wert = (string) $wert;
-		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+		parent::__construct();
 	}
 	
 	/**

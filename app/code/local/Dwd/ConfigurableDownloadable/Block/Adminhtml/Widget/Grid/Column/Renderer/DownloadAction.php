@@ -51,7 +51,8 @@ class Dwd_ConfigurableDownloadable_Block_Adminhtml_Widget_Grid_Column_Renderer_D
 					if (is_array($action['url'])) {
 						$params = array($action['field']=>$this->_getValue($row));
 						if (isset($action['url']['params'])) {
-							$params = array_merge($action['url']['params'], $params);
+                            /** @noinspection SlowArrayOperationsInLoopInspection */
+                            $params = array_merge($action['url']['params'], $params);
 						}
 						$action['href'] = $this->getUrl($action['url']['base'], $params);
 						unset($action['field']);

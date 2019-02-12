@@ -748,13 +748,20 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			$buchungstextMwst = Mage::helper('paymentbase')->getHaushaltsparameter($product->getData('buchungstext_mwst'));
 			
 			
-			$taxKeys = array();
+			$taxKeys = [[]];
 			foreach ($taxKeysByQuoteItemId as $id => $tax) {
 				if ($id != $item->getQuoteItemId() || empty($tax)) {
 					continue;
 				}
-				$taxKeys = array_merge($taxKeys, $tax);
+				$taxKeys[] = $tax;
 			}
+            if (version_compare(PHP_VERSION, '5.6', '>=')) {
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $taxKeys = array_merge(...$taxKeys);
+            } else {
+                /* PHP below 5.6 */
+                $taxKeys = call_user_func_array('array_merge', $taxKeys);
+            }
 			unset($taxKeysByQuoteItemId[$item->getQuoteItemId()]);
 			if(count($taxKeys)> 0)
 			{
@@ -953,7 +960,7 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 				
 		//deprecated
 		$dep = Mage::getStoreConfig('payment_services/paymentbase/kennz_mahn');
-		Mage::log(sprintf('%s::Benutze deprecated Kennzeichen-Mahnverfahren:', $this->getCode(), $dep), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+		Mage::log(sprintf('%s::Benutze deprecated Kennzeichen-Mahnverfahren:', $this->getCode()), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
 		return $dep;
 	}
 	

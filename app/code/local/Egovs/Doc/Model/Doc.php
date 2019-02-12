@@ -19,7 +19,7 @@ class Egovs_Doc_Model_Doc extends Mage_Core_Model_Abstract
     
     public function getFileIdentId()
     {    	
-    	return md5(microtime(false).rand(0,10000));
+    	return md5(microtime(false).mt_rand(0,10000));
     }
     
     public function deleteFile()

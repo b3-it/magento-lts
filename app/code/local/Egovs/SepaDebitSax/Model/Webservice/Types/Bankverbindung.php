@@ -43,19 +43,13 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
     /**
      * Constructor method for WSBankverbindung
      * @see parent::__construct()
-     * @param string $_iban
-     * @param string $_bic
+     * @param string $iban
+     * @param string $bic
      * @return Egovs_SepaDebitSax_Model_Webservice_Types_Bankverbindung
      */
-    public function xxxx__construct($_iban,$_bic)
-    {
-        parent::__construct(array('Iban'=>$_iban,'Bic'=>$_bic),false);
-    }
-    
-    
-    public function Egovs_SepaDebitSax_Model_Webservice_Types_Bankverbindung(
-    		$blz = null,
-    		$kontoNr = null
+    public function __construct(
+    		$bic = null,
+    		$iban = null
     ) {
     	$args = func_get_args();
     	Mage::log(sprintf("%s called...", __METHOD__), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
@@ -68,14 +62,14 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
     			}
     			break;
     		case 2:
-    			$this->BLZ = $args[0];
-    			$this->kontoNr = $args[1];
+    			$this->Bic = $args[0];
+    			$this->Iban = $args[1];
     			break;
     		default:
     	}
-    
-    
-    	//parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+
+
+    	parent::__construct(array('Bic' => $bic, 'Iban' => $iban));
     }
     /**
      * Get Iban value
@@ -111,18 +105,7 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
     {
         return ($this->Bic = $_bic);
     }
-    /**
-     * Method called when an object has been exported with var_export() functions
-     * It allows to return an object instantiated with the values
-     * @see Egovs_SepaDebitSax_Model_Webservice_WsdlClass::__set_state()
-     * @uses Egovs_SepaDebitSax_Model_Webservice_WsdlClass::__set_state()
-     * @param array $_array the exported values
-     * @return Egovs_SepaDebitSax_Model_Webservice_Types_Bankverbindung
-     */
-    public static function __set_state(array $_array,$_className = __CLASS__)
-    {
-        return parent::__set_state($_array,$_className);
-    }
+
     /**
      * Method returning the class name
      * @return string __CLASS__

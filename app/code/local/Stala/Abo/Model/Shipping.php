@@ -87,7 +87,6 @@ class Stala_Abo_Model_Shipping extends Stala_Abo_Model_Abstract
     {
 		
     	$freecopy = Mage::getModel('extcustomer/freecopies');
-    	$res = array();
     	
     	$res = $freecopy->decreaseFreecopies($item->getContractQty(),$item->getProductId(),$item->getCustomerId());
     	

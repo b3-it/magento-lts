@@ -35,7 +35,6 @@ class Sid_ExportOrder_IndexController extends Mage_Core_Controller_Front_Action
     		}
     	}
     	$this->norouteAction();
-    	return;
     }
     
     protected function _is_hex($hex_code) 

@@ -16,7 +16,10 @@ abstract class Egovs_Paymentbase_Model_Attributes_Source_Abstract extends Mage_E
 	
 	/**
 	 * Liefert ein Array von Optionen
-	 * 
+	 *
+     * @param bool $withEmpty       Add empty option to array
+     * @param bool $defaultValues
+     *
 	 * @return array
 	 * 
 	 * @see Mage_Eav_Model_Entity_Attribute_Source_Table::getAllOptions()
@@ -36,13 +39,12 @@ abstract class Egovs_Paymentbase_Model_Attributes_Source_Abstract extends Mage_E
 	    			$this->_options[$item->getId()] = $item->getTitle();
 	    		}
  			}
-    		
-    		//if (count($this->_options) > 1 || empty($this->_options)) 
-    		{
-    			$this->_options = array_reverse($this->_options, true);
-    			$this->_options[''] = Mage::helper('paymentbase')->__("-- Bitte wählen --");
-    			$this->_options = array_reverse($this->_options, true);
-    		}
+
+            if ($withEmpty) {
+                $this->_options = array_reverse($this->_options, true);
+                $this->_options[''] = Mage::helper('paymentbase')->__("-- Bitte wählen --");
+                $this->_options = array_reverse($this->_options, true);
+            }
         }
         return $this->_options;
     }

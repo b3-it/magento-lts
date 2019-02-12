@@ -239,7 +239,8 @@ class Egovs_GermanTax_Model_Tax_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sal
     		} else {
     			$appliedAmount = 0;
     			$baseAppliedAmount = 0;
-    			foreach ($row['rates'] as $rate) {
+                /** @noinspection SuspiciousLoopInspection */
+                foreach ($row['rates'] as $rate) {
     				$appliedAmount += $rate['amount'];
     				$baseAppliedAmount += $rate['base_amount'];
     			}

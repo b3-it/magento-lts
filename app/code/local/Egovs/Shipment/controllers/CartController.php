@@ -116,8 +116,6 @@ class Egovs_Shipment_CartController extends Mage_Core_Controller_Front_Action
     	$this->getResponse()->setBody(
     			$this->getLayout()->createBlock('egovsshipment/cart_estimate')->toHtml()
     	);
-    	
-    	return;
     }
     
     
@@ -132,8 +130,6 @@ class Egovs_Shipment_CartController extends Mage_Core_Controller_Front_Action
     	$this->getResponse()->setBody(
     			$block->toHtml()
     	);
-    
-    	return;
     }
     
     private function _estimate()

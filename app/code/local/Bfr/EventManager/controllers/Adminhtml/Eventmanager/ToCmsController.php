@@ -40,7 +40,6 @@ class Bfr_EventManager_Adminhtml_EventManager_ToCmsController extends Mage_Admin
 		}
 		
 		$this->_redirect('*/eventmanager/index');
-		return;
 	}
 
     protected function _isAllowed() {
@@ -59,8 +58,6 @@ class Bfr_EventManager_Adminhtml_EventManager_ToCmsController extends Mage_Admin
 
 
         $this->getResponse()->setBody(json_encode($product->getData()));
-        return;
-
     }
     
     

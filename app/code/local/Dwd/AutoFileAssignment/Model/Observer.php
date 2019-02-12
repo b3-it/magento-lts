@@ -33,36 +33,41 @@ class Dwd_AutoFileAssignment_Model_Observer extends Varien_Object
 	 * @return Dwd_AutoFileAssignment_Model_Observer
 	 */
 	public function autoAssignFiles($schedule) {
-		$lifetimes = Mage::getConfig()->getStoresConfigByPath('catalog/dwd_afa/runtime');
 		$_shouldRun = false;
 		$_msg = null;
-		
-		foreach ($lifetimes as $storeId=>$lifetime) {
-			//Admin ignorieren
-			if ($storeId == 0) {
-				continue;
-			}
-			
-			/* @var $collection Mage_Cron_Model_Resource_Schedule_Collection */
-			$collection = $schedule->getCollection();
-			$collection->addFieldToFilter('job_code', $schedule->getJobCode())
-				->addFieldToFilter($schedule->getIdFieldName(), array('neq' => $schedule->getId()))
-				->addFieldToSelect('status')
-				//Bind wird von Select wird von Bind der DataCollection überschrieben
-				->addBindParam('status_run', Mage_Cron_Model_Schedule::STATUS_RUNNING)
-				->getSelect()->where('status = :status_run')
-			;
-			//Mage::log('dwdafa::Service SQL:'.$collection->getSelect()->__toString() . " lastrun " .date("Y-m-d H:i:s", time()-$lifetime-$offset), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-			
-			if ($collection->count() > 0) {
-				$message = Mage::helper('dwdafa')->__('AFA service is still running');
-				Mage::helper('dwdafa')->sendMailToAdmin("dwdafa::".$message);
-				Mage::log($message, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
-				$_msg = $message;
-			} else {
-				$_shouldRun = true;
-			}
-		}
+
+        $lockKey = 'dwd_afa_apr_cron_mutex' . $schedule->getId();
+
+        // TODO TTL muss dynamisch errechnet werden --> jetzt statisch auf 10 Min
+        // Sollte über schedule collection next runtime möglich sein
+        $ttl = 600;
+        $lockResult = Mage::helper('egovsbase/lock')->getLock($lockKey, $ttl);
+        if ($lockResult === null) {
+            Mage::log("dwd_afa::apr:LOCK $lockKey couldn't be obtained!", Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            throw new Dwd_AutoFileAssignment_Cron_Exception("LOCK $lockKey couldn't be obtained!");
+        }
+
+        if ($lockResult == 0) {
+            Mage::log("dwd_afa::apr:LOCK $lockKey already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            return true;
+        }
+
+        $lastRun = date("Y-m-d H:i:s", (time() - ($ttl)));
+        $statusRun = Mage_Cron_Model_Schedule::STATUS_RUNNING;
+
+        $collection = $schedule->getCollection();
+        $collection->addFieldToFilter('job_code', $schedule->getJobCode())
+            ->addFieldToFilter($schedule->getIdFieldName(), array('neq' => $schedule->getId()))
+            ->addFieldToSelect('status')
+            ->getSelect()->where("(executed_at >'" . $lastRun . "'  AND status = '" . $statusRun . "')");
+
+        if ($collection->count() > 0) {
+            $_msg = Mage::helper('dwdafa')->__('Service is still running');
+            Mage::log($_msg, Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+            Mage::helper('egovsbase/lock')->releaseLock($lockKey);
+        } else {
+            $_shouldRun = true;
+        }
 		
 		if ($_shouldRun) {
 			try {
@@ -79,7 +84,6 @@ class Dwd_AutoFileAssignment_Model_Observer extends Varien_Object
 		} else {
 			throw new Dwd_AutoFileAssignment_Cron_Exception($_msg);
 		}
-		
 	
 		return $this;
 	}

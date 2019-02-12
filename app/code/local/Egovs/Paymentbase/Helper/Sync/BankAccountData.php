@@ -30,8 +30,6 @@ class Egovs_Paymentbase_Helper_Sync_BankAccountData extends Mage_Core_Helper_Abs
 	
 	public function sync() {
 		/* @var $_bankVerbindung Egovs_Paymentbase_Model_Webservice_Types_Response_BankverbindungErgebnis */
-		$_bankVerbindung = null;
-		
 		$_bankVerbindung = Mage::helper('paymentbase')->leseBankverbindungBewirtschafter();
 		
 		if (!($_bankVerbindung instanceof Egovs_Paymentbase_Model_Webservice_Types_Response_BankverbindungErgebnis)) {

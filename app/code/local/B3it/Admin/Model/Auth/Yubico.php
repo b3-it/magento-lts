@@ -303,7 +303,7 @@ class B3it_Admin_Model_Auth_Yubico
         }
         $params = array('id'=>$this->_id,
             'otp'=>$ret['otp'],
-            'nonce'=>md5(uniqid(rand())));
+            'nonce'=>md5(uniqid(mt_rand(), true)));
         /* Take care of protocol version 2 parameters */
         if ($use_timestamp) $params['timestamp'] = 1;
         if ($sl) $params['sl'] = $sl;
@@ -343,7 +343,9 @@ class B3it_Admin_Model_Auth_Yubico
             curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
             if (!$this->_httpsverify) {
+                /** @noinspection CurlSslServerSpoofingInspection */
                 curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+                /** @noinspection CurlSslServerSpoofingInspection */
                 curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 0);
             }
             curl_setopt($handle, CURLOPT_FAILONERROR, true);
@@ -362,9 +364,7 @@ class B3it_Admin_Model_Auth_Yubico
         $valid=False;
         do {
             /* Let curl do its work. */
-            while (($mrc = curl_multi_exec($mh, $active))
-                == CURLM_CALL_MULTI_PERFORM)
-                ;
+            while (($mrc = curl_multi_exec($mh, $active)) == CURLM_CALL_MULTI_PERFORM) /** @noinspection SuspiciousSemicolonInspection */ ;
 
             while ($info = curl_multi_info_read($mh)) {
                 if ($info['result'] == CURLE_OK) {
@@ -402,7 +402,7 @@ class B3it_Admin_Model_Auth_Yubico
                             /* Case 2. Verify signature first */
                             $rows = explode("\r\n", trim($str));
                             $response=array();
-                            while (list($key, $val) = each($rows)) {
+                            foreach ($rows as $key => $val) {
                                 /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
                                 $val = preg_replace('/=/', '#', $val, 1);
                                 $row = explode("#", $val);

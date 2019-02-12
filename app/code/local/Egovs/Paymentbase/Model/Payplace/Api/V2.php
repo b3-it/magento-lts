@@ -127,7 +127,7 @@ class Egovs_Paymentbase_Model_Payplace_Api_V2 extends Mage_Api_Model_Resource_Ab
 							$this->_log(sprintf("NOTIFY_ACTION:Activating Kassenzeichen failed: %s", $e->getMessage()), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
 						}
 					}
-					$this->_log(sprintf("NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result...", $i+1), Zend_Log::DEBUG);
+					$this->_log(sprintf("NOTIFY_ACTION:Tried to activate Kassenzeichen, validating result..."), Zend_Log::DEBUG);
 					
 					// wenn Web-Service nicht geklappt hat
 					if (!$objResult || !$objResult->isOk()) {

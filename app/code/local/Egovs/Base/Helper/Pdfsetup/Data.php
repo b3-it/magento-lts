@@ -87,7 +87,9 @@ class Egovs_Base_Helper_Pdfsetup_Data extends Mage_Core_Helper_Abstract
         if ( strlen($destination) ) {
             // Ziel-Pfad ist nicht da => anlegen
             if ( !is_dir(dirname($destination)) ) {
-                mkdir(dirname($destination), $this->_defaultDirectoryMask, TRUE);
+                if (!mkdir($concurrentDirectory = dirname($destination), $this->_defaultDirectoryMask, true) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                }
             }
 
             // Die Datei existiert nicht => kopieren

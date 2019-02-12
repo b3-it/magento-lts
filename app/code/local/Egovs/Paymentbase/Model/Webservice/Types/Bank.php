@@ -27,7 +27,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Bank(
+	public function __construct(
 			$bic = null,
 			$name = null
 	) {
@@ -70,7 +70,7 @@ extends Egovs_Paymentbase_Model_Webservice_Types_Abstract
 		}
 		
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

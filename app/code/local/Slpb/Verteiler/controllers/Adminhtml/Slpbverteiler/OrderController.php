@@ -93,7 +93,7 @@ class Slpb_Verteiler_Adminhtml_Slpbverteiler_OrderController extends Mage_Adminh
 	    		}
 	    		
 	    		$products = array();
-	    		for($i = 0; $i < count($contract['items']['id']); $i++)
+	    		for($i = 0, $iMax = count($contract['items']['id']); $i < $iMax; $i++)
 	    		{
 		    		$id = $contract['items']['id'][$i];
 		    		$qty = $contract['items']['qty'][$i];	

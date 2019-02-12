@@ -20,7 +20,7 @@
  *
  * @category    Varien
  * @package     Varien_Autoload
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -87,11 +87,12 @@ class Varien_Autoload
         if ($this->_isIncludePathDefined) {
             $classFile =  COMPILER_INCLUDE_PATH . DIRECTORY_SEPARATOR . $class;
         } else {
+        	$class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
             $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $class)));
         }
         $classFile.= '.php';
         //echo $classFile;die();
-        return include $classFile;
+        return @include $classFile;
     }
 
     /**
@@ -105,7 +106,7 @@ class Varien_Autoload
     {
         self::$_scope = $code;
         if (defined('COMPILER_INCLUDE_PATH')) {
-            @include COMPILER_INCLUDE_PATH . DIRECTORY_SEPARATOR . self::SCOPE_FILE_PREFIX.$code.'.php';
+            @include_once COMPILER_INCLUDE_PATH . DIRECTORY_SEPARATOR . self::SCOPE_FILE_PREFIX.$code.'.php';
         }
     }
 

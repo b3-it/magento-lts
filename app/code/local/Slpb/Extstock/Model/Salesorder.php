@@ -194,7 +194,7 @@ class Slpb_Extstock_Model_Salesorder extends Mage_Core_Model_Abstract
 			
 			//Kann für alte Produkte passieren, die vor der erweiterten Lagerverwaltung gekauft worden!!
 			if (($collection->getSize() < 1 && $hasShipments && $decreaseOnShipping)
-				|| $collection->getSize() < 1 && !$decreaseOnShipping
+				|| ($collection->getSize() < 1 && !$decreaseOnShipping)
 			) {
 				$this->_addNotManagedWarning($orderId, $productId);
 								

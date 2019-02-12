@@ -48,9 +48,7 @@ class Sid_Report_Block_Adminhtml_Sales_Grid extends Sid_Report_Block_Adminhtml_A
     
     public function getResourceCollectionName()
     {
-    	return ($this->getFilterData()->getData('report_type') == 'updated_at_order')
-    			? 'sidreport/sales_collection'
-    			: 'sidreport/sales_collection';
+    	return 'sidreport/sales_collection';
     }
 
     protected function _prepareCollection()

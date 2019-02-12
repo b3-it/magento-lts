@@ -9,7 +9,6 @@ class Dwd_Stationen_ListeController extends Mage_Core_Controller_Front_Action
     	//var_dump($block);
 		//die($block->toHtml());
     	$this->getResponse()->setBody($block->toHtml());
-    	return;
     }
     
     public function jsonAction()
@@ -23,7 +22,6 @@ class Dwd_Stationen_ListeController extends Mage_Core_Controller_Front_Action
 
     	$this->getResponse()->clearHeaders()->setHeader('Content-type','application/json',true);
     	$this->getResponse()->setBody(json_encode($data));
-    	return;
     }
     
     protected function getProduct()

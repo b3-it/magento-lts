@@ -115,7 +115,7 @@ class LdapService extends SoapClient {
                                     'setPasswordUserResponse' => 'setPasswordUserResponse',
                                    );
 
-  public function LdapService($wsdl = "ICD.wsdl", $options = array()) {
+  public function __construct($wsdl = "ICD.wsdl", $options = array()) {
     foreach(self::$classmap as $key => $value) {
       if(!isset($options['classmap'][$key])) {
         $options['classmap'][$key] = $value;

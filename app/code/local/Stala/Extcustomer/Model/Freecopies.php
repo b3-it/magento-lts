@@ -664,9 +664,7 @@ class Stala_Extcustomer_Model_Freecopies extends Mage_Core_Model_Abstract
 		$calcPrice = $quoteItem->getRowTotal();
 		$calcBasePrice = $quoteItem->getBaseRowTotal();
 		
-		if (!Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) && Mage::helper('tax')->discountTax($quoteItem->getStore())
-			//Wird ignoriert, wenn 'Steuer nach Rabatt berechnen' aktiv ist
-			|| (Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) == false && Mage::helper('tax')->discountTax($quoteItem->getStore()))) {
+		if (!Mage::helper('tax')->applyTaxAfterDiscount($quoteItem->getStore()) && Mage::helper('tax')->discountTax($quoteItem->getStore())) {
 			$calcPrice = round($calcPrice + $this->_getCalcTaxAmount($quoteItem), 2);
 			$calcBasePrice = round($calcBasePrice + $this->_getCalcBaseTaxAmount($quoteItem), 2);
 		}
@@ -1083,7 +1081,8 @@ class Stala_Extcustomer_Model_Freecopies extends Mage_Core_Model_Abstract
 			$amount *= -1;
 		}
 		//Verringern der Freiexemplare
-		foreach ($freecopies as $customerId => $value) {								
+        /** @noinspection SuspiciousLoopInspection */
+        foreach ($freecopies as $customerId => $value) {
 			$x = min($value, -1 * $amount);
 			
 			if ($x > 0) {
@@ -1145,7 +1144,9 @@ class Stala_Extcustomer_Model_Freecopies extends Mage_Core_Model_Abstract
 		
 		$masterId = $this->getId();
 		$usedFreecopies = array_reverse($usedFreecopies, true);
-		foreach ($usedFreecopies as $customerId => $value) {
+
+        /** @noinspection SuspiciousLoopInspection */
+        foreach ($usedFreecopies as $customerId => $value) {
 			//sonst wird nicht korrekt hoch gezählt
 			self::$_processedProducts = array();
 			

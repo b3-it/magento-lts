@@ -41,7 +41,7 @@ class Egovs_Base_Model_Sales_Email_Template extends Egovs_Base_Model_Core_Email_
         if (!$filename) {
             return '';
         }
-        extract($variables);
+        extract($variables, EXTR_OVERWRITE);
         ob_start();
         include $filename;
         return ob_get_clean();

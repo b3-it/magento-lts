@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ForgottenDebugOutputInspection */
+
 class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_Adminhtml_Controller_Action
 {
     protected function _initAction() {
@@ -81,7 +82,7 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_A
             }
         }
         
-        $combined = array();
+        $combined = [[]];
         foreach ($data as $k => $v) {
             $r = $resources[$v];
             if ($r === null) {
@@ -89,7 +90,7 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_A
                 continue;
             }
             
-            $combined = array_merge($combined, array_map(function($n) use ($k) {
+            $combined[] = array_map(function($n) use ($k) {
                 $x = $k."_".ucwords($n, '_');
                 try {
                     if (!class_exists($x)) {
@@ -106,7 +107,7 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_A
                 } catch (Exception $e) {
                     return null;
                 }
-            }, $r));
+            }, $r);
             
             //var_dump($resources[$v]);
             
@@ -114,7 +115,12 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_A
             
             //$combined[$k] = $names;
         }
-        
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $combined = array_merge(...$combined);
+        } else {
+            /* PHP below 5.6 */
+            $combined = call_user_func_array('array_merge', $combined);
+        }
         $combined = array_filter($combined);
         
         var_dump($combined);
@@ -141,9 +147,4 @@ class B3it_Modelhistory_Adminhtml_Modelhistory_SettingsController extends Mage_A
         return $user->getUsername() === "root";
     }
     
-}
-
-
-function my_func($k, $v, $d) {
-    var_dump([$k, $v, $d]);
 }
