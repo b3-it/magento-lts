@@ -64,13 +64,15 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <tfoot>
                 <tr>
                     <td colspan="50" class="a-right cart-footer-actions">
-                    <a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button"><span><?php echo $this->__('Delete All Items') ?></span></a>
                     <?php if($this->getContinueShoppingUrl()): ?>
                         <button class="button btn-continue egov-float-left" type="button" title="<?php echo $this->quoteEscape($this->__('Continue Shopping')) ?>" onclick="setLocation('<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>')">
                             <?php echo $this->__('Continue Shopping') ?>
                         </button>
                     <?php endif; ?>
 
+                        <button class="button btn-empty egov-float-left" type="submit" name="update_cart_action" data-cart-empty value="empty_cart" title="<?php echo $this->quoteEscape($this->__('Empty Cart')); ?>" id="empty_cart_button">
+                            <?php echo $this->__('Empty Cart'); ?>
+                        </button>
                         <button class="button btn-update" type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
                             <?php echo $this->__('Update Shopping Cart'); ?>
                         </button>
@@ -122,17 +124,24 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             <?php echo $this->getChildHtml('totals'); ?>
             <?php if(!$this->hasError()): ?>
             <button class="button btn-proceed-checkout btn-checkout"
-                    onclick="window.location='<?php echo $this->helper('gkacheckout/url')->getCheckoutUrl();?>';"
+                    id="button-proceed-to-checkout"
                     title="<?php echo $this->__('Proceed to checkout'); ?>"
                     type="button">
                 <div id="proceed-button-first">
                     <?php echo $this->__('Order now'); ?>
                 </div>
-                <?php echo $this->__('(Checkout)'); ?>
+                (<?php echo $this->__('Checkout'); ?>)
             </button>
             <?php echo $this->getChildHtml('cartinfo') ?>
             <?php endif; ?>
         </div>
+
+        <script type="text/javascript">
+            $j("#button-proceed-to-checkout").on("click", function(){
+                $j("#loading-mask").toggle();
+                window.location = "<?php echo $this->helper('gkacheckout/url')->getCheckoutUrl();?>";
+            });
+        </script>
 
         <?php echo $this->getChildHtml('coupon') ?>
 
