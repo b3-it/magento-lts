@@ -228,6 +228,14 @@
 </IfModule>
 
 ############################################
+## AhrefsBot und SEMrush Spider blocken
+## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
+
+    RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} AhrefsBot
+    RewriteRule .* - [R=429]
+
+############################################
 ## redirect for mobile user agents
 
     #RewriteCond %{REQUEST_URI} !^/mobiledirectoryhere/.*$

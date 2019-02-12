@@ -209,6 +209,14 @@
     RewriteRule .* - [L,R=405]
 
 ############################################
+## AhrefsBot und SEMrush Spider blocken
+## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
+
+    RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} AhrefsBot
+    RewriteRule .* - [R=429]
+
+############################################
 ## always send 404 on repository folders
     # Block access to .svn and .git files
     RewriteRule ^(.*/)?\.(svn|git)/ - [R=404,L]
