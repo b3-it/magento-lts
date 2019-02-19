@@ -90,7 +90,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Form extends Mage_Adminhtm
       foreach($stores as $store)
       {
           $fieldset->addField('pdftemplate_id_'.$store->getId(), 'select', array(
-              'label' => Mage::helper('eventmanager')->__('Pdf Template')." [".$store->getName()."]",
+              'label' => Mage::helper('eventmanager')->__('Pdf Template')." [".$store->getGroup()->getName().'/'. $store->getName()."]",
               'name' => "pdftemplate_id[".$store->getId()."]",
               'values' => $pdfs,
           ));
