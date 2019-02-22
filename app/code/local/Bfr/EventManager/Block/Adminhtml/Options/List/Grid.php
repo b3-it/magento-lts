@@ -49,7 +49,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       $collection->getSelect()
       	->join(array('quote_item'=>$collection->getTable('sales/quote_item')),'main_table.entity_id = quote_item.quote_id',array('sku','entity_id'=>'item_id'))
         ->joinleft(array('customer'=>$collection->getTable('customer/entity')),'main_table.customer_id = customer.entity_id',array('email'))
-        ->joinleft(array('adr'=>$collection->getTable('customer/entity').'_int'),'main_table.customer_id = adr.entity_id AND adr.attribute_id='. $eav->getIdByCode('customer', 'default_billing'))
+        ->joinleft(array('adr'=>$collection->getTable('customer/entity').'_int'),'main_table.customer_id = adr.entity_id AND adr.attribute_id='. $eav->getIdByCode('customer', 'default_billing'),array())
         ->joinleft(array('first'=>$collection->getTable('customer/address_entity').'_varchar'), 'first.entity_id = adr.value AND first.attribute_id = '. $eav->getIdByCode('customer_address', 'firstname') ,array('firstname'=>'value'))
         ->joinleft(array('last'=>$collection->getTable('customer/address_entity').'_varchar'), 'last.entity_id = adr.value AND last.attribute_id = '. $eav->getIdByCode('customer_address', 'lastname') ,array('lastname'=>'value'))
         ->joinleft(array('company'=>$collection->getTable('customer/address_entity').'_varchar'), 'company.entity_id = adr.entity_id AND company.attribute_id = '. $eav->getIdByCode('customer_address', 'company') ,array('company'=>'value'))
