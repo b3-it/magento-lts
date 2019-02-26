@@ -18,5 +18,22 @@
                 </connection>
             </slpbbase_setup>
         </resources>
+        <models>
+            <slpb_base>
+                <class>Slpb_Base_Model</class>
+            </slpb_base>
+        </models>
     </global>
+    <adminhtml>
+        <events>
+            <sales_order_item_collection_set_sales_order>
+                <observers>
+                    <slpb_base>
+                        <model>slpb_base/observer</model>
+                        <method>onSalesOrderItemCollectionSetSalesOrder</method>
+                    </slpb_base>
+                </observers>
+            </sales_order_item_collection_set_sales_order>
+        </events>
+    </adminhtml>
 </config>
