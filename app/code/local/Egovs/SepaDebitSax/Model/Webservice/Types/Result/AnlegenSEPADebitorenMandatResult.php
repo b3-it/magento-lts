@@ -47,9 +47,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPADebitorenManda
      */
  	public function getResult()
     {
-    	//TODO: Type und Funktion mit Debugger überprüfen
-    	if($this->Result instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMandat )
-    	//if($this->Result instanceof Egovs_SepaDebitSax_Model_Webservice_Types_Result_AnlegenSEPAKreditorenMandatResult )
+        if($this->Result instanceof self )
     	{
         	return $this->Result->Result;
     	}
