@@ -37,7 +37,7 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder extends Mage_Adminhtml_Block
 
     public function __construct()
     {
-        $this->_controller = 'adminhtml_customer_lastorder';
+        $this->_controller = 'adminhtml_customer_lastOrder';
         $this->_blockGroup = "egovsbase";
 
         $this->_headerText = Mage::helper('egovsbase')->__('Last Order');
