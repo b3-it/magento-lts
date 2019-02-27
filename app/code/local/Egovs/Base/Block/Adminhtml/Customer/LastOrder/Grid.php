@@ -33,54 +33,34 @@
  * @author     Frank Rochlitzer <f.rochlitzer@b3-it.de>
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_Block_Customer_Grid
+class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setId('lastOrderGrid');
+//        $this->setDefaultSort('entity_id');
+//        $this->setDefaultDir('ASC');
+        $this->setSaveParametersInSession(true);
+        $this->setUseAjax(true);
+    }
+
 
     protected function _prepareCollection()
     {
-
-
-
-        $collection = Mage::getResourceModel('egovsbase/customer_lastOrder_collection')
-//            ->addNameToSelect()
-//            ->addAttributeToSelect('email')
-//            ->addAttributeToSelect('created_at')
-//            ->addAttributeToSelect('company')
-//            ->addAttributeToSelect('group_id')
-        ;
-//            ->joinAttribute('billing_postcode', 'customer_address/postcode', 'default_billing', null, 'left')
-//            ->joinAttribute('billing_city', 'customer_address/city', 'default_billing', null, 'left')
-//            ->joinAttribute('billing_telephone', 'customer_address/telephone', 'default_billing', null, 'left')
-//            ->joinAttribute('billing_region', 'customer_address/region', 'default_billing', null, 'left')
-//            ->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left');
-
+        $collection = Mage::getModel('egovsbase/customer_lastOrder')->getCollection();
         $this->setCollection($collection);
 
         return Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
     }
 
 
-    public function xxsetCollection($collection)
-    {
-    	$collection->addAttributeToSelect('company')
-//    		->joinAttribute('base_company', 'customer_address/company', 'base_address', null, 'left')
-//	    	->joinAttribute('base_postcode', 'customer_address/postcode', 'base_address', null, 'left')
-//	    	->joinAttribute('base_city', 'customer_address/city', 'base_address', null, 'left')
-//	    	->joinAttribute('base_telephone', 'customer_address/telephone', 'base_address', null, 'left')
-//	    	->joinAttribute('base_region', 'customer_address/region', 'base_address', null, 'left')
-//	    	->joinAttribute('base_country_id', 'customer_address/country_id', 'base_address', null, 'left')
-    	;
 
 
 
-
-
-//die($collection->getSelect()->__toString());
-
-//    	Mage::dispatchEvent('customer_customer_collection_use_before', array('collection' => $collection));
-    	
-    	return parent::setCollection($collection);
-    }
     
     protected function  _prepareColumns()
     {
@@ -88,19 +68,19 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_
             'header'    => Mage::helper('customer')->__('ID'),
             'width'     => '50px',
             'index'     => 'entity_id',
+           // 'filter_index' => 't1.entity_id',
             'type'  => 'number',
+
         ));
-        /*$this->addColumn('firstname', array(
+        $this->addColumn('firstname', array(
             'header'    => Mage::helper('customer')->__('First Name'),
             'index'     => 'firstname'
         ));
+
         $this->addColumn('lastname', array(
             'header'    => Mage::helper('customer')->__('Last Name'),
-            'index'     => 'lastname'
-        ));*/
-        $this->addColumn('name', array(
-            'header'    => Mage::helper('customer')->__('Name'),
-            'index'     => 'name'
+            'index'     => 'lastname',
+            'filter_condition_callback' => array($this, '_filterCustomerCondition')
         ));
         
         $this->addColumn('base_company', array(
@@ -112,52 +92,24 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_
         $this->addColumn('email', array(
             'header'    => Mage::helper('customer')->__('Email'),
             'width'     => '150',
-            'index'     => 'email'
+            'index'     => 'email',
+            'filter_index'     => 't1.email'
         ));
 
-        $groups = Mage::getResourceModel('customer/group_collection')
-            ->addFieldToFilter('customer_group_id', array('gt'=> 0))
-            ->load()
-            ->toOptionHash();
+//        $groups = Mage::getResourceModel('customer/group_collection')
+//            ->addFieldToFilter('customer_group_id', array('gt'=> 0))
+//            ->load()
+//            ->toOptionHash();
+//
+//        $this->addColumn('group', array(
+//            'header'    =>  Mage::helper('customer')->__('Group'),
+//            'width'     =>  '100',
+//            'index'     =>  'group_id',
+//            'type'      =>  'options',
+//            'options'   =>  $groups,
+//        ));
 
-        $this->addColumn('group', array(
-            'header'    =>  Mage::helper('customer')->__('Group'),
-            'width'     =>  '100',
-            'index'     =>  'group_id',
-            'type'      =>  'options',
-            'options'   =>  $groups,
-        ));
 
-//        $this->addColumn('Telephone', array(
-//            'header'    => Mage::helper('customer')->__('Telephone'),
-//            'width'     => '100',
-//            'index'     => 'base_telephone'
-//        ));
-//
-//        $this->addColumn('base_postcode', array(
-//            'header'    => Mage::helper('customer')->__('ZIP'),
-//            'width'     => '90',
-//            'index'     => 'base_postcode',
-//        ));
-//
-//       $this->addColumn('base_city', array(
-//            'header'    => Mage::helper('customer')->__('City'),
-//            'width'     => '100',
-//            'index'     => 'base_city',
-//        ));
-//
-//       $this->addColumn('base_region', array(
-//            'header'    => Mage::helper('customer')->__('State/Province'),
-//            'width'     => '100',
-//            'index'     => 'base_region',
-//        ));
-//
-//        $this->addColumn('base_country_id', array(
-//            'header'    => Mage::helper('customer')->__('Country'),
-//            'width'     => '100',
-//            'type'      => 'country',
-//            'index'     => 'base_country_id',
-//        ));
 
         $this->addColumn('customer_since', array(
             'header'    => Mage::helper('customer')->__('Customer Since'),
@@ -195,63 +147,19 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_
             'header'    => Mage::helper('customer')->__('Count'),
             'width'     => '50px',
             'index'     => 'order_count',
-            'filter_index' => 'lastOrder.order_count',
+            'filter_index' => 't1.order_count',
             'type'  => 'number',
+            'filter_condition_callback' => array($this, '_filterOrderCountCondition')
         ));
 
-//        $this->addColumn('action',
-//            array(
-//                'header'    =>  Mage::helper('customer')->__('Action'),
-//                'width'     => '100',
-//                'type'      => 'action',
-//                'getter'    => 'getId',
-//                'actions'   => array(
-//                    array(
-//                        'caption'   => Mage::helper('customer')->__('Edit'),
-//                        'url'       => array('base'=> '*/*/edit'),
-//                        'field'     => 'id'
-//                    )
-//                ),
-//                'filter'    => false,
-//                'sortable'  => false,
-//                'index'     => 'stores',
-//                'is_system' => true,
-//        ));
 
-        foreach ($this->getColumns() as $column) {
-        	/* @var $column Mage_Adminhtml_Block_Widget_Grid_Column */
-        	if ($column->getType() && $column->getType() != "text") {
-        		continue;
-        	}
-			if (!$column->getFilterConditionCallback()) {
-        		$column->setFilterConditionCallback(array($this, '_regexFilter'));
-			}
 
-        }
-        $this->addExportType('*/*/exportCsv', Mage::helper('customer')->__('CSV'));
-        $this->addExportType('*/*/exportXml', Mage::helper('customer')->__('XML'));
+//        $this->addExportType('*/*/exportCsv', Mage::helper('customer')->__('CSV'));
+//        $this->addExportType('*/*/exportXml', Mage::helper('customer')->__('XML'));
         return $this;//parent::_prepareColumns();
     }
     
-    protected function _regexFilter($collection, $column) {
-    	if (!$value = $column->getFilter()->getValue()) {
-    		return $this;
-    	}
-    	
-    	$_condition = $column->getFilter()->getValue();
-    	$field = ( $column->getFilterIndex() ) ? $column->getFilterIndex() : $column->getIndex();
-    	if (isset($_condition) && (strpos($_condition, "/*") !== 0 || substr($_condition, -2) != "*/")) {
-    		$_condition = $column->getFilter()->getCondition();
-    	} elseif (isset($_condition)) {
-    		$_condition = substr($_condition, 2, strlen($_condition) - 4);
-	    	$helper = Mage::getResourceHelper('core');
-	    	$rlikeExpression = $helper->addLikeEscape($_condition, array('allow_symbol_mask', 'allow_string_mask'));
-	    	$_condition = array('regexp' => $rlikeExpression);
-    	}
-    	if ($field && isset($_condition)) {
-    		$collection->addFieldToFilter($field, $_condition);
-    	}
-    }
+
 
     protected function _prepareMassaction() {
         $this->setMassactionIdField('entity_id');
@@ -305,15 +213,59 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_
 
         if(isset( $value['from']) && isset( $value['to'])){
             $condition = sprintf("( ($col >= '%s') && ($col <= '%s'))", $value['from']->ToString('yyyy-MM-dd'),  $value['to']->ToString('yyyy-MM-dd') );
-            $collection->getSelect()->having($condition);
+            $collection->getSelect()->where($condition);
         }
         else if(isset( $value['from'])){
             $condition = sprintf("(($col >= '%s'))", $value['from']->ToString('yyyy-MM-dd'));
-            $collection->getSelect()->having($condition);
+            $collection->getSelect()->where($condition);
         }
         else if(isset( $value['to'])){
-            $condition = sprintf("( ($col <= '%s'))", $value['to']->ToString('yyyy-MM-dd') );
-            $collection->getSelect()->having($condition);
+            $condition = sprintf("( ($col <= '%s') OR ($col is NULL)) ", $value['to']->ToString('yyyy-MM-dd') );
+            $collection->getSelect()->where($condition);
+        }
+
+        //die($collection->getSelect()->__toString());
+    }
+
+    protected function _filterCustomerCondition($collection, $column)
+    {
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        $field = ( $column->getFilterIndex() ) ? $column->getFilterIndex() : $column->getIndex();
+
+
+        $collection->getSelect()->where($field ." like  ?",'%'.$value.'%');
+
+        //die($collection->getSelect()->__toString());
+    }
+
+    protected function _filterOrderCountCondition($collection, $column)
+    {
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        $col = null;
+
+
+        $col = $column->getFilterIndex();
+        if ($col == null) return $this;
+
+        if(isset( $value['from']) && isset( $value['to'])){
+            $condition = sprintf("( ($col >= '%s') && ($col <= '%s'))", $value['from'],  $value['to'] );
+            $collection->getSelect()->where($condition);
+        }
+        else if(isset( $value['from'])){
+            $condition = sprintf("(($col >= '%s'))", $value['from']);
+            $collection->getSelect()->where($condition);
+        }
+        else if(isset( $value['to'])){
+            $condition = sprintf("( ($col <= '%s') OR ($col is NULL) )", $value['to'] );
+            $collection->getSelect()->where($condition);
         }
 
         //die($collection->getSelect()->__toString());

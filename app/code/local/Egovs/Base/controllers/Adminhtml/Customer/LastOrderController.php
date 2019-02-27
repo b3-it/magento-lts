@@ -31,4 +31,31 @@ class Egovs_Base_Adminhtml_Customer_LastOrderController extends Mage_Adminhtml_C
         $this->_initAction()
             ->renderLayout();
     }
+
+
+    public function massDeleteAction()
+    {
+        $customersIds = $this->getRequest()->getParam('customer');
+        if(!is_array($customersIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select customer(s).'));
+        } else {
+            try {
+                $customer = Mage::getModel('customer/customer');
+                foreach ($customersIds as $customerId) {
+                    $customer->reset()
+                        ->load($customerId)
+                        ->delete();
+                }
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('adminhtml')->__('Total of %d record(s) were deleted.', count($customersIds))
+                );
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+
 }
