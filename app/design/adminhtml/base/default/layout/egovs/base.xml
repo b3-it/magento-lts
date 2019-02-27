@@ -14,6 +14,9 @@
             <!-- 2017-06-21 :: Deaktiviert, da jetzt mit jQuery umgesetzt -->
             <!-- <action method="addJs"><script>egovs/bind.trigger.prototype.js</script></action> -->
             <action method="addJs"><script>egovs/jquery.admin.js</script></action>
+            <action method="addJs"><script>egovs/varien/validation.js</script></action>
+            <action method="addItem"><type>js</type><name>lib/jquery/jquery-ui-1.12.1.js</name><params/></action>
+            <action method="addItem"><type>js_css</type><name>lib/jquery/jquery-ui-1.12.1.css</name><params/></action>
         </reference>
     </default>
     <adminhtml_egovsbase_tools_analyse_sales_order_item_index>

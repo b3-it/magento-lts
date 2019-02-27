@@ -39,7 +39,7 @@
 	color: $grundfarbe-blau;
 }
 
-#product-base-block, #product-options-wrapper {
+#product-base-block {
     margin-bottom: $global-boxmargin;
 }
 
@@ -323,6 +323,10 @@
             display: block;
             width: 100%;
 
+            span.shipping-cost-details {
+                display: none;
+            }
+
             .short-description {
                 margin: 0;
             }
@@ -350,6 +354,9 @@
                         display: inline-block;
                         width: 20%;
                     }
+                }
+                .tax-details {
+                    display: block;
                 }
             }
 
@@ -530,6 +537,10 @@
                 margin-bottom: 10px;
             }
 
+            span.shipping-cost-details {
+                display: none;
+            }
+
             .option-block-label {
                 font-weight: bold;
             }
@@ -619,6 +630,10 @@
         .label {
             font-size: 0.9rem;
         }
+    }
+
+    .product-shop .tax-details {
+        display: block;
     }
 
     .required {
@@ -882,8 +897,6 @@
 	}
 
 	.add-to-cart {
-	    position: relative;
-        top: -15px;
 	    width: 260px;
 
 	    .button {

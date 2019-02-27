@@ -13,19 +13,19 @@ class Sid_Framecontract_Block_Adminhtml_Vendor_Edit_Tabs extends Mage_Adminhtml_
 
   protected function _beforeToHtml()
   {
-      $this->addTab('form_section', array(
+      $this->addTab('contact', array(
           'label'     => Mage::helper('framecontract')->__('Contact'),
           'title'     => Mage::helper('framecontract')->__('Contact'),
           'content'   => $this->getLayout()->createBlock('framecontract/adminhtml_vendor_edit_tab_form')->toHtml(),
       ));
       
-      $this->addTab('form_section1', array(
+      $this->addTab('format', array(
       		'label'     => Mage::helper('framecontract')->__('Format'),
       		'title'     => Mage::helper('framecontract')->__('Format'),
       		'content'   => $this->getLayout()->createBlock('framecontract/adminhtml_vendor_edit_tab_format')->toHtml(),
       ));
       
-      $this->addTab('form_section2', array(
+      $this->addTab('transfer', array(
       		'label'     => Mage::helper('framecontract')->__('Transfer'),
       		'title'     => Mage::helper('framecontract')->__('Transfer'),
       		'content'   => $this->getLayout()->createBlock('framecontract/adminhtml_vendor_edit_tab_transfer')->toHtml(),

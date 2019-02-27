@@ -37,4 +37,28 @@
             </block>
         </reference>
     </customer_account_create>
+    <wishlist_index_share>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="wishlist.sharing">
+            <block type="core/text_list" name="wishlist.sharing.form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>wishlist_sharing</formId></action>
+                </block>
+            </block>
+        </reference>
+    </wishlist_index_share>
+    <sendfriend_product_send>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="sendfriend.send">
+            <block type="core/text_list" name="sendfriend.send.form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>sendfriend_send</formId></action>
+                </block>
+            </block>
+        </reference>
+    </sendfriend_product_send>
 </layout>

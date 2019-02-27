@@ -309,9 +309,6 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     				return;
     			}
 
-    			if (isset($data) && isset($data['country_id'])) {
-    				if ($data['country_id'] != 'DE') unset($data['region']);
-    			}
     			$result = $this->_getCheckout()->saveBilling($data, $customerAddressId);
     			if ($result !== true) {
     				Mage::getSingleton('checkout/session')->addError($result);
@@ -458,10 +455,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     				return;
     			}
 
-    			if (isset($data) && isset($data['country_id'])) {
-    				if ($data['country_id'] != 'DE') unset($data['region']);
-    			}
-    			$result = $this->_getCheckout()->saveShipping($data, $customerAddressId);
+                $this->_getCheckout()->saveShipping($data, $customerAddressId);
 
     			Mage::getSingleton('customer/session')->unsetData('shippingaddresspostdata');
     		}

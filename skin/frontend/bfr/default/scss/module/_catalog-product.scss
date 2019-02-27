@@ -429,6 +429,10 @@ div#details-block {
 .product-view {
     position: relative;
 
+    .product-shop .tax-details {
+        display: block;
+    }
+
     .required {
         color: $global-warning-color;
 

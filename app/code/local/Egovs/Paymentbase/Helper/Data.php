@@ -1795,14 +1795,14 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 		}
 
 		if (substr($error, 0, 5) == 'ERROR') {
-			switch (intval(substr($error, 6))) {
+			switch ((int)substr($error, 6)) {
 				case -611:
 					Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR_-0611', Mage::helper('paymentbase')->getCustomerSupportMail()));
 				default :
 					$base = 'TEXT_PROCESS_'. $error;
 					$translate = Mage::helper($code)->__($base, Mage::helper('paymentbase')->getCustomerSupportMail());
 					if ($base == $translate) {
-						$base = str_ireplace("ERROR:", "ERROR_", $error);
+						$base = str_ireplace('ERROR:', 'ERROR_', $base);
 						$translate = Mage::helper($code)->__($base, Mage::helper('paymentbase')->getCustomerSupportMail());
 						if ($base == $translate) {
 							Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));

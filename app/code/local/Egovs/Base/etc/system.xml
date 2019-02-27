@@ -88,6 +88,112 @@
         </sales>
         <sales_email translate="label" >
             <groups>
+            	<order_additional translate="label" module="egovsbase">
+            		<label>Additional information in the order confirmation</label>
+            		<show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>300</sort_order>
+            		<fields>
+            			<show_thumbnail_in_email translate="label">
+            				<label>Show Product Thumbnail in eMail</label>
+            				<frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>10</sort_order>
+            			</show_thumbnail_in_email>
+            			<thumbnail_dimension>
+            				<label>Width Product Thumbnail</label>
+            				<frontend_type>text</frontend_type>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>20</sort_order>
+            			</thumbnail_dimension>
+                        <show_description_in_order>
+            				<label>Description in the order confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>30</sort_order>
+            			</show_description_in_order>
+                        <show_short_description_in_order>
+            				<label>Short description in the order confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>40</sort_order>
+            			</show_short_description_in_order>
+                        <show_delivery_time_in_order>
+            				<label>Show delivery time in the order confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>50</sort_order>
+            			</show_delivery_time_in_order>
+            		</fields>
+            	</order_additional>
+                <invoice_additional translate="label" module="egovsbase">
+            		<label>Additional information in the invoice confirmation</label>
+            		<show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>310</sort_order>
+            		<fields>
+            			<show_thumbnail_in_email translate="label">
+            				<label>Show Product Thumbnail in eMail</label>
+            				<frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>10</sort_order>
+            			</show_thumbnail_in_email>
+            			<thumbnail_dimension>
+            				<label>Width Product Thumbnail</label>
+            				<frontend_type>text</frontend_type>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>20</sort_order>
+            			</thumbnail_dimension>
+                        <show_description_in_invoice>
+            				<label>Description in the invoice confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>30</sort_order>
+            			</show_description_in_invoice>
+                        <show_short_description_in_invoice>
+            				<label>Short description in the invoice confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>40</sort_order>
+            			</show_short_description_in_invoice>
+                        <show_delivery_time_in_invoice>
+            				<label>Show delivery time in the invoice confirmation</label>
+                            <frontend_type>select</frontend_type>
+            				<source_model>adminhtml/system_config_source_yesno</source_model>
+            				<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>50</sort_order>
+            			</show_delivery_time_in_invoice>
+                    </fields>
+                </invoice_additional>
                 <invoice>
                     <fields>
                         <send_mail translate="label">

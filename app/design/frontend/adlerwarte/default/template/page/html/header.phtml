@@ -11,6 +11,21 @@
  */
 ?>
 
+<?php
+$_arrPageBack = array('bg2.jpg', 'bg3.jpg', 'bg4.jpg', 'bg5.jpg', 'bg7.jpg', 'bg8.jpg', 'bg9.jpg');
+$_imgPath = array();
+foreach( $_arrPageBack AS $_imgName ) {
+    $_imgPath[] = '"' . Mage::getDesign()->getSkinUrl('images/' . $_imgName) . '"';
+}
+?>
+
+<script type="text/javascript">
+var backgrounds = [
+    <?php echo implode(",\n    ", $_imgPath) . "\n"; ?>
+];
+</script>
+
+
 <?php echo $this->getChildHtml('bitvmenu') ?>
 
 <?php echo $this->getChildHtml('currency_switcher') ?>

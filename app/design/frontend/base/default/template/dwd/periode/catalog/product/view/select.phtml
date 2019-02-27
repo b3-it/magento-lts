@@ -1,52 +1,63 @@
-<?php if($this->show()){?>
-<fieldset id="product-options-wrapper" class="product-options">
+<?php
+/**
+ * @var $this \Dwd_Periode_Block_Catalog_Product_View_Select
+ */
+?>
+<?php if ($this->show()) { ?>
+    <fieldset id="product-options-wrapper" class="product-options">
 
-<?php // Auswählen von Zeiträumen?>
-<?php if($this->showSelect()){?>
+        <?php // Auswählen von Zeiträumen?>
+        <?php if ($this->showSelect()) { ?>
 
-<script>
-	function changePeriodePrice()
-	{
-		var price =
-			  $(periode.options[periode.selectedIndex]).readAttribute('finalprice') ;
-		$('product-price-<?php echo $this->getProduct()->getId()?>').update('<span class="price">'+ price + '</span>');
-		
-	}
-</script>
-    <dl class="last">
-            <dt><label><?php echo $this->__('Select Period')?><span class="required">&nbsp;*</span></label></dt>
-	<dd class="last">
-    <select onchange="changePeriodePrice()" title="" class=" required-entry product-custom-option" id="periode" name="periode">
-    	<option price="--" value=""><?php echo $this->__('-- please select --')?></option>
-    	<?php foreach($this->getPerioden() as $periode) {?>
-    				<option price="<?php echo $this->getPrice($periode)?>" finalprice="<?php echo $this->getFormatedFinalPrice($periode)?>" value="<?php echo $periode->getEntityId()?>">	
-    					<?php echo $periode->getLabel();?>&nbsp;<?php  if(!$periode->getCustomerTierPrice()){ echo " +"; } echo $this->getFormatedPeriodePrice($periode);?>
-    				</option>
-    	<?php }?>
-    
-    	</select>
-    	</dd>
-        </dl>
-            <p class="required">* <?php echo $this->__('required Fields')?></p>
-<?php }?>
+            <script>
+                function changePeriodePrice() {
+                    var price =
+                        $(periode.options[periode.selectedIndex]).readAttribute('finalprice');
+                    $('product-price-<?php echo $this->getProduct()->getId()?>').update('<span class="price">' + price + '</span>');
 
+                }
+            </script>
+            <dl class="last">
+                <dt><label><?php echo $this->__('Select Period') ?><span class="required">&nbsp;*</span></label></dt>
+                <dd class="last">
+                    <select onchange="changePeriodePrice()" title="" class=" required-entry product-custom-option"
+                            id="periode" name="periode">
+                        <option price="--" value=""><?php echo $this->__('-- please select --') ?></option>
+                        <?php foreach ($this->getPerioden() as $periode) { ?>
+                            <option price="<?php echo $this->getPrice($periode) ?>"
+                                    finalprice="<?php echo $this->getFormatedFinalPrice($periode) ?>"
+                                    value="<?php echo $periode->getEntityId() ?>">
+                                <?php echo $periode->getLabel(); ?>&nbsp;<?php if (!$periode->getCustomerTierPrice()) {
+                                    echo " +";
+                                }
+                                echo $this->getFormatedPeriodePrice($periode); ?>
+                            </option>
+                        <?php } ?>
 
-
-<?php // Anzeigen von Zeiträumen?>
-<?php if($this->showInfo()){?>
-	<dl class="last">
-            <dt><label><?php echo $this->__('Period')?></label></dt>
-	<dd class="last">
-    
-    	<?php foreach($this->getPerioden() as $periode) {?>
-    		<input name="periode" type="hidden" value="<?php echo $periode->getEntityId()?>"/><?php echo $periode->getLabel()?>&nbsp; <?php echo $this->getFormatedFinalPrice($periode)?>
-    	<?php }?>
-    	</dd>
-        </dl>
-         
-    
-<?php }?>
+                    </select>
+                </dd>
+            </dl>
+            <p class="required">* <?php echo $this->__('required Fields') ?></p>
+        <?php } ?>
 
 
-</fieldset>
-<?php }?>
+
+        <?php // Anzeigen von Zeiträumen?>
+        <?php if ($this->showInfo()) { ?>
+            <dl class="last">
+                <dt><label><?php echo $this->__('Period') ?></label></dt>
+                <dd class="last">
+
+                    <?php foreach ($this->getPerioden() as $periode) { ?>
+                        <input name="periode" type="hidden"
+                               value="<?php echo $periode->getEntityId() ?>"/><?php echo $periode->getLabel() ?>&nbsp; <?php echo $this->getFormatedFinalPrice($periode) ?>
+                    <?php } ?>
+                </dd>
+            </dl>
+
+
+        <?php } ?>
+
+
+    </fieldset>
+<?php } ?>

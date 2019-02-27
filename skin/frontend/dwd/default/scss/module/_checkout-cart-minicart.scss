@@ -187,12 +187,16 @@
     .close {
         @include hover-blau-weiss;
         width: 2rem;
-        height: 100%;
+        height: 2rem;
         text-decoration: none;
         font-weight: normal;
         font-size: 30px;
         padding: 2%;
         float: right;
+    }
+
+    .shipping-cost-details {
+        padding-right: $box-spacing;
     }
 
     .product-details {
@@ -258,7 +262,6 @@
 
         .label {
             color: $textfarbe-mittel;
-            font-size: 0.7rem;
         }
         .price {
             color: $grundfarbe-blau;
