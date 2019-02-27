@@ -6,9 +6,6 @@ var fromTop = 0;      // Abstand nach oben
 var spaceBottom = 0;  // Restabstand nach unten
 var newBottom = 0;    // Neuer "von Unten" Wert für den Button
 
-// Array mit Hintergrundgrafiken erzeugen
-var backgrounds = ['bg2.jpg', 'bg3.jpg', 'bg4.jpg', 'bg5.jpg', 'bg7.jpg', 'bg8.jpg', 'bg9.jpg'];
-
 $j(document).ready(function () {
     // Scroll Top
     addScrollTop();
@@ -26,12 +23,8 @@ function randomBackground()
     var index = randomNumber(0, backgrounds.length - 1);
     var image = backgrounds[ index ];
 
-    if ( image != 'undefined' ) {
-        var newImage = SKIN_PATH + 'images/' + image;
-        
-        $j('#background-image').css({'background-image': 'url("' + newImage + '")'}).fadeIn(1000);
-        //$j('.page').css({'background-color': 'transparent', 'background': 'transparent'});
-    	//$j('.wrapper .page').css({'background-image': 'url("' + newImage + '")'});
+    if ( image !== "undefined" ) {
+        $j("#background-image").css({"background-image": "url(\"" + image + "\")"}).fadeIn(1000);
     }
 }
 
