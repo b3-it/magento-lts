@@ -45,6 +45,13 @@ class Egovs_Base_Model_Observer
 
         /** @var \Mage_Core_Controller_Varien_Front $front */
         $front = $observer->getFront();
+
+        foreach ($front->getResponse()->getHeaders() as $header) {
+            // bei Application/Json muss die Ersetzung manuell im Controller erfolgen
+            if (isset($header['value']) && strtolower($header['value']) === 'application/json') {
+                return;
+            }
+        }
         $html = $front->getResponse()->getBody();
 
         $html = Mage::helper('egovsbase')->replaceTemplateAbbr($html);
