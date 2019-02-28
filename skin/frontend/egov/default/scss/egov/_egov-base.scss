@@ -8,6 +8,14 @@
     @include default-form;
 }
 
+div.validation-advice {
+    color: $global-warning-color;
+    margin-bottom: $global-element-magrin-bottom;
+}
+.validation-failed input {
+    outline: $global-warning-color;
+}
+
 #context-help-popup {
     position: fixed;
     background-color: $global-wrapper-color;
@@ -146,6 +154,23 @@
     -webkit-border-radius: $global-radius;
     -moz-border-radius: $global-radius;
     border-radius: $global-radius;
+}
+
+div.block-eventbundle-reorder {
+    .block-title {
+        font-size: 1rem;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: $global-boxmargin;
+    }
+}
+
+.option-block-elements,
+.personal-options {
+    input, textarea {
+        width: 90%;
+    }
 }
 
 .egov-productfile-block {

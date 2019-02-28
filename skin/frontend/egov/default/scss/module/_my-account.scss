@@ -150,6 +150,12 @@
     }
 }
 
+#account-block {
+    ul li label {
+        display: block;
+    }
+}
+
 #customer-account-menu {
     @include main-navigation;
 }
