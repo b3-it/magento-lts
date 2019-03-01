@@ -37,6 +37,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 
 		<reference name="wishlist_sidebar">
@@ -67,6 +72,11 @@
 			</action>
 			<action method="addPriceBlockType">
 				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
@@ -106,6 +116,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 	</catalog_category_default>
 
@@ -138,6 +153,11 @@
 			</action>
 			<action method="addPriceBlockType">
 				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
@@ -176,6 +196,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 	</catalog_category_view>
 
@@ -208,6 +233,11 @@
 			</action>
 			<action method="addPriceBlockType">
 				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
@@ -246,6 +276,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 	</catalog_product_view>
 
@@ -278,6 +313,11 @@
 			</action>
 			<action method="addPriceBlockType">
 				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
@@ -316,6 +356,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 	</catalogsearch_result_index>
 
@@ -351,6 +396,11 @@
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
 		</reference>
 	</tag_product_list>
 
@@ -383,6 +433,11 @@
 			</action>
 			<action method="addPriceBlockType">
 				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+			<action method="addPriceBlockType">
+				<type>eventbundle</type>
 				<block>egovsready/bundle_catalog_product_price</block>
 				<template>bundle/catalog/product/price.phtml</template>
 			</action>
@@ -435,6 +490,23 @@
 			</action>
 		</reference>
 	</PRODUCT_TYPE_bundle>
+
+	<PRODUCT_TYPE_eventbundle>
+		<reference name="product.clone_prices">
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/view/price.phtml</template>
+			</action>
+		</reference>
+		<reference name="product.info">
+			<action method="addPriceBlockType">
+				<type>bundle</type>
+				<block>egovsready/bundle_catalog_product_price</block>
+				<template>bundle/catalog/product/price.phtml</template>
+			</action>
+		</reference>
+	</PRODUCT_TYPE_eventbundle>
 	
 	<customer_logged_in>
         <reference name="right">

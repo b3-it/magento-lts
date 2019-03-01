@@ -235,7 +235,7 @@
 "Please specify payment method.","Bitte wählen Sie aus, wie Sie bezahlen möchten."
 "Please specify shipping method.","Bitte wählen Sie die Versandart."
 "Please specify shipping methods for all addresses.","Bitte wählen Sie die Versandarten für alle Adressen."
-"Price","Preis"
+"Price","Einzelpreis"
 "Proceed to Checkout","zur Kasse gehen"
 "Product","Artikel"
 "Product Name","Artikelname"
@@ -313,7 +313,7 @@
 "Street Address","Straße"
 "Street Address %s","Straße %s"
 "Submitting order information...","Bestellung wird übermittelt …"
-"Subtotal","Zwischensumme"
+"Subtotal","Zeilensumme"
 "Subtotal must exceed minimum order amount","Bitte beachten Sie die Mindestbestellsumme"
 "Telephone","Telefon"
 "Terms and Conditions","Bestellbedingungen"
@@ -372,15 +372,5 @@
 "Checkout Procedure","Zur Kasse"
 "Selected Product Options","<span class=""hide-on-mobile"">gewählte </span>Produktoptionen"
 "Product Name and Product Information","Produktname und Produktinformationen"
-
-"SiD Checkout Cart Index","SID Bezahlvorgang - Warekorbanzeige"
-"SiD Checkout Multishipping Address select billing","SID Bezahlvorgang - Rechnungsadresse"
-"SiD Checkout Multishipping Address select","SID Bezahlvorgang - Adresse"
-"SiD Checkout Multishipping Addresses","SID Bezahlvorgang - Adressen"
-"SiD Checkout Multishipping Billing","SID Bezahlvorgang - Zahlart"
-"SiD Checkout Multishipping Overview","SID Bezahlvorgang - Übersicht"
-"SiD Checkout Multishipping Shipping","SID Bezahlvorgang - Versand"
-"SiD Checkout Multishipping Success","SID Bezahlvorgang - Erfolgreich"
-"SiD Checkout Multishipping","SID Bezahlvorgang"
 
 

@@ -60,29 +60,45 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 
+            $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
+
             if (isset($data['client_certificate_delete'])) {
                 $data['transfer']['client_certificate'] = null;
+                $data['transfer']['client_certificate_pwd'] = null;
             }
 
             if (isset($data['client_ca_delete'])) {
                 $data['transfer']['client_ca'] = null;
             }
 
+            $_useClientCertCa = false;
+            if (isset($data['use_clientcert_ca'])) {
+                $_useClientCertCa = (bool)$data['use_clientcert_ca'];
+            }
+
             if(isset($_FILES['client_certificate']['name']) && $_FILES['client_certificate']['name'] != '') {
                 try {
                     $uploader = new Varien_File_Uploader('client_certificate');
-                    // Any extention would work
-                    $uploader->setAllowedExtensions(array('cer', 'cert', 'crt', 'pem'));
-                    $uploader->setValidMimeTypes(array('application/octet-stream', 'text/plain'));
+                    // Any extension would work
+                    $uploader->setAllowedExtensions(array('p12', 'pfx'));
+                    $uploader->setValidMimeTypes(array('application/x-pkcs12', 'application/octet-stream', 'text/plain'));
                     $uploader->setAllowRenameFiles(false);
                     $uploader->setFilesDispersion(true);
                     $uploader->setAllowCreateFolders(true);
 
-                    $path = Mage::helper('exportorder')->getBaseStorePathForCertificates();
                     $uploader->save($path);
 
+                    $_result = Mage::helper('exportorder')->convertPkcs12ToPem($path.$uploader->getUploadedFileName(), $data['transfer']['client_certificate_pwd'], $_useClientCertCa);
+
+                    @unlink($path.$uploader->getUploadedFileName());
+
                     //this way the name is saved in DB
-                    $data['transfer']['client_certificate'] = $uploader->getUploadedFileName();
+                    if (isset($_result['key'])) {
+                        $data['transfer']['client_certificate'] = $_result['key'];
+                    }
+                    if (isset($_result['ca'])) {
+                        $data['transfer']['client_ca'] = $_result['ca'];
+                    }
                 } catch (Exception $e) {
                     $msg = Mage::helper('framecontract')->__("Can't save client certificate! Error Message was: ");
                     $msg .= Mage::helper('framecontract')->__($e->getMessage());
@@ -151,7 +167,11 @@ class Sid_Framecontract_Adminhtml_Framecontract_VendorController extends Mage_Ad
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
 				if ($this->getRequest()->getParam('back')) {
-					$this->_redirect('*/*/edit', array('id' => $model->getId()));
+				    $_args = array('id' => $model->getId());
+				    if ($_tab = $this->getRequest()->getParam('tab')) {
+				        $_args['tab'] = $_tab;
+                    }
+					$this->_redirect('*/*/edit', $_args);
 					return;
 				}
 				$this->_redirect('*/*/');

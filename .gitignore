@@ -13,12 +13,9 @@
 .idea/
 .tern-project
 
-Hackathon
-Hackathon*
-hackathon*
-
 # Debug-Files
 lib/Egovs/.localhost
+app/code/local/Egovs/Checkout/etc/debug.flag
 app/code/local/Gka/Checkout/etc/debug.flag
 
 # Magento-Config
@@ -47,6 +44,9 @@ ehthumbs.db
 
 # Zertifikate
 lib/ePayment
+
+# nützliches
+Hackathon*
 
 /app/etc_*
 /app/etc/etc.xml

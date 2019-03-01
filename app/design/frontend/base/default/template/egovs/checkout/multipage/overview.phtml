@@ -1,8 +1,8 @@
 <?php
 /**
- * @category   design_blank
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -14,21 +14,23 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
 	<?php echo $this->getBlockHtml('formkey'); ?>
-	<fieldset>
-			<ul class="form-list group-select">
-				<li>
-					<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
-				</li>
-			</ul>
-
-			<div>
-				<?php echo $this->getChildHtml('infotexts'); ?>
-				<?php echo $this->getChildHtml('agreementtexts'); ?>
-
-				<?php echo $this->getChildHtml('agreements') ?>
-			</div>
-	</fieldset>
 	<fieldset class="multiple-checkout">
+		<?php $_address=$this->getBaseAddress() ?>
+		<?php if (Mage::helper('core')->isModuleEnabled('Egovs_GermanTax') && $_address):?>
+			<div class="col2-set">
+				<h3>
+					<?php echo $this->__('Tax Information') ?>
+				</h3>
+				<div class="col-1">
+					<h4>
+						<?php echo $this->__('Base Address') ?>
+					</h4>
+					<address id="baseAddress">
+						<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
+					</address>
+			    </div>
+			</div>
+		<?php endif;?>
 		<div class="col2-set">
 			<h3>
 				<?php echo $this->__('Billing Information') ?>
@@ -42,7 +44,7 @@
 					   href="<?php echo $this->getAddressesEditUrl() ?>"
 					   title="<?php echo $this->__('Billing Address') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="invoiceAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 			</div>
@@ -55,9 +57,9 @@
 						 title="<?php echo $this->__('Payment Method') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
 				<input type="hidden" name="payment[cc_number]"
-					value="<?php echo $this->htmlEscape($this->getPayment()->getCcNumber())?>" />
+					value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
 				<input type="hidden" name="payment[cc_cid]"
-					value="<?php echo $this->htmlEscape($this->getPayment()->getCcCid())?>" />
+					value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
 				<?php echo $this->getPaymentHtml() ?>
 			</div>
 		</div>
@@ -77,11 +79,10 @@
 						 href="<?php echo $this->getEditShippingUrl() ?>"
 						 title="<?php echo $this->__('Shipping to') ?> <?php echo $this->__('Change') ?>"> </a>
 				</h4>
-				<address>
+				<address id="shippingAddress">
 					<?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?>
 				</address>
 				<?php endif;?>
-
 			</div>
 
 			<div class="col-2">
@@ -103,41 +104,79 @@
 					<br /> <strong><?php echo $this->__('Shipping charges') ?>:&nbsp;</strong>
 					<?php $_excl = $this->getShippingPriceExclTax($_address); ?>
 					<?php $_incl = $this->getShippingPriceInclTax($_address); ?>
-					<?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
-						<?php echo $_excl; ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
-						<?php echo $_incl; ?>
-					<?php endif;?>
-					<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-						<?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
-					<?php endif; ?>
+                    <?php if ($_excl === $_incl): ?>
+                        <?php echo sprintf('%s (%s)',$_excl, $this->__('Tax Free')); ?>
+                    <?php else: ?>
+                        <?php if ($this->helper('tax')->displayShippingPriceExcludingTax()):?>
+                            <?php echo sprintf('%s (%s)', $_excl, $this->__('Excl. Tax')); ?>
+                        <?php endif;?>
+                        <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()):?>
+                            <?php echo sprintf('%s (%s)', $_incl, $this->__('Incl. Tax')); ?>
+                        <?php endif;?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            <?php echo sprintf('%s (%s %s)', $_excl, $this->__('Incl. Tax'), $_incl); ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
 				</div>
 				<?php endif; ?>
-
-
 			</div>
 		</div>
 		<?php endif; ?>
 
 		<div class="col1-wide">
+			<br /><hr /><br />
+			<fieldset>
+					<ul class="form-list group-select">
+						<li>
+							<input type="hidden" name="sendOrderEmail" id="sendOrderEmail" value="1"/> <!-- <label for="sendOrderEmail"> <?php echo $this->__('Please send me a confirmation of this order by e-Mail')?></label> -->
+						</li>
+					</ul>
 
+					<div>
+						<?php echo $this->getChildHtml('infotexts'); ?>
+						<?php echo $this->getChildHtml('agreementtexts'); ?>
+
+						<?php echo $this->getChildHtml('agreements') ?>
+					</div>
+			</fieldset>
 			<table class="data-table" id="checkout-review-table">
 				<?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
-				<col />
-				<col width="80" />
-				<col width="80" />
-				<col width="10" />
-				<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-				<col width="80" />
-				<col width="80" />
-				<?php endif; ?>
+                <colgroup>
+                    <col />
+                    <col width="90" />
+                    <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                        <col width="90" />
+                    <?php endif; ?>
+                    <col width="10" />
+                    <col width="90" />
+                    <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                        <col width="90" />
+                    <?php endif; ?>
+                </colgroup>
 				<thead>
 					<tr>
 						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
-						<th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Qty') ?></th>
-						<th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
+						<th colspan="<?php echo $colspan ?>" class="a-center">
+							<?php echo $this->__('Price') ?><br />
+                            <?php if ($_address->getTaxAmount() <= 0.009): ?>
+                                <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+							<?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                <?php echo sprintf('(%s)', $this->__('Excl. Tax')); ?>
+                            <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                <?php echo sprintf('(%s)', $this->__('Incl. Tax')); ?>
+                            <?php endif; ?>
+						</th>
+						<th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+						<th colspan="<?php echo $colspan ?>" class="a-center">
+							<?php echo $this->__('Subtotal') ?>
+                            <?php if ($_address->getTaxAmount() <= 0.009): ?>
+                                <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+                            <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                <?php echo sprintf('(%s)', $this->__('Excl. Tax')); ?>
+                            <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                <?php echo sprintf('(%s)', $this->__('Incl. Tax')); ?>
+                            <?php endif; ?>
+						</th>
 					</tr>
 					<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
 					<tr>
@@ -161,10 +200,7 @@
 				<?php echo $this->getChildHtml('totals'); ?>
 			</table>
 		</div>
-		<p class="grand-total">
-			<span style="font-size:1.1rem;"><?php echo $this->__('Grand Total:') ?> </span>
-			<?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
-		</p>
+
 		<div class="buttons-set" id="review-buttons-container">
 			<a href="<?php echo $this->getBackUrl() ?>"class="button"><?php echo $this->__('Back') ?> </a>
 			<a class="button" href="<?php echo $this->getUrl() ?>">
@@ -174,10 +210,10 @@
 				<span><?php echo $this->__('Buy for %s', $this->helper('checkout')->getQuote()->getStore()->formatPrice($this->getTotal(), false)) ?> </span>
 			</button>
 		</div>
-    	<span id="review-please-wait" class="please-wait"
-	          style="display: none;"> <img
-			  src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
-			  alt="<?php echo $this->__('Please Wait') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+    	<span id="review-please-wait" class="please-wait" style="display: none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
+			     alt="<?php echo $this->__('Please Wait') ?>" class="v-middle" />
+            <?php echo $this->__('Submitting order information...') ?>
 		</span>
 	</fieldset>
 </form>

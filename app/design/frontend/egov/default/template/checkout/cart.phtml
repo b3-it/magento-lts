@@ -12,7 +12,7 @@
  * @var $this Mage_Checkout_Block_Cart
  */
 
-
+$_hasZeroTax = ( ($this->getQuote()->getGrandTotal() - $this->getQuote()->getSubtotal()) <= 0.009 );
 $_priceDisplay = ($this->helper('tax')->displayCartBothPrices()) ? 'display-both-prices' : 'display-single-price';
 $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
 ?>
@@ -25,16 +25,20 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
-            <col class="product-cart-image" width="50" />
-            <col class="roduct-cart-info" />
-            <col class="product-cart-price" />
-            <col class="product-cart-price" />
-            <col class="product-cart-total" />
-            <col class="product-cart-remove" width="20" />
-        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-            <col class="" />
-            <col class="" />
-        <?php endif; ?>
+            <colgroup>
+                <col class="product-cart-image" width="50" />
+                <col class="roduct-cart-info" />
+                <col class="product-cart-price" />
+                <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                    <col class="product-cart-price" />
+                <?php endif; ?>
+                <col class="product-cart-qty" width="60" />
+                <col class="product-cart-total" />
+                <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                    <col class="product-cart-total" />
+                <?php endif; ?>
+                <col class="product-cart-remove" width="20" />
+            </colgroup>
             <thead>
                 <tr>
                     <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
@@ -42,13 +46,39 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
                         <span class="nobr product-name"><?php echo $this->__('Product Name') ?></span>
                     </th>
                     <th class="a-center cart-price-head" colspan="<?php echo $mergedCells; ?>">
-                        <span class="nobr"><?php echo $this->__('Price') ?></span>
+                        <span class="nobr">
+                            <?php echo $this->__('Price') ?>
+                            <?php if (!$this->helper('tax')->displayCartBothPrices()): ?>
+                                <div>
+                                <?php if ( $_hasZeroTax ): ?>
+                                    <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+                                <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                    <?php echo $this->__('(Excl. Tax)'); ?>
+                                <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                    <?php echo $this->__('(Incl. Tax)'); ?>
+                                <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </span>
                     </th>
                     <th rowspan="<?php echo $mergedCells; ?>" class="a-center">
                         <?php echo $this->__('Qty') ?>
                     </th>
                     <th class="a-center cart-total-head" colspan="<?php echo $mergedCells; ?>">
-                        <?php echo $this->__('Subtotal') ?>
+                        <span class="nobr">
+                            <?php echo $this->__('Subtotal') ?>
+                            <?php if (!$this->helper('tax')->displayCartBothPrices()): ?>
+                                <div>
+                                <?php if ( $_hasZeroTax ): ?>
+                                    <?php echo sprintf('(%s)', $this->__('Tax Free')); ?>
+                                <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 1 ): ?>
+                                    <?php echo $this->__('(Excl. Tax)'); ?>
+                                <?php elseif( Mage::getStoreConfig('tax/cart_display/price') == 2 ): ?>
+                                    <?php echo $this->__('(Incl. Tax)'); ?>
+                                <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </span>
                     </th>
                     <th class="a-center cart-remove-head" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
                 </tr>

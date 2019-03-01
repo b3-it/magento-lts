@@ -488,11 +488,13 @@ p.product-name {
 .mini-products-list {
 
     .product-image {
-        min-width: 50px;
+        //min-width: 50px;
+        display: none;
     }
     .product-details {
         display: block;
-        width: 100%;
+        //width: 70%;
+        vertical-align: top;
 
         // Vertically center product name
         .product-name {

@@ -11,6 +11,11 @@
             <block type="framecontract/adminhtml_vendor" name="framecontract" />
         </reference>
     </adminhtml_framecontract_vendor_index>
+    <adminhtml_framecontract_vendor_edit>
+        <reference name="head">
+            <action method="addJs"><script>sid/framecontract/vendor.js</script></action>
+        </reference>
+    </adminhtml_framecontract_vendor_edit>
     <adminhtml_framecontract_product_index>
         <reference name="content">
             <block type="framecontract/adminhtml_product" name="framecontract" />

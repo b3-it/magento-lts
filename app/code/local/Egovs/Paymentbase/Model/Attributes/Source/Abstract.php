@@ -21,7 +21,7 @@ abstract class Egovs_Paymentbase_Model_Attributes_Source_Abstract extends Mage_E
 	 * 
 	 * @see Mage_Eav_Model_Entity_Attribute_Source_Table::getAllOptions()
 	 */
-    public function getAllOptions() {
+    public function getAllOptions($withEmpty = true, $defaultValues = false) {
 
         if (!$this->_options) {
  			$this->_options = array();

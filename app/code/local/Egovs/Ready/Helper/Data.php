@@ -66,5 +66,16 @@ class Egovs_Ready_Helper_Data extends Mage_Core_Helper_Data
 	
 		return $this->_translator->translate($args);
 	}
+
+    /**
+     * Display additional price info (like tax, shipping cost etc.)
+     *
+     * @param null $store
+     *
+     * @return bool
+     */
+	public function displayAdditionalPriceBlock($store = null) {
+        return Mage::getStoreConfigFlag('catalog/price/display_block_below_price', $store);
+    }
 	
 }

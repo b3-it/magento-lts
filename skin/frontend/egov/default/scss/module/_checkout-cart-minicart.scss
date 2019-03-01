@@ -11,7 +11,7 @@
 
 #header-cart {
     margin: 0px !important;
-    
+
     @include bp(max-width, 490px) {
     	position: absolute;
     	top: 40px;
@@ -26,7 +26,12 @@
         display: inline-block;
         width: 33%;
     }
-    
+
+    .pseudo-input {
+        position: relative;
+        padding: 5px 11px;
+    }
+
     .skip-link {
         @include bp(max-width, $bp-medium) {
             width: 90%;
@@ -48,6 +53,7 @@
         clear: both;
         position: relative;
         background-color: $global-minicart-background;
+        line-height: normal;
     }
 
     .block-cart {
@@ -80,7 +86,6 @@
     .mini-products-list {
         padding: $box-spacing;
         padding-top: 0px;
-        margin-bottom: 20px;
 
         li {
             padding: 8px 5px 8px 11px;
@@ -129,16 +134,40 @@
 
     .info-wrapper {
         margin-bottom: 0.5em;
+        width: 90%;
         position: absolute;
-        right: 0px;
+        right: 0;
 
-        th {
-            text-transform: uppercase;
-            padding-right: $gap;
-        }
         td {
             color: $global-fontcolor-dark;
             clear: right;
+        }
+
+        .mini-cart-first {
+            td:last-child {
+                text-align: right;
+                padding-left: 5px;
+            }
+        }
+
+        .mini-cart-secound {
+            td {
+                text-align: center;
+
+                &:first-child {
+                    padding-right: 10px;
+                    text-align: left;
+                }
+
+                .price, .shipping-cost-details {
+                    display: inline-block;
+                    float: right;
+                }
+
+                .shipping-cost-details {
+                    margin-left: 5px;
+                }
+            }
         }
 
         .qty-wrapper {
@@ -176,7 +205,7 @@
 
     .subtotal {
         background-color: $global-minicart-background;
-        line-height: $global-minicart-lineheight;
+        line-height: 1.1rem;
         padding-right: $global-boxpadding * 2;
 
         .label {
@@ -273,7 +302,7 @@ div.block-cart {
                 p.product-name {
                     padding: 0px;
                     overflow: hidden;
-                    max-height: 2rem;
+                    max-height: 2.2rem;
                 }
             }
         }
@@ -286,13 +315,13 @@ div.block-cart {
     display: block;
     position: absolute;
     top: 40px;
-    
+
     @include bp(max-width, $bp-medium) {
     	top: 45px;
     	right: 27%;
     	width: 50%;
     }
-    
+
     @include bp(max-width, 500px) {
     	width: 100%;
     }

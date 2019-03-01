@@ -1,100 +1,108 @@
 <?php
+
+/**
+ * Class Egovs_Base_Helper_Config
+ *
+ * @category  Egovs
+ * @package   Egovs_Base
+ * @author    Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright Copyright (c) 2009 - 2019 B3 IT Systeme GmbH - https://www.b3-it.de
+ * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
+ */
 class Egovs_Base_Helper_Config extends Mage_Core_Helper_Abstract
 {
-    protected $_guestconfig = null;
-    protected $_shippingconfig = null;
+    protected $_guestConfig;
+    protected $_shippingConfig;
+    protected $_registerConfig;
 
-    protected $_registerconfig;
     protected $_arrShippingReq = array(
-                                     'firstname', 'lastname', 'street',
-                                     'city', 'postcode', 'country_id'
-                                 );
+        'firstname', 'lastname', 'street',
+        'city', 'postcode', 'country_id',
+    );
+
+    protected $_store = NULL;
 
     /**
      * Config-Status für ein bestimmtes Feld innerhalb der Kundenkonfiguration
      *
-     * @param string $key               Feldname
-     * @param string $CheckoutMethod    Methode
+     * @param string                     $key            Feldname
+     * @param string                     $CheckoutMethod Methode
+     * @param int|\Mage_Core_Model_Store $store          ID oder Store-Instance
      *
      * @return string
+     * @throws \Mage_Core_Model_Store_Exception
      */
-    public function getConfig($key, $CheckoutMethod)
-    {
-        $store = Mage::app()->getStore();
+    public function getConfig($key, $CheckoutMethod, $store = NULL) {
+        if ($store instanceof Mage_Core_Model_Store || is_int($store)) {
+            $store = Mage::app()->getStore($store);
+        } else {
+            $store = Mage::app()->getStore();
+        }
 
-	    	// Gast
-	    	if(Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST == $CheckoutMethod) {
-	    	    if (is_null($this->_guestconfig)) {
-	    	        $this->_guestconfig = Mage::getStoreConfig('customer/guestrequired', $store->getId());
-		        }
-		        return isset($this->_guestconfig[$key]) ? $this->_guestconfig[$key] : '';
-	    	}
-	    	// Versand
-	    	elseif ('shipping' == $CheckoutMethod) {
-	    	    if( in_array($key, $this->_arrShippingReq) ) {
-	    	        return true;
-	    	    }
+        // Gast
+        if (Mage_Sales_Model_Quote::CHECKOUT_METHOD_GUEST === $CheckoutMethod) {
+            if ($this->_guestConfig === NULL) {
+                $this->_guestConfig = Mage::getStoreConfig('customer/guestrequired', $store);
+            }
+            return isset($this->_guestConfig[$key]) ? $this->_guestConfig[$key] : '';
+        }
+        // Versand
+        if ('shipping' === $CheckoutMethod) {
+            if (in_array($key, $this->_arrShippingReq)) {
+                return true;
+            }
 
-		        if (is_null($this->_shippingconfig)) {
-		            $this->_shippingconfig = Mage::getStoreConfig('customer/shippingrequired', $store->getId());
-		        }
-		        return isset($this->_shippingconfig[$key]) ? $this->_shippingconfig[$key] : '';
-	    	}
-	    	// Anmeldung
-	    	else {
-		        if (is_null($this->_registerconfig)) {
-		            $this->_registerconfig = Mage::getStoreConfig('customer/registerrequired', $store->getId());
-		        }
-		        return isset($this->_registerconfig[$key]) ? $this->_registerconfig[$key] : '';
-	    	}
+            if ($this->_shippingConfig === NULL) {
+                $this->_shippingConfig = Mage::getStoreConfig('customer/shippingrequired', $store);
+            }
+            return isset($this->_shippingConfig[$key]) ? $this->_shippingConfig[$key] : '';
+        }
+        // Anmeldung
+        if ($this->_registerConfig === NULL) {
+            $this->_registerConfig = Mage::getStoreConfig('customer/registerrequired', $store);
+        }
+        return isset($this->_registerConfig[$key]) ? $this->_registerConfig[$key] : '';
     }
 
     /**
      * Abfrage, ob ein bestimmtes Feld für Benutzerdaten ein Pflicht-Feld ist
      *
-     * @param string $key               Feldname
-     * @param string $CheckoutMethod    Methode
+     * @param string                     $key            Feldname
+     * @param string                     $checkoutMethod Methode
+     * @param int|\Mage_Core_Model_Store $store          ID oder Store-Instance
      *
      * @return bool
+     * @throws \Mage_Core_Model_Store_Exception
      */
-    public function isFieldRequired($key, $CheckoutMethod = null)
-    {
-        return ($this->getConfig($key, $CheckoutMethod) == 'req');
+    public function isFieldRequired($key, $checkoutMethod = NULL, $store = NULL) {
+        return ($this->getConfig($key, $checkoutMethod, $store) === 'req');
     }
 
     /**
      * Abfrage, ob ein bestimmtes Feld für Benutzerdaten sichtbar ist
      *
-     * @param string $key               Feldname
-     * @param string $CheckoutMethod    Methode
+     * @param string                     $key            Feldname
+     * @param string                     $checkoutMethod Methode
+     * @param int|\Mage_Core_Model_Store $store          ID oder Store-Instance
      *
      * @return bool
+     * @throws \Mage_Core_Model_Store_Exception
      */
-    public function isFieldVisible($key, $CheckoutMethod = null)
-    {
-        if ( $this->getConfig($key, $CheckoutMethod) == '' ) {
-            return false;
-        }
-        else {
-            return true;
-        }
+    public function isFieldVisible($key, $checkoutMethod = NULL, $store = NULL) {
+        return $this->getConfig($key, $checkoutMethod, $store) !== '';
     }
-    
+
     /**
      * HTML-Code je nach dem, ob ein bestimmtes Feld für Benutzerdaten ein Pflicht-Feld ist
      *
-     * @param string $key               Feldname
-     * @param string $CheckoutMethod    Methode
+     * @param string                     $key            Feldname
+     * @param string                     $checkoutMethod Methode
+     * @param int|\Mage_Core_Model_Store $store          ID oder Store-Instance
      *
      * @return bool
+     * @throws \Mage_Core_Model_Store_Exception
      */
-    public function getFieldRequiredHtml($key, $CheckoutMethod = null)
-    {
-    	if ( $this->isFieldRequired($key, $CheckoutMethod) ) {
-    		return '<span class="required">*</span>';
-    	}
-    	else {
-    		return '';
-    	}
+    public function getFieldRequiredHtml($key, $checkoutMethod = NULL, $store = NULL) {
+        return $this->isFieldRequired($key, $checkoutMethod, $store) ? '<span class="required">*</span>' : '';
     }
 }

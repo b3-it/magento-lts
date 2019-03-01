@@ -229,8 +229,15 @@ class Egovs_Checkout_Block_Multipage_Shippingmethod extends Mage_Sales_Block_Ite
         return $this->getUrl('*/*/backtoaddresses', array('_secure'=>true));
     }
 
-    public function getShippingPrice($address, $price, $flag) {
-    	$price = $this->_getShippingPrice($price, $flag, $address);
+    /**
+     * @param $address      Address
+     * @param $price        Price
+     * @param $includingTax Including Tax
+     *
+     * @return mixed
+     */
+    public function getShippingPrice($address, $price, $includingTax) {
+    	$price = $this->_getShippingPrice($price, $includingTax, $address);
         return $address->getQuote()->getStore()->convertPrice($price, true);
     }
     
