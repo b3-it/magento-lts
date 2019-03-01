@@ -22,7 +22,11 @@
 
 .account-login {
     @include egov_loginform;
-    
+
+    input {
+        margin: 0;
+    }
+
     position: relative;
     top: -25px;
 }
@@ -48,10 +52,10 @@
 
         li {
             font-weight: bold;
-            
+
             &:not(:last-child) {
                 margin-bottom: $global-boxmargin / 2;
-            }            
+            }
 
             em {
                 color: $global-warning-color;
