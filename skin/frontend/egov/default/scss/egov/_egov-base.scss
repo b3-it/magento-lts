@@ -16,6 +16,22 @@ div.validation-advice {
     outline: $global-warning-color;
 }
 
+.pseudo-input {
+    background-color: $global-fontcolor-light;
+    color: $global-fontcolor-dark;
+    font-size: $global-fontsize;
+    line-height: $global-lineheight;
+    border: 1px solid $global-wrapper-color;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.22) inset;
+    outline: medium none;
+    padding: 10px 11px;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+}
+
 #context-help-popup {
     position: fixed;
     background-color: $global-wrapper-color;
