@@ -168,7 +168,6 @@ class Egovs_Base_Model_Security_Filter
 		ini_set('session.use_only_cookies', true);
 		ini_set('session.cookie_httponly', true);
 		*/
-		ini_set('register_globals', 'Off');
 		ini_set('expose_php', false);
 		ini_set('display_startup_errors', false);
 		//ini_set('session.save_path', '/some/path');

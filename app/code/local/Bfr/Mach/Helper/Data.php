@@ -20,7 +20,9 @@ class Bfr_Mach_Helper_Data extends Mage_Core_Helper_Abstract
 			
 			try {
 			if (!is_dir($path)) {
-				mkdir($path);
+                if (!mkdir($path) && !is_dir($path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+                }
 			}
 			
 			$handle=opendir($path);
@@ -41,10 +43,12 @@ class Bfr_Mach_Helper_Data extends Mage_Core_Helper_Abstract
 			
 		try {
 			if (!is_dir($path)) {
-				mkdir($path);
+                if (!mkdir($path) && !is_dir($path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+                }
 			}
 			
-			$datei = fopen($path.$filename,"w");
+			$datei = fopen($path.$filename, 'wb');
 			fwrite($datei, $content);
 			fclose($datei);
 			

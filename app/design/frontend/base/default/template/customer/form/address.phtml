@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     base_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -37,7 +37,7 @@
         <h2 class="legend"><?php echo $this->__('Personal Information') ?></h2>
         <ul class="form-list">
             <li class="fields">
-                <?php echo $this->getLayout()->createBlock('egovsbase/customer_widget_name')->setObject($data)->toHtml() ?>
+                <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($data)->toHtml() ?>
             </li>
             <li>
                 <label for="company"><?php echo $this->__('Company') ?></label>
@@ -128,9 +128,9 @@
         <?php endforeach ?>
         </ul>
     </div>
-    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     <div class="buttons-set">
-        <a class="button" href="<?php echo $this->getUrl('customer/address/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        <p class="back-link"><a href="<?php echo $this->getUrl('customer/address/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
         <button data-action="save-customer-address" type="submit" class="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save Address')) ?>"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
     </div>
 </form>

@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -54,20 +54,10 @@ function setPostcodeOptional(zipElement, country) {
         while (zipElement.hasClassName('required-entry')) {
             zipElement.removeClassName('required-entry');
         }
-        //zipElement.up(1).down('label > span.required').hide();
-        //http://premius.net/blog/php/116-fixing-magento-error-error-in-unknown-object-fireevent.html
-        var zipElementLabel = zipElement.up(1).down('label > span.required');
-        if (zipElementLabel) {
-            zipElementLabel.hide();
-        }
+        zipElement.up(1).down('label > span.required').hide();
     } else {
         zipElement.addClassName('required-entry');
-        //zipElement.up(1).down('label > span.required').show();
-        //http://premius.net/blog/php/116-fixing-magento-error-error-in-unknown-object-fireevent.html
-        var zipElementLabel = zipElement.up(1).down('label > span.required');
-        if (zipElementLabel) {
-            zipElementLabel.show();
-        }
+        zipElement.up(1).down('label > span.required').show();
     }
 }
 

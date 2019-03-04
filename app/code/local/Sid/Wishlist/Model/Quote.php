@@ -1482,7 +1482,8 @@ class Sid_Wishlist_Model_Quote extends Sid_Wishlist_Model_Abstract
 			$errorLists = $this->_errorInfoGroups;
 		}
 
-		foreach ($errorLists as $type => $errorList) {
+        /** @noinspection SuspiciousLoopInspection */
+        foreach ($errorLists as $type => $errorList) {
 			$removedItems = $errorList->removeItemsByParams($params);
 			foreach ($removedItems as $item) {
 				if ($item['message'] !== null) {

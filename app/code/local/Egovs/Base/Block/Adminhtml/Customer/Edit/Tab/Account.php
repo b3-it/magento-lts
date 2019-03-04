@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -33,7 +33,11 @@
  */
 class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtml_Block_Customer_Edit_Tab_Account
 {
-
+    /**
+     * Initialize form
+     *
+     * @return Mage_Adminhtml_Block_Customer_Edit_Tab_Account
+     */
     public function initForm()
     {
         $form = new Varien_Data_Form();
@@ -42,7 +46,7 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
 
         $customer = Mage::registry('current_customer');
 
-        /* @var $customerForm Mage_Customer_Model_Form */
+        /** @var $customerForm Mage_Customer_Model_Form */
         $customerForm = Mage::getModel('customer/form');
         $customerForm->setEntity($customer)
             ->setFormCode('adminhtml_customer')
@@ -238,7 +242,7 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             }
         }
 
-        // make sendemail and sendmail_store_id disabled, if website_id has empty value
+        // Make sendemail and sendmail_store_id disabled, if website_id has empty value
         $isSingleMode = Mage::app()->isSingleStoreMode();
         $sendEmailId = $isSingleMode ? 'sendemail' : 'sendemail_store_id';
         $sendEmail = $form->getElement($sendEmailId);
@@ -282,19 +286,5 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
         $form->setValues($customer->getData());
         $this->setForm($form);
         return $this;
-    }
-
-    /**
-     * Return predefined additional element types
-     *
-     * @return array
-     */
-    protected function _getAdditionalElementTypes()
-    {
-        return array(
-            'file'      => Mage::getConfig()->getBlockClassName('adminhtml/customer_form_element_file'),
-            'image'     => Mage::getConfig()->getBlockClassName('adminhtml/customer_form_element_image'),
-            'boolean'   => Mage::getConfig()->getBlockClassName('adminhtml/customer_form_element_boolean'),
-        );
     }
 }

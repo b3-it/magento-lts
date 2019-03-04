@@ -35,7 +35,7 @@ class Egovs_SepaDebitSax_Model_Webservice_Soap_Client extends SoapClient // Zend
 	public function getEmptyLinePos($xml, $start = 0) {
 		$res = null;
 		
-		for ($i = $start; $i < count($xml); $i++) {
+		for ($i = $start, $iMax = count($xml); $i < $iMax; $i++) {
 			if (strlen(trim($xml[$i]))  == 0) {
 				$res = $i +1;
 				break;

@@ -90,8 +90,10 @@ class Sid_Haushalt_Model_Export_Abstract extends Mage_Core_Model_Abstract
     	try 
     	{
 	    	if(!file_exists($dir)){
-	    		
-	    		mkdir($dir);
+
+                if (!mkdir($dir) && !is_dir($dir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+                }
 	    	}
 	    	
 	    	file_put_contents($dir.$this->getFilename(),$data);

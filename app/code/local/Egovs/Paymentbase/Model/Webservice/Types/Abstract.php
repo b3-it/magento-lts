@@ -19,7 +19,7 @@ abstract class Egovs_Paymentbase_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Abstract() {
+	public function __construct() {
 		
 	}
 	

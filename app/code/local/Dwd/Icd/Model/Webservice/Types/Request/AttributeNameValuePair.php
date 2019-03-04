@@ -9,13 +9,13 @@
  * @category   	Dwd
  * @package    	Dwd_Icd
  * @name       	<Namespace>_<Module>_Block_<Submodule>
- * @author 		Frank Rochlitzer <f.rochlitzer@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2013 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @author 		Frank Rochlitzer <f.rochlitzer@b3-it.de>
+ * @copyright  	Copyright (c) 2013 - 2018 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Dwd_Icd_Model_Webservice_Types_Request_AttributeNameValuePair
 {
-	public function Dwd_Icd_Model_Webservice_Types_Request_AttributeNameValuePair() {
+	public function __construct() {
 		$args = func_get_args();
 		
 		if (isset($args[0]) && is_array($args[0]) && count($args) == 1) {

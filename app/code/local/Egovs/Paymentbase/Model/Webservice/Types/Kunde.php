@@ -59,7 +59,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Kunde extends Egovs_Paymentbase_M
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_Kunde(
+	public function __construct(
 			$EShopKundenNr = null,
 			$sprache = null,
 			$titel = null,
@@ -113,7 +113,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_Kunde extends Egovs_Paymentbase_M
 			$this->bonitaetsLevelLastschrift = (int) $bonitaetsLevelLastschrift;
 		if ($bonitaetsLevelKreditkarte !== null)
 			$this->bonitaetsLevelKreditkarte = (int) $bonitaetsLevelKreditkarte;
-		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+		parent::__construct();
 	}
 	
 	/**

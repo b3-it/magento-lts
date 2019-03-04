@@ -20,7 +20,7 @@
  *
  * @category    Varien
  * @package     Varien_Http
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -130,6 +130,7 @@ class Varien_Http_Client extends Zend_Http_Client
     	return parent::setConfig($config);
     }
     
+    
     public function getExcludeProxy($uri)
     {
     	$excludeList = null;
@@ -157,4 +158,25 @@ class Varien_Http_Client extends Zend_Http_Client
     	 
     }
     
+    public function setUri($uri) {
+    	parent::setUri($uri);
+    	 
+    	$uri = $this->getUri(true);
+    	 
+    	$this->_checkForProxyExcludes($uri, $this->config);
+    	 
+    	//Config auch in Adapter neu setzen
+    	$this->setConfig($this->config);
+    	 
+    	return $this;
+    }
+    
+    protected function _checkForProxyExcludes($uri, &$config = null) {
+    	try {
+    		Egovs_Paymentbase_Helper_Data::checkForProxyExcludes($uri, $config);
+    	} catch (Exception $e) {
+    	}
+    	 
+    	return $this;
+    }
 }

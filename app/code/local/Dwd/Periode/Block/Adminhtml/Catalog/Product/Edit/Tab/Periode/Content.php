@@ -125,6 +125,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     	  $res[] = "+ ". Mage::helper('core')->currency($item->getPrice(), true, false);
     	  if( count($tp->getItems()) )
     	  {
+              /** @noinspection SuspiciousLoopInspection */
     	      foreach( $tp->getItems() AS $item )
     	      {
 
@@ -144,6 +145,7 @@ class Dwd_Periode_Block_Adminhtml_Catalog_Product_Edit_Tab_Periode_Content exten
     	{
     		$res = array();
 
+            /** @noinspection SuspiciousLoopInspection */
     		foreach( $tp->getItems() AS $item )
     		{
     			$res[] = array($item->getQty(), $item->getPrice());

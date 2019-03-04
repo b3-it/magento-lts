@@ -82,7 +82,9 @@ class Egovs_Base_Helper_Emailsetup_Data extends Mage_Core_Helper_Abstract
                 if ( strlen($logo_to) ) {
                     // Ziel-Pfad ist nicht da => anlegen
                     if ( !is_dir(dirname($logo_to)) ) {
-                        mkdir(dirname($logo_to), $this->_defaultDirectoryMask, TRUE);
+                        if (!mkdir($concurrentDirectory = dirname($logo_to), $this->_defaultDirectoryMask, true) && !is_dir($concurrentDirectory)) {
+                            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+                        }
                     }
 
                     // Die Datei existiert nicht => kopieren

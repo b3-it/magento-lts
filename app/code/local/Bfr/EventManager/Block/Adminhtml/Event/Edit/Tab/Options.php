@@ -206,7 +206,6 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Options extends Mage_Admin
   	}
   	$totals->setData($fields);
   	$this->setTotals($totals);
-  	return;
   }
   
 

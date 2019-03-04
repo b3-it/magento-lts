@@ -319,8 +319,6 @@ class Egovs_Openaccountpayment_Model_Openaccount extends Egovs_Paymentbase_Model
 		$objBuchungsliste = $this->createAccountingList($payment, $amount, null, $iDatumFaelligkeit);
 			
 		// Webservice aufrufen
-		$objResult = null;
-		
 		$objResult = $this->_getSoapClient()->ueberweisenNachLieferungMitBLP($this->_getECustomerId(), $objBuchungsliste, $this->getBuchungsListeParameter($payment, $amount));
 
 		$this->validateSoapResult($objResult, $objBuchungsliste, 'ueberweisenNachLieferung');

@@ -20,7 +20,7 @@
  *
  * @category    Varien
  * @package     Varien_Simplexml
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -507,16 +507,14 @@ class Varien_Simplexml_Config
     public function loadString($string)
     {
         if (is_string($string)) {
-        try 
-	    	{
-	            $xml = simplexml_load_string($string, $this->_elementClass);
-		    	if ($xml instanceof Varien_Simplexml_Element) {
-	                $this->_xml = $xml;
-	                return true;
-	            }
-	    	}
-	    	catch(Exception $ex)
-	    	{
+        	try {
+            	$xml = simplexml_load_string($string, $this->_elementClass);
+
+            	if ($xml instanceof Varien_Simplexml_Element) {
+                	$this->_xml = $xml;
+                	return true;
+            	}
+        	} catch(Exception $ex) {
 	    		//var_dump($string);
 	    		 Mage::logException($ex);
 	    	}

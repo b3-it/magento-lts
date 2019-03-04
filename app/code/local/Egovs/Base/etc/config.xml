@@ -60,6 +60,16 @@
                         <sort_order>20</sort_order>
                         <action>adminhtml/egovsbase_tools_analyse_sales_order_item</action>
                     </egovs_base_order_item>
+                    <recurring_profile>
+                        <depends>
+                            <module>HideMe</module>
+                        </depends>
+                    </recurring_profile>
+                    <billing_agreement>
+                        <depends>
+                            <module>HideMe</module>
+                        </depends>
+                    </billing_agreement>
                 </children>
             </sales>
             <system>
@@ -230,10 +240,12 @@
         </translate>
         <layout>
             <updates>
-                <egovsbase>
-                    <!-- z_ muss vorhanden sein, damit XML möglichst als letztes geparsed wird! -->
-                    <file>z_egovs_base.xml</file>
-                </egovsbase>
+                <sales_billing_agreement>
+                    <file>egovs/blank.xml</file>
+                </sales_billing_agreement>
+                <sales_recurring_profile>
+                    <file>egovs/blank.xml</file>
+                </sales_recurring_profile>
             </updates>
         </layout>
         <routers>
@@ -298,6 +310,7 @@
                 <rewrite>
                     <email>Egovs_Base_Model_Core_Email</email>
                     <email_template>Egovs_Base_Model_Core_Email_Template</email_template>
+                    <email_template_mailer>Egovs_Base_Model_Core_Email_Template_Mailer</email_template_mailer>
                     <email_queue>Egovs_Base_Model_Core_Email_Queue</email_queue>
                 </rewrite>
             </core>
@@ -759,9 +772,9 @@
             </invoice_additional>
         </sales_email>
         <customer>
-        	<create_account>
-        		<register_user_on_login>1</register_user_on_login>
-        	</create_account>
+            <create_account>
+                <register_user_on_login>1</register_user_on_login>
+            </create_account>
             <guestrequired>
                 <prefix>opt</prefix>
                 <firstname>req</firstname>
@@ -807,6 +820,12 @@
                 <country_id>req</country_id>
             </shippingrequired>
         </customer>
+        <contacts>
+            <email>
+                <recipient_email><![CDATA[kontakt@testshop.org]]></recipient_email>
+                <sender_email_identity>eGov-Mustershop Kontakt</sender_email_identity>
+            </email>
+        </contacts>
     </default>
 
     <crontab>

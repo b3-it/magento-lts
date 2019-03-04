@@ -250,7 +250,6 @@ class Egovs_Search_Helper_Colognephon extends Mage_Core_Helper_Abstract
 	
 		// entfernen aller Codes "0" ausser am Anfang
 		$codelen      = strlen($code);
-		$num          = array();
 		$num          = str_split($code);
 		$phoneticcode = $num[0];
 	

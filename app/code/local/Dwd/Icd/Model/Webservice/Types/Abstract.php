@@ -17,7 +17,7 @@ abstract class Dwd_Icd_Model_Webservice_Types_Abstract
 	 * 
 	 * @return void
 	 */
-	public function Dwd_Icd_Model_Webservice_Types_Abstract() {
+	public function __construct() {
 		
 	}
 	
@@ -85,8 +85,12 @@ abstract class Dwd_Icd_Model_Webservice_Types_Abstract
 		
 		$this->$name = $value;
 	}
-	
-	/**
+
+	public function __isset($name) {
+        return isset($this->$name);
+    }
+
+    /**
 	 * Liefert den Wert zu $name
 	 * 
 	 * Falls der Wert von $name eine Instanz von Egovs_Paymentbase_Model_Webservice_Types_Abstract ist,

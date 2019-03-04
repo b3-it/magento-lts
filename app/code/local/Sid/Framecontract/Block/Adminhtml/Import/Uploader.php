@@ -179,7 +179,7 @@ implements Varien_Data_Form_Element_Renderer_Interface
     {
     	if($this->_token == null)
     	{
-    		$this->_token = md5(rand(1, 1000) . time());
+    		$this->_token = md5(mt_rand(1, 1000) . time());
     	}
     	
     	return $this->_token;

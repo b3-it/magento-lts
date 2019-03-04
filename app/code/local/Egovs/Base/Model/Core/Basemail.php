@@ -182,7 +182,7 @@ class Egovs_Base_Model_Core_Basemail extends Mage_Core_Model_Abstract {
 								continue;
 							}
 							foreach ($headers[$_recp] as $i => $_to) {
-								if (preg_match(sprintf("/%s/i", preg_quote($recipient)), $_to)) {
+								if (preg_match(sprintf("/%s/i", preg_quote($recipient, '/')), $_to)) {
 									unset($headers[$_recp][$i]);
 								}
 							}

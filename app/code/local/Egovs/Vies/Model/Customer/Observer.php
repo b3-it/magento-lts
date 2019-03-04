@@ -252,7 +252,7 @@ class Egovs_Vies_Model_Customer_Observer extends Mage_Customer_Model_Observer
 			);
 		
 			$values = $assignedCountries->getSelectedCountriesArray($customerGroup);
-			for ($i =0; $i < count($values); $i++) {
+			for ($i =0, $iMax = count($values); $i < $iMax; $i++) {
 				$fieldset->addField(
 						'assigned_countries'.$i,
 						'hidden',

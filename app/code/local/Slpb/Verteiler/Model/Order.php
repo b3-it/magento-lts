@@ -11,7 +11,7 @@ class Slpb_Verteiler_Model_Order extends Slpb_Verteiler_Model_Abstract
         $verteiler = Mage::getModel('verteiler/verteiler_customer')->getCollection();
    		$verteiler->getSelect()->where('verteiler_id=?', intval($verteiler_id));
    		
-   		for($i =0; $i < count($products); $i++) 
+   		for($i =0, $iMax = count($products); $i < $iMax; $i++)
    		{
    			$id = $products[$i]['id'];
    			$qty = $products[$i]['qty'];

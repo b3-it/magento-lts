@@ -18,14 +18,20 @@ class Sid_Haushalt_Model_Export_Type_Lg04 extends Sid_Haushalt_Model_Export_Abst
 		$ids = implode(',',$this->_orderIds);
 		$orders->getSelect()->where('entity_id IN ('.$ids.')');
 		//$sql = $orders->getSelect()->__toString();
-		$res = array();
+		$res = [[]];
 		/* @var $order Mage_Sales_Model_Order */ 
 		$orders = $orders->getItems();
 		foreach($orders as $order)
 		{
 			$format = $this->getOrderData($order);
-			$res = array_merge($res, $format);
+			$res[] = $format;
 		}
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $res = array_merge(...$res);
+        } else {
+            /* PHP below 5.6 */
+            $res = call_user_func_array('array_merge', $$res);
+        }
 		//den ExportStatus der Bestellung ändern 
 		$this->setExportStatus($this->_orderIds);
 		return implode("\n", $res);

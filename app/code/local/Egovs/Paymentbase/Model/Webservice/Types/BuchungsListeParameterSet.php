@@ -22,7 +22,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 	 * 
 	 * @throws Exception
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet ( $buchungsListeParameter = array()) {
+	public function __construct ( $buchungsListeParameter = array()) {
 		$p = array();
 		//is associative array
 		if (array_keys($buchungsListeParameter) !== range(0, count($buchungsListeParameter) -1)) {
@@ -57,7 +57,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_BuchungsListeParameterSet extends
 			 */
 			$this->buchungsListeParameter = $buchungsListeParameter;
 		}
-		parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+		parent::__construct();
 	}
 	
 	/**

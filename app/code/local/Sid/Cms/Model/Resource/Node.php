@@ -72,7 +72,7 @@ class Sid_Cms_Model_Resource_Node extends Mage_Core_Model_Resource_Db_Abstract
     			return $item;
     		}
     		if($recursiv){
-    			$tmp = $item->getCild($id,true);
+    			$tmp = $item->getChild($id,true);
     			if($tmp){
     				return $tmp; 
     			}
@@ -84,15 +84,21 @@ class Sid_Cms_Model_Resource_Node extends Mage_Core_Model_Resource_Db_Abstract
     
     public function getChildrenArray($recursiv = false)
     {
-    	$result = array();
+    	$result = [[]];
     	foreach ($this->_children as $item)
     	{
     		$result[] = $item;
     		if($recursiv){
     			$tmp = $item->getChildrenArray(true);
-    			$result = array_merge($result,$tmp);
+    			$result[] = $tmp;
     		}
     	}
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $result = array_merge(...$result);
+        } else {
+            /* PHP below 5.6 */
+            $result = call_user_func_array('array_merge', $result);
+        }
     	
     	return $result;
     }

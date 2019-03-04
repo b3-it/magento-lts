@@ -83,11 +83,13 @@ class B3it_Ids_Model_IdsComponent extends Varien_Object
 	{
 		if($this->__ip == null)
 		{
-			$this->__ip  = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
-			$_SERVER['SERVER_ADDR'] :
-			(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-					$_SERVER['HTTP_X_FORWARDED_FOR'] :
-					'127.0.0.1');
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $this->__ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
+                    $_SERVER['SERVER_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR'];
+            } else {
+                $this->__ip = ($_SERVER['SERVER_ADDR'] != '127.0.0.1') ?
+                    $_SERVER['SERVER_ADDR'] : '127.0.0.1';
+            }
 		}
 		return $this->__ip ;
 	}

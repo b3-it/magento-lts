@@ -17,7 +17,7 @@ class Egovs_Ldap_Model_Ldapauth {
 					$user->setData('lastname', $ldapauth['lastname']);
 					$user->setData('firstname', $ldapauth['firstname']);
 					$user->setData('is_active', $ldapauth['is_active']);
-					$user->setPassword(md5(microtime() + rand()));
+					$user->setPassword(md5(microtime() + mt_rand()));
 					$user->save();
 					$user = Mage :: getModel('admin/user')->loadByUsername($ldapauth['username']);
 
@@ -102,7 +102,7 @@ class Egovs_Ldap_Model_Ldapauth {
 							$info = ldap_get_entries($resource, $result);
 
 							if (isset ($info['count']) && ($info['count'] === 1) && (isset ($info[0]))) {
-								for ($x = 0; $x <= count($info[0]); $x++) {
+								for ($x = 0, $xMax = count($info[0]); $x <= $xMax; $x++) {
 									if (isset ($info[0][$x])) {
 										switch ($info[0][$x]) {
 											case 'uid' :

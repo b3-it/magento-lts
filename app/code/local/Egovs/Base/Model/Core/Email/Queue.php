@@ -150,20 +150,13 @@ class Egovs_Base_Model_Core_Email_Queue extends Mage_Core_Model_Email_Queue
                 
                 try {
                 	$this->_getBaseMail()->send();
-                    unset($mailer);
-                    unset($this->_baseMail);
-                    $message->setProcessedAt(Varien_Date::formatDate(true));
-                    $message->save();
                 } catch (Exception $e) {
-                    unset($mailer);
-                    unset($this->_baseMail);
-                    $oldDevMode = Mage::getIsDeveloperMode();
-                    Mage::setIsDeveloperMode(true);
                     Mage::logException($e);
-                    Mage::setIsDeveloperMode($oldDevMode);
-
-                    return false;
                 }
+                unset($mailer);
+                unset($this->_baseMail);
+                $message->setProcessedAt(Varien_Date::formatDate(true));
+                $message->save();
             }
         }
 

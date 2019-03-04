@@ -101,7 +101,11 @@ class Sid_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         if ($item->getPriceInclTax()) {
             return $item->getPriceInclTax();
         }
-        $qty = ($item->getQty() ? $item->getQty() : ($item->getQtyOrdered() ? $item->getQtyOrdered() : 1));
+        if ($item->getQty()) {
+            $qty = ($item->getQty());
+        } else {
+            $qty = (($item->getQtyOrdered() ? $item->getQtyOrdered() : 1));
+        }
         $price = (floatval($qty)) ? ($item->getRowTotal() + $item->getTaxAmount())/$qty : 0;
         return Mage::app()->getStore()->roundPrice($price);
     }
@@ -123,7 +127,11 @@ class Sid_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getBasePriceInclTax($item)
     {
-        $qty = ($item->getQty() ? $item->getQty() : ($item->getQtyOrdered() ? $item->getQtyOrdered() : 1));
+        if ($item->getQty()) {
+            $qty = ($item->getQty());
+        } else {
+            $qty = (($item->getQtyOrdered() ? $item->getQtyOrdered() : 1));
+        }
         $price = (floatval($qty)) ? ($item->getBaseRowTotal() + $item->getBaseTaxAmount())/$qty : 0;
         return Mage::app()->getStore()->roundPrice($price);
     }

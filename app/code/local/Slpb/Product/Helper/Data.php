@@ -77,7 +77,7 @@ class Slpb_Product_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($files as $file => $ref) {
             $file = $path.$file;
             // Open file
-            $fp = fopen($file, 'r');
+            $fp = fopen($file, 'rb');
 
             while ($data = fgetcsv($fp, 1024, "\t")) {
                 if (trim($data[$ref['plz']]) == $postcode && trim($data[$ref['region_code']]) == 'SN') {

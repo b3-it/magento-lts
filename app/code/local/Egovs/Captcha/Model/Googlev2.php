@@ -83,7 +83,7 @@ class Egovs_Captcha_Model_Googlev2 extends Egovs_Captcha_Model_Abstract
 
         if (!$response || $response->code != 200 || !$response->hasBody() || empty($response->body)) {
             if ($response && $response->hasBody()) {
-                Mage::log("captcha::invalid:".var_dump($response->body), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+                Mage::log("captcha::invalid:".var_export($response->body, true), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             }
             return false;
         }

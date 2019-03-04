@@ -111,7 +111,6 @@ class Dimdi_Import_Model_Order extends Dimdi_Import_Model_Abstract
 							$itemQty += $item->getQty();
 						}
 					}
-					$shipment = Mage::getModel('sales/service_order', $order)->prepareShipment($itemQty);
 					$shipment = new Mage_Sales_Model_Order_Shipment_Api();
 					$shipmentId = $shipment->create($order->getIncrementId());
 					Mage::log(sprintf('OSC Import:: new shippment created: %s',$shipmentId), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);

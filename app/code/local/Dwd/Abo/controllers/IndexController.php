@@ -41,8 +41,6 @@ class Dwd_Abo_IndexController extends Mage_Core_Controller_Front_Action
     	$this->_cancelAbo($abo);
     	
     	$this->_redirect('dwd_abo/index/view');
-    	return;
-    	
     }
     
    

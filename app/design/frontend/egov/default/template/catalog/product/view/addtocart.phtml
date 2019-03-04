@@ -22,9 +22,9 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
     $_isLoggedIn = true;
 }
 
+$_product = $this->getProduct();
+$buttonTitle = Mage::helper('core')->quoteEscape($this->__('Add to Cart'));
 ?>
-<?php $_product = $this->getProduct(); ?>
-<?php $buttonTitle = Mage::helper('core')->quoteEscape($this->__('Add to Cart')); ?>
 <?php if($_product->isSaleable()): ?>
     <div class="add-to-cart">
     <?php if( Mage::helper('core')->isModuleEnabled('Egovs_B2b') ): ?>
@@ -50,7 +50,12 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
         <?php if(!$_product->isGrouped()): ?>
             <div class="qty-wrapper">
                 <label for="qty"><?php echo $this->__('Qty:') ?></label>
-                <input type="tel" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+                <?php if ( $_product->getTypeId() == 'eventbundle' ): ?>
+                    <input type="hidden" name="qty" id="qty" value="1" />
+                    <span class="pseudo-input">1</span>
+                <?php else : ?>
+                    <input type="tel" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+                <?php endif; ?>
             </div>
         <?php endif; ?>
         <div class="add-to-cart-buttons">

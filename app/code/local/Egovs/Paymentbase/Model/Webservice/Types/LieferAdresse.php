@@ -32,7 +32,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_LieferAdresse extends Egovs_Payme
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_LieferAdresse(
+	public function __construct(
 			$strasse = null,
 			$land = null,
 			$PLZ = null,
@@ -50,7 +50,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_LieferAdresse extends Egovs_Payme
         $this->PLZ = $PLZ;
         $this->ort = $ort;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

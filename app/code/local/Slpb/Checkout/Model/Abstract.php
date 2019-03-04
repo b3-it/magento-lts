@@ -171,7 +171,7 @@ class Slpb_Checkout_Model_Abstract extends Mage_Checkout_Model_Type_Abstract
 		$ersetzungen[6] = 'Str.';
 
 		$strasse = explode(" ",$strasse);
-		for($i = 0; $i < count($strasse); $i++)
+		for($i = 0, $iMax = count($strasse); $i < $iMax; $i++)
 		{
 			$strasse[$i] = $this->replace($suchmuster, $ersetzungen, $strasse[$i]);
 		}
@@ -213,7 +213,7 @@ class Slpb_Checkout_Model_Abstract extends Mage_Checkout_Model_Type_Abstract
     private function replace($such,$replace,$subject)
     {
     	$res = "";
-    	for($i =0 ; $i < count($such); $i++)
+    	for($i =0, $iMax = count($such); $i < $iMax; $i++)
     	{
     		$count = 0;
     		$res = preg_replace($such[$i], $replace[$i], $subject,1, $count);
@@ -260,7 +260,7 @@ class Slpb_Checkout_Model_Abstract extends Mage_Checkout_Model_Type_Abstract
 	    $strDigits = ( string ) $digits;
 	
 	    $intCrossfoot = 0;
-	    for( $i = 0; $i < strlen ( $strDigits ); $i++ )
+	    for($i = 0, $iMax = strlen($strDigits); $i < $iMax; $i++ )
 	    {
 	      $intCrossfoot += $strDigits[$i];
 	    }

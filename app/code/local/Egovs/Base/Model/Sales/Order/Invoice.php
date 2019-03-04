@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -88,7 +88,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
             $customerName = $order->getCustomerName();
         }
 
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         if ($notifyCustomer) {
             $emailInfo = Mage::getModel('core/email_info');
             $emailInfo->addTo($order->getCustomerEmail(), $customerName);
@@ -177,7 +177,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
             $customerName = $order->getCustomerName();
         }
 
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         if ($notifyCustomer) {
             $emailInfo = Mage::getModel('core/email_info');
             $emailInfo->addTo($order->getCustomerEmail(), $customerName);

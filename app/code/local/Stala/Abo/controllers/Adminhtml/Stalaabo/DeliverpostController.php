@@ -141,7 +141,6 @@ class Stala_Abo_Adminhtml_Stalaabo_DeliverpostController extends Egovs_Base_Cont
 	    	foreach ($collection->getItems() as $item)
 	    	{
 	    		$freecopy = Mage::getModel('extcustomer/freecopies');
-	    		$res = array();
 	    		
 	    		$res = $freecopy->decreaseFreecopies($item->getContractQty(),$item->getProductId(),$item->getCustomerId());
 	    		

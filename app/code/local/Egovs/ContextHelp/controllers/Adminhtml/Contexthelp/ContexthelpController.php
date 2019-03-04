@@ -314,6 +314,7 @@ class Egovs_ContextHelp_Adminhtml_ContextHelp_ContexthelpController extends Mage
         $data = $data[$key];
         
         $res = array();
+        /** @noinspection SuspiciousLoopInspection */
         foreach($data['value'] as $key => $val)
         {
             $obj = new Varien_Object();

@@ -198,7 +198,7 @@ class Egovs_Pdftemplate_Model_Observer extends Mage_Core_Model_Abstract
 						{
 							$name = str_replace('[]', '', $element->getName());
 							$values = $element->getValue();
-							for($i =0; $i < count($values); $i++)
+							for($i =0, $iMax = count($values); $i < $iMax; $i++)
 							{
 								//$values = $element->getValues();
 								$element->setName($name.'_[]');

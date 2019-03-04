@@ -268,7 +268,7 @@ class Egovs_Extstock_Model_Observer extends Mage_Core_Model_Abstract
 		) {
 			if ($extstock['price'] < 0) {
 				$msg = $helper->__("Extended Stock").": ";
-				$msg = $helper->__("Price can't be less than 0, skipping extended stock save [Product ID: %s]", $object->getId())."!";
+				$msg .= $helper->__("Price can't be less than 0, skipping extended stock save [Product ID: %s]", $object->getId())."!";
 				Mage::log("extstock::$msg", Zend_Log::NOTICE, Egovs_Extstock_Helper_Data::LOG_FILE);
 				Mage::getSingleton('adminhtml/session')->addWarning($msg);
 				return $this;
@@ -277,7 +277,7 @@ class Egovs_Extstock_Model_Observer extends Mage_Core_Model_Abstract
 			$orderDate = Mage::app()->getLocale()->date($extstock['date_ordered']);
 			if (!$extstock['date_ordered'] || is_null($extstock['date_ordered']) || $orderDate->isLater($storeDate, Zend_Date::DATE_MEDIUM)) {
 				$msg = $helper->__("Extended Stock").": ";
-				$msg = $helper->__("Ordered date can't be tomorrow, skipping extended stock save [Product ID: %s]", $object->getId())."!";
+				$msg .= $helper->__("Ordered date can't be tomorrow, skipping extended stock save [Product ID: %s]", $object->getId())."!";
 				Mage::log("extstock::$msg", Zend_Log::NOTICE, Egovs_Extstock_Helper_Data::LOG_FILE);
 				Mage::getSingleton('adminhtml/session')->addWarning($msg);
 				return $this;

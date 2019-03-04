@@ -207,7 +207,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                     $this->$method($args[0]);
                 } else {
                     //throw new Exception("what?");
-                    Mage::log(sprintf("Function '%s' doesn't exist or no data given, tracing not available!", $method, Zend_Log::ERR));
+                    Mage::log(sprintf("Function '%s' doesn't exist or no data given, tracing not available!", $method), Zend_Log::ERR);
                 }
                 // Varien_Profiler::stop('GETTER: '.get_class($this).'::'.$method);
                 return;
@@ -539,9 +539,11 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      */
     protected function _traceConfigData(Mage_Core_Model_Config_Data $data)
     {
-
+        if (!$data) {
+            return;
+        }
         $objectNew = $data->isObjectNew();
-        if (! $data || !$data->isValueChanged() && !$objectNew) {
+        if (!$data->isValueChanged() && !$objectNew) {
             return;
         }
         
@@ -724,21 +726,22 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
 
     protected function _conditionalExcludeKey($key, $origValue, $newValue, $level = 0)
     {
-        if (empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0
+        if ((empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0)
             || strpos($key, '_cache_') === 0
-            || strpos($key, '_is_formated') !== false && $newValue == true && empty($origValue)
-            || strpos($key, 'use_config_') !== false && $newValue == true && empty($origValue)
-            || $key == 'parent_id' && $newValue == 0 && empty($origValue) || $key == 'post_index'  // Gilt für Änderung an Adressen
+            || (strpos($key, '_is_formated') !== false && $newValue == true && empty($origValue))
+            || (strpos($key, 'use_config_') !== false && $newValue == true && empty($origValue))
+            || ($key == 'parent_id' && $newValue == 0 && empty($origValue))
+            || $key == 'post_index'  // Gilt für Änderung an Adressen
             || $key == 'created_at'
             || $key == 'updated_at'
-            || $key == 'is_active' && $origValue == true && empty($newValue)
-            || $key == 'attribute_set_id' && $origValue == 0 && empty($newValue)
+            || ($key == 'is_active' && $origValue == true && empty($newValue))
+            || ($key == 'attribute_set_id' && $origValue == 0 && empty($newValue))
             || $key == 'is_customer_save_transaction'
             || $key == 'is_saved'
-            || $key == 'is_default_billing' && $newValue == true && empty($origValue)
-            || $key == 'is_default_shipping' && $newValue == true && empty($origValue)
-            || $key == 'customer_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
-            || $key == 'store_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+            || ($key == 'is_default_billing' && $newValue == true && empty($origValue))
+            || ($key == 'is_default_shipping' && $newValue == true && empty($origValue))
+            || ($key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address)
+            || ($key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address)
             || $key == 'original_group_id'
             || $key == 'current_password'
             || $key == 'password'

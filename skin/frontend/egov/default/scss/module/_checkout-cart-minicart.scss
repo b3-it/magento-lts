@@ -11,7 +11,7 @@
 
 #header-cart {
     margin: 0px !important;
-    
+
     @include bp(max-width, 490px) {
     	position: absolute;
     	top: 40px;
@@ -26,7 +26,12 @@
         display: inline-block;
         width: 33%;
     }
-    
+
+    .pseudo-input {
+        position: relative;
+        padding: 5px 11px;
+    }
+
     .skip-link {
         @include bp(max-width, $bp-medium) {
             width: 90%;
@@ -297,7 +302,7 @@ div.block-cart {
                 p.product-name {
                     padding: 0px;
                     overflow: hidden;
-                    max-height: 2rem;
+                    max-height: 2.2rem;
                 }
             }
         }
@@ -310,13 +315,13 @@ div.block-cart {
     display: block;
     position: absolute;
     top: 40px;
-    
+
     @include bp(max-width, $bp-medium) {
     	top: 45px;
     	right: 27%;
     	width: 50%;
     }
-    
+
     @include bp(max-width, 500px) {
     	width: 100%;
     }

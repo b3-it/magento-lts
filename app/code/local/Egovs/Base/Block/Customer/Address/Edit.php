@@ -150,14 +150,13 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
      */
     public function canSetAsBaseAddress()
     {
-    	if(!$this->changeBaseAddressAlowed())
-    	{
-    		return false;
-    	}
-    	if (!$this->getAddress()->getId()) {
-    		return $this->getCustomerAddressCount();
-    	}
-    	return !$this->isBaseAddress();
+    	if (! $this->changeBaseAddressAlowed()) {
+            return false;
+        }
+        if (! $this->getAddress()->getId()) {
+            return $this->getCustomerAddressCount();
+        }
+        return ! $this->isBaseAddress();
     }
     
     public function getCanSetAsBaseAddress()
@@ -171,12 +170,11 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
      */
     public function isBaseAddress()
     {
-    	if($this->getAddress()->getBaseAddress() == 1)
-    	{
-    		return true;
-    	}
-    	$baseAddress = Mage::getSingleton('customer/session')->getCustomer()->getBaseAddress();
-    	return $this->getAddress()->getId() && $this->getAddress()->getId() == $baseAddress;
+    	if ($this->getAddress()->getBaseAddress() == 1) {
+            return true;
+        }
+        $baseAddress = Mage::getSingleton('customer/session')->getCustomer()->getBaseAddress();
+        return $this->getAddress()->getId() && $this->getAddress()->getId() == $baseAddress;
     }
     
     public function getIsBaseAddress()
@@ -187,55 +185,49 @@ class Egovs_Base_Block_Customer_Address_Edit extends Mage_Customer_Block_Address
     
     public function isDefaultBilling()
     {
-    	if($this->getAddress()->getDefaultBilling() == 1)
-    	{
-    		return true;
-    	}
-    	$defaultBilling = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling();
-    	return $this->getAddress()->getId() && $this->getAddress()->getId() == $defaultBilling;
+    	if ($this->getAddress()->getDefaultBilling() == 1) {
+            return true;
+        }
+        $defaultBilling = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling();
+        return $this->getAddress()->getId() && $this->getAddress()->getId() == $defaultBilling;
     }
     
     public function isDefaultShipping()
     {
-    	if($this->getAddress()->getDefaultShipping() == 1)
-    	{
-    		return true;
-    	}
-    	$defaultShipping = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping();
-    	return $this->getAddress()->getId() && $this->getAddress()->getId() == $defaultShipping;
+    	if ($this->getAddress()->getDefaultShipping() == 1) {
+            return true;
+        }
+        $defaultShipping = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping();
+        return $this->getAddress()->getId() && $this->getAddress()->getId() == $defaultShipping;
     }
  
     public function changeBaseAddressAlowed()
     {
-    	if(!Mage::helper('egovsbase')->isModuleEnabled('Egovs_Vies'))
-    	{
-    		return false;
-    	}
-    	
-    	if(!$this->isBaseAddress())
-    	{
-    		$customer = Mage::getSingleton('customer/session')->getCustomer();
-    		if($customer && $customer->getData('use_group_autoassignment') != 1)
-    		{
-    			return false;
-    		}
-    	}
-    	
-    	return true;
+    	if (! Mage::helper('egovsbase')->isModuleEnabled('Egovs_Vies')) {
+            return false;
+        }
+        
+        if (! $this->isBaseAddress()) {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+            if ($customer && $customer->getData('use_group_autoassignment') != 1) {
+                return false;
+            }
+        }
+        
+        return true;
     }
-    
-    
+
     public function getBaseAddressInfoText()
     {
-    	$blockId = Mage::getStoreConfig('customer/address/base_address_info_block');
-    	if($blockId)
-    	{
-    		return $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHTML();
-    	}
-    	
-    	
-    	return "";
-    	
+        $blockId = Mage::getStoreConfig('customer/address/base_address_info_block');
+        if ($blockId) {
+            return $this->getLayout()
+                ->createBlock('cms/block')
+                ->setBlockId($blockId)
+                ->toHTML();
+        }
+        
+        return "";
     }
     
     public function getNameBlockHtml()

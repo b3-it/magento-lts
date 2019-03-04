@@ -19,7 +19,7 @@ class Egovs_Base_Model_Resource_Customer_Address extends Mage_Customer_Model_Res
 		// BE
 		if (Mage::app ()->getStore ()->isAdmin () || Mage::getDesign ()->getArea () == 'adminhtml') {
 			if ($address->getId ()) {
-				// für BE -- TODO für neue Adressen
+				// f�r BE -- f�r neue Adressen
 				$account = Mage::app ()->getRequest ()->getParam ( 'account', false );
 				
 				$customer = Mage::getModel ( 'customer/customer' );
@@ -79,28 +79,4 @@ class Egovs_Base_Model_Resource_Customer_Address extends Mage_Customer_Model_Res
 		}
 		return $this;
 	}
-	
-	/**
-	 * Kundengruppe speichern
-	 * 
-	 * @param Mage_Customer_Model_Customer $customer Customer Object
-	 * 
-	 * @return Egovs_Base_Model_Resource_Customer_Address
-	 */
-	private function __saveCustomerGroup($customer) {
-		if ($customer->getId() > 0) {
-			/* @var $resource Mage_Customer_Model_Resource_Customer */
-			$resource = $customer->getResource();
-			$conn = $resource->getWriteConnection();
-			$conn->update(
-					$resource->getTable('customer/entity'),
-					array('group_id' => $customer->getGroupId()),
-					array('entity_id = ?' => $customer->getId())
-			);
-		}
-		
-		return $this;
-	}
-	
-
 }

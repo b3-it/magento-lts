@@ -77,8 +77,8 @@ class Egovs_SepaDebitSax_Model_Email extends Varien_Object
 			return $this;
 		}
 		
-		/** @var $mailer Egovs_Base_Model_Core_Email_Mailer */
-		$mailer = Mage::getModel('egovsbase/core_email_mailer');
+		/** @var $mailer Egovs_Base_Model_Core_Email_Template_Mailer */
+		$mailer = Mage::getModel('egovsbase/core_email_template_mailer');
 		$emailInfo = Mage::getModel('core/email_info');
 		$emailInfo->addTo($customer->getEmail(), $customer->getName());
 		

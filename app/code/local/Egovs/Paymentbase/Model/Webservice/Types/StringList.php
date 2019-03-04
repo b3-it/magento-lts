@@ -19,7 +19,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_StringList extends Egovs_Paymentb
 	 * 
 	 * @return void
 	 */
-	public function Egovs_Paymentbase_Model_Webservice_Types_StringList(
+	public function __construct(
 			$stringList = null
 	) {
 		if (is_string($stringList) || !is_array($stringList)) {
@@ -28,7 +28,7 @@ class Egovs_Paymentbase_Model_Webservice_Types_StringList extends Egovs_Paymentb
 		
 		$this->stringList = $stringList;
         
-        parent::Egovs_Paymentbase_Model_Webservice_Types_Abstract();
+        parent::__construct();
 	}
 	
 	/**

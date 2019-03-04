@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Connect
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -564,13 +564,13 @@ class Mage_Connect_Packager
 
                         $names = array("pMin","pMax","hasMin","hasMax");
                         for($i=0, $c=count($names); $i<$c; $i++) {
-                            if(!isset(${$names[$i]})) {
+                            if(!isset($$names[$i])) {
                                 continue;
                             }
-                            if(false !== ${$names[$i]}) {
+                            if(false !== $$names[$i]) {
                                 continue;
                             }
-                            ${$names[$i]} = $i % 2 == 0 ? "0" : "999999999";
+                            $$names[$i] = $i % 2 == 0 ? "0" : "999999999";
                         }
 
                         if(!$cache->hasVersionRangeIntersect($pMin,$pMax, $hasMin, $hasMax)) {

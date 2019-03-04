@@ -52,7 +52,8 @@ $dir = Mage::getBaseDir().DS.'var'.DS.'ids';
 
 if(!file_exists($dir))
 {
-	mkdir($dir);
+    /** @noinspection MkdirRaceConditionInspection */
+    mkdir($dir);
 }
 
 

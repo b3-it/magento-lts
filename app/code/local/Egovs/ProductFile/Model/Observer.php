@@ -40,7 +40,9 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 				 * Create upload directory in media if not present
 				 */
 				if (!is_dir($path)) {
-					mkdir($path);
+                    if (!mkdir($path) && !is_dir($path)) {
+                        throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+                    }
 				}
 					
 				/*

@@ -457,6 +457,7 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
     protected function _initTypeModels()
     {
         $config = Mage::getConfig()->getNode(self::CONFIG_KEY_PRODUCT_TYPES)->asCanonicalArray();
+        $_particularAttributes = [[]];
         foreach ($config as $type => $typeModel) {
             if (!($model = Mage::getModel($typeModel, array($this, $type)))) {
                 Mage::throwException("Entity type model '{$typeModel}' is not found");
@@ -469,11 +470,17 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             if ($model->isSuitable()) {
                 $this->_productTypeModels[$type] = $model;
             }
-            $this->_particularAttributes = array_merge(
-                $this->_particularAttributes,
-                $model->getParticularAttributes()
-            );
+            $_particularAttributes[] = $model->getParticularAttributes();
         }
+        if (version_compare(PHP_VERSION, '5.6', '>=')) {
+            $_particularAttributes = array_merge(...$_particularAttributes);
+        } else {
+            /* PHP below 5.6 */
+            $_particularAttributes = call_user_func_array('array_merge', $_particularAttributes);
+        }
+
+        $this->_particularAttributes = array_merge($this->_particularAttributes, $_particularAttributes);
+
         // remove doubles
         $this->_particularAttributes = array_unique($this->_particularAttributes);
 
@@ -1372,7 +1379,9 @@ class Sid_Framecontract_Model_Import_Entity_Product extends Mage_ImportExport_Mo
             
             $destDir    = Mage::getConfig()->getOptions()->getMediaDir() . '/catalog/product/'.$srcDir;
             if (!is_writable($destDir)) {
-            	@mkdir($destDir, 0777, true);
+                if (!mkdir($destDir, 0777, true) && !is_dir($destDir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $destDir));
+                }
             }
             if (!$this->_fileUploader->setDestDir($destDir)) {
                 Mage::throwException("File directory '{$destDir}' is not writable.");

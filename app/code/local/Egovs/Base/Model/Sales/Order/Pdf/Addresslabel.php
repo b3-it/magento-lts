@@ -136,12 +136,14 @@ class Egovs_Base_Model_Sales_Order_Pdf_Addresslabel extends Mage_Sales_Model_Ord
      */
     public function newPage(array $settings = array())
     {
-        /* Add new table head */
-        $page = $this->_getPdf()->newPage(Zend_Pdf_Page::SIZE_A4);
+        if (!empty($settings) && is_string($settings)) {
+            $pageSize = $settings;
+        } else {
+            $pageSize = !empty($settings['page_size']) ? $settings['page_size'] : Zend_Pdf_Page::SIZE_A4;
+        }
+        $page = $this->_getPdf()->newPage($pageSize);
         $this->_getPdf()->pages[] = $page;
         $this->y = 800;
-
- 
 
         return $page;
     }
@@ -153,7 +155,7 @@ class Egovs_Base_Model_Sales_Order_Pdf_Addresslabel extends Mage_Sales_Model_Ord
 	
 		$drawingString = iconv('UTF-8', 'UTF-16BE', $text);
 	     $characters = array();
-	     for ($i = 0; $i < strlen($drawingString); $i++) {
+	     for ($i = 0, $iMax = strlen($drawingString); $i < $iMax; $i++) {
 		         $characters[] = (ord($drawingString[$i++]) << 8) | ord
 			($drawingString[$i]);
 		     }

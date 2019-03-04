@@ -25,6 +25,7 @@ class Egovs_Base_Model_Sales_Observer extends Mage_Sales_Model_Observer
 
         $lifetimes = Mage::getConfig()->getStoresConfigByPath('checkout/cart/delete_quote_after');
         foreach ($lifetimes as $storeId=>$lifetime) {
+            /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
             $lifetime *= 86400;
 
             /* @var $quotes Mage_Sales_Model_Mysql4_Quote_Collection */

@@ -64,41 +64,4 @@ class Slpb_Checkout_Block_Quick_Suggest extends Mage_Core_Block_Abstract
 
         return $html;
     }
-
-    //wird nicht mehr benötigt
-    public function xxxgetSuggestData()
-    {
-        if (!$this->_suggestData) {
-        	
-            $collection = Mage::getModel('catalog/product')->getCollection();
-            
-            $queryText = $collection->getConnection()->quoteInto("?","%".Mage::app()->getRequest()->getParam('quicksuggest')."%");
-                        
-            $collection->addAttributeToFilter('name',array('like'=>str_replace("'","",$queryText)));
-            $collection->addStoreFilter($this->getStore());
-            $s = $collection->getSelect()
-            	->orWhere("sku like ?", $queryText);
-            $s = $collection->getSelect()->__toString();
-
-            $counter = 0;
-            $data = array();
-            foreach ($collection->getItems() as $item) {
-                $_data = array(
-                    'title' => $item->getName(),
-                    'row_class' => (++$counter)%2?'odd':'even',
-                    'sku' => $item->getSku(),
-                	'id'=> $item->getId()
-                );
-				$data[] = $_data;
-            }
-            $this->_suggestData = $data;
-        }
-        return $this->_suggestData;
-    }
-    
-
-    
-/*
- *
-*/
 }
