@@ -88,7 +88,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       }
 
 
-die($collection->getSelect()->__toString());
+//die($collection->getSelect()->__toString());
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
