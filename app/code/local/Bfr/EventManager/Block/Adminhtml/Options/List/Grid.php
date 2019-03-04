@@ -61,11 +61,24 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
 
      //die($collection->getSelect()->__toString());
 
+
+      $collection->getSelect()
+          ->joinleft(array('order' => $collection->getTable('sales/order')), "main_table.entity_id = order.quote_id", array('order_status'=>'status'));
+
+      $statusExpr = new Zend_Db_Expr('(order.status IS NOT NULL)');
+
       if(Mage::helper('eventmanager')->isModuleEnabled('Bfr_EventRequest')) {
           $collection->getSelect()
-              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "main_table.entity_id = evt.quote_id", array('status'));
-
+              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "main_table.entity_id = evt.quote_id", array('request_status'=>'status'));
+            $statusExpr = new Zend_Db_Expr('((order.status IS NOT NULL) OR (evt.status IS NOT NULL))');
       }
+
+      $collection->getSelect()->where($statusExpr);
+
+
+
+
+
       $options = $this->getEvent()->getProduct()->getOptions();
       foreach($options as $option)
       {
@@ -75,7 +88,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       }
 
 
-//die($collection->getSelect()->__toString());
+die($collection->getSelect()->__toString());
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -149,12 +162,20 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
               'header' => Mage::helper('eventmanager')->__('Status'),
               'align' => 'left',
               'width' => '80px',
-              'index' => 'status',
+              'index' => 'request_status',
               'type' => 'options',
               'options' => Bfr_EventRequest_Model_Status::getOptionArray(),
           ));
       }
 
+      $this->addColumn('order_status', array(
+          'header' => Mage::helper('eventmanager')->__('Order Status'),
+          'align' => 'left',
+          'width' => '80px',
+          'index' => 'order_status',
+          'type' => 'options',
+          'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+      ));
 
       
 
