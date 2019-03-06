@@ -18,7 +18,7 @@
 <config>
     <modules>
         <B3it_Modelhistory>
-            <version>0.0.3.0</version>
+            <version>0.0.4.0</version>
         </B3it_Modelhistory>
     </modules>
     <default>
@@ -44,15 +44,15 @@
         </routers>
     </admin>
     <adminhtml>
-		<translate>
-			<modules>
-				<B3it_Modelhistory>
-					<files>
-						<default>B3it_Modelhistory.csv</default>
-					</files>
-				</B3it_Modelhistory>
-			</modules>
-		</translate>
+        <translate>
+            <modules>
+                <B3it_Modelhistory>
+                    <files>
+                        <default>B3it_Modelhistory.csv</default>
+                    </files>
+                </B3it_Modelhistory>
+            </modules>
+        </translate>
         <menu>
             <system>
                 <children>
@@ -71,11 +71,6 @@
                                         <sort_order>20</sort_order>
                                         <action>adminhtml/modelhistory_config</action>
                                     </modelhistory_config>
-                                    <modelhistory_settings module="adminhtml">
-                                        <title>Settings</title>
-                                        <sort_order>30</sort_order>
-                                        <action>adminhtml/modelhistory_settings</action>
-                                    </modelhistory_settings>
                                 </children>
                             </modelhistory>
                         </children>
@@ -144,6 +139,15 @@
                     </b3it_modelhistory_trace_observer>
                 </observers>
             </core_config_data_save_commit_after>
+            <b3it_modelhistory_model_save_diff>
+                <observers>
+                    <b3it_modelhistory_on_diff>
+                        <type>singleton</type>
+                        <class>b3it_modelhistory/observer</class>
+                        <method>onDiff</method>
+                    </b3it_modelhistory_on_diff>
+                </observers>
+            </b3it_modelhistory_model_save_diff>
         </events>
         <layout>
             <updates>
@@ -217,4 +221,111 @@
             </cleanup_model>
         </jobs>
     </crontab>
+    <b3it_modelhistory>
+        <blacklist>
+            <names>
+                <mage_eav_entity_store>Mage_Eav_Model_Entity_Store</mage_eav_entity_store>
+                <mage_payment_info>Mage_Payment_Model_Info</mage_payment_info>
+                <mage_downloadable_link>Mage_Downloadable_Model_Link_Purchased_Item</mage_downloadable_link>
+                <mage_cataloginventory>Mage_CatalogInventory_Model_Stock_Item</mage_cataloginventory>
+                <mage_catalogindex>Mage_CatalogIndex_Model_Catalog_Index_Flag</mage_catalogindex>
+            </names>
+            <matches>
+                <b3it_modelhistory>B3it_ModelHistory_</b3it_modelhistory>
+                <mage_sales>Mage_Sales_</mage_sales>
+                <mage_index>Mage_Index_</mage_index>
+                <egovs_aggreement>Egovs_Agreement_</egovs_aggreement>
+                <mage_tax>Mage_Tax_</mage_tax>
+            </matches>
+        </blacklist>
+        <ignore_attributes>
+            <general>
+                <class>Varien_Object</class>
+                <attributes>
+                    <updated_at>updated_at</updated_at>
+                    <created_at>created_at</created_at>
+                    <is_saved>is_saved</is_saved>
+                    <form_key>form_key</form_key>
+                    <cache_editable_attributes>_cache_editable_attributes</cache_editable_attributes>
+                    <!-- Password stuff are for all possible objects -->
+                    <current_password>current_password</current_password>
+                    <password>password</password>
+                    <new_password>new_password</new_password>
+                    <password_confirmation>password_confirmation</password_confirmation>
+                    <password_hash>password_hash</password_hash>
+                </attributes>
+                <matches>
+                    <is_formated>_is_formated</is_formated>
+                    <use_config>use_config_</use_config>
+                </matches>
+            </general>
+            <mage_customer_customer>
+                <class>Mage_Customer_Model_Customer</class>
+                <attributes>
+                </attributes>
+            </mage_customer_customer>
+            <mage_customer_address>
+                <class>Mage_Customer_Model_Address</class>
+                <attributes>
+                    <customer_id>customer_id</customer_id>
+                    <store_id>store_id</store_id>
+                    <postcode_checked>postcode_checked</postcode_checked>
+                    <is_default_base_address>is_default_base_address</is_default_base_address>
+                    <is_default_billing>is_default_billing</is_default_billing>
+                    <is_default_shipping>is_default_shipping</is_default_shipping>
+                    <is_customer_save_transaction>is_customer_save_transaction</is_customer_save_transaction>
+                    <post_index>post_index</post_index>
+                </attributes>
+            </mage_customer_address>
+            <mage_catalog_product>
+                <class>Mage_Catalog_Model_Product</class>
+                <attributes>
+                    <stock_data>stock_data</stock_data>
+                    <stock_item>stock_item</stock_item>
+                    <media_attributes>media_attributes</media_attributes>
+                    <media_gallery>media_gallery/values</media_gallery>
+                    <can_save_custom_options>can_save_custom_options</can_save_custom_options>
+                    <website_ids>website_ids</website_ids>
+                    <store_ids>store_ids</store_ids>
+                    <is_changed_categories>is_changed_categories</is_changed_categories>
+                </attributes>
+            </mage_catalog_product>
+            <mage_admin_user>
+                <class>Mage_Admin_Model_User</class>
+                <attributes>
+                    <created>created</created>
+                    <modified>modified</modified>
+                    <logdate>logdate</logdate>
+                    <lognum>lognum</lognum>
+                    <page>page</page>
+                    <limit>limit</limit>
+                    <reload_acl_flag>reload_acl_flag</reload_acl_flag>
+                    <roles>roles</roles>
+                    <user_roles>user_roles</user_roles>
+                </attributes>
+            </mage_admin_user>
+            <mage_admin_roles>
+                <class>Mage_Admin_Model_Roles</class>
+                <attributes>
+                    <name>name</name>
+                </attributes>
+            </mage_admin_roles>
+        </ignore_attributes>
+        <default_attributes>
+            <general>
+                <class>Varien_Object</class>
+                <attributes>
+                    <parent_id>
+                        <name>parent_id</name>
+                        <value>0</value>
+                    </parent_id>
+                </attributes>
+            </general>
+            <mage_catalog_product>
+                <class>Mage_Catalog_Model_Product</class>
+                <attributes>
+                </attributes>
+            </mage_catalog_product>
+        </default_attributes>
+    </b3it_modelhistory>
 </config>
