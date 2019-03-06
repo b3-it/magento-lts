@@ -15,6 +15,12 @@
         <?php echo $this->getPagerHtml() ?>
         <ol class="products-list">
         <?php $i=0; foreach ($_products->getItems() as $_product): ?>
+            <?php
+                $_isorder = $_helper->productAttribute($_product, $_product->getShowOrderability(), 'show_orderability');
+                if ( is_null($_isorder) ) {
+                    $_isorder = true;
+                }
+            ?>
             <li class="item<?php echo (++$i == count($_products))?' last':''; ?>">
                 <div class="product-list-left-col">
                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="product-image">
@@ -63,7 +69,8 @@
                     </div>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php echo $this->getPriceHtml($_product, true, '-widget-new-list') ?>
-                    <div class="product-action">
+                    <?php if( $_isorder ): ?>
+                        <div class="product-action">
                           <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
                             <button type="button"
                                     title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
@@ -80,7 +87,8 @@
                           <?php else: ?>
                             <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
                           <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </li>
         <?php endforeach; ?>
