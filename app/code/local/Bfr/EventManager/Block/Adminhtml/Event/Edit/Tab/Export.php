@@ -145,8 +145,9 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
       $collection->getSelect()
       ->distinct()
       ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
-      
+//      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
+      ->where('event_id='.(int)($this->getEvent()->getId()));
+
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
       	$collection->getSelect()->where('order.entity_id=0');
