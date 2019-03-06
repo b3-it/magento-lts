@@ -25,7 +25,7 @@ class Bfr_EventManager_Model_Resource_Participant_Collection extends Mage_Core_M
 
     public function setSelectCountSql($select)
     {
-        $this->_selectCount = clone($select);
+        $this->_selectCount = $select;
     }
 
 
@@ -56,8 +56,7 @@ class Bfr_EventManager_Model_Resource_Participant_Collection extends Mage_Core_M
 
         $this->_select = $sel;
         $this->_isFiltersRendered = $filter;
-        //$sql = $countSelect->__toString();
-        //die($sql);
+        $sql = $countSelect->__toString();
         return $countSelect;
     }
 }
