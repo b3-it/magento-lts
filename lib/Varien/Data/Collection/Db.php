@@ -243,7 +243,7 @@ class Varien_Data_Collection_Db extends Varien_Data_Collection
         $countSelect->reset(Zend_Db_Select::COLUMNS);
 
         $countSelect->columns('COUNT(*)');
-
+$sql = $countSelect->__toString();
         return $countSelect;
     }
 
