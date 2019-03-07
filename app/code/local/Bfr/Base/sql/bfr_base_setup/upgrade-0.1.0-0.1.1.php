@@ -21,20 +21,21 @@ if ( !$attr || $attr->isEmpty() ) {
 		$entityType,		// Attribut-Typ
 		$attributeCode,		// Attribut-Code
 		array(
-			'global'            => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,		// Ebene der Sichtbarkeit
-			'visible'           => true,														// im BE sichtbar
-			'searchable'        => false,														// Verwendung für Suche
-			'filterable'        => false,														// Filterbar
-			'comparable'        => false,														// Vergleichsliste
-			'visible_on_front'  => false,														// im FE sichtbar
-			'required'          => true,														// Pflichtfeld
-			'source'            => 'eav/entity_attribute_source_boolean',						// Element-Typ
-			'input'             => 'boolean',													// Element-Art
-			'label'             => 'Bestellbarkeit anzeigen',									// Bezeichner
-			'type'              => 'int',														// Speicher-Typ
-			'default'           => '1',															// Standard im BE
-			'unique'            => false,														// Verwendung nur für einen Artikel
-			'user_defined'      => true,														// von Benutzer
+			'global'                  => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,	// Ebene der Sichtbarkeit
+			'visible'                 => true,														// im BE sichtbar
+			'searchable'              => false,														// Verwendung für Suche
+			'filterable'              => false,														// Filterbar
+			'comparable'              => false,														// Vergleichsliste
+			'visible_on_front'        => false,														// im FE sichtbar
+			'required'                => true,														// Pflichtfeld
+			'source'                  => 'eav/entity_attribute_source_boolean',						// Element-Typ
+			'input'                   => 'boolean',													// Element-Art
+			'label'                   => 'Bestellbarkeit anzeigen',									// Bezeichner
+			'type'                    => 'int',														// Speicher-Typ
+			'default'                 => '1',														// Standard im BE
+			'unique'                  => false,														// Verwendung nur für einen Artikel
+			'user_defined'            => true,														// von Benutzer
+            'used_in_product_listing' => true,                                                      // Auf "Ja" setzen, damit es in Widgets funktioniert
 		)
 	);
 
