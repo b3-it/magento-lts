@@ -16,6 +16,7 @@
         <ol class="products-list">
         <?php $i=0; foreach ($_products->getItems() as $_product): ?>
             <?php
+                $_helper  = $this->helper('catalog/output');
                 $_isorder = $_helper->productAttribute($_product, $_product->getShowOrderability(), 'show_orderability');
                 if ( is_null($_isorder) ) {
                     $_isorder = true;
