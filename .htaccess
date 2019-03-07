@@ -47,7 +47,6 @@
 ############################################
 ## adjust memory limit
 
-    #php_value memory_limit 256M
     php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
@@ -89,7 +88,7 @@
 ############################################
 ## adjust memory limit
 
-    php_value memory_limit 256M
+    php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M
@@ -226,6 +225,14 @@
 
     </IfModule>
 </IfModule>
+
+############################################
+## AhrefsBot und SEMrush Spider blocken
+## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
+
+    RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} AhrefsBot
+    RewriteRule .* - [R=429]
 
 ############################################
 ## AhrefsBot und SEMrush Spider blocken

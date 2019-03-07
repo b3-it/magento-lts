@@ -461,6 +461,11 @@
         min-width: 50px;
         text-align: center;
 
+        .pseudo-input {
+            position: relative;
+            padding: 3px 11px;
+        }
+
         .qty {
             height: 30px;
             border-color: $c-input-border;

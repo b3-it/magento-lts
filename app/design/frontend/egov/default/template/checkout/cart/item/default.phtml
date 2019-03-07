@@ -185,9 +185,14 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php endif; ?>
     <?php endif; ?>
     <td class="product-cart-actions" data-rwd-label="<?php echo $this->__('Qty'); ?>">
-        <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
-               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
-               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
+        <?php if( $_item->getProductType() == 'eventbundle' ): ?>
+            <input type="hidden" name="cart[<?php echo $_item->getId() ?>][qty]" value="1" />
+            <span class="pseudo-input">1</span>
+        <?php else: ?>
+            <input type="tel" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+                   data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
+                   title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
+        <?php endif; ?>
         <div class="product-cart-symbols">
         <?php if ($isVisibleProduct): ?>
             <a class="egov-pencile" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item parameters')) ?>" title="<?php echo $this->__('Edit') ?>" alt="<?php echo $this->__('Edit') ?>"> </a>
