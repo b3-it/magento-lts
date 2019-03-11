@@ -49,7 +49,7 @@ if ( is_null($_isorder) ) {
 
                     <div id="details-block">
                         <div class="product-sku">
-                            <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                            <?php echo $this->__('SKU') . ': ' . $_helper->productAttribute($_product, $this->escapeHtml($_product->getSku()), 'sku'); ?>
                         </div>
                       <?php if ( $_isorder ): ?>
                         <div class="price-info">

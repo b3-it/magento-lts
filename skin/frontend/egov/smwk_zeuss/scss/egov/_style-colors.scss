@@ -94,7 +94,8 @@ $global-category-font-color: #333333;                                  // Textfa
 $global-category-hover-color: #333333;                                 // Hover-Farbe der Kategorie-Navigation
 $global-category-item-color: #CCDCE9;                                  // Hintergrundfarbe des ersten Menüpunktes
 $global-category-gradientrgb-1: rgba(233, 240, 249, 0.9);              // Start-Gradient des ersten Menüpunktes
-$global-category-gradientrgb-2: rgba( 53, 110, 197, 0.97);             // End-Gradient des ersten Menüpunktes
+//$global-category-gradientrgb-2: rgba( 53, 110, 197, 0.97);             // End-Gradient des ersten Menüpunktes
+$global-category-gradientrgb-2: rgba(150, 181, 262, 0.97);             // End-Gradient des ersten Menüpunktes
 $global-category-color-ms-1: #E6EDF4;                                  // IE Start-Gradient des ersten Menüpunktes
 $global-category-color-ms-2: #CCDCE9;                                  // IE End-Gradient des ersten Menüpunktes
 $global-category-textshadow: 0 1px 1px rgba(255, 255, 255, 0.5);       // Schatten der Kategorie-Navigation

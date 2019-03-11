@@ -117,6 +117,7 @@ class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_C
 	
 		if (($_taxRate <= 0.01 && !Mage::getStoreConfigFlag('catalog/price/display_zero_tax_below_price'))
             || !Mage::getStoreConfigFlag('catalog/price/display_tax_below_price')
+            || !Mage::getStoreConfigFlag('catalog/price/display_block_below_price')
         ) {
 		    return false;
         }

@@ -39,18 +39,36 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
     protected $_cached = array();
 
     /**
+     * @var array
+     */
+    protected $_class_names = null;
+
+    /**
+     * @var array
+     */
+    protected $_match_names = null;
+
+    /**
+     * @var array
+     */
+    protected $_ignored_attributes = null;
+
+    /**
+     * @var array
+     */
+    protected $_default_attributes = null;
+
+    /**
+     * @var array
+     */
+    protected $_ignored_attribute_matches = null;
+
+    /**
      * Enthält bereits verarbeitete ID von ConfigData Objekten
      *
      * @var array
      */
     protected $_processedConfigData = array();
-
-    /**
-     * Aktuelle Quelle
-     *
-     * @var Object
-     */
-    protected $_source = null;
 
     /**
      * Liefert die Apache Request Headers zurück
@@ -64,7 +82,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         } else {
             $headers = new Varien_Object();
         }
-        
+
         return $headers;
     }
 
@@ -83,10 +101,10 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
     protected function _getSessionInformation()
     {
         $sessionInformation = new Varien_Object();
-        
+
         /* @var $adminSession Mage_Admin_Model_Session */
         $adminSession = Mage::getSingleton('admin/session');
-        
+
         $remoteAddr = "empty";
         $userName = "unknown";
         // only if admin/session is not empty
@@ -96,19 +114,19 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 $remoteAddr = $validatorData->getRemoteAddr();
             }
             $sessionInformation->setRemoteAddr($remoteAddr);
-            
+
             if ($adminSession->getUser()) {
                 $userName = $adminSession->getUser()->getUsername();
             }
         }
-        
+
         $sessionInformation->setUserName($userName);
         $sessionInformation->setRemoteAddr($remoteAddr);
-        
+
         $sessionInformation->setViaHeader($this->_getHeaders()->getVia());
-        
+
         $sessionInformation->setSecretKey(Mage::getSingleton('adminhtml/url')->getSecretKey());
-        
+
         return $sessionInformation;
     }
 
@@ -117,35 +135,36 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      *
      * @param Mage_Core_Model_Abstract $source
      *            Das zu Prüfende Model
-     *            
+     *
      * @return boolean
      */
     public function isTraceableObject($source)
     {
-        // prevent loop
+        // HardCoded to prevent loop
         if ($source instanceof B3it_ModelHistory_Model_History
             || $source instanceof B3it_ModelHistory_Model_Config
             || $source instanceof B3it_Modelhistory_Model_Settings) {
-                return false;
-            }
+            return false;
+        }
 
-        /**
-         * @var B3it_Modelhistory_Model_Resource_Settings_Collection $collection
-         */
-        $collection = Mage::getModel("b3it_modelhistory/settings")->getCollection();
-        
-        foreach ($collection->getItemsByColumnValue('blocked', true) as $type) {
-            /**
-             * @var B3it_Modelhistory_Model_Settings $type
-             */
-            $modelName = $type->getData('model');
-            if ($source instanceof $modelName) {
-                return false;
-            } else if (strpos(get_class($source), $modelName) === 0) {
+        // filter by full class name, that works with instanceof
+        foreach ($this->_getClassNames() as $className) {
+            if ($source instanceof $className) {
                 return false;
             }
         }
-        
+
+        // need to iterate over all class names
+        $objClassNames = array_values(array_merge([get_class($source)], class_parents($source)));
+
+        foreach ($this->_getMatchNames() as $matchName) {
+            foreach ($objClassNames as $className) {
+                if (strpos($className, $matchName) !== false) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
@@ -156,13 +175,13 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      */
     public function isAvailable()
     {
-        if (! $this->_isBackendOperation) {
+        if (!$this->_isBackendOperation) {
             return false;
         }
-        
+
         return $this->_isEnabled;
     }
-    
+
     /**
      * Prüft ob die Aktion im Backend stattfindet.
      *
@@ -177,7 +196,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }
         $this->_isBackendOperation = true;
     }
-    
+
     /**
      * Erweitert die ursprüngliche Funktion um Methoden die mit 'on' beginnen!
      *
@@ -187,7 +206,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      *            Name
      * @param array $args
      *            Parameter
-     *            
+     *
      * @return mixed
      *
      * @see Varien_Object::__call()
@@ -197,10 +216,10 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
 
         switch (substr($method, 0, 2)) {
             case 'on':
-                if (! $this->isAvailable()) {
+                if (!$this->isAvailable()) {
                     return;
                 }
-                
+
                 // Varien_Profiler::start('GETTER: '.get_class($this).'::'.$method);
                 $method = '_' . $method;
                 if (method_exists($this, $method) && isset($args[0])) {
@@ -222,42 +241,43 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      *
      * @param Varien_Event_Observer $observer
      *            Observer
-     *            
+     *
      * @return void
      */
     protected function _onModelSaveAfter($observer)
     {
-        
+
         /** @var Mage_Core_Model_Abstract $source */
         $source = $observer->getObject();
-        $this->_source = $source;
-        
+
         $eventName = $observer->getEvent()->getName();
 
         if (strpos($eventName, 'core_config_data_') === 0) {
             // wird in _onCoreConfigDataSaveCommitAfter geloggt
             return;
         }
-        if ($source instanceof Mage_Core_Model_Config_Data && ! isset($this->_processedConfigData[$source->getId()])) {
+        if ($source instanceof Mage_Core_Model_Config_Data && !isset($this->_processedConfigData[$source->getId()])) {
             $this->_traceConfigData($source);
             if ($source->getId() > 0) {
                 $this->_processedConfigData[$source->getId()] = true;
             }
             return;
         }
-        
+
         $id = $source->getId();
         $data = $source->getData();
         $origData = $source->getOrigData();
         $className = get_class($source);
-        
-        $new = $source->isObjectNew();
-        
+
         if ($origData === null) {
             $origData = [];
         }
-        
-        if ($source instanceof Mage_Customer_Model_Address && ! empty($id) && ! empty($origData)) {
+
+        // some models might reset isObjectNew before the save after is run,
+        // look into origData
+        $new = $source->isObjectNew() || empty($origData);
+
+        if ($source instanceof Mage_Customer_Model_Address && !empty($id) && !empty($origData)) {
             if (isset($this->_cached[$className])) {
                 // Type bereits vorhanden
                 $this->_cached[$className][$source->getId()] = $source->getData();
@@ -267,7 +287,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                     $source->getId() => $source->getData()
                 );
             }
-        } elseif ($source instanceof Mage_Customer_Model_Address && ! empty($id) && empty($origData)) {
+        } elseif ($source instanceof Mage_Customer_Model_Address && !empty($id) && empty($origData)) {
             if (isset($this->_cached[$className]) && isset($this->_cached[$className][$source->getId()])) {
                 $origData = $this->_cached[$className][$source->getId()];
                 // Objekt mit alten Daten füttern
@@ -281,28 +301,51 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 unset($this->_cached[$className][$source->getId()]);
             }
         }
-        
-        if (! $source || ! isset($id) || $source->isEmpty()) {
+
+        if (!$source || !isset($id) || $source->isEmpty()) {
             return;
         }
-        
-        // TODO : Es müssen noch einige Ausnahmen definiert werden
-        if (! $this->isTraceableObject($source)) {
+
+        if (!$this->isTraceableObject($source)) {
             return;
         }
-        
+
+        $eventData = [
+            'source' => $source,
+            'hold' => new Varien_Object([
+                'new' => $data,
+                'old' => $origData
+            ])
+        ];
+
+        Mage::dispatchEvent('b3it_modelhistory_model_save_diff', $eventData);
+
+        /**
+         * @var Varien_Object $hold
+         */
+        $hold = $eventData['hold'];
+        if ($hold->hasData('abort')) {
+            return;
+        }
+
+        $data = $hold->getNew();
+        $origData = $hold->getOld();
+
+        $this->_filterNewData($source, $origData, $data);
+
+        $this->_filterOldData($source, $origData);
+
         if (!$new) {
-            $diff = array();
+            $changed = false;
             if ($source->dataHasChangedFor('')) {
                 try {
-                    // $diff = array_diff_assoc($source->getData(), $source->getOrigData());
-                    $diff = $this->_arrayDiff($origData, $data);
+                    $changed = $data != $origData;
                 } catch (Exception $e) {
                     Mage::log(sprintf("Error: %s, tracing stopped!", $e->getMessage()), Zend_Log::ERR);
                 }
             }
-    
-            if (empty($diff)) {
+
+            if (empty($changed)) {
                 return;
             }
         }
@@ -311,53 +354,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }
 
         // remove empty keys from new data
-        $result_data = $this::__myArrayFilter($data, function ($value, $key) use ($origData) {
-            if ($this->_conditionalExcludeKey($key, isset($origData[$key]) ? $origData[$key] : null, $value, 0)) {
-                return false;
-            }
-
-            if (empty($value) && (!isset($origData[$key]) || !empty($origData[$key]))) {
-                return false;
-            } else {
-                return true;
-            }
-        });
-
-        // filter origData
-        $origData = $this::__myArrayFilter($origData, function ($value, $key) use ($result_data) {
-            if (empty($value) && !isset($result_data[$key])) {
-                return false;
-            } else if ($this->_conditionalExcludeKey($key, $value, isset($result_data[$key]) ? $result_data[$key] : null, 0)) {
-                return false;
-            } else {
-                return true;
-            }
-        });
-        
-        // filter variables that only did change type from string to integer
-        array_walk($result_data, function (&$value, $key) use ($origData) {
-            if (isset($origData[$key]) && $origData[$key] == $value) {
-                $value = $origData[$key];
-            }
-        });
-
-        // TODO some specifice fixing, need to expanded later for other models
-        if ($source instanceof Mage_Admin_Model_User) {
-            // remove some flags
-            unset($result_data['page']);
-            unset($result_data['limit']);
-
-            if (!is_null($origData)) {
-                $keys = array('created', 'reload_acl_flag', 'logdate', 'lognum');
-                foreach ($keys as $key) {
-                    if (isset($origData[$key])) {
-                        $result_data[$key] = $origData[$key];
-                    }
-                }
-            }
-        } else if ($source instanceof Mage_Admin_Model_Roles) {
-            unset($result_data['name']);
-        }
+        $result_data = $data;
 
         ksort($result_data);
         if (!is_null($origData)) {
@@ -369,11 +366,11 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         }
 
         $sessionInformation = $this->_getSessionInformation();
-        
+
         $model = Mage::getModel("b3it_modelhistory/history");
-        
+
         $rev = 1;
-        
+
         if (!$new) {
             /**
              * @var B3it_Modelhistory_Model_Resource_History_Collection $collection
@@ -384,7 +381,7 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             ->addFieldToFilter('model_id', $source->getId())
             ->setPage(1,1)
             ->addAttributeToSort('rev', 'desc')->getFirstItem();
-            
+
             if ($maxRevItem) {
                 $rev += $maxRevItem->getData('rev');
             }
@@ -414,31 +411,30 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      *
      * @param Varien_Event_Observer $observer
      *            Observer
-     *            
+     *
      * @return void
      */
     protected function _onModelDeleteAfter($observer)
     {
         /* @var $source Mage_Core_Model_Abstract */
         $source = $observer->getObject();
-        
+
         $id = $source->getId();
-        if (! $source || ! isset($id) || $source->isEmpty()) {
+        if (!$source || !isset($id) || $source->isEmpty()) {
             return;
         }
-        
-        // TODO : Es müssen noch einige Ausnahmen definiert werden
-        if (! $this->isTraceableObject($source)) {
+
+        if (!$this->isTraceableObject($source)) {
             return;
         }
-        
+
         $sessionInformation = $this->_getSessionInformation();
 
         $rev = 1;
 
         if ($source instanceof Mage_Core_Model_Config_Data) {
             $model = Mage::getModel("b3it_modelhistory/config");
-            
+
             $old_value = $source->getValue();
 
             $collection = $model->getCollection();
@@ -470,20 +466,23 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 'date' => now(),
                 'type' => self::TYPE_DELETED
             );
-            
+
             $model->setData($data)->save();
         } else {
             $model = Mage::getModel("b3it_modelhistory/history");
             $collection = $model->getCollection();
 
-            $old_value = json_encode($source->getData(), JSON_UNESCAPED_UNICODE);
+            // TODO need to filter old data?
+            $oldData = $source->getData();
+            $this->_filterOldData($source, $oldData);
+            $old_value = json_encode($oldData, JSON_UNESCAPED_UNICODE);
 
             $maxRevItem = $collection
             ->addFieldToFilter('model', get_class($source))
             ->addFieldToFilter('model_id', $source->getId())
             ->setPage(1,1)
             ->addAttributeToSort('rev', 'desc')->getFirstItem();
-            
+
             if ($maxRevItem) {
                 $rev += $maxRevItem->getData('rev');
                 $old_value = $maxRevItem->getData('value');
@@ -518,33 +517,33 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      * @return void
      */
     protected function _onCoreConfigDataSaveCommitAfter($observer) {
-        
+
         /* @var $source Mage_Core_Model_Abstract */
         $source = $observer->getConfigData();
-    
+
         if ($source instanceof Mage_Core_Model_Config_Data && !isset($this->_processedConfigData[$source->getId()])) {
             $this->_traceConfigData($source);
             $this->_processedConfigData[$source->getId()] = true;
             return;
         }
     }
-    
+
     /**
      * Verfolgt Änderungen an der Konfiguration
      *
      * @param Mage_Core_Model_Config_Data $data
      *            Daten
-     *            
+     *
      * @return void
      */
     protected function _traceConfigData(Mage_Core_Model_Config_Data $data)
     {
 
         $objectNew = $data->isObjectNew();
-        if (! $data || !$data->isValueChanged() && !$objectNew) {
+        if (!$data || !$data->isValueChanged() && !$objectNew) {
             return;
         }
-        
+
         if (preg_match('/\r\n|\n/', $data->getValue()) == true) {
             $old = str_replace("\r\n", "\n", $data->getOldValue());
             $new = str_replace("\r\n", "\n", $data->getValue());
@@ -552,19 +551,19 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
                 return;
             }
         }
-        
+
         if ($data instanceof Mage_Adminhtml_Model_System_Config_Backend_Encrypted) {
             $value = Mage::helper('core')->decrypt($data->getValue());
-            
+
             if ($value == $data->getOldValue()) {
                 return;
             }
         }
-        
+
         $sessionInformation = $this->_getSessionInformation();
-        
+
         $model = Mage::getModel("b3it_modelhistory/config");
-        
+
         $rev = 1;
         // search only for model is not new
         if (!$objectNew) {
@@ -573,12 +572,12 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             ->addFieldToFilter('model_id', $data->getId())
             ->setPage(1,1)
             ->addAttributeToSort('rev', 'desc')->getFirstItem();
-            
+
             if ($maxRevItem) {
                 $rev += $maxRevItem->getData('rev');
             }
         }
-        
+
         $modelData = array(
             'path' => $data->getPath(),
             'group_id' => $data->getGroupId(),
@@ -604,15 +603,15 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
      * Nötig da {@link Mage_Core_Model_App::__callObserverMethod} method_exists verwendet
      *
      * @param Varien_Event_Observer $observer
-     *            
+     *
      * @return void
      */
     public function doTrace($observer)
     {
-        if (! ($observer instanceof Varien_Event_Observer) || ! $observer->hasEvent()) {
+        if (!($observer instanceof Varien_Event_Observer) || !$observer->hasEvent()) {
             return;
         }
-        
+
         $this->__call(sprintf('on%s', $this->_camelize($observer->getEvent()
             ->getName())), array(
             $observer
@@ -620,109 +619,47 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
     }
 
     /**
-     * Liefert einen Diff zwischen zwei Arrays
-     *
-     * @param array $old
-     *            Altes Array
-     * @param array $new
-     *            Neues Array
-     * @param integer $level
-     *            Array-level
-     *            
-     * @return array
+     * @param Varien_Event_Observer $observer
      */
-    protected function _arrayDiff($old, $new, $level = 0, $parentKey = null)
-    {
-        /*
-        if ($level > 3) {
-            return '';
-        }
-        //*/
-        
-        if ($old instanceof Varien_Object) {
-            $old = $old->getData();
-        }
-        if ($new instanceof Varien_Object) {
-            $new = $new->getData();
-        }
-        
-        if (! is_array($old)) {
-            $old = array();
-        }
-        $keysOld = array_keys($old);
-        if (! is_array($new)) {
-            $new = array();
-        }
-        $keysNew = array_keys($new);
-        $keys = array_merge($keysNew, $keysOld);
-        
-        $res = array();
-        foreach ($keys as $key) {
-            if ($key != '_cache_editable_attributes') {
-                $origValue = '';
-                $newValue = '';
-                if (isset($old[$key])) {
-                    $origValue = $old[$key];
-                }
-                if (isset($new[$key])) {
-                    $newValue = $new[$key];
-                }
-                //*
-                //*/
-                if ($origValue !== $newValue) {
-                    if ((is_array($origValue) or is_object($origValue)) || (is_array($newValue) or is_object($newValue))) {
-                        
-                        //if ($parentKey === "media_attributes") {
-                        //    var_dump([$parentKey, $key, $origValue, $newValue, $level]);
-                        //    exit();
-                        //}
-                        $res[$key] = $this->_arrayDiff($origValue, $newValue, $level + 1, $key);
-                        if (empty($res[$key])) {
-                            unset($res[$key]);
-                        }
-                    } else {
-                        $origValue = trim($origValue);
-                        $newValue = trim($newValue);
-                        
-                        // Ausnahmen
-                        if ($this->_conditionalExcludeKey($key, $origValue, $newValue, $level)) {
-                            continue;
-                        }
+    public function onDiff($observer) {
+        $source = $observer->getSource();
+        $newData = $observer->getHold()->getNew();
+        $oldData = $observer->getHold()->getOld();
 
-                        if (strpos($key, 'discount_quota') === 0) {
-                            // Preis wieder in float umwandeln
-                            $origValue = Mage::app()->getLocale()->getNumber($origValue);
-                            // Auf 2 Nachkommastellen setzen
-                            $origValue = Mage::app()->getStore()->roundPrice($origValue);
-                        }
-                        
-                        // String truncation
-                        if (is_string($origValue)) {
-                            $origValue = $this->_truncate($origValue);
-                        }
-                        if (is_string($newValue)) {
-                            $newValue = $this->_truncate($newValue);
-                        }
-                        
-                        if ($origValue != $newValue) {
-                            $res[$key] = sprintf("OLD: %s|NEW: %s;", $origValue, $newValue);
-                        }
+        // some magic to generate category_ids for Product, but only category ids are set
+        if ($source instanceof Mage_Catalog_Model_Product && isset($newData['category_ids'])) {
+            $oldCatIds = $newData['category_ids'];
+
+            if (isset($newData['affected_category_ids'])) {
+                foreach ($newData['affected_category_ids'] as $a) {
+                    if (in_array($a, $oldCatIds)) {
+                        $oldCatIds = array_diff($oldCatIds, [$a]);
+                    } else {
+                        array_push($oldCatIds, $a);
                     }
+                    sort($oldCatIds);
                 }
+                unset($newData['affected_category_ids']);
             }
+
+            $oldData['category_ids'] = $oldCatIds;
+
+            $observer->getHold()->setNew($newData);
+            $observer->getHold()->setOld($oldData);
         }
-        
-        /*
-        if ($parentKey === "productfiledescription") {
-            var_dump([$parentKey, $old, $new, $level]);
-            var_dump($res);
-            exit();
-        }
-        //*/
-        return $res;
     }
 
-    protected function _conditionalExcludeKey($key, $origValue, $newValue, $level = 0)
+    /**
+     *
+     * @param $source
+     * @param $key
+     * @param $origValue
+     * @param $newValue
+     * @param number $level
+     * @return boolean
+     * @deprecated
+     */
+    protected function _conditionalExcludeKey($source, $key, $origValue, $newValue, $level = 0)
     {
         if (empty($newValue) && $newValue != 0 && empty($origValue) && $origValue != 0
             || strpos($key, '_cache_') === 0
@@ -737,18 +674,33 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
             || $key == 'is_saved'
             || $key == 'is_default_billing' && $newValue == true && empty($origValue)
             || $key == 'is_default_shipping' && $newValue == true && empty($origValue)
-            || $key == 'customer_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
-            || $key == 'store_id' && $level == 0 && empty($origValue) && ! empty($newValue) && $this->_source instanceof Mage_Customer_Model_Address
+            || $key == 'is_default_base_address' && $newValue == true && empty($origValue)
+            || $key == 'customer_id' && $level == 0 && empty($origValue) && !empty($newValue) && $source instanceof Mage_Customer_Model_Address
+            || $key == 'store_id' && $level == 0 && empty($origValue) && !empty($newValue) && $source instanceof Mage_Customer_Model_Address
             || $key == 'original_group_id'
             || $key == 'current_password'
             || $key == 'password'
             || $key == 'new_password'
             || $key == 'password_confirmation'
             || $key == 'password_hash'
+            || $key == 'postcode_checked'
+            || $key == 'can_save_custom_options'
             || $key == 'form_key') {
             return true;
         }
-        
+
+        if ($source instanceof Mage_Customer_Model_Customer) {
+            if ($key == 'tax_class_id') {
+                return true;
+            }
+        }
+
+        if ($source instanceof Mage_Catalog_Model_Product) {
+            if ($key == 'use_config_manage_stock') {
+                return true;
+            }
+        }
+
         // exclude media_gallery stuff variables
         if ($origValue === null && $newValue === 'no_selection' && $level === 2) {
             return true;
@@ -761,32 +713,195 @@ class B3it_Modelhistory_Model_Observer extends Varien_Object
         return false;
     }
 
-    protected function _truncate($origValue)
-    {
-        if (! is_string($origValue)) {
-            return $origValue;
+    /**
+     * returns names of blacklisted classes
+     * @return array
+     */
+    protected function _getClassNames() {
+        if ($this->_class_names === null) {
+            $data = Mage::getConfig()->getNode('b3it_modelhistory/blacklist/names')->asArray();
+            $this->_class_names = array_values($data);
         }
-        
-        $len = strlen($origValue);
-        $tmp = substr($origValue, 0, min($len, 250));
-        if ($len > 250) {
-            $tmp .= '...';
-        }
-        return $tmp;
+        return $this->_class_names;
     }
-    
 
-    static protected function __myArrayFilter($array, $closure) {
-        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
-            return array_filter($array, $closure, ARRAY_FILTER_USE_BOTH);
-        } else {
-            $newData = array();
-            foreach ($array as $key=>$val) {
-                if (call_user_func_array($closure, array($val, $key))) {
-                    $newData[$key]= $val;
+    /**
+     * returns names of ignored attributes
+     * class => [attributes]
+     * @return array[]
+     */
+    protected function _getIgnoredAttributes() {
+        if ($this->_ignored_attributes === null) {
+            $data = Mage::getConfig()->getNode('b3it_modelhistory/ignore_attributes')->asArray();
+
+            $result = [];
+
+            // might need better way to combine it?
+            foreach ($data as $v) {
+                if (!is_array($v['attributes'])) {
+                    continue;
+                }
+                $attrs = array_values($v['attributes']);
+                if (isset($result[$v['class']])) {
+                    $result[$v['class']] = array_merge($result[$v['class']], $attrs);
+                } else {
+                    $result[$v['class']] = $attrs;
                 }
             }
-            return($array);
+
+            $this->_ignored_attributes = $result;
         }
+        return $this->_ignored_attributes;
+    }
+
+    /**
+     * returns attribute matches to be ignored
+     * class => [matches]
+     * @return array[]
+     */
+    protected function _getIgnoredAttributeMatches() {
+        if ($this->_ignored_attribute_matches === null) {
+            $data = Mage::getConfig()->getNode('b3it_modelhistory/ignore_attributes')->asArray();
+
+            $result = [];
+            foreach ($data as $v) {
+                if (!isset($v['matches'])) {
+                    continue;
+                }
+                $result[$v['class']] = array_values($v['matches']);
+            }
+
+            $this->_ignored_attribute_matches = $result;
+        }
+        return $this->_ignored_attribute_matches;
+    }
+
+    /**
+     * returns default value for class => attribute
+     * @return array
+     */
+    protected function _getDefaultAttributes() {
+        if ($this->_default_attributes === null) {
+            $data = Mage::getConfig()->getNode('b3it_modelhistory/default_attributes')->asArray();
+            $result = [];
+            foreach ($data as $v) {
+                if (is_array($v['attributes'])) {
+                    $attrs = [];
+                    foreach ($v['attributes'] as $a) {
+                        $attrs[$a['name']] = $a['value'];
+                    }
+                    $result[$v['class']] = $attrs;
+                }
+            }
+            $this->_default_attributes = $result;
+        }
+        return $this->_default_attributes;
+    }
+
+    /**
+     * returns matches for blacklisted classes
+     * @return array
+     */
+    protected function _getMatchNames() {
+        if ($this->_match_names === null) {
+            $data = Mage::getConfig()->getNode('b3it_modelhistory/blacklist/matches')->asArray();
+            $this->_match_names = array_values($data);
+        }
+        return $this->_match_names;
+    }
+
+    protected function _isKeyIgnored($source, $key) {
+        $strKey = implode("/", $key);
+        foreach ($this->_getIgnoredAttributes() as $klass => $attrs) {
+            if (($source instanceof $klass) && in_array($strKey, $attrs)) {
+                return true;
+            }
+        }
+        foreach ($this->_getIgnoredAttributeMatches() as $klass => $matches) {
+            if (($source instanceof $klass)) {
+                // TODO use regex?
+                foreach ($matches as $match) {
+                    if (strpos($strKey, $match) !== false) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    protected function _isDefaultValue($source, $key, $value) {
+        $strKey = implode("/", $key);
+        foreach ($this->_getDefaultAttributes() as $klass => $attrs) {
+            if ($source instanceof $klass) {
+                if (isset($attrs[$strKey])) {
+                    return $attrs[$strKey] == $value;
+                }
+            }
+        }
+        // in theory each empty value is treat as not set
+        if (empty($value)) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function _updateOldValue($source, $parent, $key, &$oldValue, $level)
+    {
+        $combinedKey = array_merge($parent, [
+            $key
+        ]);
+        // if key is ignored for source, make the value null
+        if ($this->_isKeyIgnored($source, $combinedKey)) {
+            $oldValue = null;
+        } else if (is_array($oldValue)) {
+            $this->_filterOldData($source, $oldValue, $combinedKey, $level + 1);
+            if (empty($oldValue)) {
+                $oldValue = null;
+            }
+        }
+    }
+
+    protected function _updateNewValue($source, $parent, $key, $oldValue, &$newValue, $level)
+    {
+        $combinedKey = array_merge($parent, [
+            $key
+        ]);
+        if ($this->_isKeyIgnored($source, $combinedKey)) {
+            $newValue = null;
+        } else if (is_array($newValue)) {
+            $this->_filterNewData($source, $oldValue, $newValue, $combinedKey, $level + 1);
+            if (empty($newValue)) {
+                $newValue = null;
+            }
+        } else if (!isset($oldValue)) {
+            // do default check only if oldValue isn't set
+            if ($this->_isDefaultValue($source, $combinedKey, $newValue)) {
+                $newValue = null;
+            }
+        } else if ($oldValue !== $newValue && $oldValue == $newValue){
+            // old value == new value but not ===, means it it nearly identical, but type did change?
+            $newValue = $oldValue;
+        }
+    }
+
+    protected function _filterOldData($source, &$oldData, $parent = [], $level = 0)
+    {
+        array_walk($oldData, function (&$innerValue, $innerKey) use ($source, $parent, $level) {
+            $this->_updateOldValue($source, $parent, $innerKey, $innerValue, $level);
+        });
+        $oldData = array_filter($oldData, function ($innerValue) {
+            return !is_null($innerValue);
+        });
+    }
+
+    protected function _filterNewData($source, $oldData, &$newData, $parent = [], $level = 0)
+    {
+        array_walk($newData, function (&$innerValue, $innerKey) use ($source, $parent, $oldData, $level) {
+            $this->_updateNewValue($source, $parent, $innerKey, is_array($oldData) && isset($oldData[$innerKey]) ? $oldData[$innerKey] : null, $innerValue, $level);
+        });
+        $newData = array_filter($newData, function ($innerValue) {
+            return !is_null($innerValue);
+        });
     }
 }

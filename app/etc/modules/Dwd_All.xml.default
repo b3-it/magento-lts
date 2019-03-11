@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
   <modules>
     <Dwd_Abo>
@@ -35,6 +36,7 @@
       <codePool>local</codePool>
       <depends>
         <Mage_Downloadable />
+        <Egovs_Checkout />
         <Dwd_Stationen />
         <Dwd_Periode />
       </depends>
@@ -43,6 +45,7 @@
       <active>false</active>
       <codePool>local</codePool>
       <depends>
+        <Egovs_Checkout />
         <Dwd_Stationen />
         <Dwd_Periode />
       </depends>
