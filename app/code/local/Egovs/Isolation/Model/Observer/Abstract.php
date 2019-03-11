@@ -72,15 +72,23 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
         return Mage::getConfig('storeisolation/filter/show_order_within_customer_store');
     }
 
-
+    /**
+     * alle zum aktuellen Benutzer gehörenden Stores
+     * @return array
+     */
     protected function getUserStoreGroups()
 	{
-		$user = $this->getUser();
-		return $user->getStoreGroups();
+        if( Mage::app()->getStore()->isAdmin() ) {
+            return array();
+        }
+        else {
+            $user = $this->getUser();
+            return $user->getStoreGroups();
+        }
 	}
 	
 	/**
-	 * Aller erlaubten StoreViews des nutzers fesstellen
+	 * Aller erlaubten StoreViews des Nutzers festellen
 	 * @return NULL[]
 	 */
 	protected function getUserStoreViews()
