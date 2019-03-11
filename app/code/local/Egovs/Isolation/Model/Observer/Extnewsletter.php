@@ -6,7 +6,7 @@
  * @category   	Egovs
  * @package    	Egovs_Isolation
  * @name       	Egovs_Isolation_Model_Observer_Extnewsletter
- * @author 		Holger K�gel <hkoegel@edv-beratung-hempel.de>
+ * @author 		Holger Kögel <hkoegel@edv-beratung-hempel.de>
  * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
@@ -15,7 +15,7 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
    
   /**
    * der Filter für die Newsletterthemen
-   * Enter description here ...
+   *
    * @param Varien_Event_Observer $observer Observer
    */
     public function onStoreBlockLoad($observer)
@@ -36,8 +36,12 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     	}
     	
     }
-  
-    
+
+    /**
+     *
+     *
+     * @param Varien_Event_Observer $observer Observer
+     */
     public function onIssueCollectionLoad($observer)
     {
     	$storeGroups = $this->getUserStoreViews();
@@ -52,8 +56,12 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     	}
     	 
     }
-    
-    
+
+    /**
+     *
+     *
+     * @param Varien_Event_Observer $observer Observer
+     */
     public function onIssueLoad($observer)
     {
     	$product = $observer->getExtnewsletterIssue();
@@ -72,7 +80,12 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     	}
     	 
     }
-    
+
+    /**
+     *
+     *
+     * @param Varien_Event_Observer $observer Observer
+     */
     public function onSubscriberCollectionLoad($observer)
     {
     	$storeGroups = $this->getUserStoreGroups();
@@ -109,7 +122,12 @@ class Egovs_Isolation_Model_Observer_Extnewsletter extends Egovs_Isolation_Model
     	}
     
     }
-    
+
+    /**
+     *
+     *
+     * @param Varien_Event_Observer $observer Observer
+     */
     public function onQueueCollectionLoad($observer)
     {
     	$storeGroups = $this->getUserStoreGroups();
