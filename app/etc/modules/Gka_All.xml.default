@@ -14,10 +14,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_Checkout>
-		<Gka_Flexprice>
-            <active>true</active>
-            <codePool>local</codePool>
-		</Gka_Flexprice>
         <Gka_Product>
             <active>true</active>
             <codePool>local</codePool>
