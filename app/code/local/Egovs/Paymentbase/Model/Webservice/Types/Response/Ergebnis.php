@@ -12,7 +12,7 @@
  * 
  * @property string $EPaymentId Interne eindeutige ID des ePayment System, unter der der Request gespeichert wurde, der das Ergebniselement als Returnstruktur erzeugt hat. Sollte protokolliert werden und als Referenz gegenüber dem ePayment System verwendet werden.
  * @property date $EPaymenTimestamp Zeitpunkt zu welchem der aufrufende Request im ePayment-System gespeichert wurde
- * @property bool $istOK Status des Ergebnisses
+ * @property bool $istOk Status des Ergebnisses
  * 
  * @property Egovs_Paymentbase_Model_Webservice_Types_Text $text Enthält detaillierte Zusatzinformationen zum Vorgang; seit ePayBL 3.x
  * 
