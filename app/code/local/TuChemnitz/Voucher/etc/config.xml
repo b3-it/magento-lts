@@ -182,7 +182,17 @@
             </sales_order_save_commit_after> 
         </events>
     </global>
-    
+
+    <frontend>
+        <layout>
+            <updates>
+                <tucvoucher module="tucvoucher">
+                    <file>egovs/voucher.xml</file>
+                </tucvoucher>
+            </updates>
+        </layout>
+    </frontend>
+
     <admin>
         <fieldsets>
             <catalog_product_dataflow>
@@ -243,6 +253,7 @@
             </adminhtml>            
         </routers>
     </admin>
+
     <crontab>
         <jobs>
             <tuc_voucher_disable>

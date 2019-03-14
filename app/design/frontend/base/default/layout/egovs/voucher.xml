@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+   <PRODUCT_TYPE_voucher translate="label" module="tucvoucher">
+       <label>Catalog Product View (Voucher)</label>
+    </PRODUCT_TYPE_voucher>
+
+    <reference name="product_list">
+        <action method="addPriceBlockType">
+            <type>voucher</type>
+            <block>egovsready/catalog_product_price</block>
+            <template>catalog/product/price.phtml</template>
+        </action>
+    </reference>
+</layout>
