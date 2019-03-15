@@ -10,6 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
 {
+    protected $mockForOrder;
+    protected $mockForPayment;
+    protected $mockForGirosolution;
+
     public function __construct(?string $name = NULL, array $data = [], string $dataName = '') {
         require_once dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'Mage.php';
         $this->assertInstanceOf(Mage_Core_Model_App::class,
@@ -21,55 +25,135 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
         parent::__construct($name, $data, $dataName);
     }
 
-    public function testModifyOrderAfterPaymentSuccessPayment() {
-        $mockForPayment = $this->getMockBuilder(Mage_Sales_Model_Order_Payment::class)
-            ->setMethods(array('getKassenzeichen'))
-            ->getMock()
-            ;
-        $mockForPayment->method('getKassenzeichen')
-            ->willReturn('123456789')
-            ;
-
-        $mockForOrder = $this->getMockBuilder(Mage_Sales_Model_Order::class)
-            ->setConstructorArgs(array(array('id' => 65532, 'state' => Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)))
-            ->setMethods(array('save', 'canInvoice', 'setState', 'getState', 'getPayment', 'getIdFieldName'))
+    /**
+     * @param $bkz string Kassenzeichen
+     *
+     * @return Egovs_Paymentbase_Model_Girosolution $paymentMethod
+     * @throws \ReflectionException
+     */
+    protected function _initMocks($bkz) {
+        $this->mockForPayment = $this->getMockBuilder(Mage_Sales_Model_Order_Payment::class)
+            ->setMethods(array('getKassenzeichen', 'addTransaction', 'hasKassenzeichen'))
             ->getMock()
         ;
+        $this->mockForPayment->method('getKassenzeichen')
+            ->willReturn($bkz)
+        ;
 
-        $mockForOrder->method('getIdFieldName')
-            ->willReturn('id');
+        $this->mockForPayment->method('hasKassenzeichen')
+            ->willReturn(true)
+        ;
 
-        $mockForOrder->expects($this->atLeast(2))
+        $mockForTransaction = $this->getMockBuilder(Mage_Sales_Model_Order_Payment_Transaction::class)
+            ->setMethods(array('save', 'setParentTxnId'))
+            ->getMock()
+        ;
+        $mockForTransaction->expects($this->any())
             ->method('save')
             ->willReturnSelf()
         ;
-        $mockForOrder->expects($this->any())
-            ->method('canInvoice')
-            ->willReturn(false)
-        ;
-        $mockForOrder->expects($this->any())
-            ->method('setState')
-            ->willReturnSelf()
+
+        $this->mockForPayment->method('addTransaction')
+            ->willReturn($mockForTransaction)
         ;
 
-        $mockForOrder->method('getPayment')
-            ->willReturn($mockForPayment)
-            ;
+        $this->_initMockForOrder();
 
-
-        $mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
-            ->setMethods(array('_getOrder'))
+        $this->mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
+            ->setMethods(array('_getOrder', '_getQuote', '_activateKassenzeichen'))
             ->getMockForAbstractClass()
         ;
 
-        $mockForGirosolution->expects($this->any())
+        $this->mockForGirosolution->expects($this->any())
             ->method('_getOrder')
-            ->willReturn($mockForOrder);
+            ->willReturn($this->mockForOrder)
+        ;
 
-        $paymentMethod = $mockForGirosolution;
+        $this->mockForGirosolution->expects($this->any())
+            ->method('_activateKassenzeichen')
+            ->willReturn(true)
+        ;
+
+        $mockForQuote = $this->getMockBuilder(Mage_Sales_Model_Quote::class)
+            ->setMethods(array('save'))
+            ->getMock()
+        ;
+        $mockForQuote->expects($this->any())
+            ->method('save')
+            ->willReturnSelf()
+        ;
+        $this->mockForGirosolution->expects($this->any())
+            ->method('_getQuote')
+            ->willReturn($mockForQuote)
+        ;
+
+        return $this->mockForGirosolution;
+    }
+
+    public function _initMockForOrder() {
+        $this->mockForOrder = $this->getMockBuilder(Mage_Sales_Model_Order::class)
+            ->setConstructorArgs(array(array('id' => 65532, 'state' => Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW)))
+            ->setMethods(array('save', 'canInvoice', 'getPayment', 'getIdFieldName', 'getResource'))
+            ->getMock()
+        ;
+
+        $this->mockForOrder->method('getIdFieldName')
+            ->willReturn('id');
+
+        $this->mockForOrder->expects($this->any())
+            ->method('canInvoice')
+            ->willReturn(false)
+        ;
+
+        $mockForOrderResource = $this->getMockBuilder(Mage_Sales_Model_Resource_Order::class)
+            ->setMethods(array('saveAttribute'))
+            ->getMock()
+        ;
+
+        $this->mockForOrder->expects($this->any())
+            ->method('getResource')
+            ->willReturn($mockForOrderResource)
+        ;
+
+        $this->mockForOrder->method('getPayment')
+            ->willReturn($this->mockForPayment)
+        ;
+
+        return $this->mockForOrder;
+    }
+
+    public function testModifyOrderAfterPaymentUnequalBkz() {
+        $paymentMethod = $this->_initMocks('123456789');
+        $this->mockForOrder->expects($this->never())
+            ->method('save')
+            ->willReturnSelf()
+        ;
+
         $result = $paymentMethod->modifyOrderAfterPayment(
             true,
             'test1234',
+            true,
+            'Test',
+            false,
+            true,
+            'Test Invoice',
+            'test1234gc',
+            array()
+        );
+        $this->assertFalse($result, 'BKZ are equal');
+    }
+
+    public function testModifyOrderAfterPaymentSuccessPayment() {
+        $paymentMethod = $this->_initMocks('123456789');
+
+        $this->mockForOrder->expects($this->any())
+            ->method('save')
+            ->willReturnSelf()
+        ;
+
+        $result = $paymentMethod->modifyOrderAfterPayment(
+            true,
+            'test/123456789',
             true,
             'Test',
             //TODO implement test case
