@@ -245,6 +245,30 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 		}
 		return $this->__order;
 	}
+
+	/** @var null Aktuelle Quote */
+	private $__quote = null;
+
+    /**
+     * Get current quote
+     *
+     * @param $quote
+     *
+     * @return \Egovs_Base_Model_Sales_Quote|\Mage_Core_Model_Abstract|\Mage_Sales_Model_Quote|null
+     */
+	protected function _getQuote($quote) {
+	    if (!$this->__quote) {
+            /** @var $_quote Mage_Sales_Model_Quote */
+            $_quote = $this->getInfoInstance()->getQuote();
+            if ($_quote && $_quote->getId() === $quote) {
+                $this->__quote = $_quote;
+            } else {
+                $this->__quote = Mage::getModel('sales/quote')->load($quote);
+            }
+        }
+
+	    return $this->__quote;
+    }
 	/**
 	 * Löscht den Kunden an der ePayment Plattform
 	 *

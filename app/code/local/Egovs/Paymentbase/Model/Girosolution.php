@@ -787,8 +787,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         // SUCCESSFUL PAYMENT
         // Set customers shopping cart inactive
         $quote = $this->_getOrder()->getQuoteId();
-        $quote = Mage::getModel('sales/quote')->load($quote);
-        //Mage::getSingleton('checkout/session')->getQuote()->setIsActive(false)->save();
+        $quote = $this->_getQuote($quote);
         $quote->setIsActive(false)->save();
 
         // If no update was required, return true, because the order was found
