@@ -33,6 +33,8 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 	 * @var array
 	 */
 	protected $_errors = array();
+
+	protected $_globalStartTime = 0.0;
 	
 	/**
 	 * Liefert den Transaktionstyp
@@ -621,8 +623,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $orderStateFinished = Mage_Sales_Model_Order::STATE_PROCESSING
     ) {
         //=======================================================================================================
-        $startTime = $this->_getTimeStamp();
-        $globalStartTime = $startTime;
+        $this->_globalStartTime = $this->_getTimeStamp();
 
         $order = $this->_getOrder();
         // If order was not found, return false
@@ -647,11 +648,12 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
          * verfügbar und sind standarmäßig deaktiviert.
          */
         $lockKey = 'girosolution_mutex'.$this->_getOrder()->getId();
-        $lockHelper = Mage::helper('egovsbase/lock');
+        $lockHelper = $this->getLockHelper();
         $lockAlreadyObtainedMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:modifyOrderAfterPayment already called, disabling update order state!";
         $lockNotObtainableMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:Timed out, can not obtain lock";
         $isLockedFlag = false;
         //APCU lock is optional
+        $startTime = $this->_getTimeStamp();
         if (!$lockHelper->getApcuLock($lockKey)) {
             if ($lockHelper->isFreeLockApcu($lockKey) === false) {
                 Mage::log(sprintf($lockAlreadyObtainedMsg, 'APCU_FETCH'), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
@@ -662,10 +664,11 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             }
         } else {
             $isLockedFlag = true;
-            $this->_logLockTimeDiff($startTime, 'apcu', $globalStartTime);
+            $this->_logLockTimeDiff($startTime, 'apcu');
         }
 
         //DB lock is mandatory
+        $startTime = $this->_getTimeStamp();
         if (!$lockHelper->getDbLock($lockKey)) {
             if (!$lockHelper->isFreeLockDb($lockKey)) {
                 Mage::log(sprintf($lockAlreadyObtainedMsg, 'DB_LOCK'), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
@@ -676,7 +679,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             }
         } else {
             $isLockedFlag = true;
-            $this->_logLockTimeDiff($startTime, 'DB:get_lock', $globalStartTime);
+            $this->_logLockTimeDiff($startTime, 'DB:get_lock');
         }
 
         if (isset($paymentSuccessful)) {
@@ -704,6 +707,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             return false;
         }
 
+        $startTime = $this->_getTimeStamp();
         $orderState = $order->getState();
         //If order was already updated, do not update again.
         if($orderState != Mage_Sales_Model_Order::STATE_PAYMENT_REVIEW) {
@@ -720,7 +724,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
             //Schnelles Speichern um Bereich zu verriegeln!
             $orderResource = $order->getResource();
             $orderResource->saveAttribute($order, 'state');
-            $this->_logLockTimeDiff($startTime, 'DB_STATE', $globalStartTime);
+            $this->_logLockTimeDiff($startTime, 'DB_STATE');
 
             //update transaction
             $payment = $order->getPayment();
@@ -848,15 +852,17 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
                 } catch (Exception $e) {
                     Mage::logException($e);
                 }
+                //Event muss aus Kompatibilitätsgründen so heißen!?
+                Mage::log("{$this->getCode()}::dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
+                Mage::dispatchEvent('egovs_paymentbase_gateway_sales_order_invoice_after_pay', array('invoice'=>$invoice));
+                Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
             }
         }
 
         $order->save();
-        //Event muss aus Kompatibilitätsgründen so heißen!?
-        Mage::log("{$this->getCode()}::dispatching event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        Mage::dispatchEvent('egovs_paymentbase_saferpay_sales_order_invoice_after_pay', array('invoice'=>$invoice));
-        Mage::log("{$this->getCode()}::dispatched event:egovs_paymentbase_saferpay_sales_order_invoice_after_pay", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
-        Mage::log("{$this->getCode()}::...invoice created", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+
         $lockHelper->releaseAllLocks($lockKey);
         return true;
 	}
@@ -969,17 +975,14 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 		return $this;
 	}
 
-	protected function _logLockTimeDiff($startTime, $lockMethod = '', $globalStartTime = null) {
+	protected function _logLockTimeDiff($startTime, $lockMethod = '') {
         if (function_exists('microtime')) {
             $endTime = microtime(true);
         } else {
             $endTime = time();
         }
         $runTime = $endTime - $startTime;
-        $totalRunTime = false;
-        if ($globalStartTime !== null) {
-            $totalRunTime = $endTime - $globalStartTime;
-        }
+        $totalRunTime = $endTime - $this->_globalStartTime;
 
         if ($totalRunTime > 0) {
             $totalRunTimeMsg = "Total run time is $totalRunTime seconds.";

@@ -354,7 +354,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 
             if ($objResult instanceof SoapFault) {
                 $sMailText .= "SOAP: " . $objResult->getMessage() . "\n\n";
-            } elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
+            } /** @noinspection MissingIssetImplementationInspection */
+            elseif (!$objResult || is_null($objResult) || !isset($objResult->ergebnis)) {
                 $sMailText .= "Error: No result returned\n";
             } else {
                 $sMailText .= Mage::helper('paymentbase')->getErrorStringFromObjResult($objResult->ergebnis);
@@ -392,7 +393,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			if (method_exists($this, '_customErrorHandler')) {
 				call_user_func(array($this,'_customErrorHandler'), $objResult);
 			} else {
-				if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) {
+                /** @noinspection MissingIssetImplementationInspection */
+                if ($objResult && isset($objResult->ergebnis) && Mage::helper($this->getCode())->__('TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) != 'TEXT_PROCESS_ERROR_'.$objResult->ergebnis->getCode()) {
 					$this->parseAndThrow('ERROR:'.$objResult->ergebnis->getCode());
 				} elseif ($objResult instanceof SoapFault) {
 					$this->parseAndThrow('ERROR_-999989');
@@ -1092,4 +1094,11 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 	public function getCustomText() {
 		return $this->getConfigData('customtext');
 	}
+
+    /**
+     * @return \Egovs_Base_Helper_Lock
+     */
+	public function getLockHelper() {
+        return Mage::helper('egovsbase/lock');
+    }
 }
