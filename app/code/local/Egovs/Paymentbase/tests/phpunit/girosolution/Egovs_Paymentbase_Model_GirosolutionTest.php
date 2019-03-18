@@ -59,19 +59,9 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
 
         $this->_initMockForOrder();
 
-        $this->mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
-            ->setMethods(array('_getOrder', '_getQuote', '_activateKassenzeichen'))
-            ->getMockForAbstractClass()
-        ;
-
         $this->mockForGirosolution->expects($this->any())
             ->method('_getOrder')
             ->willReturn($this->mockForOrder)
-        ;
-
-        $this->mockForGirosolution->expects($this->any())
-            ->method('_activateKassenzeichen')
-            ->willReturn(true)
         ;
 
         $mockForQuote = $this->getMockBuilder(Mage_Sales_Model_Quote::class)
@@ -86,6 +76,18 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
             ->method('_getQuote')
             ->willReturn($mockForQuote)
         ;
+
+        $this->mockForGirosolution->expects($this->any())
+            ->method('_activateKassenzeichen')
+            ->willReturnCallback(
+                function () {
+                    Mage::log(sprintf('paymentbase::_activateKassenzeichen:succeeded'), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                    return true;
+                }
+            )
+        ;
+
+
 
         return $this->mockForGirosolution;
     }
@@ -123,6 +125,11 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
     }
 
     public function testModifyOrderAfterPaymentUnequalBkz() {
+        $this->mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
+            ->setMethods(array('_getOrder', '_getQuote', '_activateKassenzeichen'))
+            ->getMockForAbstractClass()
+        ;
+
         $paymentMethod = $this->_initMocks('123456789');
         $this->mockForOrder->expects($this->never())
             ->method('save')
@@ -144,8 +151,19 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
     }
 
     public function testModifyOrderAfterPaymentSuccessPayment() {
+        $this->mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
+            ->setMethods(array('_getOrder', '_getQuote', '_activateKassenzeichen'))
+            ->getMockForAbstractClass()
+        ;
+
         $paymentMethod = $this->_initMocks('123456789');
 
+        $this->mockForGirosolution->expects($this->once())
+            ->method('_activateKassenzeichen')
+            ->willReturn(true)
+        ;
+
+        //expects funktioniert mit debugger nicht!
         $this->mockForOrder->expects($this->any())
             ->method('save')
             ->willReturnSelf()
@@ -156,13 +174,59 @@ final class Egovs_Paymentbase_Model_GirosolutionTest extends TestCase
             'test/123456789',
             true,
             'Test',
-            //TODO implement test case
             false,
             true,
             'Test Invoice',
             'test1234gc',
             array()
             );
+        $this->assertTrue($result, 'Payment not successful');
+    }
+
+    public function testModifyOrderAfterPaymentFailedDbLock() {
+        $this->mockForGirosolution = $this->getMockBuilder(Egovs_Paymentbase_Model_Girosolution::class)
+            ->setMethods(array('_getOrder', '_getQuote', '_activateKassenzeichen', 'getLockHelper'))
+            ->getMockForAbstractClass()
+        ;
+
+        $paymentMethod = $this->_initMocks('123456789');
+
+        $mockLockHelper = $this->getMockBuilder(Egovs_Base_Helper_Lock::class)
+            ->setMethods(array('getDbLock'))
+            ->getMock()
+        ;
+
+        $mockLockHelper->method('getDbLock')
+            ->willReturn(false)
+        ;
+
+        $this->mockForGirosolution->expects($this->any())
+            ->method('getLockHelper')
+            ->willReturn($mockLockHelper)
+        ;
+
+        $this->mockForGirosolution->expects($this->once())
+            ->method('_activateKassenzeichen')
+            ->willReturn(true)
+        ;
+
+        //expects funktioniert mit debugger nicht!
+        $this->mockForOrder->expects($this->any())
+            ->method('save')
+            ->willReturnSelf()
+        ;
+
+        $result = $paymentMethod->modifyOrderAfterPayment(
+            true,
+            'test/123456789',
+            true,
+            'Test',
+            false,
+            true,
+            'Test Invoice',
+            'test1234gc',
+            array()
+        );
         $this->assertTrue($result, 'Payment not successful');
     }
 }
