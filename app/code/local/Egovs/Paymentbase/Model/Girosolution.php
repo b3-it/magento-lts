@@ -650,7 +650,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
         $lockKey = 'girosolution_mutex'.$this->_getOrder()->getId();
         $lockHelper = $this->getLockHelper();
         $lockAlreadyObtainedMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:modifyOrderAfterPayment already called, disabling update order state!";
-        $lockNotObtainableMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:Timed out, can not obtain lock";
+        $lockNotObtainableMsg = "{$this->getCode()}::modifyOrderAfterPayment:%s:Lock is free! ".'It seems %1$s timed out, so lock could not obtained.';
         $isLockedFlag = false;
         //APCU lock is optional
         $startTime = $this->_getTimeStamp();
@@ -675,7 +675,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
                 $updateOrderState = false;
                 $isLockedFlag = true;
             } else {
-                Mage::log(sprintf($lockNotObtainableMsg, 'DB_LOCK').' Timed out!', Zend_Log::WARN, Egovs_Helper::LOG_FILE);
+                Mage::log(sprintf($lockNotObtainableMsg, 'DB_LOCK'), Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             }
         } else {
             $isLockedFlag = true;
