@@ -163,6 +163,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
               'align' => 'left',
               'width' => '80px',
               'index' => 'request_status',
+              'filter_index' =>'evt.status',
               'type' => 'options',
               'options' => Bfr_EventRequest_Model_Status::getOptionArray(),
           ));
@@ -197,6 +198,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
                 //'align'     =>'left',
                 'index' => $alias,
                 'type'  => 'options',
+                'filter_index' => $alias.'.value',
                 'options' => $tmp,
                 //'width'     => '150px',
             ));
@@ -205,7 +207,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
                 'header' => $option->getTitle(),
                 //'align'     =>'left',
                 'index' => $alias,
-                'filter.index' => $alias.".value",
+                'filter_index' => $alias.".value",
                 //'width'     => '150px',
             ));
         }
