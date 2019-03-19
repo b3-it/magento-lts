@@ -4,7 +4,7 @@ use Ramsey\Uuid\Uuid;
 
 class AtomFeed_Api_V1_Feed extends AtomFeed_Api_V1_Abstract {
 
-    public const MIME_TYPE = "application/atom+xml";
+    const MIME_TYPE = "application/atom+xml";
 
     protected $_authors = [];
     protected $_contributors = [];
