@@ -34,6 +34,22 @@
                     </slpb_base>
                 </observers>
             </sales_order_item_collection_set_sales_order>
+            <sales_quote_item_collection_load_before>
+                <observers>
+                    <slpb_base>
+                        <model>slpb_base/observer</model>
+                        <method>onSalesQuoteItemCollectionLoadBefore</method>
+                    </slpb_base>
+                </observers>
+            </sales_quote_item_collection_load_before>
+            <adminhtml_sales_order_create_process_data>
+                <observers>
+                    <slpb_base>
+                        <model>slpb_base/observer</model>
+                        <method>onAdminhtmlSalesOrderCreateProcessData</method>
+                    </slpb_base>
+                </observers>
+            </adminhtml_sales_order_create_process_data>
         </events>
     </adminhtml>
 </config>
