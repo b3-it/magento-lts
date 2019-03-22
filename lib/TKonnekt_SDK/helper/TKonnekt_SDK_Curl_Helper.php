@@ -69,7 +69,7 @@ class TKonnekt_SDK_Curl_Helper
         if ($_config->getConfig('DEBUG_MODE')) {
             TKonnekt_SDK_Debug_Helper::getInstance()->logRequest(curl_getinfo($ch), $params);
         }
-        if ($_config->getConfig('DEBUG_MODE')) {
+        if ($_result === false || $_config->getConfig('DEBUG_MODE')) {
             TKonnekt_SDK_Debug_Helper::getInstance()->logReply($_result, curl_error($ch));
         }
 
