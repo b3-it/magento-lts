@@ -4,8 +4,7 @@ class Gka_InternalPayId_Block_Adminhtml_Sales_Items_Column_Name extends Mage_Adm
 {
 	public function getPayId(Mage_Sales_Model_Order_Item $item)
 	{
-		$br = $item->getBuyRequest();
-		return $br->getPayId();
+		return $item->getInternalPayid();
 	
 	}
 }

@@ -1,0 +1,12 @@
+<?php 
+	$periode = $this->getFormatedPeriode();
+	$station = $this->getStationLabel();
+
+?>
+
+<?php if ($periode):?>
+Periode: <?php echo $periode?> <br/>
+<?php endif;?>
+<?php if ($station):?>
+Station: <?php echo $station?>
+<?php endif;?>
