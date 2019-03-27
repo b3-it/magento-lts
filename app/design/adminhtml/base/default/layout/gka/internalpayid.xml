@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+  <adminhtml_internalpayid_epaybl_client_index>
+        <reference name="content">
+            <block type="internalpayid/adminhtml_epaybl_client" name="epaybl_client" />
+        </reference>
+    </adminhtml_internalpayid_epaybl_client_index>
+    
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>internalpayid</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>gka/internalpayid/sales/order/view/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>internalpayid/adminhtml_sales_items_column_name</block><template>gka/internalpayid/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/invoice/create/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/invoice/view/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/invoice/view/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/creditmemo/create/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/creditmemo/view/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_items">
+            <action method="addItemRender"><type>configvirtual</type><block>adminhtml/sales_items_renderer_default</block><template>dwd/configvirtual/sales/order/creditmemo/view/items/renderer/configvirtual.phtml</template></action>
+            <action method="addColumnRender"><column>cvname</column><block>configvirtual/adminhtml_sales_items_column_name</block><template>dwd/configvirtual/sales/items/column/name.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    
+    <adminhtml_configvirtual_credential_index>
+        <reference name="content">
+            <block type="configvirtual/adminhtml_credential" name="credential" />
+        </reference>
+    </adminhtml_configvirtual_credential_index>
+        
+</layout>

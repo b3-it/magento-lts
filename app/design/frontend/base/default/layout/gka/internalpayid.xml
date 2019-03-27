@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+-->
+<layout version="0.1.0">
+    <PRODUCT_TYPE_internalpayid translate="label" module="internalpayid">
+       <label>Catalog Product View (Virtual)</label>
+       <update handle="page_two_columns_left" />
+       <reference name="product.info">
+       		<block type="internalpayid/catalog_product_view_type" name="product.info.internalpayid" as="product_type_data" template="gka/internalpayid/catalog/product/view/type.phtml">
+            </block>
+            <reference name="product.info.addtocart">
+                <action method="setTemplate"> <template>gka/internalpayid/catalog/product/view/addtocart.phtml</template> </action>
+            </reference>
+        </reference>
+    </PRODUCT_TYPE_internalpayid>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/checkout_cart_item_renderer</block><template>gka/internalpayid/checkout/cart/item/default.phtml</template></action>
+        </reference>
+    </checkout_cart_index>
+    
+    <egovs_checkout_singlepage_overview>
+        <reference name="checkout_overview">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/checkout_cart_item_renderer</block><template>gka/internalpayid/checkout/onepage/review/item.phtml</template></action>
+        </reference>
+    </egovs_checkout_singlepage_overview>
+   
+    <egovs_checkout_singlepage_successview>
+        <reference name="checkout_successview">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/checkout_cart_item_renderer</block><template>gka/internalpayid/checkout/onepage/review/item.phtml</template></action>
+        </reference>
+    </egovs_checkout_singlepage_successview> 
+
+    <sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/sales_item_renderer</block><template>gka/internalpayid/sales/items/renderer/renderer.phtml</template></action>
+        </reference>
+    </sales_order_view>
+    
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/sales_email_items_order_type</block><template>gka/internalpayid/email/order/items/order/type.phtml</template></action>
+        </reference>
+    </sales_email_order_items>
+    
+    <sales_email_order_invoice_items>
+        <reference name="items">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/sales_email_items_type</block><template>gka/internalpayid/email/order/items/invoice/type.phtml</template></action>
+        </reference>
+    </sales_email_order_invoice_items>
+    
+    <sales_email_order_creditmemo_items>
+        <reference name="items">
+            <action method="addItemRender"><type>internalpayid</type><block>internalpayid/sales_email_items_type</block><template>gka/internalpayid/email/order/items/creditmemo/type.phtml</template></action>
+        </reference>
+    </sales_email_order_creditmemo_items>
+    
+    <!--
+    Pro Produkttyp müssen die entsprechende Blöcke zur Anzeige von Preisen angepasst werden!
+    Wichtig für neue Produkttypen!! 
+     -->
+    <default>
+        <reference name="catalog_product_price_template">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+
+ 
+    </default>
+
+    <!-- Preisblock für Steuer und Versandkosten hinzufügen -->
+    <catalog_category_default>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_layered>
+
+    <catalog_category_view>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_view>
+
+    <catalog_product_compare_index>
+        <reference name="catalog.compare.list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_compare_index>
+
+    <catalog_product_view>
+        <reference name="catalog.product.related">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_view>
+
+    <catalogsearch_advanced_result>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <catalogsearch_result_index>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <tag_product_list>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_product_list>
+
+    <tag_customer_view>
+        <reference name="customer_view">
+            <action method="addPriceBlockType">
+                <type>internalpayid</type>
+                <block>egovsready/catalog_product_price</block>
+                <template>catalog/product/price.phtml</template>
+            </action>
+        </reference>
+    </tag_customer_view>
+</layout>

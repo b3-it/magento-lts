@@ -1,0 +1,74 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
+<?php $_product = $this->getProduct() ?>
+
+<?php if ($this->displayProductStockStatus()): ?>
+    <?php if ($_product->isAvailable()): ?>
+        <p class="availability in-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
+    <?php else: ?>
+        <p class="availability out-of-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+    <?php endif; ?>
+<?php endif; ?>
+
+<div id="virtual-pay-block" style="vertical-align:top;">
+    <div style="padding-bottom: 20px;">
+	    <label for="pay_client"><?php echo $this->__('ePayBL Client') ?></label>
+	    <?php echo $this->getClientSelectBox();?>
+        <?php if ($this->getPayClientValidationAdvice()): ?>
+            <div class="validation-advice" id="advice-required-entry-pay-client"><?php echo $this->getPayClientValidationAdvice()?></div>
+        <?php endif; ?>
+    </div>
+
+    <div style="padding-bottom: 20px;">
+        <label for="pay_id"><?php echo $this->__('Payment code') ?></label>
+	    <input style="height: 23px; line-height: 23px;" name="pay_id" class="required-entry" id="pay-id" value="" />
+    </div>
+
+    <div style="padding-bottom: 20px;">
+        <label for="amount">Betrag</label>
+        <input style="height: 23px; line-height: 23px;" class="validate-both-amounts" name="amount" id="amount">
+        <br/>
+        <br/>
+        <label for="confirmation">Betrag wiederholen</label>
+        <input style="height: 23px; line-height: 23px;" name="confirmation" class="validate-both-amounts" onchange="validateAmount();return false;" id="confirmation">
+    </div>
+	
+	<div id="price-container"></div>
+</div>
+
+<script type="text/javascript">
+    var optionsPrice    = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+	var fetch_price_url = "<?php echo $this->getKzInfoUrl(); ?>";
+	var diff_price_msg  = "<?php echo $this->__('Amounts are not equal!'); ?>";
+	var validator_msg   = "<?php echo $this->__('Please make sure your amounts match.'); ?>";
+	var ajax_error_msg  = "<?php echo $this->__('Sorry, there was a problem!'); ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/internal_pay_id.js"></script>
+
+<?php //echo $this->getChildHtml('product_type_data_extra') ?>
+<?php // echo $this->getPriceHtml($_product) ?>
