@@ -254,5 +254,13 @@
                 <Egovs_Checkout/>
             </depends>
         </Egovs_EventBundle>
+        <Egovs_CreditWorth>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_CreditWorth>
     </modules>
 </config>
