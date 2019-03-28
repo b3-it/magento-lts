@@ -80,7 +80,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 		
 					try {
 						$_verifyPeer = Mage::getStoreConfigFlag('catalog/dwd_pod/verfiy_peer');
-						if (strtolower($urlProp['scheme']) == 'https' && $_verifyPeer) {
+						if (strtolower($urlProp['scheme']) == 'https') {
 							
 							if (version_compare(phpversion(), '5.6.0', '<')===true) {
 								$context = stream_context_create(
@@ -94,6 +94,28 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 								);
 							} else {
 								//@see https://wiki.php.net/rfc/improved-tls-defaults
+                                /*
+                                 * https://www.php.net/manual/de/function.stream-socket-enable-crypto.php
+                                 * Constants added in PHP 5.6 :
+                                    STREAM_CRYPTO_METHOD_ANY_CLIENT
+                                    STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
+                                    STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
+                                    STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+                                    STREAM_CRYPTO_METHOD_ANY_SERVER
+                                    STREAM_CRYPTO_METHOD_TLSv1_0_SERVER
+                                    STREAM_CRYPTO_METHOD_TLSv1_1_SERVER
+                                    STREAM_CRYPTO_METHOD_TLSv1_2_SERVER
+
+                                    Now, be careful because since PHP 5.6.7, STREAM_CRYPTO_METHOD_TLS_CLIENT (same for _SERVER) no longer means any tls version but tls 1.0 only (for "backward compatibility"...).
+
+                                    Before PHP 5.6.7 :
+                                    STREAM_CRYPTO_METHOD_SSLv23_CLIENT = STREAM_CRYPTO_METHOD_SSLv2_CLIENT|STREAM_CRYPTO_METHOD_SSLv3_CLIENT
+                                    STREAM_CRYPTO_METHOD_TLS_CLIENT = STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT|STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT|STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+
+                                    PHP >= 5.6.7
+                                    STREAM_CRYPTO_METHOD_SSLv23_CLIENT = STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT|STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT|STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+                                    STREAM_CRYPTO_METHOD_TLS_CLIENT = STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
+                                 */
 								$context = stream_context_create(
 										array(
 												'ssl' => array(
@@ -101,7 +123,7 @@ class Dwd_ProductOnDemand_Helper_Downloadable_Download extends Mage_Downloadable
 														'capath' => Mage::getStoreConfig('catalog/dwd_pod/ca_path'),
 														'disable_compression' => true,
 														'capture_session_meta' => TRUE,
-														'crypto_method' => STREAM_CRYPTO_METHOD_TLS_CLIENT,
+														'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
 														"honor_cipher_order"    => TRUE,
 												)
 										)
