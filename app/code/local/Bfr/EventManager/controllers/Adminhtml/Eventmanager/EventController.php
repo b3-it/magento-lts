@@ -606,7 +606,29 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
         $this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
     }
 
+    public function removeIndividualoptionsAction()
+    {
+        $id     = $this->getRequest()->getParam('id');
+        $model  = Mage::getModel('eventmanager/event')->load(intval($id));
+        try
+        {
+           $model->removeIndividualoptions();
+        } catch (Exception $e){
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+        $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+    }
+
     protected function _isAllowed() {
-    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_event');
+
+        $action = strtolower($this->getRequest()->getActionName());
+        switch ($action) {
+            case 'removeIndividualoptions':
+                return Mage::getSingleton('admin/session')->isAllowed('admin/bfr_eventmanager/eventmanager_event_remove_individual_options');
+                break;
+            default:
+                return Mage::getSingleton('admin/session')->isAllowed('admin/bfr_eventmanager/eventmanager_event');
+                break;
+        }
     }
 }
