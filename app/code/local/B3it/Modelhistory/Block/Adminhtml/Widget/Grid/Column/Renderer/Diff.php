@@ -30,6 +30,7 @@ class  B3it_Modelhistory_Block_Adminhtml_Widget_Grid_Column_Renderer_Diff extend
                 }
             }, ARRAY_FILTER_USE_BOTH);
 
+            // empty array are rendered as [] instead as {} as i want
             if (empty($oldValueResult)) {
                 $oldValueResult = (object) null;
             }

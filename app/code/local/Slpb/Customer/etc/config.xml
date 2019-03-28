@@ -27,37 +27,37 @@
                 </Slpb_Customer>
             </modules>
         </translate>
-		<menu>
-			<customer >
-				            
-				<children>
-				    <slpbcustomer_lastorder module="slpbcustomer">
-					    <title>Customers last order</title>
-						<sort_order>100</sort_order>
-						<action>adminhtml/slpbcustomer_sales</action>
-				    </slpbcustomer_lastorder>
-				</children>
-			</customer>
-		</menu>
-		<acl>
-			<resources>
-				<all>
-					<title>Allow Everything</title>
-				</all>
-				<admin>
-					<children>
-					    <customer>
-					        <children>
-					            <slpbcustomer_lastorder>
-					            <title>Customers last order</title>
-							    <sort_order>100</sort_order>
-					        </slpbcustomer_lastorder>
-					        </children>
-					    </customer>
-					</children>
-				</admin>
-			</resources>
-		</acl>
+		<!--<menu>-->
+			<!--<customer >-->
+				            <!---->
+				<!--<children>-->
+				    <!--<slpbcustomer_lastorder module="slpbcustomer">-->
+					    <!--<title>Customers last order</title>-->
+						<!--<sort_order>100</sort_order>-->
+						<!--<action>adminhtml/slpbcustomer_sales</action>-->
+				    <!--</slpbcustomer_lastorder>-->
+				<!--</children>-->
+			<!--</customer>-->
+		<!--</menu>-->
+		<!--<acl>-->
+			<!--<resources>-->
+				<!--<all>-->
+					<!--<title>Allow Everything</title>-->
+				<!--</all>-->
+				<!--<admin>-->
+					<!--<children>-->
+					    <!--<customer>-->
+					        <!--<children>-->
+					            <!--<slpbcustomer_lastorder>-->
+					            <!--<title>Customers last order</title>-->
+							    <!--<sort_order>100</sort_order>-->
+					        <!--</slpbcustomer_lastorder>-->
+					        <!--</children>-->
+					    <!--</customer>-->
+					<!--</children>-->
+				<!--</admin>-->
+			<!--</resources>-->
+		<!--</acl>-->
 		<layout>
 			<updates>
 				<slpbcustomer>

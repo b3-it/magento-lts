@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
   <modules>
          <Bfr_Base>
@@ -35,6 +36,15 @@
                 <Mage_Catalog/>
                 <Mage_Customer/>
            </depends>
-        </Bfr_Mach>   
+        </Bfr_Mach> 
+     <Bfr_Report>
+      <active>true</active>
+      <codePool>local</codePool>
+       <depends>
+        <Mage_Sales />
+        <Mage_Catalog />
+        <Mage_Customer />
+      </depends>
+    </Bfr_Report>		
   </modules>
 </config>
