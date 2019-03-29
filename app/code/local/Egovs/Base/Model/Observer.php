@@ -74,4 +74,14 @@ class Egovs_Base_Model_Observer
         $result = $observer->getResult();
         $result->isAllowed = true;
     }
+
+    public function cmsWysiwygConfigPrepare($observer) {
+        $config = $observer->getConfig();
+
+        if (!$config || !$config->hasData('files_browser_window_url')) {
+            return;
+        }
+
+        $config->setData('files_browser_window_url', Mage::getSingleton('adminhtml/url')->getUrl('*/cms_wysiwyg_media/dialog'));
+    }
 }

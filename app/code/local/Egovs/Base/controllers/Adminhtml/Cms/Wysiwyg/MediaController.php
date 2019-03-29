@@ -52,9 +52,24 @@ class Egovs_Base_Adminhtml_Cms_Wysiwyg_MediaController extends Mage_Adminhtml_Cm
         }
         $this->renderLayout();
     }
-	
-	protected function _isAllowed()
-	{
-		return true;
-	}
+
+    public function dialogAction() {
+        $storeId = (int) $this->getRequest()->getParam('store');
+
+        try {
+            Mage::helper('cms/wysiwyg_images')->getCurrentPath();
+        } catch (Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+        }
+        $this->_initAction()->loadLayout('overlay_popup');
+        $block = $this->getLayout()->getBlock('wysiwyg_images.js');
+        if ($block) {
+            $block->setStoreId($storeId);
+        }
+        $block = $this->getLayout()->getBlock('wysiwyg_images.uploader');
+        if ($block) {
+            $block->getUploaderConfig()->setFileParameterName('media');
+        }
+        $this->renderLayout();
+    }
 }
