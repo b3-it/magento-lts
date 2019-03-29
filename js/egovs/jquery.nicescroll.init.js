@@ -5,7 +5,7 @@ let scroll_element = "";
 
 function updateScrollbar(localScrollElement)
 {
-    if ( detectIE() != false && is_touch_device() != false ) {
+    if ( detectIE() != false || is_touch_device() != false ) {
         return;
     }
     $j(localScrollElement).niceScroll({
