@@ -44,6 +44,15 @@
                     </media_gallery>
                 </children>
             </cms>
+            <customer>
+                <children>
+                    <last_order module="egovsbase">
+                        <title>Last Order</title>
+                        <sort_order>900</sort_order>
+                        <action>adminhtml/customer_lastOrder</action>
+                    </last_order>
+                </children>
+            </customer>
             <sales>
                 <children>
                     <egovs_base_order_item module="egovsbase">

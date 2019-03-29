@@ -6,8 +6,8 @@
  * @category   	Bfr
  * @package    	Bfr_EventManager
  * @name       	Bfr_EventManager_Model_Resource_Participant_Collection
- * @author 		Holger Kögel <hkoegel@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2015 - 2019 B3 IT Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Bfr_EventManager_Model_Resource_Participant_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
@@ -25,7 +25,7 @@ class Bfr_EventManager_Model_Resource_Participant_Collection extends Mage_Core_M
 
     public function setSelectCountSql($select)
     {
-        $this->_selectCount = $select;
+        $this->_selectCount = clone($select);
     }
 
 
@@ -56,7 +56,8 @@ class Bfr_EventManager_Model_Resource_Participant_Collection extends Mage_Core_M
 
         $this->_select = $sel;
         $this->_isFiltersRendered = $filter;
-        $sql = $countSelect->__toString();
+        //$sql = $countSelect->__toString();
+        //die($sql);
         return $countSelect;
     }
 }

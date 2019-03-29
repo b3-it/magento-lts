@@ -40,12 +40,14 @@
     AddType video/ogg .ogg
 
 <IfModule mod_php5.c>
+############################################
+# !!!Funktioniert nur falls Apache mit mod_php läuft!!
+# Unter Windows läuft PHP meist als CGI/FPM usw.
 
 ############################################
 ## adjust memory limit
 
-#    php_value memory_limit 64M
-    php_value memory_limit 256M
+    php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M
@@ -56,31 +58,30 @@
     #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
 
 ############################################
-## disable magic quotes for php request vars
-
-    php_flag magic_quotes_gpc off
-
-############################################
 ## disable automatic session start
 ## before autoload was initialized
 
-    php_flag session.auto_start off
+    php_value session.auto_start off
+
+############################################
+## Session-Configuration
+## https://trac.kawatest.de/ticket/1647
+
+    php_value session.gc_probability 1
+    php_value session.gc_divisor 100
+    php_value session.gc_maxlifetime 86400
 
 ############################################
 ## enable resulting html compression
 
-    #php_flag zlib.output_compression on
+    #php_value zlib.output_compression on
 
 ###########################################
 # disable user agent verification to not break multiple image upload
 
-    php_flag suhosin.session.cryptua off
+    php_value suhosin.session.cryptua off
 
 ###########################################
-# turn off compatibility with PHP4 when dealing with objects
-
-    php_flag zend.ze1_compatibility_mode Off
-
 </IfModule>
 
 <IfModule mod_php7.c>
@@ -88,8 +89,7 @@
 ############################################
 ## adjust memory limit
 
-#    php_value memory_limit 64M
-    php_value memory_limit 256M
+    php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M
@@ -99,16 +99,20 @@
     php_flag log_errors on
     #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
 
-############################################
-## disable magic quotes for php request vars
-
-    php_flag magic_quotes_gpc off
 
 ############################################
 ## disable automatic session start
 ## before autoload was initialized
 
     php_flag session.auto_start off
+
+############################################
+## Session-Configuration
+## https://trac.kawatest.de/ticket/1647
+
+    php_value session.gc_probability 1
+    php_value session.gc_divisor 100
+    php_value session.gc_maxlifetime 86400
 
 ############################################
 ## enable resulting html compression
@@ -208,6 +212,29 @@
     RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
     RewriteRule .* - [L,R=405]
 
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+
+        ############################################
+        # X-Content-Type-Options: nosniff disable content-type sniffing on some browsers.
+        Header set X-Content-Type-Options: nosniff
+
+        ############################################
+        # This header forces to enables the Cross-site scripting (XSS) filter in browsers (if disabled)
+        BrowserMatch \bMSIE\s8 ie8
+        Header set X-XSS-Protection: "1; mode=block" env=!ie8
+
+    </IfModule>
+</IfModule>
+
+############################################
+## AhrefsBot und SEMrush Spider blocken
+## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
+
+    RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
+    RewriteCond %{HTTP_USER_AGENT} AhrefsBot
+    RewriteRule .* - [R=429]
+
 ############################################
 ## AhrefsBot und SEMrush Spider blocken
 ## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
@@ -291,9 +318,6 @@
     #Girosolution
     Require ip 46.163.91.71
 
-    #Flash Uploader
-    SetEnvIf User-Agent "Shockwave Flash" Flash=1
-    Require env Flash
     Require valid-user
 
 </IfModule>

@@ -20,7 +20,7 @@
  * @property int $bonitaetsLevelLastschrift Bonitätsstatus eines Kunden für Zahlverfahren 'elektronische Lastschrift', zugelassen sind 0, 1, 2, 3 und 4 (Optional)
  * @property int $bonitaetsLevelKreditkarte Bonitätsstatus eines Kunden für Zahlverfahren 'Kreditkarte', zugelassen sind 0, 1, 2 und 3 (Optional)
  * @property string $archivdatei 100 Zeichen Name einer möglichen Archivdatei (Optional)
- * @property Egovs_Paymentbase_Model_Webservice_Types_Text status Status des Kunden (Optional)
+ * @property Egovs_Paymentbase_Model_Webservice_Types_Text $status Status des Kunden (Optional)
  * @property string $sepaMandatReferenz 35 Zeichen Referenz auf ein SEAP-Mandat (Optional
  * 
  * 

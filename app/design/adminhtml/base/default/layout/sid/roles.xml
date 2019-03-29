@@ -55,4 +55,12 @@
     <remove name="root"></remove>
      <block type="adminhtml/customer_edit_tab_view_wishlist" name="admin.customer.view.wishlist"  output="toHtml" />
    </adminhtml_sidroles_customer_viewwishlist>
+
+    <adminhtml_sidroles_customer_productreviews>
+        <update handle="adminhtml_customer_productreviews"/>
+    </adminhtml_sidroles_customer_productreviews>
+
+    <adminhtml_sidroles_customer_producttags>
+        <update handle="adminhtml_customer_producttags"/>
+    </adminhtml_sidroles_customer_producttags>
 </layout>

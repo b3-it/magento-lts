@@ -1,6 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
 <config>
     <modules>
+        <Slpb_Base>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Slpb_Base>
         <Slpb_Checkout>
             <active>false</active>
             <codePool>local</codePool>
