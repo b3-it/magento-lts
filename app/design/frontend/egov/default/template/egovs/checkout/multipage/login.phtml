@@ -121,6 +121,7 @@ if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
 		                            <input type="password" class="input-text required-entry" id="login-password" name="login[password]" />
 		                        </div>
 		                    </li>
+                            <?php echo $this->getChildHtml('form.additional.info'); ?>
 		                </ul>
                         <?php if ($_show_ssl): ?>
                             <span class="securityLabel"<?php echo $show_css; ?>>
