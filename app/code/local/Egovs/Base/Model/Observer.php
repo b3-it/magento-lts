@@ -47,8 +47,11 @@ class Egovs_Base_Model_Observer
         $front = $observer->getFront();
 
         foreach ($front->getResponse()->getHeaders() as $header) {
-            // bei Application/Json muss die Ersetzung manuell im Controller erfolgen
-            if (isset($header['value']) && strtolower($header['value']) === 'application/json') {
+            if (isset($header['name']) && strtolower($header['name']) !== 'content-type') {
+                continue;
+            }
+
+            if (isset($header['value']) && strpos(strtolower($header['value']), 'text/html') === false) {
                 return;
             }
         }
