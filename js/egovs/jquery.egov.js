@@ -44,7 +44,8 @@ function addJsToHeader($scriptPath)
 }
 
 $j(document).ready(function () {
-    if ( detectIE() == false ) {
+    //alert(is_touch_device());
+    if ( detectIE() == false && is_touch_device() == false ) {
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.min.js');
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.init.js');
     }
