@@ -14,9 +14,12 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 {
 
 	protected function _initAction() {
+	    $this->_title(Mage::helper('adminhtml')->__('Event Manager'));
 		$this->loadLayout()
 			->_setActiveMenu('bfr_eventmanager/eventmanager_event')
 			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+
+		$this->_title(Mage::helper('eventmanager')->__('Event'));
 
 		return $this;
 	}
@@ -84,7 +87,53 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 					$model->setUpdateTime(now());
 				}
 
-				$model->save();
+
+
+                if(isset($_FILES['signature_original_filename']['name']) && $_FILES['signature_original_filename']['name'] != '') {
+                    /* Starting upload */
+                    $uploader = new Varien_File_Uploader('signature_original_filename');
+
+                    // Any extention would work
+                    $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
+                    $uploader->setAllowRenameFiles(false);
+
+                    // Set the file upload mode
+                    // false -> get the file directly in the specified folder
+                    // true -> get the file in the product like folders
+                    //	(file.jpg will go in something like /media/f/i/file.jpg)
+                    $uploader->setFilesDispersion(false);
+
+                    // We set media as the upload dir
+                    $path =  Mage::helper('eventmanager')->getSignaturePath();
+                    if(!file_exists($path)){
+                        mkdir($path);
+                    }
+                    if(!file_exists($path)){
+                        Mage::throwException('Path not found: '.$path);
+                    }
+
+                    $path .= DS;
+                    $hash = md5($_FILES['signature_original_filename']['name'] . time());
+                    $uploader->save($path, $hash);
+
+                    //this way the name is saved in DB
+                    $model->setSignatureOriginalFilename($_FILES['signature_original_filename']['name']);
+                    $model->setSignatureFilename($hash);
+                }
+
+                if(isset($data['delete_signature'])){
+
+                    $path = Mage::helper('eventmanager')->getSignaturePath() . DS . $model->getSignatureFilename();
+                    if(file_exists($path)){
+                        unlink($path);
+                    }
+                    $model->setSignatureOriginalFilename("");
+                    $model->setSignatureFilename("");
+                }
+
+                $model->save();
+                $this->_savePdfTemplates($data,$model);
+
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('eventmanager')->__('Item was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setFormData(false);
 
@@ -92,19 +141,62 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
 					$this->_redirect('*/*/edit', array('id' => $model->getId()));
 					return;
 				}
-				$this->_redirect('*/*/');
-				return;
+                $this->_redirect('*/*/');
+                return;
+
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
+
+
+
+
         }
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('eventmanager')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
 	}
 
+	protected function _savePdfTemplates($data,$model)
+    {
+        $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
+        $pdfs->getSelect()->where('event_id=?', $model->getId());
+
+
+        $values = array();
+        if(isset($data['pdftemplate_id'])){
+            $values = $data['pdftemplate_id'];
+        }
+
+
+        foreach ($pdfs as $pdf)
+        {
+            if(isset($values[$pdf->getStoreId()])) {
+                if (!empty($values[$pdf->getStoreId()])) {
+                    if ($pdf->getPdftemplateId() != $values[$pdf->getStoreId()]) {
+                        $pdf->setPdftemplateId($values[$pdf->getStoreId()])
+                            ->save();
+                    }
+                }else{
+                    $pdf->delete();
+                }
+                $values[$pdf->getStoreId()] = null;
+            }
+        }
+
+        foreach($values as $key => $value) {
+            if($value != null && !empty($value)) {
+                $pdf = Mage::getModel('eventmanager/event_pdftemplate');
+                $pdf->setStoreId($key)
+                    ->setPdftemplateId($value)
+                    ->setEventId($model->getId())
+                    ->save();
+            }
+        }
+
+    }
 	public function deleteAction() {
 		if( $this->getRequest()->getParam('id') > 0 ) {
 			try {
@@ -454,8 +546,89 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     }
 
 
+    public function ceritificateAction()
+    {
+        $id         = (int) $this->getRequest()->getParam('id');
+        $event_id         = (int) $this->getRequest()->getParam('event');
+
+
+
+        /** @var Bfr_EventManager_Model_Participant $model */
+        $model  = Mage::getModel('eventmanager/participant')->load($id);
+        if($model->getStatus() != Bfr_EventManager_Model_Status::STATUS_ENABLED){
+            $this->_getSession()->addError($this->__('Wrong Participation Status'));
+            $this->_redirect('*/eventmanager_event/edit',array('_current'=>true,'active_tab'=>'participants_section','id'=>$event_id));
+
+            return;
+        }
+
+        $event = Mage::getModel('eventmanager/event')->load($model->getEventId());
+        if(empty($event->getPdftemplateId())){
+            $this->_getSession()->addError($this->__('Pdf Template not set'));
+            $this->_redirect('*/*/*',array('_current'=>true));
+        }
+
+
+        $model->showPdf($event);
+        die();
+        //$this->_redirect('*/*/*');
+
+    }
+
+
+    public function masscertificateAction()
+    {
+        $participantIds = $this->getRequest()->getParam('participant');
+        $participants = array();
+        if(!is_array($participantIds)) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
+        } else {
+            try {
+                foreach($participantIds as $participantId) {
+                    $participant = Mage::getModel('eventmanager/participant')->load($participantId);
+                    $participants[] = $participant;
+                    if ($participant->getStatus() != Bfr_EventManager_Model_Status::STATUS_ENABLED) {
+                        $this->_getSession()->addError($this->__('Wrong Participation Status'));
+                        $this->_redirect('*/*/edit', array('_current' => true, 'active_tab' => 'participants_section'));
+                        return;
+                    }
+                }
+                foreach ($participants as $participant) {
+                        $participant->sendPdfFile();
+                    }
+                    $this->_getSession()->addSuccess(
+                        $this->__('Total of %d record(s) were send', count($participantIds))
+                    );
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+        $this->_redirect('*/*/edit',array('_current'=>true, 'active_tab'=> 'participants_section'));
+    }
+
+    public function removeIndividualoptionsAction()
+    {
+        $id     = $this->getRequest()->getParam('id');
+        $model  = Mage::getModel('eventmanager/event')->load(intval($id));
+        try
+        {
+           $model->removeIndividualoptions();
+        } catch (Exception $e){
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+        $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+    }
 
     protected function _isAllowed() {
-    	return Mage::getSingleton('admin/session')->isAllowed('bfr_eventmanager/eventmanager_event');
+
+        $action = strtolower($this->getRequest()->getActionName());
+        switch ($action) {
+            case 'removeIndividualoptions':
+                return Mage::getSingleton('admin/session')->isAllowed('admin/bfr_eventmanager/eventmanager_event_remove_individual_options');
+                break;
+            default:
+                return Mage::getSingleton('admin/session')->isAllowed('admin/bfr_eventmanager/eventmanager_event');
+                break;
+        }
     }
 }
