@@ -136,23 +136,27 @@
                 <tr class="qty-wrapper">
                     <th class="mini-cart-first"><?php echo $this->__('Qty'); ?></th>
                     <td class="mini-cart-secound">
-                        <button id="qbutton-<?php echo $_item->getId(); ?>"
+                        <?php if( $_item->getProductType() == 'eventbundle' ): ?>
+                            <span class="pseudo-input">1</span>
+                        <?php else: ?>
+                            <button id="qbutton-<?php echo $_item->getId(); ?>"
+                                    data-item-id="<?php echo $_item->getId(); ?>"
+                                    disabled="disabled"
+                                    data-update
+                                    data-cart-item-update
+                                    class="button quantity-button">
+                                <?php echo $this->__('ok'); ?>
+                            </button>
+                            <input
+                                id="qinput-<?php echo $_item->getId(); ?>"
+                                data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
                                 data-item-id="<?php echo $_item->getId(); ?>"
-                                disabled="disabled"
-                                data-update
-                                data-cart-item-update
-                                class="button quantity-button">
-                            <?php echo $this->__('ok'); ?>
-                        </button>
-                        <input
-                            id="qinput-<?php echo $_item->getId(); ?>"
-                            data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
-                            data-item-id="<?php echo $_item->getId(); ?>"
-                            data-cart-item-id="<?php echo $_item->getSku(); ?>"
-                            class="qty cart-item-quantity input-text" name=""
-                            value="<?php echo $this->getQty()?>"
-                            <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
-                            />
+                                data-cart-item-id="<?php echo $_item->getSku(); ?>"
+                                class="qty cart-item-quantity input-text" name=""
+                                value="<?php echo $this->getQty()?>"
+                                <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
+                                />
+                        <?php endif; ?>
                     </td>
                 </tr>
             </tbody>
