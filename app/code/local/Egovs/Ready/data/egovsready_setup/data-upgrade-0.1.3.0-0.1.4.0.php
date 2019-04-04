@@ -26,7 +26,7 @@ $cmsPages = array(
         'is_active'     => 0
     ),
     array(
-        'identifier' => 'contacts',
+        'identifier' => 'contact-us',
         'title'      => 'Kontaktieren Sie uns'
     ),
     array(
