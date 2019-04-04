@@ -33,7 +33,7 @@ class Dwd_Abo_Model_Order_Order extends Dwd_Abo_Model_Order_Abstract
 	
 	/**
 	 * Bestellung für einen Liste von Abo Items erstellen
-	 * @param array $items
+	 * @param array  Dwd_Abo_Model_Abo $items
 	 * @return Dwd_Abo_Model_Order_Order
 	 */
 	public function createOrders($items)

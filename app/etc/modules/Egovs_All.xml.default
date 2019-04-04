@@ -38,7 +38,8 @@
             <active>false</active>
             <codePool>local</codePool>
             <depends>
-                <Mage_Captcha/>
+                <Mage_Captcha />
+                <Egovs_Checkout />
             </depends>
         </Egovs_Captcha>
         <Egovs_Cashpayment>
