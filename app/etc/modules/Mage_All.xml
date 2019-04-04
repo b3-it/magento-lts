@@ -316,7 +316,7 @@
             </depends>
         </Mage_Wishlist>
         <Mage_GoogleAnalytics>
-            <active>true</active>
+            <active>false</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Core/>
