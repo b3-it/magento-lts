@@ -6,7 +6,11 @@
             <active>true</active>
             <codePool>local</codePool>
         </Egovs_Acl>
-        <Egovs_B2b>
+        <Egovs_Agreement>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Egovs_Agreement>
+		<Egovs_B2b>
             <active>false</active>
             <codePool>local</codePool>
         </Egovs_B2b>
@@ -34,7 +38,8 @@
             <active>false</active>
             <codePool>local</codePool>
             <depends>
-                <Mage_Captcha/>
+                <Mage_Captcha />
+                <Egovs_Checkout />
             </depends>
         </Egovs_Captcha>
         <Egovs_Cashpayment>
@@ -250,5 +255,13 @@
                 <Egovs_Checkout/>
             </depends>
         </Egovs_EventBundle>
+        <Egovs_CreditWorth>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+                <Egovs_Paymentbase />
+            </depends>
+        </Egovs_CreditWorth>
     </modules>
 </config>

@@ -20,6 +20,7 @@
                 <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
                     <?php
                         $_imgSize = 210;
+                        $_helper  = $this->helper('catalog/output');
                         $_isorder = $_helper->productAttribute($_product, $_product->getShowOrderability(), 'show_orderability');
                         if ( is_null($_isorder) ) {
                             $_isorder = true;

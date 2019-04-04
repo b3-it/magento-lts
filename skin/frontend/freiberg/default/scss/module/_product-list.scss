@@ -1,6 +1,6 @@
 //
 // @category    design
-// @package     egov_default
+// @package     freiberg_default
 // @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
@@ -373,7 +373,7 @@ p.product-name {
 
             .price-box, .tax-details {
                 display: inline-block;
-                width: 45%;
+                margin-right: 10px;
 
                 @include bp(max-width, $bp-small) {
                     display: block;
