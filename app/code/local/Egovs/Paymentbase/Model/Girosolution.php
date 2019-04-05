@@ -673,7 +673,7 @@ abstract class Egovs_Paymentbase_Model_Girosolution extends Egovs_Paymentbase_Mo
 
         $lockResult = $this->_getDbLock($lockKey);
         $this->_logLockTimeDiff($startTime, 'DB:get_lock');
-        if ($lockResult == 0) {
+        if ($lockResult === 0) {
             Mage::log("{$this->getCode()}::modifyOrderAfterPayment:DB_LOCK:modifyOrderAfterPayment already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             $updateOrderState = false;
         }
