@@ -943,13 +943,16 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
     		$data = $object->getData();
 
     	}
-    	foreach ($data as $key => $value) 
+    	foreach ($data as $key => $value)
     	{
     		echo $name.$key."<br>";
     	}
     }
-    
-    
-    
-    
+
+
+    public function getBaseUrl($type = Mage_Core_Model_Store::URL_TYPE_MEDIA)
+    {
+        return Mage::getBaseUrl($type);
+    }
+
 }
