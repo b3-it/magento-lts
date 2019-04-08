@@ -703,7 +703,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
                 $schedule->setCronExpr($aprCronExprByStore[$storeId]);
 
                 if (!$schedule->trySchedule(time())) {
-                    Mage::log("apr::APR for store ID $storeId not scheduled for now cron expr: {$aprCronExprByStore[$storeId]}, omitting!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                    Mage::log("apr::APR for store ID $storeId not scheduled for now! Cron expr was: {$aprCronExprByStore[$storeId]}, omitting!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
                     continue;
                 }
 
