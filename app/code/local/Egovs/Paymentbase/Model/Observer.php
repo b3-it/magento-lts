@@ -716,20 +716,19 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
 
         if (empty($storeIds)) {
             Mage::log('apr::No stores available to run APR', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
-            return true;
-        }
+        } else {
+            try {
+                $paymentbase = Mage::getModel('paymentbase/paymentbase');
+                $paymentbase->setStoreIds($storeIds);
+                $paymentbase->getZahlungseingaenge();
 
-        try {
-            $paymentbase = Mage::getModel('paymentbase/paymentbase');
-            $paymentbase->setStoreIds($storeIds);
-            $paymentbase->getZahlungseingaenge();
-
-            if ($paymentbase->hasIncomingPayments()) {
-                $paymentbase->sendMailForNewPayments();
+                if ($paymentbase->hasIncomingPayments()) {
+                    $paymentbase->sendMailForNewPayments();
+                }
+            } catch (Exception $e) {
+                Mage::logException($e);
+                Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
             }
-        } catch (Exception $e) {
-            Mage::logException($e);
-            Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
         }
         Mage::helper('egovsbase/lock')->releaseLock($lockKey);
         if (isset($e)) {
