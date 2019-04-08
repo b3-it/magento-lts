@@ -694,7 +694,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
         $storeIds = array();
         foreach ($aprEnabledByStore as $storeId=>$aprEnabled) {
             if (!$aprEnabled) {
-                Mage::log('apr::APR for store $storeId not enabled, omitting!', Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                Mage::log("apr::APR for store $storeId not enabled, omitting!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
                 continue;
             }
 
