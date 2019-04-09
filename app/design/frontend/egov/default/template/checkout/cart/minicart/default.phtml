@@ -178,6 +178,7 @@
                     </td>
                     <td>
                         <?php if( $_item->getProductType() == 'eventbundle' ): ?>
+                            <input type="hidden" id="qinput-<?php echo $_item->getId(); ?>" name="" value="1" />
                             <span class="pseudo-input">1</span>
                         <?php else: ?>
                             <button id="qbutton-<?php echo $_item->getId(); ?>"
