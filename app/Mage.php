@@ -807,7 +807,7 @@ final class Mage
             $logActive = true;
         }
 
-        if ((($level > $logLevel && $logActive) || !self::$_isDeveloperMode && !$logActive) && !$forceLog) {
+        if ((($level > $logLevel && $logActive) || (!self::$_isDeveloperMode && !$logActive)) && !$forceLog) {
             return;
         }
 
