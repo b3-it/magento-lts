@@ -54,6 +54,8 @@ class Egovs_Base_Adminhtml_Cms_Wysiwyg_MediaController extends Mage_Adminhtml_Cm
     }
 
     public function dialogAction() {
+        $this->getRequest()->setParam('type', null);
+
         $storeId = (int) $this->getRequest()->getParam('store');
 
         try {
