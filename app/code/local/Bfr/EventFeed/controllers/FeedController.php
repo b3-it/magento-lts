@@ -4,7 +4,7 @@ require_once "AtomFeed/bootstrap.php";
 
 class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
 
-    public function listAction() {
+    public function indexAction() {
         /**
          * @var Mage_Catalog_Model_Resource_Product_Collection $collection
          */
@@ -102,6 +102,10 @@ class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
 
         $this->getResponse()->setBody($feed->toXML());
         return $this->getResponse();
+    }
+
+    public function listAction() {
+        $this->_forward('index');
     }
 }
 
