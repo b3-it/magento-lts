@@ -62,10 +62,24 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		
 	}
 	
-	
+
+	protected function _skipIsolation()
+    {
+        $value = Mage::registry('IGNORE_STORE_ISOLATION');
+        if($value === true)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 	
 	protected function getUserStoreGroups()
 	{
+	    if($this->_skipIsolation()){
+	        return null;
+        }
 		$user = $this->getUser();
 		return $user->getStoreGroups();
 	}
