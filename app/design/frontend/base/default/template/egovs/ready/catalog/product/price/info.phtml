@@ -11,14 +11,14 @@
  *
  */
 
-
-/** 
- * @var $this \Mage_Core_Block_Template
+/**
+ * @var $this Egovs_Ready_Block_Catalog_Product_Price_Info
  * @see Egovs_Ready_Block_Catalog_Product_Price
  * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
 
 $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
+$showShippingLink = $this->getShowShippingLink();
 $_taxPrefix = 'Incl.';
 if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ) {
     $_taxPrefix = 'Excl.';
@@ -38,7 +38,7 @@ $_productType = $this->getProduct()->getTypeId();
     <?php else: ?>
         <?php echo $this->__( "$_taxPrefix $_taxPostfix", $this->getFormattedTaxRate() ) ?>
     <?php endif ?>
-    <?php if ( (!empty( $shippingCostUrl ) && $this->getShowShippingLink()) || $this->getWithoutShippingCostsText()): ?>
+    <?php if ( $showShippingLink && (!empty( $shippingCostUrl ) || $this->getWithoutShippingCostsText())): ?>
         <?php if (!$this->getExcludeContainer()): ?>
             <span class="tax-separator">,&nbsp;</span>
         <?php else: ?>
@@ -49,7 +49,7 @@ $_productType = $this->getProduct()->getTypeId();
 <?php if (!$this->getExcludeContainer()): ?>
     </span>
 <?php endif; ?>
-<?php if( !empty( $shippingCostUrl ) && $this->getShowShippingLink() ): ?>
+<?php if( !empty( $shippingCostUrl ) && $showShippingLink ): ?>
 	<?php
         if ( $this->getIsIncludingShippingCosts() ) {
         	$_sIncludingShippingCosts = 'incl.';
@@ -63,7 +63,7 @@ $_productType = $this->getProduct()->getTypeId();
         <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
     <?php endif; ?>
 <?php else: ?>
-    <?php if ( !$this->getShowShippingLink() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+    <?php if ( $showShippingLink && ($wscText = $this->getWithoutShippingCostsText())): ?>
         <?php if (!$this->getExcludeContainer()): ?>
             <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
         <?php else: ?>
