@@ -714,7 +714,10 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
             }
         }
 
-        Mage::register('IGNORE_STORE_ISOLATION',true);
+        /**
+         * @see Egovs_Isolation_Model_Observer_Abstract::_skipIsolation()
+         */
+        //Mage::register('IGNORE_STORE_ISOLATION',true);
 
         if (empty($storeIds)) {
             Mage::log('apr::No stores available to run APR', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
