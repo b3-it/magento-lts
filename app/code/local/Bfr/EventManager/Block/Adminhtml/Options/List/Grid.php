@@ -70,11 +70,11 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
 
       if(Mage::helper('eventmanager')->isModuleEnabled('Bfr_EventRequest')) {
           $collection->getSelect()
-              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "order.entity_id = evt.quote_id", array('request_status'=>'status'));
+              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "quote.entity_id = evt.quote_id", array('request_status'=>'status'));
             $statusExpr = new Zend_Db_Expr('((order.status IS NOT NULL) OR (evt.status IS NOT NULL))');
       }
 
-      $collection->getSelect()->where($statusExpr);
+     // $collection->getSelect()->where($statusExpr);
 
 
 
@@ -85,7 +85,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       {
           $alias = 'option_'.$option->getId();
           $collection->getSelect()
-              ->join(array($alias=>$collection->getTable('sales/quote_item_option')),$alias.".item_id = main_table.item_id AND ".$alias.".code='".$alias."'",array($alias=>'value'));
+              ->joinleft(array($alias=>$collection->getTable('sales/quote_item_option')),$alias.".item_id = main_table.item_id AND ".$alias.".code='".$alias."'",array($alias=>'value'));
       }
 
 
