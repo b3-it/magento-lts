@@ -124,5 +124,15 @@
                 </extsalesorder>
             </updates>
         </layout>
+        <events>
+            <core_layout_block_create_after>
+                <observers>
+                    <extsalesorder>
+                        <model>extsalesorder/sales_observer</model>
+                        <method>addOrderGridColumns</method>
+                    </extsalesorder>
+                </observers>
+            </core_layout_block_create_after>
+        </events>
     </adminhtml>
 </config>

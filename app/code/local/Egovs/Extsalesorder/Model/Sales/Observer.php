@@ -152,5 +152,24 @@ class Egovs_Extsalesorder_Model_Sales_Observer
 		return $canReturnToStock;
 	}
 	
-	
+	public function addOrderGridColumns($observer) {
+	    $block = $observer->getBlock();
+	    if (!($block instanceof Mage_Adminhtml_Block_Sales_Order_Grid)) {
+	        return;
+        }
+	    /** @var \Mage_Adminhtml_Sales_OrderController $controller */
+        $controller = Mage::app()->getFrontController()->getAction();
+        $fullActionName = $controller->getFullActionName();
+	    if ($block->getNameInLayout() === 'sales_order.grid' || stripos($fullActionName, 'adminhtml_sales_order_export') !== 0) {
+	        return;
+        }
+
+	    $block->getLayout()->getUpdate()->load('add_order_grid_column_handle');
+        $block->getLayout()->generateXml();
+
+        $node = $block->getLayout()->getNode('reference');
+        $node->attributes()->name = $block->getNameInLayout();
+
+        $block->getLayout()->generateBlocks();
+    }
 }
