@@ -62,15 +62,27 @@ $_height = $this->getImagesHeight();
             <small style="display: none"><?php echo $this->getFileName($file); ?></small>
         <?php endif; ?>
         <br />
-        <small><?php echo $this->__('Template-URL:'); ?> <?php echo $this->escapeHtml(sprintf('{{media url="wysiwyg/%s"}}', $_fname)); ?></small>
+        <?php
+            $_url = $file->getUrl();
+            $baseUrl = Mage::getBaseUrl('media').'wysiwyg/';
+            $_url = str_replace($baseUrl, '', $_url);
+        ?>
+        <span>
+            <small><?php echo $this->__('Template-URL:'); ?>
+                <span class="template-url">
+                    <?php echo $this->escapeHtml(sprintf('{{media url="wysiwyg/%s"}}', $_url)); ?>
+                </span>
+            </small>
+        </span>
     </div>
     <?php endforeach; ?>
+    <div class="copy-helper"><input type="text"/></div>
 <?php else: ?>
     <?php echo $this->helper('cms')->__('No files found') ?>
 <?php endif; ?>
 <input type="hidden" id="file-content"/>
 <script type="text/javascript">
-    $j('div.filecnt small').on('click', function(){
+    $j('div.filecnt small').on('click', function() {
         if( $j(this).css('display') == 'inline' && ($j(this).next().is('small') || $j(this).prev().is('small'))) {
             $j(this).css('display', 'none');
             if ($j(this).next().is('small')) {
@@ -79,5 +91,35 @@ $_height = $this->getImagesHeight();
                 $j(this).prev().css('display', 'inline');
             }
         }
+    });
+
+    $j('.copy-helper').toggle();
+    $j('div.filecnt').on( "click", function() {
+        var text = $j(this).find('.template-url').html();
+
+        /** navigator.clipboard.writeText('Text to be copied')
+            .then(function() {
+            console.log('Text copied to clipboard');
+        })
+        .catch(err => {
+                // This can happen if the user denies clipboard permissions:
+                console.error('Could not copy text: ', err);
+        });
+         */
+
+        var txt = $j('.copy-helper input')
+
+        txt.val(text.trim())
+            .css({ width: "1px", height: "1px" });
+
+        $j('.copy-helper').show();
+
+        txt.select();
+
+        if (document.execCommand('copy')) {
+            //todo show copy tooltip
+            //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard2
+        }
+        $j('.copy-helper').hide();
     });
 </script>

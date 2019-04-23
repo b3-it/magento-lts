@@ -31,7 +31,12 @@ var LinkDialog = {
 	},
 
 	update : function() {
-		var f = document.forms[0], ed = tinyMCEPopup.editor, e, b, href = f.href.value.replace(/ /g, '%20');
+		var f = document.forms[0], ed = tinyMCEPopup.editor, e, b;
+		if (f.href.value.match(/^{{.*}}$/g) == null) {
+			href = f.href.value.replace(/ /g, '%20');
+		} else {
+			href = f.href.value;
+		}
 
 		tinyMCEPopup.restoreSelection();
 		e = ed.dom.getParent(ed.selection.getNode(), 'A');
