@@ -28,7 +28,7 @@ $_productType = $this->getProduct()->getTypeId();
 ?>
 
 <?php if ($_productType != 'eventbundle'): ?>
-
+<?php if ( $this->getPriceDisplayType() != Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
 <?php if (!$this->getExcludeContainer()): ?>
     <span class="tax-details">
 <?php endif; ?>
@@ -48,6 +48,7 @@ $_productType = $this->getProduct()->getTypeId();
 <?php endif; ?>
 <?php if (!$this->getExcludeContainer()): ?>
     </span>
+<?php endif; ?>
 <?php endif; ?>
 <?php if( !empty( $shippingCostUrl ) && $showShippingLink ): ?>
 	<?php
