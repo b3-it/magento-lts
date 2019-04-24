@@ -17,7 +17,10 @@ class Slpb_Base_Model_Observer
             return;
         }
 
+        //Numsort
         $collection->setOrder('sku + 0', Mage_Sales_Model_Resource_Order_Item_Collection::SORT_ORDER_ASC);
+        //Alphasort
+        $collection->setOrder('sku', Mage_Sales_Model_Resource_Order_Item_Collection::SORT_ORDER_ASC);
     }
 
     public function onSalesQuoteItemCollectionLoadBefore($observer) {
@@ -26,7 +29,10 @@ class Slpb_Base_Model_Observer
             return;
         }
 
-        $collection->setOrder('sku + 0', Mage_Sales_Model_Resource_Quote_Item_Collection::SORT_ORDER_ASC);
+        //Numsort
+        $collection->setOrder('sku + 0', Mage_Sales_Model_Resource_Order_Item_Collection::SORT_ORDER_ASC);
+        //Alphasort
+        $collection->setOrder('sku', Mage_Sales_Model_Resource_Order_Item_Collection::SORT_ORDER_ASC);
     }
 
     public function onAdminhtmlSalesOrderCreateProcessData ($observer) {
