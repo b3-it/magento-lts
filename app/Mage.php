@@ -807,7 +807,7 @@ final class Mage
             $logActive = true;
         }
 
-        if ((($level > $logLevel && $logActive) || !self::$_isDeveloperMode && !$logActive) && !$forceLog) {
+        if ((($level > $logLevel && $logActive) || (!self::$_isDeveloperMode && !$logActive)) && !$forceLog) {
             return;
         }
 
@@ -822,9 +822,9 @@ final class Mage
             ',',
             (string) self::getConfig()->getNode('dev/log/allowedFileExtensions', Mage_Core_Model_Store::DEFAULT_CODE)
         );
-        $logValidator = new Zend_Validate_File_Extension($_allowedFileExtensions);
         $logDir = self::getBaseDir('var') . DS . 'log';
-        if (!$logValidator->isValid($logDir . DS . $file)) {
+        $validatedFileExtension = pathinfo($file, PATHINFO_EXTENSION);
+        if (!$validatedFileExtension || !in_array($validatedFileExtension, $_allowedFileExtensions)) {
             return;
         }
 
