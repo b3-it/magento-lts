@@ -25,6 +25,9 @@ class Slpb_Base_Model_Observer
 
     public function onSalesItemCollectionLoadBefore($observer) {
         $collection = $observer->getQuoteItemCollection();
+        if ($collection === null) {
+            $collection = $observer->getOrderInvoiceItemCollection();
+        }
         if (!($collection instanceof Mage_Sales_Model_Resource_Quote_Item_Collection)
             && (!($collection instanceof Mage_Sales_Model_Resource_Order_Invoice_Item_Collection))
         ) {
