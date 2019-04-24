@@ -120,12 +120,18 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
      * @return bool|int|string
      */
     public function getFormattedTaxRate() {
-        if ($this->getTaxRate() === null || $this->getProduct()->getTypeId() == 'bundle') {
-            return '';
+        $_taxRate = $this->getTaxRate();
+        if ($this->getProduct()->getTypeId() == 'bundle') {
+            return false;
+        }
+
+        // sanify boolean values
+        if (is_bool($_taxRate) || is_null($_taxRate)) {
+            return boolval($_taxRate);
         }
 
         $_locale = Mage::app()->getLocale()->getLocaleCode();
-        $_taxRate = Zend_Locale_Format::toFloat($this->getTaxRate(), array('locale' => $_locale));
+        $_taxRate = Zend_Locale_Format::toFloat($_taxRate, array('locale' => $_locale));
 
         if (($_taxRate <= 0.01 && !Mage::getStoreConfigFlag('catalog/price/display_zero_tax_below_price'))
             || !Mage::getStoreConfigFlag('catalog/price/display_tax_below_price')
