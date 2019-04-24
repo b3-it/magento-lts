@@ -23,9 +23,11 @@ class Slpb_Base_Model_Observer
         $collection->setOrder('sku', Mage_Sales_Model_Resource_Order_Item_Collection::SORT_ORDER_ASC);
     }
 
-    public function onSalesQuoteItemCollectionLoadBefore($observer) {
+    public function onSalesItemCollectionLoadBefore($observer) {
         $collection = $observer->getQuoteItemCollection();
-        if (!($collection instanceof Mage_Sales_Model_Resource_Quote_Item_Collection)) {
+        if (!($collection instanceof Mage_Sales_Model_Resource_Quote_Item_Collection)
+            && (!($collection instanceof Mage_Sales_Model_Resource_Order_Invoice_Item_Collection))
+        ) {
             return;
         }
 

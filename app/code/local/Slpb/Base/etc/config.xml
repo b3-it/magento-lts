@@ -38,10 +38,18 @@
                 <observers>
                     <slpb_base>
                         <model>slpb_base/observer</model>
-                        <method>onSalesQuoteItemCollectionLoadBefore</method>
+                        <method>onSalesItemCollectionLoadBefore</method>
                     </slpb_base>
                 </observers>
             </sales_quote_item_collection_load_before>
+            <sales_order_invoice_item_collection_load_before>
+                <observers>
+                    <slpb_base>
+                        <model>slpb_base/observer</model>
+                        <method>onSalesItemCollectionLoadBefore</method>
+                    </slpb_base>
+                </observers>
+            </sales_order_invoice_item_collection_load_before>
             <adminhtml_sales_order_create_process_data>
                 <observers>
                     <slpb_base>
