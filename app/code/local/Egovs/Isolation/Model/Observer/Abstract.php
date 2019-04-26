@@ -50,7 +50,6 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		if($token == null){
 			$error = 'Authorization Token Not found.';
 			throw new Exception($error);
-			return null;
 		}
 		
 		$oauth =  Mage::getModel('oauth/token')->load($token,'token');
@@ -62,10 +61,25 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		
 	}
 	
-	
+
+	protected function _skipIsolation()
+    {
+        $value = Mage::registry('IGNORE_STORE_ISOLATION');
+        $isCron = isset($_SERVER['PHP_SELF']) ? strtolower(basename($_SERVER['PHP_SELF'])) === 'cron.php' : false;
+
+        if ($value === true || $isCron) {
+            return true;
+        }
+
+        return false;
+    }
+
 	
 	protected function getUserStoreGroups()
 	{
+	    if($this->_skipIsolation()){
+	        return null;
+        }
 		$user = $this->getUser();
 		return $user->getStoreGroups();
 	}

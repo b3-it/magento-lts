@@ -50,6 +50,21 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 	 * @var boolean
 	 */
 	protected $_initialized = false;
+
+    /**
+     * @var int
+     */
+	protected $_storeId;
+
+    /**
+     * @var array Store IDs
+     */
+	protected $_storeIds = array();
+
+    /**
+     * @var \Mage_Core_Model_Store
+     */
+	protected $_store = null;
 	
 	protected static $_running = false;
 	
@@ -328,56 +343,26 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
      * @return Mage_Sales_Model_Mysql4_Order_Invoice_Collection
      */
     protected function _getUnbalancedInvoices() {
-    	if (version_compare(Mage::getVersion(), '1.4.1', '<')) {
-    		//cached ID verwenden
-    		$orderPaymentEntityType = Mage::getSingleton('eav/config')->getEntityType('order_payment');
-    		$attrMethodId = Mage::getSingleton('eav/entity_attribute')->getIdByCode('order_payment', 'method');
-    		$attributeTableName = $orderPaymentEntityType->getEntity()
-	    		->getAttribute('method')
-	    		->getBackendTable()
-    		;
-    	
-    		//Brauchen collection mit offenen Rechnungen
-    		$collection = Mage::getResourceModel('sales/order_invoice_collection')
-	    		//Brauchen order_id im Ergebnis
-	    		->addAttributeToFilter(array(array('attribute'=>'order_id', 'gt' => '0')))
-	    		//nach offenen Rechnungen Filtern
-	    		->addAttributeToFilter('state', Mage_Sales_Model_Order_Invoice::STATE_OPEN)
-	    		//Verweis auf Payment wird benötigt
-	    		->joinTable('sales/order_entity',
-	    				'parent_id=order_id',
-	    				array('payment_entity_id' => 'entity_id'),
-	    				'{{table}}.entity_type_id='.$orderPaymentEntityType->getId()
-	    		)
-	    		//method Attribute mit einbinden
-	    		->joinTable($attributeTableName,
-	    				'entity_id=payment_entity_id',
-	    				array('method' => 'value'),
-	    				'{{table}}.attribute_id='.$attrMethodId
-	    		)
-	    		//Benötigen nur 'Offene Rechnung' und 'Vorkasse'
-	    		->addAttributeToFilter('method', array('openaccount', 'bankpayment'))
-	    		//Es gibt nur ein Kassenzeichen --> bei Teilrechnungen hätten wir sonst mehrmals die gleiche Order
-	    		->groupByAttribute('order_id')
-    		;
-    	} else {
-    		//Magento 1.6
-    		//Brauchen collection mit offenen Rechnungen
-    		/* @var $collection Mage_Sales_Model_Resource_Order_Invoice_Collection */
-    		$collection = Mage::getResourceModel('sales/order_invoice_collection');
-    		$quotedParentId = $collection->getConnection()->quoteIdentifier('parent_id');
-    		$quotedMethod = $collection->getConnection()->quoteIdentifier('method');
-    		$quotedOrderId = $collection->getConnection()->quoteIdentifier('order_id');
-    		$collection->addFieldToFilter('order_id', array('gt' => '0'))
-    			->addFieldToFilter('state', Mage_Sales_Model_Order_Invoice::STATE_OPEN)
-    		;
-    		$collection
-    			->join('sales/order_payment', $collection->getConnection()->quoteInto("$quotedParentId=$quotedOrderId AND $quotedMethod IN (?)", array('openaccount', 'bankpayment')), 'method')
-    			->getSelect()->group('order_id')
-    		;
-    		//Älteste als erstes
-    		$collection->addOrder('order_id', 'asc');
-    	}
+    	//Magento 1.6
+        //Brauchen collection mit offenen Rechnungen
+        /* @var $collection Mage_Sales_Model_Resource_Order_Invoice_Collection */
+        $collection = Mage::getResourceModel('sales/order_invoice_collection');
+        $quotedParentId = $collection->getConnection()->quoteIdentifier('parent_id');
+        $quotedMethod = $collection->getConnection()->quoteIdentifier('method');
+        $quotedOrderId = $collection->getConnection()->quoteIdentifier('order_id');
+        $collection->addFieldToFilter('order_id', array('gt' => '0'))
+            ->addFieldToFilter('state', Mage_Sales_Model_Order_Invoice::STATE_OPEN)
+        ;
+        $collection
+            ->join('sales/order_payment', $collection->getConnection()->quoteInto("$quotedParentId=$quotedOrderId AND $quotedMethod IN (?)", array('openaccount', 'bankpayment')), 'method')
+            ->getSelect()->group('order_id')
+        ;
+        if (!empty($this->_storeIds)) {
+            $collection->addFieldToFilter('store_id', array('in' => $this->_storeIds));
+        }
+        //Älteste als erstes
+        $collection->addOrder('order_id', 'asc');
+
     	Mage::log(sprintf('paymentbase::getZahlungseingänge: %s', $collection->getSelect()->assemble()), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
     	
     	return $collection;
@@ -697,5 +682,42 @@ class Egovs_Paymentbase_Model_Paymentbase extends Mage_Core_Model_Abstract
 
             Mage::log($error.": {$ex->getTraceAsString()}", Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
         }
+    }
+
+    /**
+     * @param int $storeId Store ID
+     *
+     * @return $this
+     */
+    public function setStoreId($storeId) {
+        $this->_storeId = (int)$storeId;
+
+        return $this;
+    }
+
+    public function setStore($store) {
+        if (is_numeric($store)) {
+            $this->_store = Mage::app()->getStore($store);
+        } elseif ($store instanceof Mage_Core_Model_Store) {
+            $this->_store = $store;
+        } else {
+            Mage::throwException("No store given!");
+        }
+        $this->setStoreId($this->_store->getId());
+
+        return $this;
+    }
+
+    public function setStoreIds($storeIds) {
+        if (is_numeric($storeIds)) {
+            $this->_storeIds = array($storeIds);
+            $this->setStore($storeIds);
+        } elseif (is_array($storeIds)) {
+            $this->_storeIds = $storeIds;
+        } else {
+            Mage::throwException("No store given!");
+        }
+
+        return $this;
     }
 }
