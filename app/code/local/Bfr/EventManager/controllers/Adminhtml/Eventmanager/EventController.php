@@ -473,7 +473,7 @@ class Bfr_EventManager_Adminhtml_EventManager_EventController extends Mage_Admin
     	Mage::register('event_data', $model);
     	 
     	$this->loadLayout();
-    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customeroptions');
+    	$block = $this->getLayout()->createBlock('eventmanager/adminhtml_event_edit_tab_customerOptions');
     	$this->getResponse()->setBody($block->toHtml());
     
     }
