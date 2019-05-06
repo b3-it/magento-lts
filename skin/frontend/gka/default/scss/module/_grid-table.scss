@@ -2,7 +2,6 @@
 // Grid-Tabelle aus dem BE für das FE erzeugt
 //
 
-
 table.actions, table.massaction, form {
 	button {
 	    @extend .button;
@@ -22,7 +21,7 @@ table.actions {
     
     input, select {
     	vertical-align: middle;
-    	line-height: auto;
+    	line-height: initial;
     	width: 40px;
     	padding: 1px 3px;
     	line-height: 1.5em;
@@ -102,10 +101,11 @@ div.grid {
 	
 	.hor-scroll {
 	    margin-bottom: -4px;
-	    overflow: auto;
+		overflow: auto;
 	    -ms-overflow-style: scrollbar;
 	    padding-bottom: $global-boxpadding;
 	    width: 100%;
+		max-height: 60vh;
 	}
 	
 	table {

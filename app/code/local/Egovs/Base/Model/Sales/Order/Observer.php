@@ -49,11 +49,11 @@ class Egovs_Base_Model_Sales_Order_Observer extends Mage_Core_Model_Abstract {
 		if ($invoice->getDoNotSendEmail ()) {
             return;
         }
-		if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == 0) {
+		if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == Egovs_Base_Model_System_Config_Source_Email_Invoice::SEND_MAIL_NEVER) {
             return;
         }
-        if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == 2
-            && (0.01 <= (float)$invoice->getGrandTotal())
+        if (Mage::getStoreConfig ( "sales_email/invoice/send_mail", $invoice->getStoreId () ) == Egovs_Base_Model_System_Config_Source_Email_Invoice::SEND_MAIL_GREATER_ZERO
+            && ((float)$invoice->getGrandTotal() < 0.01)
         ) {
             return;
         }

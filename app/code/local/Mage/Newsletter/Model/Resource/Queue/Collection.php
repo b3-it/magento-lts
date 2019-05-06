@@ -261,4 +261,18 @@ class Mage_Newsletter_Model_Resource_Queue_Collection extends Mage_Core_Model_Re
         }
         return $this;
     }
+
+    //für Store Isolation
+    public function hasJoinToTable($joinname)
+    {
+        foreach ($this->_joinedTables as $k=>$v)
+        {
+            if($k == $joinname)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
