@@ -1,3 +1,12 @@
+/**
+ * Anpassungen im Magento-BE auf %
+ */
+.form-list td.value textarea    { width:90%; }
+.form-list td.value select      { width:90%; }
+.form-list td.scope-label       { min-width:150px; }
+.form-list td.value p.note      { width:90%; }
+.columns .form-list td.value    { width:90%; }
+
 .slpb_col2 {
     width: 50%;
     border-right: 1px solid #aeaeae;
@@ -55,7 +64,7 @@ div.sidcms-main-col{
     width: 58%;
 }
 .sidcms-columns{
-    background: rgba(0, 0, 0, 0) url("images/side_col_bg.gif") repeat-y scroll 417px 0;
+    background: rgba(0, 0, 0, 0) url("../images/side_col_bg.gif") repeat-y scroll 417px 0;
 }
 
 del {
