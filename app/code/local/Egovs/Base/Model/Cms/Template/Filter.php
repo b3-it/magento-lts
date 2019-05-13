@@ -15,7 +15,7 @@
  * @copyright Copyright (c) 2019 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license   http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Egovs_Base_Model_Cms_Template_Filter extends Mage_Cms_Model_Template_Filter
+class Egovs_Base_Model_Cms_Template_Filter extends Mage_Widget_Model_Template_Filter
 {
     /**
      * Filter the string as template.
