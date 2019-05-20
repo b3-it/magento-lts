@@ -22,7 +22,6 @@
 "Shipping cost information","Versandkosten Informationen"
 "Click here to get the shipping cost information","Hier finden Sie Informationen zu den Versandkosten."
 "Free shipment","Versandkostenfrei"
-"Without Shipping Costs","Versandkostenfrei"
 "incl. Tax","inkl. MwSt."
 "excl. Tax","zzgl. MwSt."
 "incl. Shipping Cost","inkl. Versandkosten"
@@ -32,4 +31,4 @@
 "Excl. Tax","zzgl. MwSt."
 "Display formatted tax rate below Price","Anzeige des formatierten Steuersatzes unter des Preises"
 "Display formatted tax rate info below the price on all pages","Anzeige der formatierten Steuersatzinformationen unterhalb des Preises auf allen Seiten"
-"Without Shipping Costs","Ohne Versandkosten"
+"Without Shipping Costs","zzgl. Versandkosten"
