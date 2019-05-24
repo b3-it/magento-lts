@@ -46,6 +46,20 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit extends Mage_Adminhtml_Block_W
         		'class'     => 'save',
         ), -100);
 
+        if( Mage::getSingleton('admin/session')->isAllowed('admin/bfr_eventmanager/eventmanager_event_remove_individual_options')) {
+            $this->_addButton('delete_options', array(
+                'label' => Mage::helper('adminhtml')->__('Delete Individual Options'),
+                'onclick' => 'deleteConfirm(\''
+                    . Mage::helper('core')->jsQuoteEscape(
+                        Mage::helper('eventmanager')->__('Are you sure you want to delete individual Options')
+                    )
+                    . '\', \''
+                    . $this->getUrl('*/*/removeIndividualoptions', array('id' => $this->getRequest()->getParam('id', 0))) . '\')'
+            ,
+                'class' => 'delete',
+            ), -100);
+        }
+
         $this->_formScripts[] = "
             function toggleEditor() {
                 if (tinyMCE.getInstanceById('event_content') == null) {
