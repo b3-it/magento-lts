@@ -175,6 +175,7 @@ ins {
 }
 /* Ende für Auswahl bei VirtualGeo-Inhalt */
 
+/* Start Media-Speichern */
 .egovs-base-media-block {
     width: 45%;
     margin-right: 1%;
@@ -182,6 +183,7 @@ ins {
     display: inline-block;
     vertical-align: top;
     padding: 3px;
+    border: 1px solid transparent;
 }
 .egovs-base-media-block:hover {
     background: #f5d6c7;
@@ -196,6 +198,10 @@ ins {
     margin-right: 10px !important;
     display: inline-block;
 }
+.egovs-base-media-block.selected {
+    border-color: black;
+}
+/* Ende Media-Speichern */
 
 .select-button-container {
     width: 100%;
