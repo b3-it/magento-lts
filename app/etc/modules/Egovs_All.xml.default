@@ -74,6 +74,10 @@
                 <Egovs_Paymentbase/>
             </depends>
         </Egovs_DebitPIN>
+        <Egovs_DesignFeatures>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Egovs_DesignFeatures>
         <Egovs_Doc>
             <active>false</active>
             <codePool>local</codePool>
