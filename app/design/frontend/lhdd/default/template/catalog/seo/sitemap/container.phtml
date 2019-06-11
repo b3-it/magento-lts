@@ -1,0 +1,32 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2017 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h2><?php echo $this->escapeHtml($this->getTitleSiteMap()) ?></h2>
+</div>
+<div id="sitemap-top-links">
+    <?php echo $this->getChildHtml('links') ?>
+</div>
+<?php echo $this->getChildHtml('pager_top') ?>
+
+<div id="sitemap-cms">
+    <h2><?php echo $this->escapeHtml($this->getTitleSiteCms()) ?></h2>
+    <?php echo $this->getChildHtml('cms') ?>
+</div>
+<div id="sitemap-default">
+    <h2><?php echo $this->getTitle() ?></h2>
+    <?php echo $this->getChildHtml('sitemap') ?>
+</div>
+
+<div id="sitemap-product">
+    <h2><?php echo $this->getTitleProduct() ?></h2>
+    <?php echo $this->getChildHtml('sitemap_product') ?>
+</div>
+
+<?php echo $this->getChildHtml('links') ?>
+<?php echo $this->getChildHtml('pager_bottom') ?>

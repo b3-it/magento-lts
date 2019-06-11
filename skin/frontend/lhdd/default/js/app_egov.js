@@ -15,12 +15,12 @@ var egov_break = {
 function setTabIndex(arr)
 {
     $j.each(arr, function(element, tabindex){
-        $j('#' + element).attr('tabindex', tabindex);
+        $j("#" + element).attr("tabindex", tabindex);
     });
 }
 
 // =============================================
-//
+// Rechten Abstand in der Seite ermitteln
 // =============================================
 $j.fn.right = function() {
 	return $j(document).width() - (this.offset().left + this.outerWidth());
@@ -28,7 +28,7 @@ $j.fn.right = function() {
 
 jQuery(document).ready(function ($j) {
 	// Fixed HTML-Scroll-Bug für IE ab Version 8
-	$j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
+	$j("html").css({"overflow-y": "", "-ms-overflow-y": ""});
 
     // Dynamische Skallierung der Welcome-Schrift
     var resizeText = function() {
@@ -43,17 +43,17 @@ jQuery(document).ready(function ($j) {
         // Berechnete Schrift-Größe
         var newSize = (preferredFont * scaleFactor) - 50;
 
-        $j('.header-position').css("font-size", newSize + '%');
+        $j(".header-position").css("font-size", newSize + "%");
     };
 
     // Grafischer Language-Switcher hinzufügen
-    if ( $j('#select-language').length ) {
-        $j('#select-language').touchSelect({
-            'useMulti'     : true,                                    // Popup erzeugen
-            'elementInsert': '#store-view-switcher',                  // Quell-Element angeben
-            'elementClass' : 'skip-link skip-switch-language',        // CSS-Klassen für Schalter engeben
-            'elementImage' : SKIN_PATH + 'images/icon-language.svg',  // Bild als Titel verwenden
-    		'uiFindElement': true
+    if ( $j("#select-language").length ) {
+        $j("#select-language").touchSelect({
+            "useMulti"     : true,                                    // Popup erzeugen
+            "elementInsert": "#store-view-switcher",                  // Quell-Element angeben
+            "elementClass" : "skip-link skip-switch-language",        // CSS-Klassen für Schalter engeben
+            "elementImage" : SKIN_PATH + "images/icon-language.svg",  // Bild als Titel verwenden
+            "uiFindElement": true
     	});
     }
 
@@ -61,25 +61,25 @@ jQuery(document).ready(function ($j) {
     // damit das DropDown an der korrekten Stelle angezeigt wird
     // siehe scss/module/_skip-links-link
     var addjustUserMenu = function() {
-        var posRight = 42;  // Start-Position (Offset)
+        var posRight = 0;  // Start-Position (Offset)
 
-        if ( $j('.skip-switch-language').length ) {
-            posRight += $j('.store-language-container').width() + 2;
+        if ( $j(".skip-switch-language").length ) {
+            posRight += $j(".store-language-container").width() + 2;
         }
-        posRight += $j('.skip-search').width();
-        posRight += $j('.skip-cart').width() + 6;
+        posRight += $j(".skip-search").width();
+        posRight += $j(".skip-cart").width() + 6;
 
-        $j('#header-account').css('right', posRight + 'px');
+        $j("#header-account").css("right", posRight + "px");
     };
     addjustUserMenu();
 
-    $j(window).bind('resize', function(){
+    $j(window).bind("resize", function(){
         //resizeText();
-    }).trigger('resize');
+    }).trigger("resize");
 
     // Rest-Verfügbarkeit in rechte Spalte (über Cart-Button) einfügen
-    if ( $j('.availability-only').length ) {
-        $j('.availability-only').detach().appendTo('.extra-info');
+    if ( $j(".availability-only").length ) {
+        $j(".availability-only").detach().appendTo(".extra-info");
     }
 
     // Rechte Seitenspalte im 3-Spalten-Layout

@@ -38,3 +38,15 @@
 		border-color: $grundfarbe1;
 	}
 }
+
+@mixin toolbar-button {
+	display: inline-block;
+	width: $toolbar-button;
+	height: $toolbar-button;
+	margin-left: $toolbar-button / 2;
+	box-shadow: inset 0 0 2px 0 $grundfarbe4;
+	border: $border-width solid $element-schatten;
+	background-color: $grundfarbe1;
+	color: $grundfarbe-hell;
+	padding: 1px;
+}
