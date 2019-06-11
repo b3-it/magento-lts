@@ -1,0 +1,59 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.overflow-container {
+	overflow-x: auto;
+	padding: 1px;
+}
+
+.data-table {
+    width: 100%;
+    margin-bottom: $default-margin;
+	border: $border-width solid $grundfarbe1;
+
+	// bis dahin ist die Tabelle darstellbar
+	@include bp(max-width, 830px) {
+		@include linearize-table;
+	}
+
+    td, th {
+	    padding: $default-padding * 2;
+    	vertical-align: top;
+    }
+
+    th {
+    	background: $grundfarbe1;
+    	color: $grundfarbe-hell;
+	}
+
+	tbody td,
+	tfoot td {
+		border-width: 0 $border-width $border-width $border-width;
+		border-style: solid;
+		border-color: $grundfarbe1;
+	}
+
+	tbody td .item-options {
+    	margin-top: $default-margin / 2;
+
+	    dt:after {
+    	    content: ':';
+    	}
+    	dd {
+    		margin-left: $default-margin;
+
+    		.price {
+    			display: inline-block;
+    			float: right;
+    		}
+    	}
+	}
+
+	tfoot {
+		background-color: $grundfarbe3;
+	}
+}

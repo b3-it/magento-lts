@@ -1,0 +1,53 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.add-to-cart {
+	display: block;
+	background-color: $grundfarbe4;
+	padding: $default-padding * 2;
+
+	.qty-wrapper, .add-to-cart-buttons {
+		display: inline-block;
+	}
+	.qty-wrapper {
+		width: 40%;
+		vertical-align: middle;
+		text-align: left;
+	}
+	.add-to-cart-buttons {
+		width: 58%;
+	}
+	input {
+		width: 90%;
+		display: block;
+		background-image: none;
+	}
+	.button {
+		padding: 0;
+	}
+}
+
+.col3-layout {
+	.qty-wrapper {
+		width: 100%;
+		
+		> * {
+			display: inline-block;
+		}
+		
+		input {
+			width: 60%;
+			margin: 0;
+			float: right;
+		}
+	}
+	.add-to-cart-buttons {
+		display: block;
+		width: 100%;
+		margin-top: $default-margin / 2;
+	}
+}

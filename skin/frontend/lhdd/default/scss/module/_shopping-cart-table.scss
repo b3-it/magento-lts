@@ -1,0 +1,48 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.product-cart-info a.egov-delete,
+.product-cart-info a.btn-remove,
+.cart-links {
+	display: none;
+}
+
+.product-cart-info {
+	.product-name {
+		max-height: $cart-title-height;
+		overflow: hidden;
+		
+		a {
+			white-space: normal;
+		}
+	}
+}
+
+.product-cart-price,
+.product-cart-subprice,
+.product-cart-total {
+	width: $cart-price-width;
+	text-align: right;
+}
+
+.product-cart-actions {
+	width: $cart-action-width;
+	text-align: center;
+
+	input {
+		width: 90%;
+	}
+}
+
+.product-cart-image {
+	width: $cart-image-width;
+	
+	img {
+		width: 100%;
+		height: auto;
+	}
+}

@@ -1,0 +1,35 @@
+<?php
+/**
+ * @category    design
+ * @package     lhdd_default
+ * @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+        <title><?php echo $this->getTitle() ?></title>
+        <meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+        <meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+        <meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+        <meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+        <link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+        <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+        <!--[if lt IE 7]>
+        <script type="text/javascript">
+        //<![CDATA[
+            var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+            var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+        //]]>
+        </script>
+        <![endif]-->
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var SKIN_PATH = '<?php echo Mage::getDesign()->getSkinUrl(); ?>';
+            var baseUrl = '<?php echo Mage::getBaseUrl('web'); ?>';
+        //]]>
+        </script>
+
+        <?php echo $this->getCssJsHtml() ?>
+        <?php echo $this->getChildHtml() ?>
+        <?php echo $this->helper('core/js')->getTranslatorScript() ?>
+        <?php echo $this->getIncludes() ?>

@@ -1,0 +1,117 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.nav-primary {	
+	#mobile-home-link {
+	    @include bp(min-width, $bp-mobil) {
+            display: none;
+        }
+	}
+
+	strong, a {
+	    display: block;
+	    color: $haupt-text-farbe;
+
+	    &:hover, &:active, &:focus {
+	        color: $grundfarbe1;
+	    }
+	}
+
+	a {
+		padding: $default-padding * 2 $default-padding * 6 $default-padding * 2 $default-padding * 3;
+	    line-height: 1.4rem;
+	}
+
+	a.level0 {
+		font-size: 1.2rem;
+	}
+	
+	> li {
+	    background-image: linear-gradient(to bottom, $grundfarbe-hell 0, $gradient1 100%);
+	    background-size: 100% 45px;
+	    background-repeat: no-repeat;
+	    border: $border-width solid $grundfarbe3;
+	    border-radius: $border-radius $border-radius 0 0;
+
+	    > ul {
+	    	border-bottom: $border-width solid $grundfarbe3;
+	    }
+	}
+
+	li {
+		border-bottom: $border-width solid $grundfarbe3;
+		background-color: $grundfarbe-hell;
+		
+		&.active > a {
+			background-color: $grundfarbe1;
+			color: $grundfarbe4;
+			font-weight: bold;
+			background-image: $navitem-active;
+		}
+
+		&:first-child {
+		    border-top: $border-width solid $grundfarbe3;
+		}
+		
+		&:last-child {
+            border-bottom: none;
+        }
+	}
+
+	li.level0 {
+	    ul {
+	    	// Hide until displayed.
+	    	display: none;
+	    }
+	}
+
+    li.level1 {       
+        li {
+        	padding-left: $default-padding * 3;
+        }
+    }
+
+
+    // Correct menus that will hang off the page (class added by js)
+    li.level0 ul.level0.spill {
+        right: 0;
+        left: auto;
+
+        // Sub-menu drop down to the left
+        li.level1 ul {
+            left: auto;
+            right: 50px;
+            top: 20px;
+        }
+    }
+   
+    // Level 1+
+    li.level0 li.parent > a {
+        position: relative;
+    }    
+    
+    .menu-active {
+        z-index: 200;
+    }
+    
+    // Show sub-menus when JS adds the appropriate classes
+    .menu-active > ul,
+    .menu-active > ul.level0,
+    li.level0 li.sub-menu-active > ul {
+        display: block;
+    }
+    
+    // Class for js to add briefly to evaluate element positioning.
+    li.level0 ul.level0.position-test {
+        display: block;
+    }
+    
+    li.menu-active > a,
+    li.sub-menu-active > a {
+        color: $grundfarbe1;
+    }
+}

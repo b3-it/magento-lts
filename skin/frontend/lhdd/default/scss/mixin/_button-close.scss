@@ -1,0 +1,18 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@mixin button-close {
+    @include hell-dunkel;
+
+    display: block;
+    position: absolute;
+    font-size: $minicard-closed * 0.75;
+    font-weight: normal;
+    width: $minicard-closed;
+    height: $minicard-closed;
+    line-height: $minicard-closed - 6px;
+}

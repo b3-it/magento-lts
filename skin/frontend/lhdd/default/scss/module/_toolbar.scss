@@ -1,0 +1,67 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.toolbar {
+	@include clearfix;
+    display: block;
+
+    > div {
+        border-color: $grundfarbe2;
+        border-width: $border-width 0;
+        border-style: solid;
+        background-color: $grundfarbe4;
+        margin: $default-padding 0;
+        line-height: $toolbar-height;
+        height: $toolbar-height;
+        padding: 0 $default-padding * 2;
+    }
+
+    .count-container, .limiter,
+    .sort-by, .view-mode {
+        display: inline-block;
+
+		a {
+			text-decoration: none;
+		}
+    }
+
+    .limiter, .sort-by {
+        float: right;
+    }
+
+    p label {
+        position: relative;
+        top: -4px;
+    }
+
+    .sort-by-switcher--asc, .sort-by-switcher--desc {
+    	@extend .egov-fa-base;
+    	display: inline-block;
+        width: $toolbar-button;
+        height: $toolbar-button;
+        margin-left: $toolbar-button / 2;
+        border: $border-width solid $grundfarbe1;
+        box-shadow: inset 0 0 2px 0 $grundfarbe4;
+	    border: $border-width solid $element-schatten;
+	    background-color: $grundfarbe1;
+	    color: $grundfarbe-hell;
+	    padding: 2px;
+
+	    &:active, &:hover, &:focus {
+	    	text-decoration: none;
+	    	background-color: $grundfarbe4;
+	    	color: $grundfarbe1;
+	    }
+    }
+
+    .sort-by-switcher--asc {
+    	@extend .fa-arrow-down;
+    }
+    .sort-by-switcher--desc {
+    	@extend .fa-arrow-up;
+    }
+}

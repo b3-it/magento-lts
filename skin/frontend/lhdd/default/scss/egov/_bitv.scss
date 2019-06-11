@@ -1,0 +1,60 @@
+﻿//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.list-links {
+	li {
+		padding-left: $default-margin / 2;
+		text-indent: -2px;
+
+		&:before {
+			display: none;
+		}
+	}
+
+	a {
+		display: inline-block;
+		width: 100%;
+
+		background-position: $default-margin / 2 13px;
+		background-repeat  : no-repeat;
+		background-image   : $bitv-background-image;
+		background-color   : $bitv-bg-color;
+	}
+}
+
+.list-links.list-links-focus {
+	position: absolute;
+	z-index: 999;
+	top: $default-margin;
+	left: $default-margin;
+	width: $bitv-width;
+
+	li {
+		padding: 0 0;
+		border: none;
+	}
+
+	a {
+		padding: 7px $default-margin 8px 27px;
+		border-radius:0 0 $border-radius 0;
+		text-decoration: none;
+		color: $bitv-text-color;
+		font-family: $base-font;
+	}
+}
+
+.only-focusable {
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+
+ 	&:active, &:focus {
+ 	    position: static;
+		overflow: visible;
+		clip: auto;
+ 	}
+}

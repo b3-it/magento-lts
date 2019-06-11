@@ -1,0 +1,46 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.widget-static-block {
+    margin-bottom: $default-margin;
+}
+
+#credit_cards, .credit_cards,
+#widget_credit_cards, .widget_credit_cards {
+    text-align: center;
+
+    img {
+        width: $credit-card-image-width;
+        display: inline-block;
+        margin: 0 2%;
+    }
+}
+
+#widget_logo_master_card {
+}
+
+#widget_logo_master_card_secure {
+}
+
+#widget_logo_visa {
+}
+
+#widget_logo_visa_verified {
+}
+
+#pay-logo-before {
+	@extend .fa;
+	@extend .fa-credit-card;
+}
+#pay-logo-two {
+	@extend .fa;
+	@extend .fa-eur;
+    font-size: 1.6rem;
+    left: -15%;
+    position: relative;
+    top: 10%;
+}

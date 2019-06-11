@@ -1,0 +1,78 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$global-repeat-scroll:   none repeat scroll 0 0;
+$global-norepeat-scroll: no-repeat scroll;
+
+// =============================================
+// Definition der Grundfarben
+// =============================================
+$grundfarbe1: #337E33;                      // Basisfarbe
+$grundfarbe2: #B6D2B6;                      // Basisfarbe mit 40%
+$grundfarbe3: #DAE8DA;                      // Basisfarbe mit 20%
+$grundfarbe4: #EDF4ED;                      // Basisfarbe mit 10%
+
+$gradient1: #E7EFE8;
+
+$zusatzfarbe1: #6E6E6E;                     // Basisfarbe
+$zusatzfarbe2: #C5C5C5;                     // Basisfarbe mit 40%
+$zusatzfarbe3: #E2E2E2;                     // Basisfarbe mit 20%
+$zusatzfarbe4: #F1F1F1;                     // Basisfarbe mit 10%
+
+$grundfarbe-hell : #FFFFFF;                 // helle Basisfarbe (Hintergrund, Buttons, etc.)
+$haupt-text-farbe: #313131;                 // Textfarbe für Fließtext
+$box-shatten     : #888888;                 // Farbe für den Schatten bei Eingabefeldern
+$button-gradient : #3F9B3F;                 // Gradient-Farbe bei Buttons
+
+// =============================================
+// DEMO-Notice
+// =============================================
+$demo-notice-back-color: #f1af73;           // Hintergrundfarbe für DEMO-Hinweis
+
+// =============================================
+// Alert, Notice, Success
+// =============================================
+$fehler-text-color: #DF280A;                // Pflicht-Felder, Fehlermeldungen
+$fehler-back-color: #FAEBE7;                // Hintergrundfarbe für Fehlermeldungen
+$warn-text-color  : #DF280A;                // Warnungen und Hinweise
+$warn-back-color  : #FAEBE7;                // Hintergrundfarbe für Warnungen und Hinweise
+$ok-text-color    : #59814C;                // OK-Meldungen und Erfolge
+$ok-back-color    : #EFF5EA;                // Hintergrundfarbe für OK und Erfolge
+
+// =============================================
+// Schatten-Definitionen und Alpha-Blend
+// =============================================
+$link-alpha      : rgba(0  , 0  , 0  , 0.15);     // Hover-Definition für Links
+$input-alpha     : rgba(255, 255, 255, 0.75);     // Schatten für Eingabe-Elemente
+$element-schatten: rgba(0  , 0  , 0  , 0.25);     // Schatten um Elemente
+$default-shadow  : rgba(0  , 0  , 0  , 0.50);     // Standars-Schatten für Elemente
+$loding-shaddow  : rgba(0  , 0  , 0  , 0.75);     // Schatten um Lade-Anzeige
+$button-shadow   : rgba(1  , 0  , 0  , 0.75);     // Text-Shatten für Button-Beschriftung
+
+// =============================================
+// Barrierefrei Defaults
+// =============================================
+$bitv-text-color  : #003456;                // Textfarbe für Barrierefrei-Menü
+$bitv-bg-color    : #f4ddb5;                // Hintergrundfarbe für Barrierefrei-Menü
+$bitv-border-color: #f49e00;                // Rahmenfarbe für Barrierefrei-Menü
+
+// =============================================
+// Seitenhintergrund
+// =============================================
+$wrapper-background: $grundfarbe-hell;      // normaler Seitenhintergrund
+
+// =============================================
+// Loading-Layer
+// =============================================
+$loading-layer-background: #fff4e9;         // Hintergrundfarbe der Box
+$loading-layer-border    : #f1af73;         // Farbe für den Rand
+$loading-layer-fontcolor : #d85909;         // Schriftfarbe
+
+// =============================================
+// RSS-Icon
+// =============================================
+$rss-icon-color: #FF6600;

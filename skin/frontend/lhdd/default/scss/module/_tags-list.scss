@@ -1,0 +1,16 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.tags-list {
+    margin: $default-margin 0;
+    font-size: $search-tag-font-size;
+
+    li {
+        display: inline-block;
+        margin: $default-margin / 2 $default-margin;
+    }
+}

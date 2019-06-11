@@ -1,0 +1,88 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.minicart-wrapper {
+	.product-image, .product-details {
+		vertical-align: top;
+		display: inline-block;
+	}
+
+	.product-image img {
+		@include product-image;
+	}
+
+	.product-details {
+		width: 75%;
+		margin-left: 4%;
+	}
+
+	.item .product-name a {
+		position: relative;
+
+		&:after {
+			@include fading-left-right(20%, $grundfarbe4);
+		}
+	}
+
+	.product-name a, table a {
+		color: $grundfarbe1;
+		white-space: normal;
+	}
+
+	.product-name {
+		margin-bottom: $default-margin / 2;
+		overflow: hidden;
+		max-height: $minicard-title;
+	}
+
+	li {
+		padding-bottom: $minicard-items;
+		border-bottom: $border-width solid $grundfarbe1;
+
+		&:first-child {
+			padding-top: $minicard-items;
+			border-top: $border-width solid $grundfarbe1;
+		}
+	}
+
+	table {
+		.mini-cart-secound {
+			padding-left: 10px;
+		}
+
+		span.price {
+			display: inline-block;
+			float: right;
+			margin-right: 20px;
+		}
+
+		input {
+			width: 40%;
+			margin-top: 2%;
+			margin-left: -1px;
+		}
+
+		button {
+			float: right;
+			position: relative;
+			right: 20px;
+		}
+	}
+
+	.subtotal {
+		text-align: right;
+	}
+
+	.minicart-actions {
+		border-top: $border-width solid $grundfarbe1;
+		padding-top: $default-padding;
+
+		button {
+			width: 48%;
+		}
+	}
+}

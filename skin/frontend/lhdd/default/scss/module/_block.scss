@@ -1,0 +1,152 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+$block-border-style: $border-width solid $grundfarbe2;
+$block-padding: $default-padding * 3;
+
+.block,
+.block-title {
+	border-radius: $border-radius $border-radius 0 0;
+}
+
+.block-content .block-content {
+	// Falls Templates ungünstig ineinander-geschachtelt werden
+	padding: 0;
+}
+
+.block {
+	margin-bottom: $default-margin;
+	background-color: $zusatzfarbe4;
+	border: $block-border-style;
+	background-clip: padding-box;
+	box-sizing: border-box;
+
+	.block-title {
+		background-image: linear-gradient(to bottom, $grundfarbe-hell 0, $grundfarbe4 100%);
+		border-bottom: $block-border-style;
+		padding: round($block-padding / 2) $block-padding;
+		font-size: 1.2rem;
+		color: $haupt-text-farbe;
+		font-weight: 500;
+
+		@include bp(max-width, $bp-tablet) {
+			font-size: 1rem;
+		}
+	}
+
+	.block-content {
+		background-color: $grundfarbe-hell;
+		padding: $block-padding;
+		font-size: 0.9rem;
+		line-height: 1.24rem;
+	}
+
+	.block-footer {
+		border-top: $block-border-style;
+		padding: round($block-padding / 2) $block-padding;
+		font-weight: 700;
+		background-color: $zusatzfarbe4;
+		border-width: $border-width 0 0 0;
+	}
+
+	.block-footer,
+	.block-title {
+		position: relative;
+
+		.egov-icon {
+			display: inline-block;
+			position: absolute;
+			top: round($block-padding / 2);
+			right: $block-padding;
+		}
+	}
+
+	.actions {
+		margin: 0;
+
+		a.button {
+			padding-top: 6%;
+		}
+	}
+}
+
+.block-info {
+	margin: $default-margin 0;
+	padding: $default-padding * 2;
+	border: $border-width solid $grundfarbe2;
+	background-color: $grundfarbe4;
+}
+
+.block-layered-nav {
+	.block-subtitle {
+		font-weight: bold;
+		margin-bottom: $default-margin / 2;
+	}
+
+	dt:after {
+		content: ':';
+	}
+
+	dd:not(:last-child) {
+		margin-bottom: $default-margin / 4;
+	}
+}
+
+.block-reorder {
+	li, p {
+		margin-bottom: $default-margin / 2;
+	}
+}
+
+.block-viewed {
+	li {
+		margin-bottom: $default-margin / 2;
+
+		> * {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.product-details {
+			width: 70%;
+
+			@include bp(max-width, $bp-tablet) {
+				width: 62%;
+			}
+		}
+		.product-name {
+			position: relative;
+			overflow: hidden;
+
+			&:after {
+				@include fading-left-right(20%, $grundfarbe-hell);
+			}
+		}
+
+		&:hover {
+			background-color: $grundfarbe4;
+		}
+	}
+
+	img {
+		@include product-image;
+	}
+}
+
+.block-poll {
+	.block-subtitle {
+		margin-bottom: $default-margin / 2;
+	}
+
+	li {
+		margin-left: $default-margin / 2;
+		margin-bottom: $default-margin / 2;
+
+		> * {
+			height: auto;
+		}
+	}
+}

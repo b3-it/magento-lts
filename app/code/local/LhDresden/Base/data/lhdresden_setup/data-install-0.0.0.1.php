@@ -20,4 +20,30 @@ $installer->setConfigData('design/theme/default', '');
 $installer->setConfigData('design/package/name', 'lhdd');
 
 
+/**
+ * CMS-Block für den Footer erzeugen
+ * @var array $cms_blocks
+ */
+$cms_blocks = array(
+    array(
+        'title'      => 'Footerblock Herausgeber',
+        'identifier' => 'footerblock_herausgeber',
+        'content'    => '<div class="links">
+    <div class="block-title"><strong>Herausgeber</strong></div>
+        <div class="block-content"><img class="footer-wappen" alt="Wappen vom Freistaat Sachsen" src="{{skin url=\'images/logo-sachsen-emblem.svg\'}}" />
+        <div class="herausgeber-info">
+            {{block type=\'imprint/field\' value=\'shop_name\'}}<br />
+            {{block type=\'imprint/field\' value=\'street\'}}<br />
+            {{block type=\'imprint/field\' value=\'zip\'}} {{block type=\'imprint/field\' value=\'city\'}}<br /> <br />
+            Telefon: {{block type=\'imprint/field\' value=\'telephone\'}}<br />
+            Telefax: {{block type=\'imprint/field\' value=\'fax\'}}<br />
+            E-Mail: {{block type=\'imprint/field\' value=\'email\'}}
+        </div>
+    </div>
+</div>',
+        'isactive'   => 1,
+        'stores'     => array(0)
+    )
+);
+
 $installer->endSetup();

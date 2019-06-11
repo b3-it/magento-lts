@@ -1,0 +1,47 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+h1, .h1, h2, .h2, h3, .h3,
+h4, .h4, h5, .h5, h6, .h6 {
+	text-rendering: optimizeSpeed;
+}
+
+// keine weiteren Definitionen, da dies der Shop-Name im Titel ist
+h1, .h1 {
+	font-family: RotisSansSerifW01-Bold, Arial, sans-serif;
+	color: $grundfarbe1;
+	font-size: $h1-size;
+	line-height: $h1-line;
+}
+h2, .h2 {
+	font-family: RotisSansSerifW01-Bold, Arial, sans-serif;
+	margin-bottom: $default-margin;
+	font-size: $h2-size;
+	line-height: $h2-line;
+	color: $grundfarbe1;
+	font-weight: 500;
+}
+h3, .h3 {
+	color: $grundfarbe1;
+	font-size: $h3-size;
+	line-height: $h3-line;
+	margin-top: $default-margin / 2;
+	margin-bottom: $default-margin;
+}
+
+h4, .h4 {
+	font-size: $h4-size;
+	line-height: $h4-line;
+}
+h5, .h5 {
+	font-size: $h5-size;
+	line-height: $h5-line;
+}
+h6, .h6 {
+	font-size: $h6-size;
+	line-height: $h6-line;
+}

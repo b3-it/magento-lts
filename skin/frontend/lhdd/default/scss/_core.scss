@@ -1,0 +1,86 @@
+﻿//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// Core Application
+// ==============================================
+
+// ----------------------------------------------
+// EGOV-Definitionen
+@import "egov/egov_base";
+@import "egov/font-awesome";
+@import "egov/fa-icons";
+@import "egov/bitv";
+@import "egov/checkiban";
+@import "egov/credit-cards";
+@import "egov/silver-track";
+
+// @import "egov/video";
+
+// ----------------------------------------------
+// Modules
+@import "module/loading-mask";
+@import "module/demo-notice";
+@import "module/required";
+@import "module/messages";
+@import "module/input";
+@import "module/links";
+@import "module/button";
+@import "module/buttons-set";
+@import "module/title-buttons";
+@import "module/block";
+@import "module/col-set";
+@import "module/toolbar";
+@import "module/col-main";
+@import "module/mini-products-list";
+@import "module/in-stock";
+@import "module/add-to-links";
+@import "module/add-to-cart";
+@import "module/data-table";
+@import "module/shopping-cart-table";
+@import "module/checkout-progress";
+@import "module/narrow-by-list";
+@import "module/search-autocomplete";
+@import "module/skip-links-link";
+@import "module/tags-list";
+@import "module/widget";
+
+// ----------------------------------------------
+// Layout
+@import "layout/page";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/breadcrumbs";
+@import "layout/marginal-blocks";
+@import "layout/navigation";
+@import "layout/input-form";
+@import "layout/to-top";
+
+// ----------------------------------------------
+// Pages
+@import "pages/cms";
+@import "pages/catalog-category-view";
+@import "pages/catalog-product-view";
+@import "pages/catalog-seo-sitemap-category";
+@import "pages/contacts-index-index";
+@import "pages/catalogsearch-advanced-index";
+@import "pages/checkout-cart-index";
+@import "pages/mp-checkout";
+@import "pages/egovs-checkout-multipage-login";
+@import "pages/egovs-checkout-multipage-newaddress";
+@import "pages/egovs-checkout-multipage-addresses";
+@import "pages/egovs-checkout-multipage-billingdetails";
+@import "pages/egovs-checkout-multipage-shippingmethod";
+@import "pages/egovs-checkout-multipage-overview";
+@import "pages/egovs-checkout-multipage-successview";
+@import "pages/customer-account";
+@import "pages/customer-account-login";
+@import "pages/customer-account-create";
+@import "pages/customer-account-index";
+@import "pages/customer-account-edit";
+@import "pages/customer-address-index";
+@import "pages/sales-order-view";

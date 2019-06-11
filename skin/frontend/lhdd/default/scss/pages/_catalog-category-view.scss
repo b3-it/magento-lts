@@ -1,0 +1,274 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.page-title {
+	@extend h2;
+	font-size: 1.9rem;
+	margin: 0;
+	position: relative;
+	top: -7px;
+}
+
+.category-image {
+	margin-top: $default-margin;
+
+	img {
+		max-height: $category-image-max-height;
+		max-width: $category-image-max-width;
+		height: auto;
+		width: auto;
+		margin: 0 auto;
+	}
+}
+
+.col3-layout .products-grid {
+	.actions,
+	.product-action {
+		.button {
+			padding: $default-padding 0;
+		}
+	}
+}
+
+.products-grid > li {
+	/* ----------------------------------------------- */
+	/* Config: Two columns + flexible gutter           */
+	/* Container: 480 - (2 * 20 trim) = 440            */
+	/* Math: (440 - (20 gutter)) / 2 items = 210       */
+	/* ----------------------------------------------- */
+	float: left;
+	width: percentage(210 / 440);
+	margin-right: percentage(20 / 440);
+
+	&:nth-child(odd) {
+		clear: left;
+	}
+
+	&:nth-child(even) {
+		margin-right: 0;
+	}
+}
+
+.products-grid {
+	.product-image {
+		@include loadingOverlay();
+		margin-bottom: 5px;
+		display: block;
+	}
+
+	.item {
+		text-align: center;
+
+		.actions {
+			position: absolute;
+			width: 88%;
+
+			@include bp(max-width, $bp-tablet) {
+				width: 100%;
+				margin: 0;
+				bottom: -10px;
+			}
+			.button {
+				width: 100%;
+			}
+
+			li {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.products-list > li {
+	margin-bottom: $default-margin;
+	border-top: $border-width solid $grundfarbe1;
+	padding-top: $default-padding * 4;
+	height: $category-list-item-height;
+	display: table;
+	width: 100%;
+
+	&:first-child {
+		margin-top: $default-margin;
+		border-top: 0;
+		padding-top: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	.product-list-left-col,
+	.product-shop {
+		display: table-cell;
+		vertical-align: top;
+		position: relative;
+		height: 100%;
+	}
+
+	.product-list-left-col {
+		width: $category-list-bild-block;
+		padding-right: $default-margin;
+	}
+
+	.product-image {
+		position: relative;
+		display: block;
+		height: $category-list-img-heigh;
+	}
+
+	img {
+		width: 100%;
+	}
+
+	.add-to-links {
+		margin: 0;
+	}
+
+	.product-shop {
+		width: $category-list-info-block;
+
+		.desc {
+			height: $category-list-desc-block;
+			overflow: hidden;
+			position: relative;
+
+			&:after {
+				@include fading-top-bottom(30%, $grundfarbe-hell);
+			}
+		}
+
+		.product-action,
+		.product-price {
+			display: inline-block;
+			position: absolute;
+			bottom: 0;
+			width: 50%;
+		}
+
+		.product-action {
+			right: 0;
+			text-align: right;
+		}
+	}
+}
+
+.item {
+	margin-bottom: $default-margin;
+
+	.actions,
+	.product-action {
+		.button {
+			width: $katalog-button;
+			font-weight: normal;
+			margin: 0;
+		}
+
+		.add-to-links {
+			margin-bottom: 0;
+		}
+	}
+
+	.price-from, .price-to {
+		display: block;
+	}
+
+	.price-box .price,
+	.product-price .price {
+		font-size: $category-price-size;
+	}
+
+	.product-name {
+		font-size: $produkt-titel-schrift;
+		height: $produkt-titel-hoehe;
+		overflow: hidden;
+		line-height: normal;
+
+		a {
+			@include word-wrap;
+			line-height: $produkt-titel-zeile;
+			display: block;
+			position: relative;
+
+			&:after {
+				@include fading-left-right(20%, $grundfarbe-hell);
+			}
+		}
+	}
+
+	&:hover {
+		background-color: $grundfarbe4;
+
+		.product-name a:after {
+			@include fading-left-right(20%, $grundfarbe4);
+		}
+
+		.product-shop .desc:after {
+			@include fading-top-bottom(30%, $grundfarbe4);
+		}
+	}
+}
+
+.widget-products,
+.category-products {
+	position: relative;
+	// Korrektur, da sonst die Liste zu weit unten beginnt
+	top: $content-offset;
+
+	ul {
+		.item {
+			position: relative;
+		}
+
+		&:after {
+			@include clearfix;
+		}
+	}
+
+	.product-image img {
+		@include product-image;
+	}
+}
+
+// ---------------------------------------------
+@include bp(min-width, $bp-small + 1) {
+	/* Config: Three columns + flexible gutter   */
+	/* Container: 600 - (2 * 30 trim wide) = 540 */
+	$column-count: 3;
+	$column-gutters: 2;
+	$container: 600 - (2 * $default-margin);
+	/* Math: (540 - (2 * 30 gutter)) / 3 items = 160  */
+	$column-width: ($container - ($column-gutters * $default-margin)) / $column-count;
+
+	.products-grid {
+		/* Undo two-column config */
+		> li:nth-child(odd) {
+			clear: none;
+		}
+
+		> li:nth-child(even) {
+			margin-right: percentage($default-margin / $container);
+		}
+		/* Set three-column config */
+		> li {
+			width: percentage($column-width / $container);
+			margin-right: percentage($default-margin / $container);
+		}
+
+		> li:nth-child(#{$column-count}n+1) {
+			clear: left;
+		}
+
+		> li:nth-child(#{$column-count}n) {
+			margin-right: 0;
+		}
+	}
+}
+@include bp(min-width, $desktop-page-width) {
+	@include product-grid(4, $desktop-page-width);
+	@include product-grid(5, $desktop-page-width);
+	@include product-grid(6, $desktop-page-width);
+}

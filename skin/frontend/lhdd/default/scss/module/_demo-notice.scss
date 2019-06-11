@@ -1,0 +1,12 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.demo-notice {
+    position: relative;
+    top: 0 - ( $default-margin / 2 );
+    background-color: $demo-notice-back-color;
+}
