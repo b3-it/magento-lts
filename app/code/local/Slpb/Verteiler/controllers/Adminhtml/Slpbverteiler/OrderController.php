@@ -128,7 +128,7 @@ class Slpb_Verteiler_Adminhtml_Slpbverteiler_OrderController extends Mage_Adminh
     	$action = strtolower($this->getRequest()->getActionName());
     	switch ($action) {
     		default:
-    			return Mage::getSingleton('admin/session')->isAllowed('slpb_verteiler');
+    			return Mage::getSingleton('admin/session')->isAllowed('sales/slpb_verteiler_order');
     			break;
     	}
     }
