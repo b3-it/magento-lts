@@ -18,7 +18,7 @@ class Gka_UserStore_Model_Entity_Attribute_Source_Allowedstores
         if (is_null($this->_options)) {
             $this->_options = array();
             foreach (Mage::app()->getStores() as $store) {
-            	//if( $this->_getCustomer()->isInStore($store))
+            	//if(($this->_getCustomer()->isInStore($store)) || empty($this->_getCustomer()->getId()))
             	{
 	                /* @var $group Mage_Customer_Model_Group */
 	                $this->_options[] = array(

@@ -19,16 +19,17 @@ class Egovs_Isolation_Model_Observer_User extends Varien_Object
     	{
     		$stores = $user->getStoreGroups();
     		Mage::getModel('isolation/relation')->removeAllStoreRelations($user->getId());
-    		if(is_array($stores))
-    		{
-    			foreach($stores as $store)
-    			{
-	    			$store_relation = Mage::getModel('isolation/relation');
-	    			$store_relation->setUserId($user->getId());
-	    			$store_relation->setStoreGroupId($store);
-	    			$store_relation->save();
-    			}
-    		}
+
+            if(!Mage::helper('isolation')->getUserIsAdmin()) {
+                if (is_array($stores)) {
+                    foreach ($stores as $store) {
+                        $store_relation = Mage::getModel('isolation/relation');
+                        $store_relation->setUserId($user->getId());
+                        $store_relation->setStoreGroupId($store);
+                        $store_relation->save();
+                    }
+                }
+            }
     	}
     }
     
