@@ -19,17 +19,16 @@ $block-padding: $default-padding * 3;
 
 .block {
 	margin-bottom: $default-margin;
-	background-color: $zusatzfarbe4;
+	background-color: $zusatzfarbe2;
 	border: $block-border-style;
 	background-clip: padding-box;
 	box-sizing: border-box;
 
 	.block-title {
-		background-image: linear-gradient(to bottom, $grundfarbe-hell 0, $grundfarbe4 100%);
+		background-color: $zusatzfarbe1;
 		border-bottom: $block-border-style;
 		padding: round($block-padding / 2) $block-padding;
-		font-size: 1.2rem;
-		color: $haupt-text-farbe;
+		color: $zusatzfarbe3;
 		font-weight: 500;
 
 		@include bp(max-width, $bp-tablet) {
@@ -38,7 +37,8 @@ $block-padding: $default-padding * 3;
 	}
 
 	.block-content {
-		background-color: $grundfarbe-hell;
+		background-color: $zusatzfarbe2;
+		color: $zusatzfarbe3;
 		padding: $block-padding;
 		font-size: 0.9rem;
 		line-height: 1.24rem;
@@ -48,7 +48,8 @@ $block-padding: $default-padding * 3;
 		border-top: $block-border-style;
 		padding: round($block-padding / 2) $block-padding;
 		font-weight: 700;
-		background-color: $zusatzfarbe4;
+		background-color: $zusatzfarbe1;
+		color: $zusatzfarbe3;
 		border-width: $border-width 0 0 0;
 	}
 

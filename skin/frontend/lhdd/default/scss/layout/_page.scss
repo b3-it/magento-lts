@@ -49,6 +49,8 @@ body {
 }
 
 .main-container {
+	background-color: $grundfarbe-hell;
+
 	.col-left, .col-main, .col-right {
 	    display: inline-block;
 	    vertical-align: top;

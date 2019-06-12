@@ -30,7 +30,7 @@ $cms_blocks = array(
         'identifier' => 'footerblock_herausgeber',
         'content'    => '<div class="links">
     <div class="block-title"><strong>Herausgeber</strong></div>
-        <div class="block-content"><img class="footer-wappen" alt="Wappen vom Freistaat Sachsen" src="{{skin url=\'images/logo-sachsen-emblem.svg\'}}" />
+        <div class="block-content"><img class="footer-wappen" alt="Wappen vom Freistaat Sachsen" src="{{skin url=\'images/logo_dresden_stadtverwaltung_footer.png\'}}" />
         <div class="herausgeber-info">
             {{block type=\'imprint/field\' value=\'shop_name\'}}<br />
             {{block type=\'imprint/field\' value=\'street\'}}<br />

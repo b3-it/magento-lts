@@ -10,10 +10,8 @@
 	white-space: normal;
 	max-width: 100%;
 	color: $grundfarbe-hell;
-	background-color: $grundfarbe1;
-	background-image: linear-gradient(to bottom, $button-gradient 0, $grundfarbe1 100%);
+	background-color: $zusatzfarbe1;
 	font-weight: 700;
-	text-shadow: 0 1px 0 $button-shadow;
 	text-align: center;
 	vertical-align: middle;
 	touch-action: manipulation;
