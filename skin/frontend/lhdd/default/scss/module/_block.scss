@@ -37,8 +37,8 @@ $block-padding: $default-padding * 3;
 	}
 
 	.block-content {
-		background-color: $zusatzfarbe2;
-		color: $zusatzfarbe3;
+		background-color: $zusatzfarbe3;
+		color: $haupt-text-farbe;
 		padding: $block-padding;
 		font-size: 0.9rem;
 		line-height: 1.24rem;

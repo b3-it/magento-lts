@@ -78,6 +78,8 @@
     .sort-by-switcher--asc, .sort-by-switcher--desc {
     	@extend .egov-fa-base;
         @include toolbar-button;
+        padding-top: 2px;
+        padding-left: 3px;
 
 	    &:active, &:hover, &:focus {
 	    	text-decoration: none;

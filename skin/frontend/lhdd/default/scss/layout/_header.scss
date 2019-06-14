@@ -141,21 +141,21 @@ header {
 	}
 }
 .welcome-header {
+	@extend .egov-home;
+
 	display: block;
 	width: 100%;
 	position: absolute;
 	bottom: $welcome-bottom;
+	color: $haupt-text-farbe;
 
 	> * {
 	    display: inline-block;
-	    color: $haupt-text-farbe;
 	}
 
 	h1 {
 	    font-size: $h1-size;
-	    padding-left: $welcome-left-padding;
-	    background-image : $home-icon;
-	    background-repeat: no-repeat;
+		padding-left: $welcome-left-padding;
 	}
 
 	.welcome-msg {
