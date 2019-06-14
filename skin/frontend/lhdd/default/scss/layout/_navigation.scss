@@ -14,10 +14,10 @@
 
 	strong, a {
 	    display: block;
-	    color: $haupt-text-farbe;
+	    color: $grundfarbe-hell;
 
 	    &:hover, &:active, &:focus {
-	        color: $grundfarbe1;
+	        color: $grundfarbe-hell;
 	    }
 	}
 
@@ -32,34 +32,24 @@
 	}
 	
 	> li {
-	    background-image: linear-gradient(to bottom, $grundfarbe-hell 0, $gradient1 100%);
-	    background-size: 100% 45px;
-	    background-repeat: no-repeat;
-	    border: $border-width solid $grundfarbe3;
-	    border-radius: $border-radius $border-radius 0 0;
-
 	    > ul {
-	    	border-bottom: $border-width solid $grundfarbe3;
 	    }
 	}
 
 	li {
-		border-bottom: $border-width solid $grundfarbe3;
-		background-color: $grundfarbe-hell;
+		background-color: $grundfarbe1;
 		
 		&.active > a {
 			background-color: $grundfarbe1;
-			color: $grundfarbe4;
+			color: $grundfarbe-hell;
 			font-weight: bold;
 			background-image: $navitem-active;
 		}
 
 		&:first-child {
-		    border-top: $border-width solid $grundfarbe3;
 		}
 		
 		&:last-child {
-            border-bottom: none;
         }
 	}
 
@@ -70,9 +60,12 @@
 	    }
 	}
 
-    li.level1 {       
+    li.level1 {
+		background-color: $zusatzfarbe2;
+
         li {
         	padding-left: $default-padding * 3;
+			background-color: $zusatzfarbe2;
         }
     }
 
@@ -113,6 +106,6 @@
     
     li.menu-active > a,
     li.sub-menu-active > a {
-        color: $grundfarbe1;
+        color: $grundfarbe-hell;
     }
 }
