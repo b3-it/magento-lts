@@ -3,6 +3,9 @@
 
 <layout version="0.1.0">
     <default>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.context.helper.popup.js</file></action>
+        </reference>
         <reference name="content" >              
           <block type="contexthelp/contexthelp" name="contexthelp" template="egovs/contexthelp/contexthelp.phtml"/>
         </reference>
