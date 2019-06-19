@@ -6,8 +6,6 @@
 //
 
 header {
-	box-shadow: 0 1px 4px 0 $default-shadow;
-	margin-bottom: $default-margin;
 }
 
 .page-header, .page-header-container {
@@ -15,28 +13,15 @@ header {
 	position: relative;
 }
 
-.page-header {
+.page-header-container {
 	background-color: $grundfarbe1;
-	background-repeat: no-repeat;
-	background-size: auto 83px, 100% $header-background-position-top, auto;
-	background-position: 49.75% -3px,
-	                     $header-background-position-start $header-background-position-start,
-	                     $header-background-position-start $header-background-position-top;
-	background-image: $header-background-image,
-	                  linear-gradient($grundfarbe1, $grundfarbe1),
-	                  linear-gradient(to top,$grundfarbe4 $header-background-position-start, $grundfarbe4 5px, $gradient1 75px, $grundfarbe-hell 100%);
-	color: $grundfarbe-hell;
+}
 
+.page-header {
 	@include bp(max-width, $desktop-page-width) {
-		background-position: 47.5% -3px,
-		                     $header-background-position-start $header-background-position-start,
-		                     $header-background-position-start $header-background-position-top;
 	}
 
 	@include bp(max-width, $bp-tablet) {
-		background-position: 46% -3px,
-		                     $header-background-position-start $header-background-position-start,
-		                     $header-background-position-start $header-background-position-top;
 	}
 }
 
@@ -44,9 +29,12 @@ header {
 	text-decoration: none;
 	outline: 0;
 	padding: $logo-padding-vrt $logo-padding-hrz;
-	height: auto;
 	display: inline-block;
+	float: left;
 	margin-top: $logo-margin-top;
+	height: $logo-height;
+	width: $logo-width;
+	border: 0;
 
 	.large {
 	    display: inline-block;
@@ -68,18 +56,34 @@ header {
 	}
 }
 
-.skip-links {
-	@include button-border(left-right, $border-width, null, $grundfarbe1, 20%);
+.skip-link-block, .welcome-header {
 	display: inline-block;
-	max-width: $header-buttons-block-width;
+	width: calc( 100% - #{$logo-width} );
 	float: right;
+	position: relative;
+}
+
+.skip-links {
 	height: $header-link-height;
-	margin-top: $header-link-margin-top;
+	max-width: 75%;
+	display: inline-block;
+	float: right;
 
 	a {
 	    color: $grundfarbe-hell;
 	    text-align: center;
 	    border-width: 0;
+
+		-moz-transition: background-color .2s ease;
+		-o-transition: background-color .2s ease;
+		-webkit-transition: background-color .2s ease;
+		transition: background-color .2s ease;
+
+		&:hover, &.skip-active {
+			background-color: $zusatzfarbe2;
+			color: $grundfarbe4;
+			text-decoration: none;
+		}
 	}
 
 	> a, > div {
@@ -111,7 +115,6 @@ header {
 	}
 
 	> .skip-link {
-	    @include button-border(right-left, $border-width, null, $grundfarbe1, 20%);
 	    float: left;
 	}
 
@@ -141,16 +144,17 @@ header {
 	}
 }
 .welcome-header {
-	@extend .egov-home;
+	padding-top: 13px;
+	padding-bottom: 13px;
+	padding-right: 10px;
 
-	display: block;
-	width: 100%;
-	position: absolute;
-	bottom: $welcome-bottom;
-	color: $haupt-text-farbe;
+	color: $zusatzfarbe3;
+	background-color: $zusatzfarbe4;
+	height: $welcome-height;
 
 	> * {
 	    display: inline-block;
+		color: $zusatzfarbe3;
 	}
 
 	h1 {
@@ -170,7 +174,7 @@ header {
 	.links a {
 		text-align: left;
     	display: block;
-    	color: $haupt-text-farbe;
+    	color: $zusatzfarbe3;
     	padding: $default-padding $default-padding * 3 $default-padding $default-padding * 4;
 
 		background-position: 1px 45%;
@@ -201,16 +205,18 @@ header {
 		width: 100%;
 		position: absolute;
 		top: 0;
+		right: 0;
 		height: $minicard-closed;
 		padding-right: $minicard-closed;
 		line-height: $minicard-closed;
+		background-color: $zusatzfarbe2;
 	}
 
 	.close {
 		@include button-close;
 
 		top: 0;
-		right: 5px;
+		right: 0;
 	}
 }
 
@@ -329,12 +335,11 @@ header {
 	    background-repeat  : no-repeat;
 	    background-position: center center;
 
+		color: $grundfarbe4;
 	    height: $default-input-height;
 	    width: $default-input-height;
-	    box-shadow: inset 0 0 2px 0 $grundfarbe4;
-	    border: $border-width solid $element-schatten;
 	    position: absolute;
-	    top: 29%;
+	    top: 17%;
 	}
 }
 
@@ -347,12 +352,14 @@ header {
 .skip-content.skip-active {
     position: absolute;
 	display: block;
-    background-color: $grundfarbe4;
+    background-color: $zusatzfarbe2;
+	color: $zusatzfarbe3;
 }
 
 #header-cart.skip-active {
     width: $minicard-width;
     right: $minicard-right;
+	background-color: $grundfarbe-hell;
 
 	@include bp(max-width, $bp-tablet) {
 		width: 395px;

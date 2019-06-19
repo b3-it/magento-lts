@@ -24,7 +24,7 @@
 		position: relative;
 
 		&:after {
-			@include fading-left-right(20%, $grundfarbe4);
+			@include fading-left-right(20%, transparent);
 		}
 	}
 

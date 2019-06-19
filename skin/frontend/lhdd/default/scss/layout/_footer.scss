@@ -6,11 +6,14 @@
 //
 
 .footer-container {
-	background-color: $zusatzfarbe4;
+	position: relative;
+	top: $content-offset;
 }
 
 .footer {
 	padding: $default-margin * 2 0;
+	background-color: $zusatzfarbe2;
+	color: $zusatzfarbe3;
 
 	.links {
 		display: inline-block;
@@ -24,7 +27,7 @@
 		}
 
 		.block-title {
-		    color: $grundfarbe1;
+		    color: $grundfarbe4;
 		    margin: $default-margin / 2 0;
 		}
 		ul {
@@ -37,7 +40,7 @@
 		a {
 		    display: block;
 		    padding-left: 15px;
-		    color: $haupt-text-farbe;
+		    color: $zusatzfarbe3;
 		    background-position: 1px 50%;
 		    background-repeat: no-repeat;
 		    background-image: $navitem-icon;
