@@ -289,34 +289,21 @@
 <IfModule mod_authz_host.c>
 ############################################
 ## By default allow all access
-    ## http://blog.plee.me/2013/07/access-control-via-hybrid-htaccess-for-both-apache-httpd-2-2-and-2-4/
-    <IfModule !mod_authz_core.c>
-    		#Apache 2.2
-    Order allow,deny
-    Allow from all
-    </IfModule>
-
     <IfModule mod_authz_core.c>
         #Apache 2.3+
-    		Require all granted
+    	Require all granted
     </IfModule>
-
 </IfModule>
 
 ###########################################
 ## Deny access to release notes to prevent disclosure of the installed Magento version
 
-    <Files RELEASE_NOTES.txt>
-    <IfModule !mod_authz_core.c>
-	      #Apache 2.2
-        order allow,deny
-        deny from all
-    </IfModule>
+<Files RELEASE_NOTES.txt>
     <IfModule mod_authz_core.c>
 	      #Apache 2.3+
-			  Require all denied
-		</IfModule>
-    </Files>
+		  Require all denied
+	</IfModule>
+</Files>
 
 ############################################
 ## If running in cluster environment, uncomment this
@@ -326,7 +313,7 @@
 
 ###########################################
 ## Deny access to cron.php
-    <Files cron.php>
+<Files cron.php>
 
 ############################################
 ## uncomment next lines to enable cron access with base HTTP authorization
@@ -343,17 +330,9 @@
         #Require valid-user
 
 ############################################
-
-    <IfModule !mod_authz_core.c>
-	      #Apache 2.2
-	      order allow,deny
-	      deny from all
-	      Allow from localhost
-    </IfModule>
     <IfModule mod_authz_core.c>
-	      #Apache 2.3+
-			  Require all denied
-			  Require local
-		</IfModule>
-
-    </Files>
+        #Apache 2.3+
+		Require all denied
+		Require local
+	</IfModule>
+</Files>

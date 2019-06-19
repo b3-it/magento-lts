@@ -76,40 +76,60 @@
     }
 }
 
-.remember-me-box {
-    a.hide {
+.account-login .registered-users form {
+    .remember-me-box {
+        position: relative;
+
+        input {
+            width: initial;
+            max-width: initial;
+        }
+        .input-box {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        > label, > a {
+            position: relative;
+            top: -2px;
+        }
+
+        a.hide {
+            display: none;
+        }
+        .link-tip {
+            font-size: $f-size-s;
+            padding-left: $gap;
+        }
+    }
+
+    .remember-me-popup {
         display: none;
-    }
-    .link-tip {
-        font-size: $f-size-s;
-        padding-left: $gap;
-    }
-}
-
-.remember-me-popup {
-    display: none;
-    border: 1px solid $c-module-border;
-    padding: $box-spacing;
-    position: relative;
-
-    &.show {
-        display: block;
-    }
-
-    p {
-        font-family: $f-stack-default;
-    }
-
-    .remember-me-popup-close {
-        position: absolute;
-        top: 0;
-        right: 0;
+        border: 1px solid $c-module-border;
         padding: $box-spacing;
-        font-size: $f-size-xs;
-    }
+        position: relative;
 
-    .remember-me-popup-close-button {
-        display: none;
+        &.show {
+            display: block;
+            z-index: 200;
+            background-color: $global-wrapper-color;
+            border: $global-box-border solid $global-border-color;
+        }
+
+        p {
+            font-family: $f-stack-default;
+        }
+
+        .remember-me-popup-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: $box-spacing;
+            font-size: $f-size-xs;
+        }
+
+        .remember-me-popup-close-button {
+            display: none;
+        }
     }
 }
 

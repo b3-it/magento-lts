@@ -1,0 +1,81 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.footer-container {
+	background-color: $zusatzfarbe4;
+}
+
+.footer {
+	padding: $default-margin * 2 0;
+
+	.links {
+		display: inline-block;
+		width: 24.5%;
+		padding: 0 $default-padding * 2;
+		vertical-align: top;
+
+		@include bp(max-width, $desktop-page-width) {
+			width: 49.5%;
+			margin-bottom: $default-margin;
+		}
+
+		.block-title {
+		    color: $grundfarbe1;
+		    margin: $default-margin / 2 0;
+		}
+		ul {
+			list-style: none;
+		}
+		li {
+		    padding: 2px 0;
+		    border-bottom: $border-width dotted $zusatzfarbe2;
+		}
+		a {
+		    display: block;
+		    padding-left: 15px;
+		    color: $haupt-text-farbe;
+		    background-position: 1px 50%;
+		    background-repeat: no-repeat;
+		    background-image: $navitem-icon;
+		}
+	}
+}
+
+.footer-wappen, .herausgeber-info {
+	display: inline-block;
+	vertical-align: top;
+}
+.footer-wappen {
+	max-width: 75px;
+}
+.herausgeber-info {
+	width: 70%;
+	position: relative;
+	top: -4px;
+	padding-left: $default-padding * 2;
+	font-size: 0.8rem;
+	line-height: 1.3rem;
+}
+
+.footer-links.half-width {
+	padding: 0 12.5%;
+
+	.links {
+	    width: 33%;
+	}
+
+	@include bp(max-width, $bp-mobil) {
+	    padding: 0;
+	}
+}
+
+.copyright {
+	display: block;
+	float: right;
+	font-size: 0.7rem;
+	padding-top: $default-padding * 2 0;
+}

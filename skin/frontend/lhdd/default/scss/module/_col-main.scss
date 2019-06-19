@@ -1,0 +1,26 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// Gliederungs-Darstellung für Funktions-Seiten (Suche, Kontakt, etc.)
+
+.col-main {
+	.page-title {
+		top: 0;
+		margin-top: 0;
+	}
+
+	h1 {
+		font-size: $h2-size;
+		line-height: $h2-line;
+	}
+
+	h2.legend {
+		margin-top: $default-margin;
+		font-size: $h3-size;
+		line-height: normal;
+	}
+}

@@ -24,7 +24,10 @@ if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDI
     $_taxPrefix = 'Excl.';
 }
 $_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
+$_productType = $this->getProduct()->getTypeId();
 ?>
+
+<?php if ($_productType != 'eventbundle'): ?>
 
 <?php if (!$this->getExcludeContainer()): ?>
     <span class="tax-details">
@@ -67,7 +70,9 @@ $_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
             <?php echo $this->__($wscText) ?>
         <?php endif; ?>
     <?php endif; ?>
-<?php endif ?>
+<?php endif; ?>
 <?php if ($this->getDisplayProductWeight()): ?>
         <br/> (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)
-<?php endif ?>
+<?php endif; ?>
+
+<?php endif; // End if is not EventBundle ?>

@@ -1,0 +1,201 @@
+﻿//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egov-fa-base {
+	font-family: 'FontAwesome' !important;
+	@extend .fa;
+}
+
+// Loading-Spinner für Seiten-Lade-DIV
+.egov-spinner {
+    @extend .egov-fa-base;
+    @extend .fa-spinner;
+    @extend .fa-spin;
+}
+
+// Icon für Bearbeiten (Stift)
+.egov-pencile {
+    @extend .egov-fa-base;
+    @extend .fa-pencil;
+    font-size: $text-size + 4 !important;
+}
+
+// Icon für Löschen (Mülltonne)
+.egov-delete {
+    @extend .egov-fa-base;
+    @extend .fa-trash-o;
+    font-size: $text-size + 4;
+}
+
+// Icon 2 für Löschen (Kreuz)
+.egov-delete2 {
+	@extend .egov-fa-base;
+	@extend .fa-times;
+	font-size: $text-size + 4;
+}
+
+// Icon für Suchen (Lupe)
+.egov-search {
+	@extend .egov-fa-base;
+	@extend .fa-search;
+	font-size: $text-size + 6 !important;
+}
+
+// Icon für Passwort (Schloss)
+.egov-password {
+    @extend .egov-fa-base;
+    @extend .fa-lock;
+    font-size: $text-size + 4 !important;
+}
+
+// Icon für eMail (Briefumschlag)
+.egov-email {
+    @extend .egov-fa-base;
+    @extend .fa-envelope;
+    font-size: $text-size + 4 !important;
+}
+
+// Icon für Telefon (Telefon)
+.egov-phone {
+    @extend .egov-fa-base;
+    @extend .fa-phone;
+}
+
+// Icon für Mobil (Handy)
+.egov-mobile {
+    @extend .egov-fa-base;
+    @extend .fa-mobile;
+}
+
+// Icon für Fax (Fax)
+.egov-fax {
+    @extend .egov-fa-base;
+    @extend .fa-fax;
+}
+
+// Icon für Kachel-Asicht der Produkte (Gitter)
+.egov-grid {
+    @extend .egov-fa-base;
+    @extend .fa-th-large;
+    font-size: $text-size + 8;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Listen-Ansicht der Produkte (Liste)
+.egov-list {
+    @extend .egov-fa-base;
+    @extend .fa-bars;
+    font-size: $text-size + 10;
+    margin: $fa-icon-margin;
+}
+
+// Navbar-Icon für Startseite (Häuschen)
+.egov-home {
+    @extend .egov-fa-base;
+    @extend .fa-home;
+    font-size: $text-size + 6;
+    margin: $fa-icon-margin;
+}
+
+// Sprachumschalter (Globus)
+.egov-lang {
+	@extend .egov-fa-base;
+	@extend .fa-globe;
+	font-size: $text-size + 6;
+}
+
+// Navbar-Icon für Benutzermenü (Männchen)
+.egov-user {
+    @extend .egov-fa-base;
+    @extend .fa-user;
+    font-size: $text-size + 6;
+    margin: $fa-icon-margin;
+}
+
+// Navbar-Icon für Warenkorb (Einkaufswagen)
+.egov-cart {
+    @extend .egov-fa-base;
+    @extend .fa-shopping-cart;
+    font-size: $text-size + 6;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Wunschzettel (Stern)
+.egov-star {
+    @extend .egov-fa-base;
+    @extend .fa-star;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Katalog-Sortierung absteigend (Pfeil runter)
+.egov-arrow-up {
+    @extend .egov-fa-base;
+    @extend .fa-arrow-up;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Katalog-Sortierung aufsteigend (Pfeil hoch)
+.egov-arrow-down {
+    @extend .egov-fa-base;
+    @extend .fa-arrow-down;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Nachbestellen in der Bestellübersicht (runder Pfeil)
+.egov-reorder {
+    @extend .egov-fa-base;
+    @extend .fa-repeat;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Drucken in der Bestellansicht des Benutzerkontos (Drucker)
+.egov-print {
+    @extend .egov-fa-base;
+    @extend .fa-print;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Details in der Bestellübersicht (Auge)
+.egov-view {
+    @extend .egov-fa-base;
+    @extend .fa-eye;
+    font-size: $text-size + 2;
+    margin: $fa-icon-margin;
+}
+
+// Icon für Alles-Anzeigen in der Bestellübersicht (2 Zettel)
+.egov-view-all {
+    @extend .egov-fa-base;
+    @extend .fa-files-o;
+    font-size: $text-size + 2;
+    margin: $fa-icon-margin;
+}
+
+// Icons für Produkte auf Vergleichsliste (2 Icons)
+.egov-compare {
+    @extend .egov-fa-base;
+    @extend .fa-balance-scale;
+    font-size: $text-size;
+    margin: $fa-icon-margin;
+}
+
+// Icons für RSS-Feet
+.egov-rss {
+    @extend .egov-fa-base;
+    @extend .fa-rss-square;
+    font-size: $text-size + 16;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 12px;
+}

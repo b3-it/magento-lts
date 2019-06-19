@@ -1,0 +1,365 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+header {
+	box-shadow: 0 1px 4px 0 $default-shadow;
+	margin-bottom: $default-margin;
+}
+
+.page-header, .page-header-container {
+	min-height: $header-min-height;
+	position: relative;
+}
+
+.page-header {
+	background-color: $grundfarbe1;
+	background-repeat: no-repeat;
+	background-size: auto 83px, 100% $header-background-position-top, auto;
+	background-position: 49.75% -3px,
+	                     $header-background-position-start $header-background-position-start,
+	                     $header-background-position-start $header-background-position-top;
+	background-image: $header-background-image,
+	                  linear-gradient($grundfarbe1, $grundfarbe1),
+	                  linear-gradient(to top,$grundfarbe4 $header-background-position-start, $grundfarbe4 5px, $gradient1 75px, $grundfarbe-hell 100%);
+	color: $grundfarbe-hell;
+
+	@include bp(max-width, $desktop-page-width) {
+		background-position: 47.5% -3px,
+		                     $header-background-position-start $header-background-position-start,
+		                     $header-background-position-start $header-background-position-top;
+	}
+
+	@include bp(max-width, $bp-tablet) {
+		background-position: 46% -3px,
+		                     $header-background-position-start $header-background-position-start,
+		                     $header-background-position-start $header-background-position-top;
+	}
+}
+
+.logo {
+	text-decoration: none;
+	outline: 0;
+	padding: $logo-padding-vrt $logo-padding-hrz;
+	height: auto;
+	display: inline-block;
+	margin-top: $logo-margin-top;
+
+	.large {
+	    display: inline-block;
+
+		@include bp(max-width, $bp-tablet) {
+			width: 70%;
+		}
+
+		@include bp(max-width, $bp-mobil){
+    	    display: none;
+	    }
+	}
+	.small {
+	    display: none;
+
+	    @include bp(max-width, $bp-mobil){
+	        display: inline-block;
+	    }
+	}
+}
+
+.skip-links {
+	@include button-border(left-right, $border-width, null, $grundfarbe1, 20%);
+	display: inline-block;
+	max-width: $header-buttons-block-width;
+	float: right;
+	height: $header-link-height;
+	margin-top: $header-link-margin-top;
+
+	a {
+	    color: $grundfarbe-hell;
+	    text-align: center;
+	    border-width: 0;
+	}
+
+	> a, > div {
+		display: inline-block;
+		line-height: $header-link-height;
+		position: relative;
+	}
+	.skip-search {
+		padding: 0 $default-margin;
+	}
+	.skip-cart, .skip-account,
+	.skip-switch-language {
+	    display: inline-block;
+	}
+	.skip-switch-language:not(.skip-switch-language-fa) {
+		padding: $default-margin - 1px $default-margin;
+		display: block;
+	}
+
+	.skip-link > span {
+	    font-weight: 400;
+		text-shadow: 0 1px 0 $default-shadow;
+
+		&.label {
+			@include bp(max-width, $bp-tablet) {
+				display: none;
+			}
+		}
+	}
+
+	> .skip-link {
+	    @include button-border(right-left, $border-width, null, $grundfarbe1, 20%);
+	    float: left;
+	}
+
+	.no-count .count {
+	    display: none;
+	}
+
+	.count {
+		position: absolute;
+		top: $minicard-counter-top;
+		right: $minicard-counter-right;
+		padding: $minicard-padding;
+		width: $minicard-counter;
+		height: $minicard-counter;
+		line-height: $minicard-line;
+		text-align: center;
+		color: $grundfarbe1;
+		background-color: $zusatzfarbe3;
+	}
+
+	.skip-nav {
+	    display: none;
+
+	    @include bp(max-width, $bp-mobil){
+	        display: inline-block;
+	    }
+	}
+}
+.welcome-header {
+	@extend .egov-home;
+
+	display: block;
+	width: 100%;
+	position: absolute;
+	bottom: $welcome-bottom;
+	color: $haupt-text-farbe;
+
+	> * {
+	    display: inline-block;
+	}
+
+	h1 {
+	    font-size: $h1-size;
+		padding-left: $welcome-left-padding;
+	}
+
+	.welcome-msg {
+	    float: right;
+	}
+}
+
+#header-account, #header-cart {
+	@include header-dropbown-box(dotted);
+}
+#header-account {
+	.links a {
+		text-align: left;
+    	display: block;
+    	color: $haupt-text-farbe;
+    	padding: $default-padding $default-padding * 3 $default-padding $default-padding * 4;
+
+		background-position: 1px 45%;
+		background-repeat  : no-repeat;
+		background-image   : $navitem-icon;
+	}
+}
+#header-cart {
+	margin-bottom: 0;
+
+	li {
+		border-top-color: transparent;
+		border-bottom-color: $grundfarbe1;
+		border-style: solid;
+
+		&:first-child {
+			border-top-color: $grundfarbe1;
+		}
+		&:last-child {
+			border-bottom-color: $grundfarbe1;
+		}
+	}
+
+	.block-subtitle {
+		font-weight: bold;
+		text-align: center;
+		vertical-align: middle;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		height: $minicard-closed;
+		padding-right: $minicard-closed;
+		line-height: $minicard-closed;
+	}
+
+	.close {
+		@include button-close;
+
+		top: 0;
+		right: 5px;
+	}
+}
+
+#header-select-language {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+	background-color: $loding-shaddow;
+
+	.overlay-title, .country-name {
+		color: $haupt-text-farbe;
+	}
+
+	.overlay-wrapper {
+		position: relative;
+		width: $lng-switch-width;
+		margin: $lng-switch-margin auto;
+		background-color: $grundfarbe-hell;
+		padding: $default-padding * 3;
+		min-height: $lng-switch-minheight;
+
+		@include bp(max-width, $bp-tablet) {
+			width: 80%;
+		}
+	}
+	.overlay-close {
+		@include button-close;
+
+		top: $default-margin;
+		right: $default-margin;
+		background-color: transparent;
+	}
+	.overlay-title {
+		margin: $default-margin * 0.75 0 0 $default-margin * 2.25;
+		font-size: $lng-switch-title;
+	}
+	.overlay-content {
+		padding: $default-padding * 4 $default-padding * 9;
+	}
+
+	.country-current:not(:hover) {
+		background-color: $zusatzfarbe4;
+	}
+
+	.link-inline {
+		display: inline-block;
+		width: $lng-switch-button;
+
+		@include bp(max-width, $bp-mobil) {
+			display: block;
+			width: 100%;
+		}
+
+		&:nth-child(odd) {
+			margin-right: $lng-switch-button-gap;
+		}
+	}
+	.link-block {
+		display: block;
+		width: 100%;
+	}
+
+	.county-link {
+		padding: $default-padding $default-padding * 3;
+		margin-bottom: $default-margin;
+		border-color: $zusatzfarbe2;
+		border-radius: round( $border-radius / 2 );
+		white-space: nowrap;
+
+		@include bp(max-width, $bp-tablet) {
+			padding: $default-padding;
+		}
+
+		&:hover, &:active {
+			text-decoration: none;
+		}
+	}
+	.country-dummy-image, .country-image {
+		display: inline-block;
+		height: $lng-switch-image;
+	}
+	.country-dummy-image {
+		width: 1px;
+		margin: $default-margin / 4 0 0 $default-margin / 2;
+	}
+	.country-image {
+		margin: $default-margin / 4 $default-margin 0 $default-margin * 2;
+
+		@include bp(max-width, $bp-tablet) {
+			margin: $default-margin / 4 $default-margin / 4 0 $default-margin / 4;
+		}
+	}
+	.country-name {
+		position: relative;
+		top: $lng-switch-name-offset;
+	}
+}
+
+.form-search {
+	position: relative;
+
+    label, .button span {
+	    display: none;
+	}
+
+	#search {
+		width: 84%;
+		margin: 0;
+	}
+
+	.button {
+	    background-image   : $search-icon;
+	    background-repeat  : no-repeat;
+	    background-position: center center;
+
+	    height: $default-input-height;
+	    width: $default-input-height;
+	    box-shadow: inset 0 0 2px 0 $grundfarbe4;
+	    border: $border-width solid $element-schatten;
+	    position: absolute;
+	    top: 29%;
+	}
+}
+
+.skip-content {
+    display: none;
+    z-index: 999;
+}
+
+#header-cart.skip-active,
+.skip-content.skip-active {
+    position: absolute;
+	display: block;
+    background-color: $grundfarbe4;
+}
+
+#header-cart.skip-active {
+    width: $minicard-width;
+    right: $minicard-right;
+
+	@include bp(max-width, $bp-tablet) {
+		width: 395px;
+	}
+}
+
+#header-account.skip-active {
+	top: $header-background-position-top;
+	min-width: 200px;
+}

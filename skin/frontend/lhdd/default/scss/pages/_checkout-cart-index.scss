@@ -1,0 +1,119 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.checkout-cart-index {
+	.top-offset {
+		margin-top: -25px;
+	}
+
+	.buttons-set {
+		margin: 0 0 $default-margin 0;
+	}
+
+	.messages {
+		margin: $default-margin 0 0 0;
+	}
+}
+
+#shopping-cart-table {
+	margin-bottom: $default-margin;
+	//@include linearize-table;
+
+	h2 {
+		font-size: $h1-size;
+		line-height: normal;
+		margin-bottom: 0;
+		position: relative;
+
+		&:after {
+			@include fading-left-right(20%, $grundfarbe-hell);
+		}
+	}
+}
+
+#shopping-cart-totals-table {
+	width: 100%;
+	margin-bottom: $default-margin;
+}
+
+.cart-forms, .cart-totals-wrapper {
+	width: 47%;
+	display: inline-block;
+	vertical-align: top;
+
+	> div {
+		padding: $default-padding * 2;
+		border-radius: $border-radius;
+		border: $border-width solid $grundfarbe1;
+		background-color: $grundfarbe3;
+
+		h2 {
+			font-size: $h1-size;
+			line-height: normal;
+			margin-bottom: 0;
+		}
+
+		p {
+			margin-bottom: $default-margin / 2;
+			line-height: normal;
+		}
+
+		form .form-list li > div.input-box {
+			margin: 0;
+		}
+
+		.buttons-set .button {
+			float: none;
+			width: 100%;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.cart-totals-wrapper {
+	float: right;
+
+	td {
+		text-align: right;
+		padding: 0 $default-padding * 2 $default-padding 0;
+	}
+
+	button.btn-checkout {
+		width: 100%;
+	}
+	.field-wrapper {
+		position: relative;
+	}
+	input {
+		width: 65%;
+		padding: $default-padding * 2 $default-padding;
+		height: auto;
+	}
+	.button-wrapper {
+		display: inline-block;
+		position: absolute;
+		right: 0px;
+	}
+}
+
+.sp-methods {
+	margin-bottom: $default-margin / 2;
+
+	dt {
+		font-weight: bold;
+	}
+	dd {
+		font-style: italic;
+		margin-left: $default-margin;
+	}
+	.price {
+		font-style: normal;
+	}
+}

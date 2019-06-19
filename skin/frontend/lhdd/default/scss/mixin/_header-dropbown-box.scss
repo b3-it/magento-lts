@@ -1,0 +1,41 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@mixin header-dropbown-box($border-style: solid) {
+	border: $border-width solid $grundfarbe2;
+	color: $haupt-text-farbe;
+	text-align: left;
+	line-height: $text-lineheight;
+	padding: $default-padding;
+	box-shadow: 5px 5px 10px 0px $element-schatten;
+	border-radius: 0 0 $border-radius $border-radius;
+	background-color: $grundfarbe4;
+
+	li {
+		border-width: $border-width;
+		border-style: $border-style;
+		border-color: transparent transparent $grundfarbe2 transparent;
+		color: $grundfarbe1;
+		padding: $default-padding;
+
+		a {
+			border: 0;
+			background-color: transparent;
+		}
+
+		&:last-child {
+			border-bottom-color: transparent;
+		}
+
+		&:hover {
+			//background-color: $grundfarbe3;
+			background-color: $element-schatten;
+			border-color: $grundfarbe1;
+			border-style: solid;
+		}
+	}
+}

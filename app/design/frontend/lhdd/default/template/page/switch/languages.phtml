@@ -1,0 +1,60 @@
+<?php
+/**
+ * @category    design
+ * @package     lhdd_default
+ * @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+ /**
+  * Language switcher template
+  *
+  * @see Mage_Page_Block_Switch
+  *
+  * @var $this Mage_Page_Block_Switch
+  */
+?>
+<?php if(count($this->getStores())>1): ?>
+<script type="text/javascript">
+    var languageSelectTitle = '<?php echo $this->__('Your Language:') ?>';
+    var lngUseImageButton   = '<?php echo Mage::getStoreConfig('design/language_switcher_settings/language_switcher_use_image'); ?>';
+    var lngShowFlags        = '<?php echo Mage::getStoreConfig('design/language_switcher_settings/language_switcher_flags'); ?>';
+    var lngButtonCaption    = '<?php echo Mage::getStoreConfig('design/language_switcher_settings/language_switcher_button_caption'); ?>';
+    var lngButtonRow        = '<?php echo Mage::getStoreConfig('design/language_switcher_settings/language_switcher_button_row'); ?>';
+</script>
+<?php
+$_currLng = Mage::app()->getLocale()->getLocaleCode();
+$_list = Zend_Locale::getTranslationList('language', $_currLng);
+?>
+<select id="select-language" title="<?php echo $this->__('Your Language') ?>" onchange="window.location.href=this.value">
+  <?php foreach ($this->getStores() as $_lang): ?>
+    <?php /** @var $_lang Mage_Core_Model_Store */?>
+    <?php
+        $_loc = new Zend_Locale($_lang->getLocaleCode());
+        $_reg = $_loc->getRegion();
+
+        // first from Region
+        $_lng = $_list[strtolower($_reg)];
+        if ( !strlen($_lng) ) {
+            // then from Lang-Code
+            $_lng = $_list[$_lang->getLocaleCode()];
+
+            if ( !strlen($_lng) ) {
+                // last from Lang-Region
+                $_lng = $_list[$_loc->getLanguage()];
+            }
+        }
+
+        $_cty = Mage::getModel('directory/country')->loadByCode($_loc->getRegion())->getName();
+        $_selected = ($_lang->getId() == $this->getCurrentStoreId()) ? ' selected="selected"' : '';
+    ?>
+    <option value="<?php echo $_lang->getCurrentUrl() ?>"
+            data-lang="<?php echo $_lng; ?>"
+            data-region="<?php echo $_reg; ?>"
+            data-country="<?php echo $_cty; ?>"
+            <?php echo $_selected ?>>
+        <?php echo $this->escapeHtml($_lang->getName()) ?>
+    </option>
+  <?php endforeach; ?>
+</select>
+<?php endif; ?>

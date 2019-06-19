@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <sections>
+        <design>
+            <groups>
+                <language_switcher_settings translate="label comment">
+                    <label>Customize Settings Overlay for Language-Switcher</label>
+                    <comment>These options are only taken into account if more than 2 StoreViews are available.</comment>
+                    <sort_order>15</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <language_switcher_use_image translate="label comment">
+                            <label>Use image for toolbar button</label>
+                            <comment>Select "Yes" to use a PNG image as the caption for the toolbar button. Select "No" to use the icon from the Font Awesome package.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </language_switcher_use_image>
+                        <language_switcher_flags translate="label">
+                            <label>Show national flags in button text</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </language_switcher_flags>
+                        <language_switcher_button_caption translate="label">
+                            <label>Button representation in the overlay</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>egovsdesignfeatures/system_config_backend_design_button_template</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </language_switcher_button_caption>
+                        <language_switcher_button_row translate="label">
+                            <label>Show one button per row</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </language_switcher_button_row>
+                    </fields>
+                </language_switcher_settings>
+            </groups>
+        </design>
+    </sections>
+</config>

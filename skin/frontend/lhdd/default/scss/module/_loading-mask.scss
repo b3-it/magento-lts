@@ -1,0 +1,45 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+#loading-mask {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: $default-shadow;
+
+    .loader {
+        position: fixed;
+        left: 50vw;
+        top: 45vh;
+        background-color: $loading-layer-background;
+        border: $border-width * 2 solid $loading-layer-border;
+        color: $loading-layer-fontcolor;
+        font-weight: bold;
+        margin-left: -60px;
+        padding: $default-padding * 4 $default-padding * 12;
+        text-align: center;
+        border-radius: $border-radius;
+        box-shadow: 10px 10px 16px -1px $loding-shaddow;
+
+        > div {
+            display: inline-block;
+            vertical-align: top;
+            line-height: normal;
+        }
+
+        #loading-spinner {
+            margin-right: $default-margin / 2;
+            font-size: 2rem;
+        }
+
+        #loading-msg {
+        }
+    }
+}

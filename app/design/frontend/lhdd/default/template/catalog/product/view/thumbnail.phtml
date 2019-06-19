@@ -1,0 +1,48 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+
+/* @var $this Mage_Catalog_Block_Product_View_Media */
+?>
+<?php
+    $_product     = $this->getProduct();
+    $_helper      = $this->helper('catalog/output');
+    $_image_list  = $this->getGalleryImages();
+    $_video_types = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a', 'flv', 'avi');
+?>
+<div class="product-image product-image-zoom">
+    <div class="product-image-gallery">
+        <img id="image-main"
+             class="gallery-image visible"
+             src="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"
+             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+             title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+        <?php $i=0; foreach ($_image_list AS $_image): ?>
+            <?php if ($this->isGalleryImageVisible($_image)): ?>
+            <?php
+                $_file = $_image->getFile();
+                $_info = pathinfo($_file);
+                $_img  = $this->getGalleryImageUrl($_image);
+            ?>
+          <?php if ( in_array($_info['extension'], $_video_types) ): ?>
+            <div id="image-<?php echo $i; ?>" class="gallery-image"></div>
+          <?php else : ?>
+            <img id="image-<?php echo $i; ?>"
+                 class="gallery-image"
+                 src="<?php echo $_img; ?>"
+                 data-zoom-image="<?php echo $_img; ?>" />
+          <?php endif; ?>
+            <?php endif; ?>
+        <?php $i++; endforeach; ?>
+    </div>
+</div>

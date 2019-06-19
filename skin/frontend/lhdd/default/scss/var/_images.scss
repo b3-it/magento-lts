@@ -1,0 +1,53 @@
+﻿//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$header-background-image : url("../images/bg-wave.svg");
+$overlay-background-image: url("../images/overlayBack.png");
+$bitv-background-image   : url("../images/icon-tobottom.svg");
+
+$home-icon     : url("../images/icon-home.svg");
+$navitem-icon  : url("../images/icon-arrow-right.svg");
+$navitem-active: url("../images/icon-arrow-white-right.svg");
+$search-icon   : url("../images/icon-search.svg");
+
+$category-arrow-full-down  : url("../images/arrow_white_down.png");
+$category-arrow-full-right : url("../images/arrow_white_right.png");
+$category-arrow-light-right: url("../images/arrow_right_small.png");
+$category-arrow-light-down : url("../images/arrow_down_small.png");
+
+// Wechselnde Pfeile in den Navigationen \\
+.egov-arrow-main-closed, .egov-arrow-main-open,
+.egov-arrow-sub-closed, .egov-arrow-sub-open {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-origin: padding-box;
+	background-size: auto auto;
+}
+.egov-arrow-main-closed, .egov-arrow-main-open {
+	padding: $default-padding $default-padding * 5 $default-padding $default-padding * 3;
+	background-position-x: 95%;
+	background-position-y: 55%;
+}
+.egov-arrow-sub-closed, .egov-arrow-sub-open {
+	background-position-x: 2%;
+	background-position-y: 50%;
+}
+
+.egov-arrow-main-closed {
+    background-image: $category-arrow-full-right;
+}
+.egov-arrow-main-open {
+    background-image: $category-arrow-full-down;
+}
+.egov-arrow-sub-closed {
+    background-image: $category-arrow-light-right;
+}
+.egov-arrow-sub-open {
+    background-image: $category-arrow-light-down;
+}

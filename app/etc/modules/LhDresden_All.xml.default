@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+   		<LhDresden_Base>
+			<active>false</active>
+			<codePool>local</codePool>
+		</LhDresden_Base>
+    </modules>
+</config>

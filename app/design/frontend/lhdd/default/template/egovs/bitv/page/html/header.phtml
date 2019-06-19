@@ -1,0 +1,27 @@
+<?php
+/**
+ * @category    design
+ * @package     lhdd_default
+ * @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+
+?>
+<ul class="list-links list-links-focus">
+<?php foreach($this->getJumps() as $jump):
+    $_accesskey = "";
+    if($jump->getAccesskey()!= null){
+        $_accesskey = ' accesskey="'.$jump->getAccesskey().'"';
+    }
+?>
+    <li>
+        <a href="#<?php echo $this->helper('bitv')->getJumpTarget($jump);?>"<?php echo $_accesskey; ?> class="only-focusable">
+            <?php echo trim(Mage::helper('bitv')->__($jump->getJumptitle())); ?>
+        </a>
+    </li>
+<?php endforeach ?>
+</ul>

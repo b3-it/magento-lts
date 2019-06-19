@@ -1,0 +1,32 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+#to-top {
+    /* BOTTOM wird über JavaScript gesetzt! */
+    position: fixed;
+    right: 30px;
+    z-index: 20000;
+
+    a {
+        font-size: 22px;
+        padding: 18% 21%;
+        border-radius: 50%;
+        display: block;
+        height: 38px;
+        transition-duration: 0s;
+        width: 38px;
+        text-decoration: none;
+        background-color: $grundfarbe1;
+        color: $grundfarbe-hell;
+        opacity: 0.75;
+
+        &:hover {
+        	background-color: $grundfarbe1;
+        	 opacity: 1;
+        }
+    }
+}
