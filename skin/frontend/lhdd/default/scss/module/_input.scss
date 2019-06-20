@@ -8,12 +8,13 @@
 a, input, button, select, textarea {
     /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
     &:focus {
-        border: $border-width solid $grundfarbe1;
+        border: $border-width solid $zusatzfarbe2;
     }
 }
 
 input, textarea, select {
 	@include default-hidden-border;
+	border-color: $grundfarbe1;
 	background-clip: padding-box;
 	box-shadow: inset 0 5px 5px -5px $box-shatten;
 	text-shadow: 0 1px 1px $input-alpha;
@@ -24,8 +25,8 @@ input, textarea, select {
 	margin-right: $default-margin / 2;
 
 	&:active, &:hover, &:focus {
-	    border-color: $grundfarbe1;
-	    outline: $border-width solid $grundfarbe1;
+	    border-color: $zusatzfarbe2;
+	    outline: $border-width solid $zusatzfarbe2;
 	}
 
 	&:disabled {
@@ -42,7 +43,7 @@ input[type="checkbox"] {
 	height: auto;
 
 	&:checked {
-	    outline: $border-width solid $grundfarbe1;
+	    outline: $border-width solid $zusatzfarbe2;
 	}
 }
 
@@ -51,6 +52,6 @@ input[type="checkbox"], input[type="radio"] {
 		/* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
     	outline-width: $border-width;
     	outline-style: solid;
-    	outline-color: $grundfarbe1;
+    	outline-color: $zusatzfarbe2;
 	}
 }

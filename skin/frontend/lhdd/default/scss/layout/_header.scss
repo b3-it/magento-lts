@@ -218,6 +218,10 @@ header {
 		top: 0;
 		right: 0;
 	}
+
+	.empty {
+		color: $grundfarbe1;
+	}
 }
 
 #header-select-language {
@@ -360,6 +364,7 @@ header {
     width: $minicard-width;
     right: $minicard-right;
 	background-color: $grundfarbe-hell;
+	padding-top: $default-padding * 3;
 
 	@include bp(max-width, $bp-tablet) {
 		width: 395px;
