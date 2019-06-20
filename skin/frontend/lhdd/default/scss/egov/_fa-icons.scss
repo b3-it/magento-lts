@@ -22,6 +22,7 @@
     @extend .egov-fa-base;
     @extend .fa-pencil;
     font-size: $text-size + 4 !important;
+    color: $grundfarbe4;
 }
 
 // Icon für Löschen (Mülltonne)
@@ -98,7 +99,7 @@
     @extend .egov-fa-base;
     @extend .fa-home;
     font-size: $text-size + 6;
-    margin: $fa-icon-margin;
+    padding: $fa-icon-margin;
 }
 
 // Sprachumschalter (Globus)

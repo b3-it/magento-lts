@@ -67,7 +67,7 @@ jQuery(document).ready(function ($j) {
             posRight += $j(".store-language-container").width() + 2;
         }
         posRight += $j(".skip-search").width();
-        posRight += $j(".skip-cart").width() + 6;
+        posRight += $j(".skip-cart").width() - 6;
 
         $j("#header-account").css("right", posRight + "px");
     };

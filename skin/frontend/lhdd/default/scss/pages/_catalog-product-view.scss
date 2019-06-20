@@ -7,9 +7,6 @@
 
 .catalog-product-view {
 	header, .main-container {
-		// Höhen-Korrektur, da die Seite sonst zu weit unten beginnt
-		position: relative;
-		top: $content-offset;
 	}
 }
 

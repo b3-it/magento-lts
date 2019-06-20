@@ -1,0 +1,35 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<nav id="customer-account-menu">
+    <ol class="nav-primary">
+        <li class="level0 account-block-title">
+            <a class="level0 has-children egov-arrow-main-open" href="javascript:void(0);"><?php echo $this->__('My Account'); ?></a>
+            <ul id="customer-account-navigation">
+            <?php $_links = $this->getLinks(); ?>
+            <?php $_index = 1; ?>
+            <?php $_count = count($_links); ?>
+            <?php foreach ($_links as $_link): ?>
+              <?php $_last = ($_index++ >= $_count); ?>
+              <?php if ($this->isActive($_link)): ?>
+                <li class="level1 active<?php echo ($_last ? ' last' : '') ?>">
+                    <a class="egov-arrow-main-open" href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a>
+                </li>
+              <?php else: ?>
+                <li class="level1<?php echo ($_last ? ' last' : '') ?>">
+                    <a class="egov-arrow-main-closed" href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a>
+                </li>
+              <?php endif; ?>
+            <?php endforeach; ?>
+            </ul>
+        </li>
+    </ol>
+</nav>
+<script type="text/javascript">
+    $j('#customer-account-menu').eGovMenu();
+</script>

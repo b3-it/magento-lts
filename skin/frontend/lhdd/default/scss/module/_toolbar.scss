@@ -13,7 +13,7 @@
         border-color: $grundfarbe2;
         border-width: $border-width 0;
         border-style: solid;
-        background-color: $grundfarbe4;
+        background-color: $grundfarbe3;
         margin: $default-padding 0;
         line-height: $toolbar-height;
         height: $toolbar-height;
@@ -52,7 +52,7 @@
             &.current,
             &:active, &:hover, &:focus {
                 text-decoration: none;
-                background-color: $grundfarbe4;
+                background-color: $grundfarbe3;
                 color: $grundfarbe1;
             }
 
@@ -83,7 +83,7 @@
 
 	    &:active, &:hover, &:focus {
 	    	text-decoration: none;
-	    	background-color: $grundfarbe4;
+	    	background-color: $grundfarbe3;
 	    	color: $grundfarbe1;
 	    }
     }

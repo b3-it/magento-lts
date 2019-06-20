@@ -49,6 +49,7 @@ td.a-center {
 	border-bottom: $border-width solid $grundfarbe1;
 	font-size: $checkout-title;
 	margin-top: $default-margin;
+	line-height: $checkout-title-height;
 
 	> a {
 		float: right;

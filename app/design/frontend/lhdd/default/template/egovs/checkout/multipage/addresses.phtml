@@ -1,0 +1,51 @@
+<?php
+/**
+ * Ship to multiple address template
+ *
+ * @see Mage_Checkout_Block_Multishipping_Addresses
+ */
+?>
+<div class="page-title">
+    <h2><?php echo $this->__('Select Shipping Method') ?></h2>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+  	<?php echo $this->getBlockHtml('formkey'); ?>
+	<div class="block">
+        <div class="block-title">
+            <strong><?php echo $this->__('Select a billing address from your address book') ?></strong>
+        </div>
+        <div class="block-content">
+            <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+            <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
+          <?php if (!$this->canShip()): ?>
+            <input type="hidden" name="billing[use_for_shipping]" value="1" />
+          <?php endif; ?>
+            <?php echo $this->getAddressesHtmlSelect('billing'); ?>
+   	        <ul class="form-list group-select">
+        	  <?php if ($this->canShip()): ?>
+        	      <li>
+        	          <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1"<?php if ($this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?>  class="radio" />
+        	          <label for="billing:use_for_shipping_yes"><?php echo  $this->__('Ship to this address') ?></label>
+        	      </li>
+        	      <li>
+        	          <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_no" value="0"<?php if (!$this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?>  class="radio" />
+        	          <label for="billing:use_for_shipping_no"><?php echo $this->__('Ship to different address') ?></label>
+        	      </li>
+        	     <?php if($this->isStorePickupAvailable()):?>
+         	      <li>
+                  	<input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_option" value="2"<?php if (!$this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?>  class="radio" />
+                  	<label for="billing:use_for_shipping_option"><?php echo $this->__('Store Pickup') ?></label>
+        	      <li>
+                 <?php endif;?>
+        	    <?php endif; ?>
+       	      </ul>
+        </div>
+	</div>
+    <div class="buttons-set">
+        <a href="<?php echo $this->getBackUrl() ?>" class="button"><?php echo $this->__('Back') ?></a>
+        <a class="button" href="<?php echo $this->getUrl() ?>"><span><?php echo $this->__('Continue Shopping') ?></span></a>
+        <button  class="button" type="submit"><span><?php echo $this->__('Continue') ?></span></button>
+    </div>
+</form>

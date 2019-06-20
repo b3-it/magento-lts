@@ -12,8 +12,8 @@ $bp-small: 500px;                                        // Haupt-Breakpoint zwi
 // Heading \\
 $h1-size: 1.2rem;                                        // Schrift-Größe H1 / Welcome
 $h1-line: 1.2rem;                                        // Zeilen-Höhe H1
-$h2-size: 2.25rem;                                       // Schrift-Größe H2
-$h2-line: 2.1rem;                                        // Zeilen-Höhe H2
+$h2-size: 1.1rem;                                        // Schrift-Größe H2
+$h2-line: 1.1rem;                                        // Zeilen-Höhe H2
 $h3-size: 1.1rem;                                        // Schrift-Größe H3
 $h3-line: 1rem;                                          // Zeilen-Höhe H3
 $h4-size: 1;                                             // Schrift-Größe H4
@@ -84,19 +84,21 @@ $two-button-width  : 47%;                                // Button-Breite bei zw
 $three-button-width: 27%;                                // Button-Breite bei drei Buttons
 $four-button-width : 20%;                                // Button-Breite bei vier Buttons
 
+// Logo \\
+$logo-padding-vrt: 0;                                    // Innenabstand des Logos (oben, unten)
+$logo-padding-hrz: 0;                                    // Innenabstand des Logos (links, rechts)
+$logo-margin-top : 0;                                    // Außenabstand oben
+$logo-width      : 138px;                                // Breite des Logo
+$logo-height     : 86px;                                 // Höhe des Logo in Pixel
+
 // Header-Angaben \\
 $bitv-width                      : 15em;                 // Breite des BITV-Menüs
 $header-buttons-block-width      : 70%;                  // Breite des Blocks im Header mit Startseite, Warenkorb, etc.
 $header-background-position-start: 0;                    // -- Position des Header-Bildes
-$header-background-position-top  : 77px;                 // -- Position des Header-Bildes
-$header-min-height               : 125px;                // Minesthöhe des Header-Block
-$header-link-height              : 69px;                 // Höhe der Links im Header
+$header-background-position-top  : $logo-height;         // -- Position des Header-Bildes
+$header-min-height               : $logo-height;         // Minesthöhe des Header-Block
+$header-link-height              : $logo-height / 2;     // Höhe der Links im Header
 $header-link-margin-top          : 8px;                  // Abstand der Header-Links nach oben
-
-// Logo \\
-$logo-padding-vrt: 0;                                    // Innenabstand des Logos (oben, unten)
-$logo-padding-hrz: 10px;                                 // Innenabstand des Logos (links, rechts)
-$logo-margin-top : 22px;                                 // Außenabstand oben
 
 // Language-Switcher \\
 $lng-switch-width      : 40%;                            // Breite des Overlay-Fensters für Sprachumschaltung
@@ -110,7 +112,8 @@ $lng-switch-name-offset: -3px;                           // Offset, damit Schrif
 
 // Welcome-Header \\
 $welcome-left-padding: 15px;                             // Platz nach Links für den Home-Icon schaffen
-$welcome-bottom      : 10%;                              // Abstand des Schriftzuges vom unteren Rand
+$welcome-bottom      : 0;                                // Abstand des Schriftzuges vom unteren Rand
+$welcome-height      : $logo-height / 2;                 // Gleiche Höhe, wie die Buttons im Header
 
 // Kreditkarten-Widget \\
 $credit-card-image-width: 22%;                           // Breite des Bilder für Kreditkarten
@@ -145,8 +148,9 @@ $progress-item-padding: 3px;                             // Innenabstand der Pro
 $progress-item-border : 4px;                             // Breite des oberen Randes bei dem Progress-Punkten im MP-Checkout
 
 // Checkout \\
-$checkout-title  : 1.8rem;                               // Schriftgröße der Überschriften im MP-Checkout
-$checkout-numbers: 1.3rem;                               // Schriftgrößen für Bestellnummer und Kassenzeichen (SuccessView)
+$checkout-title       : 1.5rem;                          // Schriftgröße der Überschriften im MP-Checkout
+$checkout-title-height: 1.7rem;                          // Zeilenhöhe der Überschriften im MP-Checkout
+$checkout-numbers     : 1.3rem;                          // Schriftgrößen für Bestellnummer und Kassenzeichen (SuccessView)
 
 // Warenkorb \\
 $cart-title-height: 3rem;                                // Maximale Höhe des Artikelnamen

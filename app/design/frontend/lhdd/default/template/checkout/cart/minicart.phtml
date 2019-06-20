@@ -1,0 +1,32 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Shoping cart sidebar
+ *
+ * @see Mage_Checkout_Block_Cart_Sidebar
+ */
+
+?>
+
+<?php
+    $_cartQty = $this->getSummaryCount();
+    if(empty($_cartQty)) {
+        $_cartQty = 0;
+    }
+?>
+
+<a href="<?php echo $this->helper('checkout/cart')->getCartUrl(); ?>" id="egov-cart-menu" data-target-element="#header-cart" class="skip-link skip-cart <?php if($_cartQty <= 0): ?> no-count<?php endif; ?>">
+    <span class="icon egov-cart"></span>
+    <span class="label"><?php echo $this->__('Cart'); ?></span>
+    <span class="count"><?php echo $_cartQty; ?></span>
+</a>
+
+<div id="header-cart" class="block block-cart skip-content">
+    <?php echo $this->getChildHtml('minicart_content');?>
+</div>

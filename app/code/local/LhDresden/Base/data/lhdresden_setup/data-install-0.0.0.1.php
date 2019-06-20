@@ -6,8 +6,9 @@ $installer = $this;
 $installer->startSetup();
 
 // Logo-Grafiken setzen
-$installer->setConfigData('design/header/logo_src', 'images/logo_lhdd.png');
-$installer->setConfigData('design/header/logo_src_small', 'images/logo_lhdd_smartphone.png');
+$installer->setConfigData('design/header/logo_src', 'images/logo-lhdd-gelb.svg');
+$installer->setConfigData('design/header/logo_src_small', 'images/logo-lhdd-gelb.svg');
+$installer->setConfigData('design/header/enable_ajax_search', '0');
 
 // Theme-Einstellungen zurücksetzen
 $installer->setConfigData('design/theme/locale', '');

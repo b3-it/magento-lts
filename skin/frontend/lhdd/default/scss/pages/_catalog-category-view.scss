@@ -165,6 +165,9 @@
 			width: $katalog-button;
 			font-weight: normal;
 			margin: 0;
+
+			background-color: $grundfarbe4;
+			color: $haupt-text-farbe;
 		}
 
 		.add-to-links {
@@ -200,14 +203,14 @@
 	}
 
 	&:hover {
-		background-color: $grundfarbe4;
+		background-color: $grundfarbe3;
 
 		.product-name a:after {
-			@include fading-left-right(20%, $grundfarbe4);
+			@include fading-left-right(20%, $grundfarbe3);
 		}
 
 		.product-shop .desc:after {
-			@include fading-top-bottom(30%, $grundfarbe4);
+			@include fading-top-bottom(30%, $grundfarbe3);
 		}
 	}
 }

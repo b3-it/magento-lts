@@ -1,0 +1,69 @@
+<?php
+/**
+ * Multishipping checkout billing information
+ *
+ * @see Mage_Checkout_Block_Multishipping_Billing
+ */
+
+$_method = $this->getMethodsForm();
+if ( $_method != null ) {
+    $_code = $_method->getCode();
+}
+else {
+    $_code = null;
+}
+
+if ( strpos($_code, 'sepa') === FALSE ) {
+    $_css_block_1 = 'col-1';
+    $_css_block_2 = 'col-2';
+}
+else {
+    $_css_block_1 = 'full-wide';
+    $_css_block_2 = 'full-wide sepa-details';
+}
+?>
+<div class="page-title">
+    <h2><?php echo $this->__('Billing Information') ?></h2>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="multishipping-billing-details-form">
+	<?php echo $this->getBlockHtml('formkey'); ?>
+    <div class="col2-set">
+        <div class="<?php echo $_css_block_1 ?>">
+            <h2><?php echo $this->__('Billing Address') ?></h2>
+            <?php $_address=$this->getAddress() ?>
+            <address><?php echo Mage::helper('mpcheckout/addressformat')->formatHtml($_address) ?></address>
+        </div>
+        <div class="<?php echo $_css_block_2 ?>">
+            <!-- Payment methods forms list -->
+            <?php
+                if($_method != null)
+                {
+                    echo '<h2>'.$this->htmlEscape($_method->getTitle()).'</h2>';
+
+                    if($html = $this->getChildHtml('payment.method.'.$_code))
+                    {
+                        echo $html;
+                    }
+                    else
+                    {
+                        echo '<div class="block-content">' . $this->__('No payment information') . '</div>';
+                    }
+                }
+
+                echo $this->getChildHtml('checkout_billing_items');
+                ?>
+        </div>
+    </div>
+    <div class="buttons-set">
+        <a href="<?php echo $this->getBackUrl() ?>" class="button">
+            <?php echo $this->__('Back') ?>
+        </a>
+        <a class="button" href="<?php echo $this->getUrl() ?>">
+            <span><?php echo $this->__('Continue Shopping') ?></span>
+        </a>
+        <button  class="button" type="submit">
+            <span><?php echo $this->__('Continue') ?></span>
+        </button>
+    </div>
+</form>

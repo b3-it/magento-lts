@@ -9,6 +9,7 @@
 	display: block;
 	overflow: hidden;
 	margin-bottom: $default-margin;
+	border-bottom: $border-width solid $zusatzfarbe4;
 
 	ul {
 		height: 1.6rem;
