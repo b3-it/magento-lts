@@ -228,7 +228,7 @@ class Slpb_Verteiler_Adminhtml_Slpbverteiler_VerteilerController extends Mage_Ad
     	$action = strtolower($this->getRequest()->getActionName());
     	switch ($action) {
     		default:
-    			return Mage::getSingleton('admin/session')->isAllowed('report/slpb_verteiler');
+    			return Mage::getSingleton('admin/session')->isAllowed('customer/slpb_verteiler');
     			break;
     	}
     }
