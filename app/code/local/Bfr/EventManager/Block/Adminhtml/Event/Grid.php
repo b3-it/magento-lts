@@ -91,6 +91,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_W
                 'is_system' => true,
         ));
 
+
 		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
 

@@ -129,7 +129,7 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       return parent::_prepareColumns();
   }
 
-    protected function x_prepareMassaction()
+    protected function _prepareMassaction()
     {
         $this->setMassactionIdField('request_id');
         $this->getMassactionBlock()->setFormFieldName('request');

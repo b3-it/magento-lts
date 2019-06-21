@@ -81,10 +81,14 @@ class Sid_ExportOrder_Model_Format_Plain extends Sid_ExportOrder_Model_Format
         }
         $_orderItems = implode($line_separator, $_itemArray);
 
+
+
+        $Vergabenummer = $order->getVergabenummer()? $order->getVergabenummer():"";
+
         $template = Mage::getStoreConfig('sid_exportorder/sid_exportorder_plaintext/plaintext_template');
         $processedTemplate = str_replace(
-                                 array('{{CustomerAddress}}', '{{InvoiceAddress}}', '{{ShippingAddress}}', '{{OrderItems}}'),
-                                 array($_customerAddress    , $_invoiceAddress    , $_shippingAddress    , $_orderItems),
+                                 array('{{CustomerAddress}}', '{{InvoiceAddress}}', '{{ShippingAddress}}', '{{OrderItems}}','{{Vergabenummer}}'),
+                                 array($_customerAddress    , $_invoiceAddress    , $_shippingAddress    , $_orderItems, $Vergabenummer),
                                  $template
                              );
 

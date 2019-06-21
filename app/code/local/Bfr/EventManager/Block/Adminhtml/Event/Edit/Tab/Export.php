@@ -123,7 +123,19 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'))
 		->joinLeft(array('orderitem'=>$collection->getTable('sales/order_item')),'orderitem.item_id = main_table.order_item_id')
 		
-		;		
+		;
+
+
+
+      $collection->getSelect()
+          ->distinct()
+          ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
+//      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
+          ->where('event_id='.(int)($this->getEvent()->getId()));
+
+
+      $collection->setSelectCountSql($collection->getSelect());
+
 		$col = null;
 		$coalesce = array();
 
@@ -141,18 +153,22 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 		}
 
       $coalesce[] = '0';
-      
-      $collection->getSelect()
-      ->distinct()
-      ->columns(array('name'=>"TRIM(CONCAT(firstname,' ',lastname))"))
-      ->where(new Zend_Db_Expr('(coalesce('.implode(',', $coalesce).') > 0) OR (event_id='.intval($this->getEvent()->getId()).')'));
-      
+
+
       //verhindern das alle angezeigt werden falls zu der Option kein Produkt konfiguriert wurde
       if($col == null){
       	$collection->getSelect()->where('order.entity_id=0');
       }
-      
-     // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
+
+
+
+
+
+
+
+
+
+      // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
 
       $this->setCollection($collection);
 
@@ -347,6 +363,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
   			'header'    => Mage::helper('eventmanager')->__('Email'),
   			'align'     =>'left',
   			'index'     => 'email',
+  			'filter_index'     => 'main_table.email',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
   	

@@ -20,9 +20,13 @@ class Egovs_Paymentbase_Block_Adminhtml_System_Config_Form_Field_Cert
 	 * @return string
 	 */
 	public function render(Varien_Data_Form_Element_Abstract $element) {
-        if (function_exists('openssl_x509_parse') && file_exists(Mage::getBaseDir().$element->getEscapedValue())) {
+	    $file = Mage::getBaseDir().$element->getEscapedValue();
+        if (function_exists('openssl_x509_parse') &&
+            file_exists($file)&&
+            !is_dir($file)
+        ) {
             //date_default_timezone_set('UTC');
-            $data = openssl_x509_parse(file_get_contents(Mage::getBaseDir().$element->getEscapedValue()));
+            $data = openssl_x509_parse(file_get_contents($file));
 
             $serialNumber = $data['serialNumber'];
             $date = new Zend_Date($data['validFrom'], 'yyMMddHHmmssz');

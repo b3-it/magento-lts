@@ -737,7 +737,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	
 	
 	protected function replaceVariables($data, $html, $root = null) {
-		$html = $this->filter($data, $html);
+	    $html = $this->filter($data, $html);
 		$html = str_replace("\n", '', $html);
 		preg_match_all("~{{(.*)}}~U", $html, $ausgabe, PREG_SET_ORDER);
 
@@ -757,8 +757,8 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 			//$value = $data->getData($treffer[1]);
 			$value = $this->extractData($data, $keys);
 			if (!($this->Mode == Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW) && $value === null) $value = "";
-				
-			if ($value !== null) 
+
+			if ($value !== null)
 			{
 				if(is_array($value))
 					{
@@ -774,7 +774,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
                             $html = str_replace($line[0][0], $linehtml, $html);
                         }
 					}
-					else 
+					else
 					{
 						if((strpos($treffer[1], 'loopitem') === false) || $root != null)
 						{
@@ -784,6 +784,9 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
                         }
 					}
 				}
+            }else{
+                $html = str_replace($treffer[0], '', $html);
+            }
 			}
 
 		return $html;

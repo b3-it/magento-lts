@@ -1,0 +1,18 @@
+"Sum Invoice Threshold","Bestellung Schwellwert für offene Rechnungen"
+"Sum Invoice Limit","Limit offener Rechungen"
+"If order is over threshold, the sum of open invoice can't be over limit","Wenn Bestellung über Schwellwert ist, dann dürfen die offenen Bestellungen nicht über Limit sein"
+"Sum Interval Weeks","Summe Bestellungen Wochen"
+"Sum Interval Limit","Summe Bestellungen Limit"
+"Sum of orders in interval can't be over limit","Summe von Bestellungen im Zeitraum kann nicht über Limit sein"
+
+"Successful Threshold","Bestellung Schwellwert für Teilgenommen-Prüfung"
+"Threshold for successful check","Wenn Bestellung über Schwellwert ist, dann wird geprüft ob schon erfolgreich Bestellung durchgeführt wurde"
+"Successful Weeks","Teilgenommen-Prüfung Wochenalter"
+"How old are the Orders needed for successful check", "Mindestalter für Bestellungen für Teilgenommen"
+
+"Use Creditworth from ePayBL","Nutze Bonität von ePayBL"
+"If enabled, it uses ePayBL for creditworth","Wenn aktiv, nutze Bonität von ePayBL wenn möglich"
+
+"Creditworthiness (Credit card)", "Bonität (Kreditkarte)"
+"Creditworthiness (Debit)", "Bonität (Lastschrift)"
+"Creditworthiness (Giro)", "Bonität (Überweisung)"

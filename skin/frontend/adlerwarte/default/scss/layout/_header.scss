@@ -14,7 +14,7 @@
     min-width: $global-min-width;
     position: relative;
     margin: 0px auto;
-    padding-top: 100px;
+    padding-top: 120px;
     height: 240px;
     background-color: $global-wrapper-color;
     background-image: none !important;
@@ -48,7 +48,7 @@
 
     .welcome-header {
         position: absolute;
-        top: 150px;
+        top: 170px;
         right: 10px;
         text-align: right;
         z-index: 999;
@@ -202,7 +202,7 @@
     display: block;
     position: absolute;
     right: 10px;
-    top: 30px;
+    top: 55px;
 
     @include bp(max-width, $bp-medium) {
         width: 65%;

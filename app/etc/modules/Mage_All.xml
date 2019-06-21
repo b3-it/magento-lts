@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config>
+<?xml version="1.0"?>
 <!--
 /**
  * Magento
@@ -235,7 +234,7 @@
             </depends>
         </Mage_Log>
         <Mage_Backup>
-            <active>true</active>
+            <active>false</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Core/>

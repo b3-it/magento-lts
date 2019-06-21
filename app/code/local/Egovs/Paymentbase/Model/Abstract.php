@@ -305,6 +305,8 @@ abstract class Egovs_Paymentbase_Model_Abstract extends Mage_Payment_Model_Metho
 			/** @var $_adminHelper Mage_Adminhtml_Helper_Data */
             $_adminHelper = Mage::helper('adminhtml');
 
+            $sMailText .= "ePayBL-Mandant: {$this->_getMandantNr()}\n";
+            $sMailText .= "ePayBL-Bewirtschafter: {$this->_getBewirtschafterNr()}\n";
 			$sMailText .= "ePayBL-Kundennummer: {$this->_getECustomerId()}\n";
 			if (($customer = $this->_getOrder()->getCustomer()) && $customer->getId() > 0) {
 				$backendUrl = $_adminHelper->getUrl('adminhtml/customer/edit', array('id' => $this->_getCustomerId()));

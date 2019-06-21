@@ -18,10 +18,15 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
 	{
 		$product = Mage::getModel('catalog/product')->load($aboitem->getProductId());
 		$product->setData('website_id', 0);
-		
+
+		$station_id = $aboitem->getStationId();
+		if($aboitem->hasData('icd_station_id')){
+            $station_id = $aboitem->getData('icd_station_id');
+        }
+
 		$buyRequest = new Varien_Object();
 		$buyRequest->setData('periode',$aboitem->getPeriodId());
-		$buyRequest->setData('station',$aboitem->getStationId());
+		$buyRequest->setData('station',$station_id);
 		
 		$product->setAboItem($aboitem);
 		$item = $quote->addProduct($product, $buyRequest);
@@ -31,7 +36,7 @@ class Dwd_Abo_Model_Order_Abstract extends Mage_Core_Model_Abstract
        
         /* @var $item Mage_Sales_Model_Quote_Item */
         $item->addOption(array('code'=>'periode_id','value'=>$aboitem->getPeriodId()));
-        $item->addOption(array('code'=>'station_id','value'=>$aboitem->getStationId()));
+        $item->addOption(array('code'=>'station_id','value'=>$station_id));
         $item->addOption(array('code'=>'previous_periode_end','value'=>$aboitem->getStopDate()));
       
        

@@ -2,26 +2,57 @@
 <!DOCTYPE config>
 <config>
     <modules>
+	<Bkg_Accounting>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Accounting>
 		<Bkg_Base>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Base>
+		<Bkg_Dps>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Dps>
+        <Bkg_GeoBundle>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Bkg_Viewer /> <!-- need viewer components -->
+                <Bkg_Tollpolicy /> <!-- needed because of the toll block -->
+                <Bkg_RegionAllocation />
+                <Netzarbeiter_GroupsCatalog2 /> <!-- to overwrite Wishlist -->
+                <Egovs_Checkout /> <!-- need to overwrite the renderer in order -->
+                <Egovs_Extstock /> <!-- need to overwrite Admin Sales Order Create -->
+            </depends>
+        </Bkg_GeoBundle>
 		<Bkg_Geometry>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Geometry>
+		<Bkg_GeoRequest>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Bkg_GeoBundle />   <!-- need config table -->
+                <Bkg_Viewer />      <!-- need viewer components -->
+                <Bkg_Tollpolicy />  <!-- needed because of the toll block -->
+                <Bkg_RegionAllocation />
+            </depends>
+        </Bkg_GeoRequest>
         <Bkg_License>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
-            	<B3it_Subscription />
+                <Egovs_Agreement />
             </depends>
         </Bkg_License>
         <Bkg_MapSeries>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
-      	        <Bkg_VirtualGeo /> <!-- need epsg stuff from there -->
+                <Egovs_Ready />
+      	        <Bkg_GeoBundle /> <!-- need epsg stuff from there -->
             </depends>
         </Bkg_MapSeries>
          <Bkg_Orgunit>
@@ -31,34 +62,44 @@
         		<Egovs_Base />
       		</depends>
         </Bkg_Orgunit>
+		<Bkg_Productlinks>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Productlinks>
+        <Bkg_ProductOnDemand>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Downloadable/>
+            </depends>
+        </Bkg_ProductOnDemand>
+        <Bkg_RegionAllocation>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_RegionAllocation>
         <Bkg_Shapefile>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
             	<Bkg_Viewer />
-        		<Bkg_VirtualGeo />
+        		<Bkg_GeoBundle />
       		</depends>
         </Bkg_Shapefile>
-        <Bkg_RegionAllocation>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Bkg_RegionAllocation>
         <Bkg_Tollpolicy>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Tollpolicy>
+		 <Bkg_Ticket>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Ticket>
         <Bkg_Viewer>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Viewer>
-        <Bkg_VirtualGeo>
+        <Bkg_VirtualAccess>
             <active>true</active>
             <codePool>local</codePool>
-            <depends>
-                <Bkg_Viewer /> <!-- need viewer components -->
-                <Bkg_Tollpolicy /> <!-- needed because of the toll block -->
-                <Bkg_RegionAllocation />
-            </depends>
-        </Bkg_VirtualGeo>
+        </Bkg_VirtualAccess>
     </modules>
 </config>

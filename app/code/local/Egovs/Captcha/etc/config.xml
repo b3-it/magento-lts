@@ -77,6 +77,14 @@
                     </captcha>
                 </observers>
             </controller_action_predispatch_customer_account_loginpost>
+            <controller_action_predispatch_egovs_checkout_multipage_loginpost>
+                <observers>
+                    <captcha>
+                        <class>egovscaptcha/observer</class>
+                        <method>checkUserLogin</method>
+                    </captcha>
+                </observers>
+            </controller_action_predispatch_egovs_checkout_multipage_loginpost>
             <controller_action_predispatch_wishlist_index_send>
                 <observers>
                     <captcha>

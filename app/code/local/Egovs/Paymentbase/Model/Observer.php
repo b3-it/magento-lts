@@ -644,10 +644,6 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
     }
 
     public function runAutomaticPaymentRetrieval($schedule) {
-        if (!Mage::getStoreConfigFlag('payment_services/paymentbase/enable_apr')) {
-            return;
-        }
-
         $lockKey = 'egovs_paymentbase_apr_cron_mutex' . $schedule->getId();
 
         $lockResult = Mage::helper('egovsbase/lock')->getLock($lockKey, 300);
@@ -693,16 +689,51 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
          */
         Mage::app()->loadAreaPart(Mage_Core_Model_App_Area::AREA_ADMINHTML, Mage_Core_Model_App_Area::PART_EVENTS);
 
-        try {
-            $paymentbase = Mage::getModel('paymentbase/paymentbase');
-            $paymentbase->getZahlungseingaenge();
-
-            if ($paymentbase->hasIncomingPayments()) {
-                $paymentbase->sendMailForNewPayments();
+        $aprEnabledByStore = Mage::getConfig()->getStoresConfigByPath('payment_services/paymentbase/enable_apr');
+        $aprCronExprByStore = Mage::getConfig()->getStoresConfigByPath('payment_services/paymentbase/apr_cronjob');
+        $storeIds = array();
+        foreach ($aprEnabledByStore as $storeId=>$aprEnabled) {
+            if (!$aprEnabled) {
+                Mage::log("apr::APR for store $storeId not enabled, omitting!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                continue;
             }
-        } catch (Exception $e) {
-            Mage::logException($e);
-            Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+
+            try {
+                $schedule = Mage::getModel('cron/schedule');
+                $schedule->setCronExpr($aprCronExprByStore[$storeId]);
+
+                if (!$schedule->trySchedule(time())) {
+                    Mage::log("apr::APR for store ID $storeId not scheduled for now! Cron expr was: {$aprCronExprByStore[$storeId]}, omitting!", Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+                    continue;
+                }
+
+                $storeIds[] = $storeId;
+            } catch (Exception $e) {
+                Mage::logException($e);
+                Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
+        }
+
+        /**
+         * @see Egovs_Isolation_Model_Observer_Abstract::_skipIsolation()
+         */
+        //Mage::register('IGNORE_STORE_ISOLATION',true);
+
+        if (empty($storeIds)) {
+            Mage::log('apr::No stores available to run APR', Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+        } else {
+            try {
+                $paymentbase = Mage::getModel('paymentbase/paymentbase');
+                $paymentbase->setStoreIds($storeIds);
+                $paymentbase->getZahlungseingaenge();
+
+                if ($paymentbase->hasIncomingPayments()) {
+                    $paymentbase->sendMailForNewPayments();
+                }
+            } catch (Exception $e) {
+                Mage::logException($e);
+                Mage::log(Mage::helper('paymentbase')->__('There was an runtime error for the automatic payment retrieval service. Please check your log files.'), Zend_Log::ERR, Egovs_Helper::LOG_FILE);
+            }
         }
         Mage::helper('egovsbase/lock')->releaseLock($lockKey);
         if (isset($e)) {
