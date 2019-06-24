@@ -86,6 +86,16 @@ input[type="radio"] {
     margin-right: $global-radio-checkback-spacing - 3;
 }
 
+.pseudo-input {
+    display: inline-block;
+    padding-top: 12px;
+}
+.product-cart-actions .pseudo-input {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 12px;
+}
+
 a {
     color: $global-linkcolor;
     text-decoration: none;

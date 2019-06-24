@@ -194,6 +194,7 @@ Additional block for bundle product type
     <PRODUCT_TYPE_eventbundle translate="label" module="eventbundle">
         <label>Catalog Product View (EventBundle)</label>
         <reference name="head">
+            <action method="addJs"><script>varien/product_options.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
         </reference>
         <reference name="product.info">

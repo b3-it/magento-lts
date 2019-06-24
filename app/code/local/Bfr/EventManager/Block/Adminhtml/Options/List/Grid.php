@@ -19,7 +19,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
   public function __construct()
   {
       parent::__construct();
-      $this->setId('eventoptionsGrid');
+      $this->setId('event_optionsGrid');
       $this->setDefaultSort('event_options_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
@@ -44,36 +44,37 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       /** @var Bfr_EventManager_Model_Event $event */
       $event = $this->getEvent();
       $productId = $event->getProductId();
-      $collection = Mage::getModel('sales/quote')->getCollection();
-//      $collection->setStoreId(0);
+      $collection = Mage::getResourceModel('eventmanager/sales_quote_item_collection');
+      $quote = new Varien_Object();
+
       $collection->getSelect()
-      	->join(array('quote_item'=>$collection->getTable('sales/quote_item')),'main_table.entity_id = quote_item.quote_id',array('sku','entity_id'=>'item_id'))
-        ->joinleft(array('customer'=>$collection->getTable('customer/entity')),'main_table.customer_id = customer.entity_id',array('email'))
-        ->joinleft(array('adr'=>$collection->getTable('customer/entity').'_int'),'main_table.customer_id = adr.entity_id AND adr.attribute_id='. $eav->getIdByCode('customer', 'default_billing'),array())
+      	->join(array('quote'=>$collection->getTable('sales/quote')),'main_table.quote_id = quote.entity_id',array('entity_id'=>'entity_id'))
+        ->joinleft(array('customer'=>$collection->getTable('customer/entity')),'quote.customer_id = customer.entity_id',array('email'))
+        ->joinleft(array('adr'=>$collection->getTable('customer/entity').'_int'),'quote.customer_id = adr.entity_id AND adr.attribute_id='. $eav->getIdByCode('customer', 'default_billing'),array())
         ->joinleft(array('first'=>$collection->getTable('customer/address_entity').'_varchar'), 'first.entity_id = adr.value AND first.attribute_id = '. $eav->getIdByCode('customer_address', 'firstname') ,array('firstname'=>'value'))
         ->joinleft(array('last'=>$collection->getTable('customer/address_entity').'_varchar'), 'last.entity_id = adr.value AND last.attribute_id = '. $eav->getIdByCode('customer_address', 'lastname') ,array('lastname'=>'value'))
         ->joinleft(array('company'=>$collection->getTable('customer/address_entity').'_varchar'), 'company.entity_id = adr.entity_id AND company.attribute_id = '. $eav->getIdByCode('customer_address', 'company') ,array('company'=>'value'))
 
-          ->where('quote_item.product_id = ? ', $productId);
+          ->where('main_table.product_id = ? ', $productId);
       ;
 
 
 
-     //die($collection->getSelect()->__toString());
+//     die($collection->getSelect()->__toString());
 
 
       $collection->getSelect()
-          ->joinleft(array('order' => $collection->getTable('sales/order')), "main_table.entity_id = order.quote_id", array('order_status'=>'status'));
+          ->joinleft(array('order' => $collection->getTable('sales/order')), "quote.entity_id = order.quote_id", array('order_status'=>'status'));
 
       $statusExpr = new Zend_Db_Expr('(order.status IS NOT NULL)');
 
       if(Mage::helper('eventmanager')->isModuleEnabled('Bfr_EventRequest')) {
           $collection->getSelect()
-              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "main_table.entity_id = evt.quote_id", array('request_status'=>'status'));
+              ->joinleft(array('evt' => $collection->getTable('eventrequest/request')), "quote.entity_id = evt.quote_id", array('request_status'=>'status'));
             $statusExpr = new Zend_Db_Expr('((order.status IS NOT NULL) OR (evt.status IS NOT NULL))');
       }
 
-      $collection->getSelect()->where($statusExpr);
+     // $collection->getSelect()->where($statusExpr);
 
 
 
@@ -84,7 +85,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
       {
           $alias = 'option_'.$option->getId();
           $collection->getSelect()
-              ->join(array($alias=>$collection->getTable('sales/quote_item_option')),$alias.".item_id = quote_item.item_id AND ".$alias.".code='".$alias."'",array($alias=>'value'));
+              ->joinleft(array($alias=>$collection->getTable('sales/quote_item_option')),$alias.".item_id = main_table.item_id AND ".$alias.".code='".$alias."'",array($alias=>'value'));
       }
 
 
@@ -95,6 +96,7 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
 
   protected function  _afterLoadCollection()
   {
+//      die($this->getCollection()->getSelect()->__toString());
       $product = $this->getEvent()->getProduct();
       $options = $product->getOptions();
 
