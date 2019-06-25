@@ -112,7 +112,9 @@ class Bfr_EventManager_Block_Adminhtml_Options_List_Grid extends Mage_Adminhtml_
                   $value = explode(',',$item->getData($alias));
                   foreach($value as $key=> $val)
                   {
-                      $value[$key] = $opt[$val]->getTitle();
+                      if(isset($opt[$val])) {
+                          $value[$key] = $opt[$val]->getTitle();
+                      }
                   }
                   $item->setData($alias,implode(',',$value));
               }
