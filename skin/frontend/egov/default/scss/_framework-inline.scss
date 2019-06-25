@@ -1,0 +1,52 @@
+﻿//
+// @category    design
+// @package     egov_default
+// @copyright   Copyright (c) 2015 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// SASS / Compass Framework
+// ==============================================
+
+// ----------------------------------------------
+// Compass
+
+@import "compass";
+@import "compass/css3";
+
+// ----------------------------------------------
+// EGOV-Definitionen (Maße und Variablen)
+@import "egov/fontbase";
+@import "egov/style-size";
+@import "egov/style-images";
+@import "egov/style-colors";
+
+// ----------------------------------------------
+// Vars
+@import "var";
+
+// ----------------------------------------------
+// font-awesome (Egov-Anpassung)
+
+// ----------------------------------------------
+// Functions
+
+// ----------------------------------------------
+// Mixins
+
+@import "mixin/breakpoint";
+@import "mixin/multi-column";
+@import "mixin/clearfix";
+@import "mixin/default-form";
+@import "mixin/egov_loginform";
+@import "mixin/image-replacement";
+@import "mixin/menu";
+@import "mixin/main-navigation";
+@import "mixin/new_address";
+@import "mixin/not-selectable";
+@import "mixin/if-resolution";
+@import "mixin/toggle-content";
+@import "mixin/triangle";
+@import "mixin/typography";
+@import "mixin/loading-overlay";
