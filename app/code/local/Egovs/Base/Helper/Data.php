@@ -260,13 +260,17 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function replaceTemplateAbbr($html)
     {
+        $_appendXml = false;
+        $_preXml = '<?xml encoding="UTF-8">';
+
         /* <ul><li style="display:none"></li> - hardcoded string of CatalogSearch in Block Autocomplete (Suggestion)*/
         if (empty($html) || stripos($html, '<ul><li style="display:none"></li>') !== false) {
             return $html;
         }
 
         if(stripos($html,'encoding="UTF-8"') === false) {
-            $html = '<?xml encoding="UTF-8">' . $html;
+            $_appendXml = true;
+            $html = $_preXml . $html;
         }
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->substituteEntities = false;
@@ -341,6 +345,11 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
             //saveHTML macht mit ENTITIES und UTF-8 Probleme
             $html = $dom->saveHTML();
         }
+
+        if ( $_appendXml === true ) {
+            $html = substr( $html, strlen($_preXml) );
+        }
+
         return $html;
     }
 
