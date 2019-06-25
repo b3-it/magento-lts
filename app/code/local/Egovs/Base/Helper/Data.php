@@ -347,7 +347,10 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         if ( $_appendXml === true ) {
-            $html = substr( $html, strlen($_preXml) );
+            $_firstChars = substr($html, 0, strlen($_preXml) );
+            if ( $_firstChars == $_preXml ) {
+                $html = substr($html, strlen($_preXml), strlen($html));
+            }
         }
 
         return $html;
