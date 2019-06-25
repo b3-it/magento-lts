@@ -210,8 +210,8 @@ class Egovs_Paymentbase_Model_Sepa_Mandate_Pdf extends Egovs_Pdftemplate_Model_P
 				return null;
 			}
 		} elseif (is_string($data)) {
-			if (strlen($data) > intval($key)) {
-				$data = mb_substr($data, intval($key), 1, 'UTF-8');
+			if (strlen($data) > (int)$key) {
+				$data = mb_substr($data, (int)$key, 1, 'UTF-8');
 			} else {
 				return "&nbsp;";
 			}
@@ -229,7 +229,7 @@ class Egovs_Paymentbase_Model_Sepa_Mandate_Pdf extends Egovs_Pdftemplate_Model_P
 				}
 				$tmp = null;
 				try {
-					$tmp = @call_user_func(array($data,$uckey));
+					$tmp = @$data->$uckey();
 				} catch (Exception $e) {
 					return '';
 				}
@@ -248,7 +248,7 @@ class Egovs_Paymentbase_Model_Sepa_Mandate_Pdf extends Egovs_Pdftemplate_Model_P
 			}
 			$tmp = null;
 			try {
-				$tmp = @call_user_func(array($data, $uckey));
+				$tmp = @$data->$uckey();
 			} catch (Exception $e) {
 				return '';
 			}
