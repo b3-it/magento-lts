@@ -67,11 +67,6 @@
                     <data>Egovs_Search_Helper_Datasearch</data>
                 </rewrite>
             </catalogsearch>
-            <catalogSearch>
-                <rewrite>
-                    <data>Egovs_Search_Helper_Datasearch</data>
-                </rewrite>
-            </catalogSearch>
         </helpers>
         <events>
             <catalog_product_save_after>
