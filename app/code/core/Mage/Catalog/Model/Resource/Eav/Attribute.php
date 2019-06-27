@@ -249,13 +249,10 @@ class Mage_Catalog_Model_Resource_Eav_Attribute extends Mage_Eav_Model_Entity_At
             if (is_array($this->getData('apply_to'))) {
                 return $this->getData('apply_to');
             }
-            $applyTo = explode(',', $this->getData('apply_to'));
-            if (is_array($applyTo)) {
-                return $applyTo;
-            }
+            return explode(',', $this->getData('apply_to'));
+        } else {
+            return array();
         }
-
-        return array();
     }
 
     /**
