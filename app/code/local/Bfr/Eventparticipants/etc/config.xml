@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bfr_Eventparticipants>
+            <version>0.1.0.0</version>
+        </Bfr_Eventparticipants>
+    </modules>
+    <global>
+        <helpers>
+            <bfr_eventparticipants>
+                <class>Bfr_Eventparticipants_Helper</class>
+            </bfr_eventparticipants>
+        </helpers>
+        <resources>
+            <bfr_eventparticipants_setup>
+                <setup>
+                    <module>Bfr_Eventparticipants</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </bfr_eventparticipants_setup>
+        </resources>
+        <blocks>
+          <bfr_eventparticipants>
+              <class>Bfr_Eventparticipants_Block</class>
+          </bfr_eventparticipants>
+        </blocks>
+        <models>
+            <bfr_eventparticipants>
+                <class>Bfr_Eventparticipants_Model</class>
+                <resourceModel>bfr_eventparticipants_resource</resourceModel>
+            </bfr_eventparticipants>
+            <bfr_eventparticipants_resource>
+                <class>Bfr_Eventparticipants_Model_Resource</class>
+                <entities>
+                  <notification_order>
+                    <table>bfr_eventparticipants_notification_order</table>
+                  </notification_order>
+
+                </entities>
+            </bfr_eventparticipants_resource>
+        </models>
+    </global>
+    <frontend>
+      <routers>
+            <bfr_eventparticipants>
+                <use>standard</use>
+                <args>
+                    <module>Bfr_Eventparticipants</module>
+                    <frontName>bfr_eventparticipants</frontName>
+                </args>
+            </bfr_eventparticipants>
+        </routers>
+        <layout>
+            <updates>
+                <bfr_eventparticipants>
+                  <file>bfr/eventparticipants.xml</file>
+                </bfr_eventparticipants>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+              <Bfr_Eventparticipants>
+                  <files>
+                      <default>bfr/eventparticipants.csv</default>
+                  </files>
+              </Bfr_Eventparticipants>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+      <routers>
+          <adminhtml>
+              <args>
+                  <modules>
+                      <Bfr_Eventparticipants_Adminhtml after="Mage_Adminhtml">Bfr_Eventparticipants_Adminhtml</Bfr_Eventparticipants_Adminhtml>
+                  </modules>
+              </args>
+          </adminhtml>
+      </routers>
+    </admin>
+    <adminhtml>
+      <menu>
+          <bfreventparticipants module="bfr_eventparticipants">
+              <title>Bfr Eventparticipants</title>
+              <sort_order>50</sort_order>
+              <children>
+                  <bfreventparticipants_notification_order module="bfr_eventparticipants">
+                      <title>Notification Order</title>
+                      <sort_order>10</sort_order>
+                      <action>adminhtml/eventparticipants_notification_order/index</action>
+                  </bfreventparticipants_notification_order>
+
+              </children>
+          </bfreventparticipants>
+      </menu>
+      <acl>
+          <resources>
+              <all>
+                  <title>Allow Everything</title>
+              </all>
+              <admin>
+                  <children>
+                      <bfreventparticipants module="bfr_eventparticipants">
+                          <title>Bfr Eventparticipants</title>
+                          <sort_order>10</sort_order>
+                          <children>
+                                <bfreventparticipants_notification_order module="bfr_eventparticipants">
+                                  <title>Notification Order</title>
+                                  <sort_order>10</sort_order>
+                              </bfreventparticipants_notification_order>
+
+                          </children>
+                      </bfreventparticipants>
+                  </children>
+              </admin>
+          </resources>
+      </acl>
+        <translate>
+            <modules>
+                <Bfr_Eventparticipants>
+                    <files>
+                        <default>bfr/eventparticipants.csv</default>
+                    </files>
+                </Bfr_Eventparticipants>
+            </modules>
+        </translate>
+        <layout>
+          <updates>
+            <bfreventparticipants>
+              <file>bfr/eventparticipants.xml</file>
+            </bfreventparticipants>
+          </updates>
+        </layout>
+    </adminhtml>
+</config>
