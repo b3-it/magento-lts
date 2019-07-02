@@ -23,9 +23,9 @@
             </bfr_eventparticipants_setup>
         </resources>
         <blocks>
-          <bfr_eventparticipants>
-              <class>Bfr_Eventparticipants_Block</class>
-          </bfr_eventparticipants>
+            <bfr_eventparticipants>
+                <class>Bfr_Eventparticipants_Block</class>
+            </bfr_eventparticipants>
         </blocks>
         <models>
             <bfr_eventparticipants>
@@ -35,16 +35,16 @@
             <bfr_eventparticipants_resource>
                 <class>Bfr_Eventparticipants_Model_Resource</class>
                 <entities>
-                  <notification_order>
-                    <table>bfr_eventparticipants_notification_order</table>
-                  </notification_order>
+                    <notification_order>
+                        <table>bfr_eventparticipants_notification_order</table>
+                    </notification_order>
 
                 </entities>
             </bfr_eventparticipants_resource>
         </models>
     </global>
     <frontend>
-      <routers>
+        <routers>
             <bfr_eventparticipants>
                 <use>standard</use>
                 <args>
@@ -56,68 +56,88 @@
         <layout>
             <updates>
                 <bfr_eventparticipants>
-                  <file>bfr/eventparticipants.xml</file>
+                    <file>bfr/eventparticipants.xml</file>
                 </bfr_eventparticipants>
             </updates>
         </layout>
         <translate>
             <modules>
-              <Bfr_Eventparticipants>
-                  <files>
-                      <default>bfr/eventparticipants.csv</default>
-                  </files>
-              </Bfr_Eventparticipants>
+                <Bfr_Eventparticipants>
+                    <files>
+                        <default>bfr/eventparticipants.csv</default>
+                    </files>
+                </Bfr_Eventparticipants>
             </modules>
         </translate>
+        <events>
+            <checkout_cart_add_product_complete>
+                <observers>
+                    <participation_agreement_add>
+                        <type>singleton</type>
+                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
+                        <method>AfterCartAddProduct</method>
+                    </participation_agreement_add>
+                </observers>
+            </checkout_cart_add_product_complete>
+            <checkout_cart_save_after>
+                <observers>
+                    <participation_agreement_edit>
+                        <type>singleton</type>
+                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
+                        <method>AfterCardEditProduct</method>
+                    </participation_agreement_edit>
+                </observers>
+            </checkout_cart_save_after>
+        </events>
     </frontend>
     <admin>
-      <routers>
-          <adminhtml>
-              <args>
-                  <modules>
-                      <Bfr_Eventparticipants_Adminhtml after="Mage_Adminhtml">Bfr_Eventparticipants_Adminhtml</Bfr_Eventparticipants_Adminhtml>
-                  </modules>
-              </args>
-          </adminhtml>
-      </routers>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bfr_Eventparticipants_Adminhtml after="Mage_Adminhtml">Bfr_Eventparticipants_Adminhtml</Bfr_Eventparticipants_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
     </admin>
     <adminhtml>
-      <menu>
-          <bfreventparticipants module="bfr_eventparticipants">
-              <title>Bfr Eventparticipants</title>
-              <sort_order>50</sort_order>
-              <children>
-                  <bfreventparticipants_notification_order module="bfr_eventparticipants">
-                      <title>Notification Order</title>
-                      <sort_order>10</sort_order>
-                      <action>adminhtml/eventparticipants_notification_order/index</action>
-                  </bfreventparticipants_notification_order>
+        <menu>
+            <bfreventparticipants module="bfr_eventparticipants">
+                <title>Bfr Eventparticipants</title>
+                <sort_order>50</sort_order>
+                <children>
+                    <bfreventparticipants_notification_order module="bfr_eventparticipants">
+                        <title>Notification Order</title>
+                        <sort_order>10</sort_order>
+                        <action>adminhtml/eventparticipants_notification_order/index</action>
+                    </bfreventparticipants_notification_order>
 
-              </children>
-          </bfreventparticipants>
-      </menu>
-      <acl>
-          <resources>
-              <all>
-                  <title>Allow Everything</title>
-              </all>
-              <admin>
-                  <children>
-                      <bfreventparticipants module="bfr_eventparticipants">
-                          <title>Bfr Eventparticipants</title>
-                          <sort_order>10</sort_order>
-                          <children>
+                </children>
+            </bfreventparticipants>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <bfreventparticipants module="bfr_eventparticipants">
+                            <title>Bfr Eventparticipants</title>
+                            <sort_order>10</sort_order>
+                            <children>
                                 <bfreventparticipants_notification_order module="bfr_eventparticipants">
-                                  <title>Notification Order</title>
-                                  <sort_order>10</sort_order>
-                              </bfreventparticipants_notification_order>
+                                    <title>Notification Order</title>
+                                    <sort_order>10</sort_order>
+                                </bfreventparticipants_notification_order>
 
-                          </children>
-                      </bfreventparticipants>
-                  </children>
-              </admin>
-          </resources>
-      </acl>
+                            </children>
+                        </bfreventparticipants>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
         <translate>
             <modules>
                 <Bfr_Eventparticipants>
@@ -128,11 +148,11 @@
             </modules>
         </translate>
         <layout>
-          <updates>
-            <bfreventparticipants>
-              <file>bfr/eventparticipants.xml</file>
-            </bfreventparticipants>
-          </updates>
+            <updates>
+                <bfreventparticipants>
+                    <file>bfr/eventparticipants.xml</file>
+                </bfreventparticipants>
+            </updates>
         </layout>
     </adminhtml>
 </config>
