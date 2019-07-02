@@ -1,0 +1,58 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.price {
+	color: $grundfarbe1;
+	font-weight: bold;
+}
+
+td.a-right {
+	text-align: right;
+}
+td.a-center {
+	text-align: center;
+}
+
+.nobr, .no-break {
+	white-space: nowrap;
+}
+
+.egov-float-left {
+    float: left;
+}
+
+.egov-float-right {
+    float: right;
+}
+
+.egov-float-stop {
+    clear: all;
+}
+
+.no-display {
+	display: none;
+}
+.no-border {
+	// Damit der Border nicht neu gesetzt werden kann
+	border: 0 !important;
+}
+
+.egov-rss {
+	color: $rss-icon-color;
+}
+
+.sub-title {
+	border-bottom: $border-width solid $grundfarbe1;
+	font-size: $checkout-title;
+	margin-top: $default-margin;
+	line-height: $checkout-title-height;
+
+	> a {
+		float: right;
+		margin-top: 1%;
+	}
+}

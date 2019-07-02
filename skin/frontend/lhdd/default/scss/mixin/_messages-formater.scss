@@ -1,0 +1,33 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/**
+ * Standard-Formatierung für Fehler-, Hinweis- und Success-Meldungen
+ *
+ * @param   Color    Farb-Code für Schrift und Pfeil
+ * @param   Color    Farb-Code für Hintergrund
+ */
+@mixin messages-formater($message-color: #000000, $message-background: #FFFFFF)
+{
+    position: relative;
+    text-align: left;
+    padding: $default-padding $default-padding * 2 $default-padding $default-padding * 4;
+    font-size: $message-size;
+    color: $message-color;
+    border-left: $message-border solid $message-color;
+    background-color: $message-background;
+
+    &:before {
+        top: 50%;
+        left: 0;
+        margin-top: 0 - $default-padding;
+    }
+
+    &:before {
+        @include triangle(right, $message-triagle, $message-color);
+    }
+}

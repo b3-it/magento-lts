@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <LhDresden_Base>
+            <version>0.0.0.1</version>
+        </LhDresden_Base>
+    </modules>
+    <global>
+        <resources>
+            <lhdresden_setup>
+                <setup>
+                    <module>LhDresden_Base</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </lhdresden_setup>
+        </resources>
+    </global>
+</config>

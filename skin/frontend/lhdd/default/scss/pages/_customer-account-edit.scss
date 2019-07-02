@@ -1,0 +1,31 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.customer-account-edit {
+}
+
+.customer-account-edit form .form-list li > div:nth-child(2n):not(.halfwide) {
+	margin: 0;
+}
+
+#account-block, #password-block {
+	vertical-align: top;
+	display: inline-block;
+}
+
+#password-block {
+	width: 48%;
+	float: right;
+
+	.form-list li > div:nth-child(2n) {
+		float: right;
+
+		@include bp(max-width, $desktop-page-width) {
+			float: none;
+		}
+	}
+}

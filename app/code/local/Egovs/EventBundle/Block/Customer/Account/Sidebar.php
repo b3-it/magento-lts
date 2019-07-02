@@ -433,7 +433,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
 				
 			}
 			$option->setSelections($selections);
-			if(count($selections) == null){
+			if (!$selections || ((is_array($selections) || $selections instanceof Countable) && count($selections) < 1)) {
 				unset($options[$opt_id]);
 			}
 		}
@@ -443,7 +443,7 @@ class Egovs_EventBundle_Block_Customer_Account_Sidebar extends Mage_Core_Block_T
  	public function getSize($sql, $connection)
     {
         $size = $connection->fetchOne($sql);
-        return intval($size);
+        return (int)$size;
     }
 	
 	/**

@@ -1,0 +1,16 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.contacts-index-index .col-main {
+	.form-list .field:nth-child(2n) {
+		margin-left: 3%;
+	}
+
+	.form-list li > div.input-box {
+		margin-left: 0;
+	}
+}

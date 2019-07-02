@@ -49,6 +49,10 @@ $j(document).ready(function () {
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.min.js');
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.init.js');
     }
+
+    $j('.toggleLoading').click(function(){
+        toggleLoadingMask();
+    });
 });
 
 (function($j){

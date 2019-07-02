@@ -13,7 +13,7 @@ html,
 body {
     height: 100%;
     /* auf 0 setzen, da sonst ueber dem Header ein Leer-Raum entsteht */
-    line-height: 0px;
+    line-height: 0;
 }
 
 .wrapper {
@@ -25,6 +25,13 @@ body {
 
     .page {
         height: 100vh;
+
+        > .widget-static-block {
+            @include bp(max-width, 500px) {
+                position: relative;
+                top: 55px;
+            }
+        }
     }
 }
 

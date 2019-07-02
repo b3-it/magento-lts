@@ -1,0 +1,50 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="col2-set">
+    <div class="col-1">
+        <h2>
+            <?php echo $this->__('Contact Information') ?>
+            <a class="egov-pencile"
+               href="<?php echo $this->getUrl('customer/account/edit') ?>"
+               title="<?php echo $this->__('Edit') ?>"> </a>
+        </h2>
+        <div class="block-content">
+            <div>
+                <?php echo $this->escapeHtml($this->getCustomer()->getName()) ?>
+            </div>
+            <div class="customer-address">
+                <?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>
+                <a class="egov-password"
+                   href="<?php echo $this->getChangePasswordUrl() ?>"
+                   title="<?php echo $this->__('Change Password') ?>"> </a>
+            </div>
+        </div>
+    </div>
+  <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="col-2">
+        <h2>
+            <?php echo $this->__('Newsletters') ?>
+            <a class="egov-pencile"
+               href="<?php echo $this->getUrl('newsletter/manage') ?>"
+               title="<?php echo $this->__('Edit') ?>"> </a>
+        </h2>
+        <div class="block-content">
+            <p>
+                <?php if( $this->getIsSubscribed() ): ?>
+                    <?php echo $this->__("You are currently subscribed to 'General Subscription'.") ?>
+                <?php else: ?>
+                    <?php echo $this->__('You are currently not subscribed to any newsletter.') ?>
+                <?php endif; ?>
+            </p>
+        </div>
+    </div>
+    <?php /* Extensions placeholder */ ?>
+    <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
+  <?php endif; ?>
+</div>

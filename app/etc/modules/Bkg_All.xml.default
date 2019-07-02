@@ -23,6 +23,7 @@
                 <Bkg_RegionAllocation />
                 <Netzarbeiter_GroupsCatalog2 /> <!-- to overwrite Wishlist -->
                 <Egovs_Checkout /> <!-- need to overwrite the renderer in order -->
+                <Egovs_Extstock /> <!-- need to overwrite Admin Sales Order Create -->
             </depends>
         </Bkg_GeoBundle>
 		<Bkg_Geometry>
@@ -43,7 +44,7 @@
             <active>true</active>
             <codePool>local</codePool>
             <depends>
-            	<B3it_Subscription />
+                <Egovs_Agreement />
             </depends>
         </Bkg_License>
         <Bkg_MapSeries>
@@ -81,29 +82,24 @@
             <codePool>local</codePool>
             <depends>
             	<Bkg_Viewer />
-        		<Bkg_VirtualGeo />
+        		<Bkg_GeoBundle />
       		</depends>
         </Bkg_Shapefile>
-        <Bkg_RegionAllocation>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Bkg_RegionAllocation>
         <Bkg_Tollpolicy>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Tollpolicy>
+		 <Bkg_Ticket>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bkg_Ticket>
         <Bkg_Viewer>
             <active>true</active>
             <codePool>local</codePool>
         </Bkg_Viewer>
-        <Bkg_VirtualGeo>
+        <Bkg_VirtualAccess>
             <active>true</active>
             <codePool>local</codePool>
-            <depends>
-                <Bkg_Viewer /> <!-- need viewer components -->
-                <Bkg_Tollpolicy /> <!-- needed because of the toll block -->
-                <Bkg_RegionAllocation />
-            </depends>
-        </Bkg_VirtualGeo>
+        </Bkg_VirtualAccess>
     </modules>
 </config>

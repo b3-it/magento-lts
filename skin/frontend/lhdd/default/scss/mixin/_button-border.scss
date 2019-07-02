@@ -1,0 +1,52 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+
+// Diese Funktion emuliert das Aussehen eines eingefärbten Button-Objekts.
+// Es wird ein Pseudo-Rahmen um Elemente gezeichnet.
+//
+// @param     $position            Position, an welcher ein Rahmen gezeichnet werden soll
+//                                 * bei Einzel-Angaben wird der Parameter $change zum zeichnen verwendet
+//                                 * bei Doppel-Angaben wird der erste Teil dunkel und der zweite Teil hell
+// @param     $border-width        Breite des Rahmens in Pixel
+// @param     $change              Methode für das Zeichnen ('darken' oder 'lighten')
+//                                 * Dieses Parameter wird bei Doppel-Angaben ignoriert
+// @param     $basecolor           Farb-Informationen, welche zum zeichnen verwendet werden
+// @param     $delta               Prozent-Wert, um welchen die Farbe verändert werden soll
+
+@mixin button-border($position: left, $border-width: 1px, $change: darken, $basecolor: #000000, $delta: 0%) {
+	@if $position == top {
+		border-top: $border-width solid $change($basecolor, $delta);
+	}
+	@if $position == right {
+		border-right: $border-width solid $change($basecolor, $delta);
+	}
+	@if $position == bottom {
+		border-bottom: $border-width solid $change($basecolor, $delta);
+	}
+	@if $position == left {
+		border-left: $border-width solid $change($basecolor, $delta);
+	}
+
+	@if $position == left-right {
+		border-left: $border-width solid darken($basecolor, $delta);
+		border-right: $border-width solid lighten($basecolor, $delta);
+	}
+	@if $position == right-left {
+		border-left: $border-width solid lighten($basecolor, $delta);
+		border-right: $border-width solid darken($basecolor, $delta);
+	}
+
+	@if $position == top-bottom {
+		border-left: $border-width solid darken($basecolor, $delta);
+		border-right: $border-width solid lighten($basecolor, $delta);
+	}
+	@if $position == bottom-top {
+		border-left: $border-width solid lighten($basecolor, $delta);
+		border-right: $border-width solid darken($basecolor, $delta);
+	}
+}

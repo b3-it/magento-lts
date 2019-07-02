@@ -1,0 +1,24 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.in-stock, .out-of-stock {
+	font-size: $article-stock-size;
+}
+.in-stock {
+	font-weight: bold;
+	color: $grundfarbe1;
+}
+.out-of-stock {
+	font-style: italic;
+	color: $fehler-text-color;
+}
+
+.col3-layout {
+	.in-stock, .out-of-stock {
+		display: block;
+	}
+}

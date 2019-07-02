@@ -1,0 +1,33 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h2><?php echo $this->__('My Dashboard') ?></h2>
+</div>
+<div class="dashboard" id="jumptarget<?php echo $this->getNameInLayout();?>">
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('hello') ?>
+    <?php echo $this->getChildHtml('top') ?>
+    <div>
+        <h2 class="sub-title"><?php echo $this->__('Account Information') ?></h2>
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
+        <?php echo $this->getChildHtml('info') ?>
+    </div>
+    <div>
+        <h2 class="sub-title">
+            <?php echo $this->__('Address Book') ?>
+            <a class="egov-pencile"
+               href="<?php echo $this->getUrl('customer/address', array('_secure'=>true)) ?>"
+               title="<?php echo $this->__('Manage Addresses') ?>"> </a>
+        </h2>
+        <?php echo $this->getChildHtml('address') ?>
+    </div>
+    <?php echo $this->getChildHtml('info1') ?>
+    <?php echo $this->getChildHtml('info2') ?>
+</div>

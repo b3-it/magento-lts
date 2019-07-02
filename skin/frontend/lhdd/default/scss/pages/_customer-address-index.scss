@@ -1,0 +1,19 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.customer-address-index {
+	.col2-set .block {
+		margin-bottom: 0;
+		
+		&:not(:last-child) .block-footer {
+			border-bottom: $border-width solid $grundfarbe2;
+		}
+	}
+	.col2-set {
+		margin-bottom: $default-margin;
+	}
+}

@@ -1,0 +1,30 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.breadcrumbs {
+	display: block;
+	overflow: hidden;
+	margin-bottom: $default-margin;
+	border-bottom: $border-width solid $zusatzfarbe4;
+
+	ul {
+		height: 1.6rem;
+		position: relative;
+
+		&:after {
+			@include fading-left-right(10%, $grundfarbe-hell);
+		}
+	}
+
+	li {
+	    display: inline;
+
+	    span {
+	        margin: 0 $default-margin / 2;
+	    }
+	}
+}

@@ -1,0 +1,35 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     lhdd_default
+ * @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+$_herausgeber = $this->getLayout()->createBlock('cms/block')->setBlockId('footerblock_herausgeber')->toHTML();
+$_spacer      = ( strlen($_herausgeber) ? '' : ' half-width' );
+?>
+<div class="footer-container">
+    <!--Sprungziel Tastatursteuerung -->
+    <div id="jumptarget<?php echo $this->getNameInLayout();?>">
+        <h2 style="display:none;"><?php echo $this->__('Service Menue')?></h2>
+    </div>
+
+    <div id="footer-wrapper">
+        <div class="footer">
+            <div class="footer-links<?php echo $_spacer; ?>">
+            	<?php echo $_herausgeber; ?>
+            	<?php echo $this->getChildHtml() ?>
+            </div>
+            <address class="copyright">
+            <?php
+                if ( $this->canShowVersion() == true ) {
+              	    echo $this->__('(Version %s) ', $this->getVersion());
+                }    
+            
+                echo $this->getCopyright();
+            ?>
+            </address>
+        </div>
+    </div>
+</div>

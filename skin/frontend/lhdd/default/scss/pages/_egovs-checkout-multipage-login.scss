@@ -1,0 +1,27 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.egov-account-login {
+	/* siehe _customer-account-login.scss */
+	top: 0 !important;
+
+	.col-1, .col-2 {
+		height: 25rem !important;
+	}
+
+	.new-users .form-list {
+		@include form-list;
+	}
+
+	ul.form-list li {
+		height: auto !important;
+	}
+
+	.new-users .button {
+		width: $one-button-width;
+	}
+}

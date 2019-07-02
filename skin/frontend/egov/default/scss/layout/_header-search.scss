@@ -10,8 +10,6 @@
  * ============================================ */
 
 .skip-search {
-	top: 5px;
-
     @include bp(min-width, 911px) {
     	display: none;
     }
