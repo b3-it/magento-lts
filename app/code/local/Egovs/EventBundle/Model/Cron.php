@@ -39,7 +39,7 @@ class Egovs_EventBundle_Model_Cron extends Mage_Core_Model_Abstract
     	$collection = Mage::getModel('catalog/product')->getCollection();
     	$collection->addAttributeToSelect('*');
     	$collection->addAttributeToFilter('date_notsaleable',array('neq'=>null));
-    	$collection->addAttributeToFilter('date_notsaleable',array('lt'=> Mage::getModel('core/date')->Date()));
+    	$collection->addAttributeToFilter('date_notsaleable',array('lt'=> Mage::getModel('core/date')->date()));
     	$collection->getSelect()->where("type_id = '".Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE."'");
     	
     	foreach($collection as $product){
