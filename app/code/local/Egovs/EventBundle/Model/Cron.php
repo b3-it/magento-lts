@@ -57,14 +57,13 @@ class Egovs_EventBundle_Model_Cron extends Mage_Core_Model_Abstract
     	/* @var $collection Mage_Catalog_Model_Resource_Product_Collection */
     	$collection = Mage::getModel('catalog/product')->getCollection();
     	$collection->addAttributeToSelect('*');
+    	$collection->addAttributeToFilter('status', array('eq'=>Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
     	$collection->addAttributeToFilter('date_disable',array('neq'=>null));
     	$collection->addAttributeToFilter('date_disable',array('lt'=> Mage::getModel('core/date')->date()));
     	$collection->getSelect()->where("type_id = '".Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE."'");
     	 
     	foreach($collection as $product){
-    		
     		$product
-    			->setDateDisable(null)
     			->setStatus(Mage_Catalog_Model_Product_Status::STATUS_DISABLED)
     			->save();
     	}
