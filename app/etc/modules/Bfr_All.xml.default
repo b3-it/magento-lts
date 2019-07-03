@@ -51,7 +51,7 @@
         <codePool>local</codePool>
         <depends>
             <Bfr_Base />
-            <Egovs_EventBundle />
+            <Bfr_EventManager />
             <Egovs_ProductFile />
         </depends>
     </Bfr_EventFeed>

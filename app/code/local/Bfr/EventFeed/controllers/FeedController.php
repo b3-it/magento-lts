@@ -19,8 +19,11 @@ class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
 
         // add attributes to select which can be added to atom
         $collection->addAttributeToSelect([
-            'name','description','short_description','name_prefix','productfile'
+            'name','description','short_description', 'productfile', 'date_disable'
         ]);
+
+        // Join with Event to get Beginn
+        $collection->joinTable('eventmanager/event', "product_id=entity_id", 'event_from');
 
         $timezone = new DateTimeZone(Mage::getStoreConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE));
 
@@ -82,9 +85,16 @@ class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
             $entry->addLink($item->getProductUrl(), null, 'text/html', $locale, $item->getName());
 
             // proprietary attributes
-            $namePrefix = $item->getData("name_prefix");
-            if (isset($namePrefix)) {
-                $entry->addChild('e:periode', $namePrefix);
+            $event_from = $item->getData('event_from');
+            if (isset($event_from)) {
+                $date = new DateTime($event_from, $timezone);
+                $entry->addChild('e:period_from', $date->format(DateTime::ATOM));
+            }
+
+            $date_disable = $item->getData('date_disable');
+            if (isset($date_disable)) {
+                $date = new DateTime($date_disable, $timezone);
+                $entry->addChild('e:period_to', $date->format(DateTime::ATOM));
             }
 
             // egovs productfile check for existence
