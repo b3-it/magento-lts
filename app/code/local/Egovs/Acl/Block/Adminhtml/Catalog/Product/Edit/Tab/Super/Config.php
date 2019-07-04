@@ -39,255 +39,39 @@ class Egovs_Acl_Block_Adminhtml_Catalog_Product_Edit_Tab_Super_Config extends Ma
      *
      * @return Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config
      */
-    protected function _prepareLayout()
-    {	
-    	$canAdd = Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/newproducts');  
-    	     
-     
-    	
+    protected function _prepareLayout() {
+        $canAdd = Mage::getSingleton('admin/session')->isAllowed('admin/catalog/products/newproducts');
+
         $this->setChild('grid',
-            $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_super_config_grid')
+            $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_super_config_grid',
+                'admin.product.edit.tab.super.config.grid')
         );
-     if($canAdd)
-     {
-        $this->setChild('create_empty',
-            $this->getLayout()->createBlock('adminhtml/widget_button')
-                ->setData(array(
-                    'label' => Mage::helper('catalog')->__('Create Empty'),
-                    'class' => 'add',
-                    'onclick' => 'superProduct.createEmptyProduct()'
-                ))
-        );
-
-        if ($this->_getProduct()->getId()) {
-            $this->setChild('simple',
-                $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_super_config_simple')
-            );
-
-            $this->setChild('create_from_configurable',
+        if ($canAdd) {
+            $this->setChild('create_empty',
                 $this->getLayout()->createBlock('adminhtml/widget_button')
                     ->setData(array(
-                        'label' => Mage::helper('catalog')->__('Copy From Configurable'),
+                        'label' => Mage::helper('catalog')->__('Create Empty'),
                         'class' => 'add',
-                        'onclick' => 'superProduct.createNewProduct()'
+                        'onclick' => 'superProduct.createEmptyProduct()',
                     ))
             );
+
+            if ($this->_getProduct()->getId()) {
+                $this->setChild('simple',
+                    $this->getLayout()->createBlock('adminhtml/catalog_product_edit_tab_super_config_simple',
+                        'catalog.product.edit.tab.super.config.simple')
+                );
+
+                $this->setChild('create_from_configurable',
+                    $this->getLayout()->createBlock('adminhtml/widget_button')
+                        ->setData(array(
+                            'label' => Mage::helper('catalog')->__('Copy From Configurable'),
+                            'class' => 'add',
+                            'onclick' => 'superProduct.createNewProduct()',
+                        ))
+                );
+            }
         }
-     }
         return Mage_Adminhtml_Block_Widget::_prepareLayout();
-    }
-
-    /**
-     * Retrieve currently edited product object
-     *
-     * @return Mage_Catalog_Model_Product
-     */
-    protected function _getProduct()
-    {
-        return Mage::registry('current_product');
-    }
-
-    /**
-     * Retrieve attributes data in JSON format
-     *
-     * @return string
-     */
-    public function getAttributesJson()
-    {
-        $attributes = $this->_getProduct()->getTypeInstance(true)
-            ->getConfigurableAttributesAsArray($this->_getProduct());
-        if(!$attributes) {
-            return '[]';
-        }
-        return Zend_Json::encode($attributes);
-    }
-
-    /**
-     * Retrieve Links in JSON format
-     *
-     * @return string
-     */
-    public function getLinksJson()
-    {
-        $products = $this->_getProduct()->getTypeInstance(true)
-            ->getUsedProducts(null, $this->_getProduct());
-        if(!$products) {
-            return '{}';
-        }
-        $data = array();
-        foreach ($products as $product) {
-            $data[$product->getId()] = $this->getConfigurableSettings($product);
-        }
-        return Zend_Json::encode($data);
-    }
-
-    /**
-     * Retrieve configurable settings
-     *
-     * @param Mage_Catalog_Model_Product $product
-     * @return array
-     */
-    public function getConfigurableSettings($product) {
-        $data = array();
-        $attributes = $this->_getProduct()->getTypeInstance(true)
-            ->getUsedProductAttributes($this->_getProduct());
-        foreach ($attributes as $attribute) {
-            $data[] = array(
-                'attribute_id' => $attribute->getId(),
-                'label'        => $product->getAttributeText($attribute->getAttributeCode()),
-                'value_index'  => $product->getData($attribute->getAttributeCode())
-            );
-        }
-
-        return $data;
-    }
-
-    /**
-     * Retrieve Grid child HTML
-     *
-     * @return string
-     */
-    public function getGridHtml()
-    {
-        return $this->getChildHtml('grid');
-    }
-
-    /**
-     * Retrieve Grid JavaScript object name
-     *
-     * @return string
-     */
-    public function getGridJsObject()
-    {
-        return $this->getChild('grid')->getJsObjectName();
-    }
-
-    /**
-     * Retrieve Create New Empty Product URL
-     *
-     * @return string
-     */
-    public function getNewEmptyProductUrl()
-    {
-        return $this->getUrl(
-            '*/*/new',
-            array(
-                'set'      => $this->_getProduct()->getAttributeSetId(),
-                'type'     => Mage_Catalog_Model_Product_Type::TYPE_SIMPLE,
-                'required' => $this->_getRequiredAttributesIds(),
-                'popup'    => 1
-            )
-        );
-    }
-
-    /**
-     * Retrieve Create New Product URL
-     *
-     * @return string
-     */
-    public function getNewProductUrl()
-    {
-        return $this->getUrl(
-            '*/*/new',
-            array(
-                'set'      => $this->_getProduct()->getAttributeSetId(),
-                'type'     => Mage_Catalog_Model_Product_Type::TYPE_SIMPLE,
-                'required' => $this->_getRequiredAttributesIds(),
-                'popup'    => 1,
-                'product'  => $this->_getProduct()->getId()
-            )
-        );
-    }
-
-    /**
-     * Retrieve Quick create product URL
-     *
-     * @return string
-     */
-    public function getQuickCreationUrl()
-    {
-        return $this->getUrl(
-            '*/*/quickCreate',
-            array(
-                'product'  => $this->_getProduct()->getId()
-            )
-        );
-    }
-
-    /**
-     * Retrieve Required attributes Ids (comma separated)
-     *
-     * @return string
-     */
-    protected function _getRequiredAttributesIds()
-    {
-        $attributesIds = array();
-        foreach ($this->_getProduct()->getTypeInstance(true)->getConfigurableAttributes($this->_getProduct()) as $attribute) {
-            $attributesIds[] = $attribute->getProductAttribute()->getId();
-        }
-
-        return implode(',', $attributesIds);
-    }
-
-    /**
-     * Escape JavaScript string
-     *
-     * @param string $string
-     * @return string
-     */
-    public function escapeJs($string)
-    {
-        return addcslashes($string, "'\r\n\\");
-    }
-
-    /**
-     * Retrieve Tab label
-     *
-     * @return string
-     */
-    public function getTabLabel()
-    {
-        return Mage::helper('catalog')->__('Associated Products');
-    }
-
-    /**
-     * Retrieve Tab title
-     *
-     * @return string
-     */
-    public function getTabTitle()
-    {
-        return Mage::helper('catalog')->__('Associated Products');
-    }
-
-    /**
-     * Can show tab flag
-     *
-     * @return bool
-     */
-    public function canShowTab()
-    {
-        return true;
-    }
-
-    /**
-     * Check is a hidden tab
-     *
-     * @return bool
-     */
-    public function isHidden()
-    {
-        return false;
-    }
-
-    /**
-     * Show "Use default price" checkbox
-     *
-     * @return bool
-     */
-    public function getShowUseDefaultPrice()
-    {
-        return !Mage::helper('catalog')->isPriceGlobal()
-            && $this->_getProduct()->getStoreId();
     }
 }

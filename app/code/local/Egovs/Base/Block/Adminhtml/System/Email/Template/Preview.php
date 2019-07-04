@@ -61,7 +61,7 @@ class Egovs_Base_Block_Adminhtml_System_Email_Template_Preview extends Mage_Admi
 
 		/* @var $filter Mage_Core_Model_Input_Filter_MaliciousCode */
 		$filter = Mage::getSingleton('core/input_filter_maliciousCode');
-		//Tabs hier nicht filtern
+		//Tabs und meta hier nicht filtern
 		$_expressions = array(
 				//comments, must be first
 				'/(\/\*.*\*\/)/Us',
@@ -80,9 +80,13 @@ class Egovs_Base_Block_Adminhtml_System_Email_Template_Preview extends Mage_Admi
 		);
 		$filter->setExpressions($_expressions);
 
-		$template->setTemplateText(
-				$filter->filter($template->getTemplateText())
-		);
+        $template->setTemplateStyles(
+            $this->maliciousCodeFilter($template->getTemplateStyles())
+        );
+
+        $template->setTemplateText(
+            $this->maliciousCodeFilter($template->getTemplateText())
+        );
 
 		Varien_Profiler::start("email_template_proccessing");
 		$vars = array();
