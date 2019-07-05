@@ -63,7 +63,7 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
 
         if ($grouped) {
             return $this->_isGroupedTax($product);
-        } else if ($product->isComposite() && $product->getPriceType() != 1) {
+        } else if (!$product->isConfigurable() && $product->isComposite() && $product->getPriceType() != 1) {
             list($_minimalPrice, $_maximalPrice) = $_priceModel->getTotalPrices($product, null, false, false);
             //We have to unset min max price to get price with tax
             $min_price = $product->getData('min_price');
