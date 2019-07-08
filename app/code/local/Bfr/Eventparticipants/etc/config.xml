@@ -42,6 +42,17 @@
                 </entities>
             </bfr_eventparticipants_resource>
         </models>
+        <events>
+            <checkout_submit_all_after>
+                <observers>
+                    <participation_agreement>
+                        <type>singleton</type>
+                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
+                        <method>OnCheckoutSubmitAllAfter</method>
+                    </participation_agreement>
+                </observers>
+            </checkout_submit_all_after>
+        </events>
     </global>
     <frontend>
         <routers>
@@ -69,26 +80,6 @@
                 </Bfr_Eventparticipants>
             </modules>
         </translate>
-        <events>
-            <checkout_cart_add_product_complete>
-                <observers>
-                    <participation_agreement_add>
-                        <type>singleton</type>
-                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
-                        <method>AfterCartAddProduct</method>
-                    </participation_agreement_add>
-                </observers>
-            </checkout_cart_add_product_complete>
-            <checkout_cart_save_after>
-                <observers>
-                    <participation_agreement_edit>
-                        <type>singleton</type>
-                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
-                        <method>AfterCardEditProduct</method>
-                    </participation_agreement_edit>
-                </observers>
-            </checkout_cart_save_after>
-        </events>
     </frontend>
     <admin>
         <routers>
