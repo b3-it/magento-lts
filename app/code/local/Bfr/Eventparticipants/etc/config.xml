@@ -57,7 +57,7 @@
             <email>
                 <eventparticipants_participation_agreement_email_template translate="label" module="eventparticipants">
                     <label>Participation list agreement</label>
-                    <file>bfr/eventmanager/participation_certificate.html</file>
+                    <file>bfr/eventparticipants/participation_agreement.html</file>
                     <type>html</type>
                 </eventparticipants_participation_agreement_email_template>
             </email>
@@ -156,10 +156,10 @@
         </layout>
     </adminhtml>
     <default>
-        <eventparticipant>
+        <eventmanager>
             <participation_agreement_email>
                 <template>eventparticipants_participation_agreement_email_template</template>
             </participation_agreement_email>
-        </eventparticipant>
+        </eventmanager>
     </default>
 </config>

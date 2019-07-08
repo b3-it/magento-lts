@@ -11,12 +11,13 @@
  */
 class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function sendEmail($template, $storeId = 0, Mage_Sales_Model_Quote $quote = null)
+    public function sendEmail($template, $storeId = 0, Mage_Sales_Model_Quote_Item $item = null, $hash = null)
     {
         /**
-         * Break if Quote is missing
+         * Break if Item or Hash is missing
          */
-        if($quote == null){
+        if($item == null || $hash == null){
+            Mage::log('\nBfr_Eventparticipants :: Missing Item or Hash in sendMail!\n');
             return $this;
         }
 
@@ -30,9 +31,17 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
             $templateId = Mage::getStoreConfig($template, $storeId);
         }
 
+        /**
+         * Break if TemplateId is missing
+         */
+        if($templateId == null){
+            Mage::log('\nBfr_Eventparticipants :: Missing TemplateId in sendMail! Check Configuration!\n');
+            return $this;
+        }
+
         $sender = [];
-        $sender['name'] = Mage::getStoreConfig("eventmanager/participation_agreement_email/sender_name", $storeId);
-        $sender['email'] = Mage::getStoreConfig("eventmanager/participation_agreement_email/sender_email_address", $storeId);
+        $sender['name'] = Mage::getStoreConfig("eventmanager/participation_agreement_email/email_sender", $storeId);
+        $sender['email'] = Mage::getStoreConfig("eventmanager/participation_agreement_email/email_address", $storeId);
 
         if (strlen($sender['name']) < 2) {
             $sender['name'] = Mage::getStoreConfig('trans_email/ident_general/name', $storeId);
@@ -44,26 +53,25 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
 
         /** @var Mage_Core_Model_Email_Info $emailInfo */
         $emailInfo = Mage::getModel('core/email_info');
-        $emailInfo->addTo($quote->getCustomerEmail(), $quote->getCustomerFirstname() . ' ' . $quote->getCustomerMiddlename() . ' ' . $quote->getCustomerLastname());
+        $emailInfo->addTo($item->getQuote()->getCustomerEmail(), $item->getQuote()->getCustomerFirstname() . ' ' . $item->getQuote()->getCustomerMiddlename() . ' ' . $item->getQuote()->getCustomerLastname());
 
         /** @var Mage_Core_Model_Translate $translate */
         $translate = Mage::getSingleton('core/translate');
         $translate->setTranslateInline(false);
 
         /** @var Egovs_Base_Model_Core_Email_Template_Mailer $mailer */
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         $mailer->addEmailInfo($emailInfo);
         $mailer->setSender($sender);
         $mailer->setStoreId($storeId);
         $mailer->setTemplateId($templateId);
-        $mailer->setTemplateParams([]);
+        $mailer->setTemplateParams(['eventName' => $item->getName(), 'eventHash' => $hash, 'eventHashLink' => Mage::getBaseUrl() . '/' . $hash]);
 
         try {
-            /** @var Egovs_Base_Model_Core_Email_Queue $emailQueue */
             $emailQueue = Mage::getModel('egovsbase/core_email_queue');
-            $emailQueue->setEntityId($participant->getId())
+            $emailQueue->setEntityId($item->getQuote()->getId())
                 ->setEntityType('participant')
-                ->setEventType('participation_certificate')
+                ->setEventType('participation_agreement')
                 ->setIsForceCheck(true);
 
             $mailer->setQueue($emailQueue)->send();

@@ -18,11 +18,11 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
      */
     public function OnCheckoutSubmitAllAfter(Varien_Event_Observer $observer)
     {
-        /** string|int $storeId */
-        $storeId = Mage::app()->getStore()->getId();
-
         /** @var Mage_Sales_Model_Quote $quote */
         $quote = $observer->getQuote();
+
+        /** string|int $storeId */
+        $storeId = $quote->getStore()->getId();
 
         /** @var Bfr_Eventparticipants_Model_Notification_Order $notification */
         $notification = Mage::getModel('bfr_eventparticipants/notification_order');
@@ -30,17 +30,18 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
         /** @var Mage_Sales_Model_Quote_Item $item */
         foreach($quote->getAllVisibleItems() as $item){
             if($item->getProductType() == Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE && $item->getBuyRequest()->getData('eventparticipants') === 'on'){
+                $hash = bin2hex(random_bytes(20));
                 $notification->unsetData();
                 $notification->setEventId($item->getProductId());
-                $notification->setSignedAt('2000-1-1 12:00:00');
-                $notification->setHash('hash');
+                $notification->setSignedAt(date('YYYY-MM-DD hh:mm:ss', time()));
+                $notification->setHash($hash);
                 $notification->setOrderItemId($item->getId());
                 $notification->setStatus(0);
                 $notification->setCustomerId($item->getQuote()->getCustomerId());
                 $notification->setQuoteItemId($item->getQuoteId());
                 $notification->save();
 
-                Mage::helper('eventparticipants')->sendEmail('eventparticipants/participation_agreement_email/template', $storeId, $quote);
+                Mage::helper('bfr_eventparticipants')->sendEmail('eventparticipants/participation_agreement_email/template', $storeId, $item, $hash);
             }
         }
         return $observer;
