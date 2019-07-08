@@ -1114,11 +1114,11 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
                 $baseAdress = $this->getCustomer()->getAddressById($baseAdress);
                 if ($baseAdress && !$baseAdress->isEmpty()) {
                     if (!$eCustomer->nachname) {
-                        $eCustomer->nachname = $baseAdress->getLastName();
+                        $eCustomer->nachname = $baseAdress->getLastname();
                         $_nameNotSet = true;
                     }
                     if (!$eCustomer->vorname) {
-                        $eCustomer->vorname = $baseAdress->getFirstName();
+                        $eCustomer->vorname = $baseAdress->getFirstname();
                     }
                 }
             }
