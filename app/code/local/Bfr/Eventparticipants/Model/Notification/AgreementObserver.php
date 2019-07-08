@@ -18,14 +18,19 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
      */
     public function OnCheckoutSubmitAllAfter(Varien_Event_Observer $observer)
     {
+        /** string|int $storeId */
+        $storeId = Mage::app()->getStore()->getId();
+
         /** @var Mage_Sales_Model_Quote $quote */
         $quote = $observer->getQuote();
+
+        /** @var Bfr_Eventparticipants_Model_Notification_Order $notification */
+        $notification = Mage::getModel('bfr_eventparticipants/notification_order');
 
         /** @var Mage_Sales_Model_Quote_Item $item */
         foreach($quote->getAllVisibleItems() as $item){
             if($item->getProductType() == Egovs_EventBundle_Model_Product_Type::TYPE_EVENTBUNDLE && $item->getBuyRequest()->getData('eventparticipants') === 'on'){
-                /** @var Bfr_Eventparticipants_Model_Notification_Order $notification */
-                $notification = Mage::getModel('bfr_eventparticipants/notification_order');
+                $notification->unsetData();
                 $notification->setEventId($item->getProductId());
                 $notification->setSignedAt('2000-1-1 12:00:00');
                 $notification->setHash('hash');
@@ -34,6 +39,8 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
                 $notification->setCustomerId($item->getQuote()->getCustomerId());
                 $notification->setQuoteItemId($item->getQuoteId());
                 $notification->save();
+
+                Mage::helper('eventparticipants')->sendEmail('eventparticipants/participation_agreement_email/template', $storeId, $quote);
             }
         }
         return $observer;

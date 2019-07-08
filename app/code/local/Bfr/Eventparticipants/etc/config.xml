@@ -53,6 +53,15 @@
                 </observers>
             </checkout_submit_all_after>
         </events>
+        <template>
+            <email>
+                <eventparticipants_participation_agreement_email_template translate="label" module="eventparticipants">
+                    <label>Participation list agreement</label>
+                    <file>bfr/eventmanager/participation_certificate.html</file>
+                    <type>html</type>
+                </eventparticipants_participation_agreement_email_template>
+            </email>
+        </template>
     </global>
     <frontend>
         <routers>
@@ -146,4 +155,11 @@
             </updates>
         </layout>
     </adminhtml>
+    <default>
+        <eventparticipant>
+            <participation_agreement_email>
+                <template>eventparticipants_participation_agreement_email_template</template>
+            </participation_agreement_email>
+        </eventparticipant>
+    </default>
 </config>
