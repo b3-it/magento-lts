@@ -1108,9 +1108,20 @@ abstract class Egovs_Paymentbase_Model_SepaDebit extends Egovs_Paymentbase_Model
 				$_bankverbindung->BIC = $this->getBic();
 			}
 			$_bankverbindung->IBAN = $this->getIban();
-// 			$_bankverbindung->BLZ = substr($this->getIban(), 4, 8);
+			$_nameNotSet = false;
+            if (!$eCustomer->nachname) {
+                $eCustomer->nachname = $this->getCustomer()->getBaseAddress()->getLastName();
+                $_nameNotSet = true;
+            }
+            if (!$eCustomer->vorname) {
+                $eCustomer->vorname = $this->getCustomer()->getBaseAddress()->getFirstName();
+            }
 			if ($this->isCustomerCompany()) {
-				$_bankverbindung->kontoinhaber = $eCustomer->nachname;
+			    if ($_nameNotSet) {
+                    $_bankverbindung->kontoinhaber = $this->getCustomer()->getBaseAddress()->getCompany();
+                } else {
+                    $_bankverbindung->kontoinhaber = $eCustomer->nachname;
+                }
 			} else {
 				$_bankverbindung->kontoinhaber = sprintf('%s %s', $eCustomer->vorname, $eCustomer->nachname);
 			}
