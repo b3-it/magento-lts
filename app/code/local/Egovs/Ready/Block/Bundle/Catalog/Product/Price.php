@@ -15,23 +15,6 @@
  */
 class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_Catalog_Product_Price
 {
-	protected function _addDeliveryTimeHtml($htmlObject) {
-		if (!Mage::getStoreConfigFlag('catalog/price/display_delivery_time_on_categories')) {
-			return;
-		}
-
-		$pathInfo = Mage::app()->getRequest()->getPathInfo();
-		if (strpos($pathInfo, 'catalog/category/view') !== false
-				|| strpos($pathInfo, 'catalogsearch/result') !== false
-		) {
-			if ($this->getProduct()->getDeliveryTime()) {
-				$html = '<p class="delivery-time time1">';
-				$html .= $this->__('Delivery Time') . ': ' . $this->getProduct()->getDeliveryTime();
-				$html .= '</p>';
-				$htmlObject->setSuffix($html);
-			}
-		}
-	}
 
     /**
      * @param \Mage_Catalog_Model_Product $product
@@ -207,8 +190,6 @@ class Egovs_Ready_Block_Bundle_Catalog_Product_Price extends Mage_Bundle_Block_C
 			->toHtml()
 		;
 		$_htmlObject->setHtml($_htmlTemplate);
-
-        $this->_addDeliveryTimeHtml($_htmlObject);
 
 		Mage::dispatchEvent('egovsready_after_bundle_product_price',
 				array(
