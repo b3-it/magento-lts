@@ -46,8 +46,11 @@ class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
 
         /**
          * @var Egovs_ProductFile_Helper_Data $helper
+         * @var Mage_Catalog_Helper_Data $catalog_helper
          */
         $helper = Mage::helper('productfile');
+        $catalog_helper = Mage::helper('catalog');
+        $filter = $catalog_helper->getPageTemplateProcessor();
 
         foreach ($collection->getItems() as $item) {
             /**
@@ -64,14 +67,14 @@ class Bfr_EventFeed_FeedController extends Mage_Core_Controller_Front_Action {
             $entry->setId($item->getProductUrl());
 
             // short description formated as html
-            $text = new AtomFeed_APi_V1_Text($item->getShortDescription(), "html");
+            $text = new AtomFeed_APi_V1_Text($filter->filter($item->getShortDescription()), "html");
             if ($locale !== $feedlocale) {
                 $text->addAttribute('xml:lang', $locale);
             }
             $entry->setSummary($text);
 
             // long description formated as html
-            $content = new AtomFeed_Api_V1_Content($item->getDescription(), "html");
+            $content = new AtomFeed_Api_V1_Content($filter->filter($item->getDescription()), "html");
             if ($locale !== $feedlocale) {
                 $content->addAttribute('xml:lang', $locale);
             }
