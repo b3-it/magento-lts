@@ -41,7 +41,7 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
                 $notification->setQuoteItemId($item->getQuoteId());
                 $notification->save();
 
-                Mage::helper('bfr_eventparticipants')->sendEmail('eventparticipants/participation_agreement_email/template', $storeId, $item, $hash);
+                Mage::helper('bfr_eventparticipants')->sendEmail('eventmanager/participation_agreement_email/template', $storeId, $item, $hash);
             }
         }
         return $observer;

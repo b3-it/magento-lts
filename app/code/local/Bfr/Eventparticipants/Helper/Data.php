@@ -11,7 +11,7 @@
  */
 class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function sendEmail($template, $storeId = 0, Mage_Sales_Model_Quote_Item $item = null, $hash = null)
+    public function sendEmail($templateConfigPath, $storeId = 0, Mage_Sales_Model_Quote_Item $item = null, $hash = null)
     {
         /**
          * Break if Item or Hash is missing
@@ -21,21 +21,9 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
             return $this;
         }
 
-        /**
-         * Get TemplateId with Name or as Number
-         */
-        if (is_numeric($template)) {
-            $templateId = $template;
-            unset($template);
-        } else {
-            $templateId = Mage::getStoreConfig($template, $storeId);
-        }
-
-        /**
-         * Break if TemplateId is missing
-         */
-        if($templateId == null){
-            Mage::log('\nBfr_Eventparticipants :: Missing TemplateId in sendMail! Check Configuration!\n');
+        $template = Mage::getStoreConfig($templateConfigPath, $storeId);
+        if($template == null){
+            Mage::log('\nBfr_Eventparticipants :: Missing Template in sendMail! Check Configuration!\n');
             return $this;
         }
 
@@ -64,7 +52,7 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
         $mailer->addEmailInfo($emailInfo);
         $mailer->setSender($sender);
         $mailer->setStoreId($storeId);
-        $mailer->setTemplateId($templateId);
+        $mailer->setTemplateId($template);
         $mailer->setTemplateParams(['eventName' => $item->getName(), 'eventHash' => $hash, 'eventHashLink' => Mage::getBaseUrl() . '/' . $hash]);
 
         try {
