@@ -33,7 +33,7 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
                 $hash = bin2hex(random_bytes(20));
                 $notification->unsetData();
                 $notification->setEventId($item->getProductId());
-                $notification->setSignedAt(date('YYYY-MM-DD hh:mm:ss', time()));
+                $notification->setSignedAt(date('Y-m-d h:m:s'));
                 $notification->setHash($hash);
                 $notification->setOrderItemId($item->getId());
                 $notification->setStatus(0);
