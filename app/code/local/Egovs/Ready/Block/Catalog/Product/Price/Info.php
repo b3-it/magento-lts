@@ -28,20 +28,18 @@ class Egovs_Ready_Block_Catalog_Product_Price_Info extends Mage_Core_Block_Templ
     }
 
     protected function _addDeliveryTimeHtml($htmlObject) {
-        if (!Mage::getStoreConfigFlag('catalog/price/display_delivery_time_on_categories')) {
-            return;
-        }
-
         $pathInfo = Mage::app()->getRequest()->getPathInfo();
         if (strpos($pathInfo, 'catalog/category/view') !== false
                 || strpos($pathInfo, 'catalogsearch/result') !== false
         ) {
-            if ($this->getProduct()->getDeliveryTime()) {
-                $html = '<p class="delivery-time time1">';
-                $html .= $this->__('Delivery Time') . ': ' . $this->getProduct()->getDeliveryTime();
-                $html .= '</p>';
-                $htmlObject->setSuffix($html);
-            }
+            /**
+             * @var Mage_Core_Block_Template $block
+             */
+            $block = $this->getLayout()->createBlock('core/template')
+            ->setTemplate('egovs/ready/catalog/product/delivery_time.phtml')
+            ->setProduct($this->getProduct());
+            
+            $htmlObject->setSuffix($block->toHtml());
         }
     }
 
