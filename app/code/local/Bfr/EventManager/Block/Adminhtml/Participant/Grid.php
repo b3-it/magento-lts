@@ -30,11 +30,13 @@ join eventmanager_lookup as el on el.lookup_id = main_table.lookup_id
 where participant_id = 1 AND el.typ = 3
   	   */	
   	
-  	  $industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+  	  $industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY.' group by participant_id)');
-  	  
-  	  $lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+
+  	  $lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
+
+
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
         ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','created_at', 'order_status'=>'status','base_grand_total','base_currency_code','base_total_paid'))
@@ -46,7 +48,8 @@ where participant_id = 1 AND el.typ = 3
       	->joinLeft(array('industryT'=>$industry),'industryT.participant_id=main_table.participant_id',array('industry'=>'value'));
 
       $this->setCollection($collection);
-     // die($collection->getSelect()->__toString());
+
+      //die($collection->getSelect()->__toString());
       return parent::_prepareCollection();
   }
 
@@ -54,13 +57,8 @@ where participant_id = 1 AND el.typ = 3
  
   protected function _prepareColumns()
   {
-  		$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-	      $yesno = array();
-	      foreach ($yn as $n)
-	      {
-	      	$yesno[$n['value']] = $n['label'];
-	      }
-      
+      $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray();
+
       $this->addColumn('participant_id', array(
           'header'    => Mage::helper('eventmanager')->__('ID'),
           'align'     =>'right',
@@ -69,11 +67,12 @@ where participant_id = 1 AND el.typ = 3
       ));
 
       $this->addColumn('created_time', array(
-      		'header'    => Mage::helper('eventmanager')->__('Created at'),
-      		'align'     =>'left',
-      		'index'     => 'created_at',
-      		'type'	=> 'Date',
-      		'width'     => '100px',
+          'header'    => Mage::helper('sales')->__('Created At'),
+          'align'     =>'left',
+          'index'     => 'created_at',
+          'filter_index' => 'order.created_at',
+          'type'	=> 'Date',
+          'width'     => '100px',
       ));
       
       
@@ -85,19 +84,21 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       $this->addColumn('pa_increment_id', array(
-      		'header'    => Mage::helper('eventmanager')->__('Order #'),
-      		'align'     =>'left',
-      		'width'     => '100px',
-      		'index'     => 'order_increment_id',
-      		//'filter_condition_callback' => array($this, '_filterNameCondition'),
+          'header'    => Mage::helper('eventmanager')->__('Order #'),
+          'align'     =>'left',
+          'width'     => '100px',
+          'index'     => 'order_increment_id',
+          'filter_index' => 'order.increment_id',
+          //'filter_condition_callback' => array($this, '_filterNameCondition'),
       ));
        
       $this->addColumn('pa_status', array(
-      		'header' => Mage::helper('sales')->__('Order Status'),
-      		'index' => 'order.status',
-      		'type'  => 'options',
-      		'width' => '70px',
-      		'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+          'header' => Mage::helper('sales')->__('Order Status'),
+          'index' => 'order_status',
+          'filter_index' => 'order.status',
+          'type'  => 'options',
+          'width' => '70px',
+          'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
       ));
       
       
@@ -224,21 +225,30 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       
-      
-      
-      
+      $industryOptions = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY)->getOptionArray();
+
       $this->addColumn('pa_industry', array(
-      		'header'    => Mage::helper('eventmanager')->__('Industry'),
-      		'align'     =>'left',
-      		'index'     => 'industry',
-      		'filter_condition_callback' => array($this, '_filterIndustryCondition'),
+          'header'    => Mage::helper('eventmanager')->__('Industry'),
+          'align'     =>'left',
+          'index'     => 'industry',
+          'filter_index' => 'industryT.value',
+          'type'      => 'options',
+          'options'   => $industryOptions,
+          'renderer' => new Bfr_EventManager_Block_Adminhtml_Renderer_Lookup(),
+          'filter_condition_callback' => array($this, '_filterLookupCondition'),
       ));
-      
+
+      $lobbyOptions = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY)->getOptionArray();
+
       $this->addColumn('pa_lobby', array(
-      		'header'    => Mage::helper('eventmanager')->__('Lobby'),
-      		'align'     =>'left',
-      		'index'     => 'lobby',
-      		'filter_condition_callback' => array($this, '_filterLobbyCondition'),
+          'header'    => Mage::helper('eventmanager')->__('Lobby'),
+          'align'     =>'left',
+          'index'     => 'lobby',
+          'filter_index' => 'lobbyT.value',
+          'type'      => 'options',
+          'options'   => $lobbyOptions,
+          'renderer' => new Bfr_EventManager_Block_Adminhtml_Renderer_Lookup(),
+          'filter_condition_callback' => array($this, '_filterLookupCondition'),
       ));
       
       $role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
@@ -287,6 +297,7 @@ where participant_id = 1 AND el.typ = 3
       		'align'     => 'left',
       		'width'     => '80px',
       		'index'     => 'status',
+            'filter_index' => 'main_table.status',
       		'type'      => 'options',
       		'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
       ));
@@ -422,29 +433,12 @@ where participant_id = 1 AND el.typ = 3
    *
    * @return void
    */
-  protected function _filterIndustryCondition($collection, $column) {
+  protected function _filterLookupCondition($collection, $column) {
   	if (!$value = $column->getFilter()->getValue()) {
   		return;
   	}
-  	$condition = "industryT.value like ?";
-  	$collection->getSelect()->where($condition, "%$value%");
+  	$findex = $column->getData('filter_index');
+
+  	$collection->addFieldToFilter($findex, array('finset' => $value));
   }
-  
-  /**
-   * FilterIndex
-   *
-   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
-   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
-   *
-   * @return void
-   */
-  protected function _filterLobbyCondition($collection, $column) {
-  	if (!$value = $column->getFilter()->getValue()) {
-  		return;
-  	}
-  	$condition = "lobbyT.value like ?";
-  	$collection->getSelect()->where($condition, "%$value%");
-  }
-  
- 
 }
