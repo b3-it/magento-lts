@@ -1240,6 +1240,11 @@
     margin: 0 0 $gap;
     padding: 0;
 }
+/* tax details after price box need to be disabled too */
+.product-options-bottom .price-box ~ .tax-details {
+    display: none;
+}
+
 .product-options-bottom .price-tax {
     float: left;
 }

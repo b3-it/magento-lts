@@ -11,34 +11,37 @@
  *
  */
 
-
-/** 
- * @var $this \Mage_Core_Block_Template
+/**
+ * @var $this Egovs_Ready_Block_Catalog_Product_Price_Info
  * @see Egovs_Ready_Block_Catalog_Product_Price
  * @see Egovs_Ready_Block_Catalog_Product_Price::_toHtml()
  */
 
 $shippingCostUrl = Mage::helper( 'egovsready' )->getShippingCostUrl();
+$showShippingLink = $this->getShowShippingLink();
 $_taxPrefix = 'Incl.';
 if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDING_TAX ) {
     $_taxPrefix = 'Excl.';
 }
-$_taxPostfix = $this->getFormattedTaxRate() === true ? 'Tax' : '% Tax';
+
+$formated = $this->getFormattedTaxRate();
+$_taxPostfix = $formated === true ? 'Tax' : '%s Tax';
 $_productType = $this->getProduct()->getTypeId();
+
 ?>
 
 <?php if ($_productType != 'eventbundle'): ?>
-
+<?php if ( $this->getPriceDisplayType() != Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
 <?php if (!$this->getExcludeContainer()): ?>
     <span class="tax-details">
 <?php endif; ?>
-<?php if ($this->getFormattedTaxRate() !== false): ?>
-    <?php if ($this->getFormattedTaxRate() === 0): ?>
+<?php if ($formated !== false): ?>
+    <?php if ($formated === 0): ?>
         <?php echo $this->__( 'Tax Free' ); ?>
     <?php else: ?>
-        <?php echo $this->__( "$_taxPrefix $_taxPostfix", $this->getFormattedTaxRate() ) ?>
+        <?php echo $this->__( "$_taxPrefix $_taxPostfix", $formated ) ?>
     <?php endif ?>
-    <?php if ( (!empty( $shippingCostUrl ) && $this->getShowShippingLink()) || $this->getWithoutShippingCostsText()): ?>
+    <?php if ( $showShippingLink && (!empty( $shippingCostUrl ) || $this->getWithoutShippingCostsText())): ?>
         <?php if (!$this->getExcludeContainer()): ?>
             <span class="tax-separator">,&nbsp;</span>
         <?php else: ?>
@@ -49,7 +52,8 @@ $_productType = $this->getProduct()->getTypeId();
 <?php if (!$this->getExcludeContainer()): ?>
     </span>
 <?php endif; ?>
-<?php if( !empty( $shippingCostUrl ) && $this->getShowShippingLink() ): ?>
+<?php endif; ?>
+<?php if( !empty( $shippingCostUrl ) && $showShippingLink ): ?>
 	<?php
         if ( $this->getIsIncludingShippingCosts() ) {
         	$_sIncludingShippingCosts = 'incl.';
@@ -63,7 +67,7 @@ $_productType = $this->getProduct()->getTypeId();
         <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
     <?php endif; ?>
 <?php else: ?>
-    <?php if ( !$this->getShowShippingLink() && ($wscText = $this->getWithoutShippingCostsText())): ?>
+    <?php if ( $showShippingLink && ($wscText = $this->getWithoutShippingCostsText())): ?>
         <?php if (!$this->getExcludeContainer()): ?>
             <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
         <?php else: ?>
