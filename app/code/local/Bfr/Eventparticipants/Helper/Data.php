@@ -47,7 +47,7 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
         $translate = Mage::getSingleton('core/translate');
         $translate->setTranslateInline(false);
 
-        $url = Mage::getUrl('evenparticipants/order/index',array('hash'=>$hash));
+        $url = Mage::getUrl('bfr_eventparticipants/notification_order/index',array('hash'=>$hash));
 
         /** @var Egovs_Base_Model_Core_Email_Template_Mailer $mailer */
         $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
