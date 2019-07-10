@@ -11,20 +11,20 @@
  */
 class Bkg_License_Model_Copy_Pdf extends Egovs_Pdftemplate_Model_Pdf_Abstract
 {
-	public function preparePdf($license = array())
+	public function preparePdf($participant = array())
 	{
-			$license = array_shift($license);
+			$participant = array_shift($participant);
 			$this->Name = Mage::helper('bkg_license')->__('License').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';		
 
-			$license->setTemplateId($license->getPdfTemplateId());
+			$participant->setTemplateId($participant->getPdfTemplateId());
 			
 			
-			$this->LoadTemplate($license);
+			$this->LoadTemplate($participant);
 			
 			$this->_Pdf->addPage();
 			
-			$this->RenderAddress($license,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_ADDRESS]);
-			$this->RenderTable($license, $this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_BODY]);
+			$this->RenderAddress($participant,$this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_ADDRESS]);
+			$this->RenderTable($participant, $this->_TemplateSections[Egovs_Pdftemplate_Model_Sectiontype::TYPE_BODY]);
 			$this->_Pdf->lastPage();
 			$this->_Pdf->ResetPagesSinceStart();
 			return $this;

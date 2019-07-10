@@ -46,6 +46,9 @@ class Sid_ExportOrder_Model_Format_Opentrans extends Sid_ExportOrder_Model_Forma
 
 		$orderInfo->getCurrency()->setValue($order->getOrderCurrencyCode());
 
+        $Vergabenummer = $order->getVergabenummer()? $order->getVergabenummer():"";
+
+        $orderInfo->getCustomerOrderReference()->getOrderId()->setValue($Vergabenummer);
 		$agreement = $orderHeader->getSourcingInfo()->getAgreement();
 
 		/** @var Sid_Framecontract_Model_Contract $contract **/

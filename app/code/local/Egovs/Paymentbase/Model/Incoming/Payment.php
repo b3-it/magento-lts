@@ -26,6 +26,11 @@ class Egovs_Paymentbase_Model_Incoming_Payment extends Mage_Core_Model_Abstract
      */
     public function saveIncomingPayment($order_id, $base_amount, $amount, $msg = null, $force = false)
     {
-        $this->getResource()->saveIncomingPayment($this, $order_id, $base_amount, $amount, $msg, $force);
+        try {
+            $this->getResource()->saveIncomingPayment($this, $order_id, $base_amount, $amount, $msg, $force);
+        }catch(Exception $ex)
+        {
+            Mage::log($ex->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
+        }
     }
 }

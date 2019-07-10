@@ -379,7 +379,7 @@ p.product-name {
 
             .price-box, .tax-details {
                 display: inline-block;
-                width: 45%;
+                margin-right: 10px;
 
                 @include bp(max-width, $bp-small) {
                     display: block;

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE config>
+<config>
+    <sections>
+        <payment_services>
+            <groups>
+                <paymentbase>
+                    <fields>
+                        <creditworth_sum_invoice_threshold translate="label comment" module="egovs_creditworth">
+                            <label>Sum Invoice Threshold</label>
+                            <comment>If order is over threshold, the sum of open invoice can't be over limit</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_sum_invoice_threshold>
+                        <creditworth_sum_invoice_limit translate="label comment" module="egovs_creditworth">
+                            <label>Sum Invoice Limit</label>
+                            <comment>If order is over threshold, the sum of open invoice can't be over limit</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>301</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_sum_invoice_limit>
+                        <creditworth_sum_interval_weeks translate="label comment" module="egovs_creditworth">
+                            <label>Sum Interval Weeks</label>
+                            <comment>Sum of orders in interval can't be over limit</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>302</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_sum_interval_weeks>
+                        <creditworth_sum_interval_limit translate="label comment" module="egovs_creditworth">
+                            <label>Sum Interval Limit</label>
+                            <comment>Sum of orders in interval can't be over limit</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>303</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_sum_interval_limit>
+                        <creditworth_successful_threshold translate="label comment" module="egovs_creditworth">
+                            <label>Successful Threshold</label>
+                            <comment>Threshold for successful check</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>304</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_successful_threshold>
+                        <creditworth_successful_weeks translate="label comment" module="egovs_creditworth">
+                            <label>Successful Weeks</label>
+                            <comment>How old are the Orders needed for successful check</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>305</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                            <validate>validate-number validate-not-negative-number</validate>
+                        </creditworth_successful_weeks>
+                        <creditworth_use_epaybl translate="label comment" module="egovs_creditworth">
+                            <label>Use Creditworth from ePayBL</label>
+                            <comment>If enabled, it uses ePayBL for creditworth</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>306</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </creditworth_use_epaybl>
+                    </fields>
+                </paymentbase>
+            </groups>
+        </payment_services>
+    </sections>
+</config>

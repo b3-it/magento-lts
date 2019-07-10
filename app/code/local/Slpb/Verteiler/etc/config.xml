@@ -30,21 +30,21 @@
 		<menu>
 			<customer>
 				<children>
-					<items module="verteiler">
+					<slpb_verteiler module="verteiler">
 						<title>Verteiler bearbeiten</title>
 						<!-- 2014-12-15 - Auf Wunsch von Frau Kluge an 2. Stelle verlegt -->
 						<sort_order>5</sort_order>
 						<action>adminhtml/slpbverteiler_verteiler</action>
-					</items>
+					</slpb_verteiler>
 				</children>
 			</customer>
 			<sales>
 				<children>
-					<items module="verteiler">
+					<slpb_verteiler_order module="verteiler">
 						<title>Verteiler Bestellungen</title>
 						<sort_order>0</sort_order>
 						<action>adminhtml/slpbverteiler_order</action>
-					</items>
+					</slpb_verteiler_order>
 				</children>
 			</sales>
 		</menu>
@@ -55,10 +55,22 @@
 				</all>
 				<admin>
 					<children>
-						<slpb_verteiler>
-							<title>Verteiler Module</title>
-							<sort_order>10</sort_order>
-						</slpb_verteiler>
+						<customer>
+                            <children>
+                                <slpb_verteiler>
+							        <title>Verteiler Module</title>
+							        <sort_order>10</sort_order>
+                                </slpb_verteiler>
+                            </children>
+						</customer>
+                        <sales>
+                            <children>
+                                <slpb_verteiler_order>
+                                    <title>Verteiler Module</title>
+                                    <sort_order>10</sort_order>
+                                </slpb_verteiler_order>
+                            </children>
+                        </sales>
 					</children>
 				</admin>
 			</resources>

@@ -447,9 +447,9 @@
 			<bankpayment>
 				<include_personal_data>0</include_personal_data>
 			</bankpayment>
-			<depit>
+			<debit>
 				<include_personal_data>0</include_personal_data>
-			</depit>
+			</debit>
 			<free>
                 <order_status>processing</order_status>
                 <payment_action>authorize_capture</payment_action>
@@ -520,7 +520,7 @@
 			</egovs_epaybl_auto_sync>
 			<egovs_epaybl_auto_payment_rerieval>
 				<schedule>
-					<config_path>payment_services/paymentbase/apr_cronjob</config_path>
+					<cron_expr>*/1 * * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>paymentbase/observer::runAutomaticPaymentRetrieval</model>

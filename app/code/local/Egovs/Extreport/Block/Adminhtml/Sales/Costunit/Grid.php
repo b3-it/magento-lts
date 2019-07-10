@@ -308,11 +308,11 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
         }
 
         if($column->getIndex() == 'sum_qty_ordered_base_price_incl_tax'){
-            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_price_incl_tax";
+            $expr = "(main_table.base_row_total_incl_tax)";
         }else if($column->getIndex() == 'sum_qty_ordered_base_price'){
-            $expr = "sum(`main_table`.`qty_ordered`)*main_table.base_price";
+            $expr = "(main_table.base_price)";
         }else{
-            $expr = "sum(`main_table`.`qty_ordered`)";
+            $expr = "(`main_table`.`qty_ordered`)";
         }
 
 
@@ -338,7 +338,7 @@ class Egovs_Extreport_Block_Adminhtml_Sales_Costunit_Grid extends Mage_Adminhtml
 	 */
 	protected function _afterLoadCollection()
 	{
-		//die($this->getCollection()->getSelect()->__toString());
+//		die($this->getCollection()->getSelect()->__toString());
 		$totalObj = new Mage_Reports_Model_Totals();
 		$this->setTotals($totalObj->countTotals($this, 0, 0));
 	}

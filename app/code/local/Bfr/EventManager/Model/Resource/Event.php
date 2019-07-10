@@ -17,4 +17,16 @@ class Bfr_EventManager_Model_Resource_Event extends Mage_Core_Model_Resource_Db_
         // Note that the eventmanager_event_id refers to the key field in your database table.
         $this->_init('eventmanager/event', 'event_id');
     }
+
+
+    public function removeQuoteItemOptions($product_id)
+    {
+        if(!$product_id) return;
+        $write = $this->_getWriteAdapter();
+        $table = $this->getTable('sales/quote_item_option');
+        if($write)
+        {
+            $write->delete($table," product_id = $product_id and code like 'option_%'");
+        }
+    }
 }

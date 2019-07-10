@@ -141,6 +141,7 @@ class Dwd_Abo_Model_Abo extends Mage_Core_Model_Abstract
     		->join(array('order'=>'sales_flat_order'),'order.entity_id=main_table.first_order_id',array('order_status'=>'status','store_id'=>'store_id'))
     		->join(array('customer'=>'customer_entity'),'order.customer_id=customer.entity_id',array('customer_id'=>'customer.entity_id'))
     		->join(array('orderitem'=>'sales_flat_order_item'),'orderitem.item_id = main_table.current_orderitem_id',array('product_id'=>'product_id','period_id'=>'period_id','station_id'=>'station_id'))
+            ->joinleft(array('icd'=>'icd_orderitem'),'icd.order_item_id = main_table.current_orderitem_id',array('icd_station_id'=>'station_id'))
     		->where("(cancelation_period_end) <= ('".Mage::getModel('core/date')->gmtDate()."')")
     		->where('main_table.status = '.Dwd_Abo_Model_Status::STATUS_ACTIVE)
     		->where('renewal_status = '.Dwd_Abo_Model_Renewalstatus::STATUS_PAUSE)

@@ -13,11 +13,34 @@
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
 <li class="item">
-    <?php if ($this->hasProductUrl()): ?>
-        <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></a>
-    <?php else: ?>
-        <span class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></span>
-    <?php endif; ?>
+    <div class="product-image" style="display:inline-block;">
+        <?php if ($this->hasProductUrl()): ?>
+            <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></a>
+        <?php else: ?>
+            <span><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></span>
+        <?php endif; ?>
+
+        <?php if ($_options = $this->getOptionList()):?>
+            <div class="truncated">
+                <div class="truncated_full_value">
+                    <dl class="item-options">
+                        <?php foreach ($_options as $_option) : ?>
+                            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+                            <dd>
+                                <?php if (is_array($_option['value'])): ?>
+                                    <?php echo nl2br(implode("\n", $_option['value'])) ?>
+                                <?php else: ?>
+                                    <?php echo $_option['value'] ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php endforeach; ?>
+                    </dl>
+                </div>
+                <a href="javascript:void(0)" onclick="return false;" class="details"><?php echo $this->__('Details') ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
+
     <div class="product-details">
         <p class="product-name">
             <?php if ($this->hasProductUrl()): ?><a href="<?php echo $this->getProductUrl() ?>"><?php endif; ?>
@@ -157,49 +180,29 @@
                         <?php if( $_item->getProductType() == 'eventbundle' ): ?>
                             <span class="pseudo-input">1</span>
                         <?php else: ?>
-                        <button id="qbutton-<?php echo $_item->getId(); ?>"
-                                data-item-id="<?php echo $_item->getId(); ?>"
-                                disabled="disabled"
-                                data-update
-                                data-cart-item-update
-                                class="button quantity-button">
-                            <?php echo $this->__('ok'); ?>
-                        </button>
-                        <input
-                                id="qinput-<?php echo $_item->getId(); ?>"
-                                type="tel"
-                                pattern="\d*"
-                                data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
-                                data-item-id="<?php echo $_item->getId(); ?>"
-                                data-cart-item-id="<?php echo $_item->getSku(); ?>"
-                                class="qty cart-item-quantity input-text" name=""
-                                value="<?php echo $this->getQty()?>"
-                            <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
-                        />
+                            <button id="qbutton-<?php echo $_item->getId(); ?>"
+                                    data-item-id="<?php echo $_item->getId(); ?>"
+                                    disabled="disabled"
+                                    data-update
+                                    data-cart-item-update
+                                    class="button quantity-button">
+                                <?php echo $this->__('ok'); ?>
+                            </button>
+                            <input
+                                    id="qinput-<?php echo $_item->getId(); ?>"
+                                    type="tel"
+                                    pattern="\d*"
+                                    data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
+                                    data-item-id="<?php echo $_item->getId(); ?>"
+                                    data-cart-item-id="<?php echo $_item->getSku(); ?>"
+                                    class="qty cart-item-quantity input-text" name=""
+                                    value="<?php echo $this->getQty()?>"
+                                <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
+                            />
                         <?php endif; ?>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <?php if ($_options = $this->getOptionList()):?>
-        <div class="truncated">
-          <div class="truncated_full_value">
-            <dl class="item-options">
-                <?php foreach ($_options as $_option) : ?>
-                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                <dd>
-                    <?php if (is_array($_option['value'])): ?>
-                    <?php echo nl2br(implode("\n", $_option['value'])) ?>
-                    <?php else: ?>
-                    <?php echo $_option['value'] ?>
-                    <?php endif; ?>
-                </dd>
-                <?php endforeach; ?>
-            </dl>
-          </div>
-        <a href="javascript:void(0)" onclick="return false;" class="details"><?php echo $this->__('Details') ?></a>
-        </div>
-        <?php endif; ?>
     </div>
 </li>
