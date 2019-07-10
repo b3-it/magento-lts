@@ -33,4 +33,10 @@
             <block type="eventbundle/catalog_product_view_eventBundle" name="product.info.participation.options" template="bfr/eventparticipants/catalog/product/view/options.phtml" />
         </reference>
     </PRODUCT_TYPE_eventbundle>
+
+    <bfr_eventparticipants_notification_order_index>
+        <reference name="content">
+            <block type="bfr_eventparticipants/notification_order" name="notification_order" template="bfr/eventparticipants/agreement.phtml" />
+        </reference>
+    </bfr_eventparticipants_notification_order_index>
 </layout>

@@ -1,0 +1,15 @@
+<?php
+/** Bfr_Eventparticipants_Block_Notification_Order $this */
+?>
+
+<?php if ($this->getValidHash()): ?>
+    <div class="page-title">
+        <h1>Teilnahmeliste</h1>
+        <span>Ihre Zustimmung wurde vermerkt.</span>
+    </div>
+<?php else: ?>
+    <div class="page-title">
+        <h1>Whoops, etwas ging schief...</h1>
+    </div>
+    <span>Die von ihnen aufgerufene Url ist nicht gültig.</span>
+<?php endif; ?>
