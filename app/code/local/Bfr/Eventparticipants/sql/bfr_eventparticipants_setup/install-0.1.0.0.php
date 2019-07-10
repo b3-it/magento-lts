@@ -17,7 +17,6 @@ if (!$installer->tableExists($installer->getTable('bfr_eventparticipants/notific
     -- DROP TABLE IF EXISTS {$installer->getTable('bfr_eventparticipants/notification_order')};
     CREATE TABLE {$installer->getTable('bfr_eventparticipants/notification_order')} (
       `id` int(11) unsigned NOT NULL auto_increment,
-        `quote_item_id` int(11) unsigned,
         `order_item_id` int(11) unsigned,
         `customer_id` int(11) unsigned,
         `hash` varchar(255) default '',
@@ -28,7 +27,6 @@ if (!$installer->tableExists($installer->getTable('bfr_eventparticipants/notific
       PRIMARY KEY (`id`),
       FOREIGN KEY (`customer_id`) REFERENCES `{$this->getTable('customer/entity')}`(`entity_id`) ON DELETE CASCADE,
       FOREIGN KEY (`order_item_id`) REFERENCES `{$this->getTable('sales/order_item')}`(`item_id`) ON DELETE CASCADE,
-      FOREIGN KEY (`quote_item_id`) REFERENCES `{$this->getTable('sales/quote_item')}`(`item_id`) ON DELETE SET NULL,
       FOREIGN KEY (`event_id`) REFERENCES `{$this->getTable('eventmanager/event')}`(`event_id`) ON DELETE CASCADE
 
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
