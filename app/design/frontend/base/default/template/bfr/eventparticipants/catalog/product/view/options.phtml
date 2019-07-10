@@ -30,8 +30,9 @@
 $_product = $this->getProduct(); ?>
 
 <?php if ($_product->hasData('eventParticipationList') && $_product->getData('eventParticipationList') === '1'): ?>
+    <br><hr><br>
     <div class="input-box">
-        <ul class="options-list">
+        <ul class="group-select">
             <li>
                 <input id="eventParticipationList_agreement" type="checkbox" name="eventparticipants">
                 <label for="eventParticipationList_agreement"><?= $this->__('I accept the use of my personal data for a participation list.') ?></label>
