@@ -106,7 +106,7 @@
             <bfr_eventmanager>
                 <children>
                     <bfreventparticipants_notification_order module="bfr_eventparticipants">
-                        <title>Participationlist Agreement</title>
+                        <title>Participationlist Agreements</title>
                         <sort_order>100</sort_order>
                         <action>adminhtml/eventparticipants_notification_order/index</action>
                     </bfreventparticipants_notification_order>
@@ -123,7 +123,7 @@
                         <bfr_eventmanager>
                             <children>
                                 <bfreventparticipants_notification_order module="bfr_eventparticipants">
-                                    <title>Participationlist Agreement</title>
+                                    <title>Participationlist Agreements</title>
                                     <sort_order>10</sort_order>
                                 </bfreventparticipants_notification_order>
                             </children>

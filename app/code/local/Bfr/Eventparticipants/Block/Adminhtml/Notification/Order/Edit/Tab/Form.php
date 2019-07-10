@@ -15,42 +15,57 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Edit_Tab_Form ext
     {
         $form = new Varien_Data_Form();
         $this->setForm($form);
-        $fieldset = $form->addFieldset('notificationorder_form', array('legend'=>Mage::helper('bfr_eventparticipants')->__(' Notification Order information')));
+        $fieldset = $form->addFieldset('notificationorder_form', array('legend' => Mage::helper('bfr_eventparticipants')->__(' Notification Order information')));
 
-        $fieldset->addField('order_item_id', 'text', array(
-            'label'     => Mage::helper('bfr_eventparticipants')->__('Order'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-            'name'      => 'order_item_id',
-        ));
-        $fieldset->addField('customer_id', 'text', array(
-            'label'     => Mage::helper('bfr_eventparticipants')->__('Customer'),
-            'class'     => 'readonly',
-            'readonly' => true,
-            'name'      => 'customer_id',
-        ));
-        $fieldset->addField('status', 'text', array(
-            'label'     => Mage::helper('bfr_eventparticipants')->__('Status'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-            'name'      => 'status',
-        ));
-        $fieldset->addField('event_id', 'text', array(
-            'label'     => Mage::helper('bfr_eventparticipants')->__('Event'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-            'name'      => 'event_id',
-        ));
-        $fieldset->addField('signed_at', 'text', array(
-            'label'     => Mage::helper('bfr_eventparticipants')->__('Signed At'),
-            //'class'     => 'required-entry',
-            //'required'  => true,
-            'name'      => 'signed_at',
-        ));
+        if (Mage::registry('notificationorder_data')) {
 
-        if ( Mage::registry('notificationorder_data') ) {
-            $form->setValues(Mage::registry('notificationorder_data')->getData());
+            /** @var Bfr_Eventparticipants_Model_Notification_Order $agreement */
+            $agreement = Mage::registry('notificationorder_data');
+
+            try {
+                $orderItem = Mage::getModel('sales/order_item')->load($agreement->getOrderItemId());
+                $order = Mage::getModel('sales/order')->load($orderItem->getOrderId());
+                $event = Mage::getModel('eventmanager/event')->load($agreement->getEventId());
+
+                $fieldset->addField('order', 'text', array(
+                    'label' => Mage::helper('bfr_eventparticipants')->__('Order'),
+                    'class' => 'readonly disabled',
+                    'readonly' => true,
+                    'name' => 'order',
+                    'value' => $order->getData('increment_id'),
+                ));
+                $fieldset->addField('customer_name', 'text', array(
+                    'label' => Mage::helper('bfr_eventparticipants')->__('Customer'),
+                    'class' => 'readonly disabled',
+                    'readonly' => true,
+                    'name' => 'customer_name',
+                    'value' => $order->getCustomerEmail(),
+                ));
+                $fieldset->addField('status', 'select', array(
+                    'label' => Mage::helper('bfr_eventparticipants')->__('Status'),
+                    'name' => 'status',
+                    'value' => $agreement->getStatus(),
+                    'values' => Bfr_Eventparticipants_Model_Resource_Accepted::getOptionArray(),
+                ));
+                $fieldset->addField('event_title', 'text', array(
+                    'label' => Mage::helper('bfr_eventparticipants')->__('Event'),
+                    'class' => 'readonly disabled',
+                    'readonly' => true,
+                    'name' => 'event_title',
+                    'value' => $event->getData('title'),
+                ));
+                $fieldset->addField('signed_at', 'text', array(
+                    'label' => Mage::helper('bfr_eventparticipants')->__('Signed At'),
+                    'class' => 'readonly disabled',
+                    'readonly' => true,
+                    'name' => 'signed_at',
+                    'value' => $agreement->getSignedAt(),
+                ));
+            } catch (Exception $e) {
+                Mage::logException($e);
+            }
         }
+
         return parent::_prepareForm();
     }
 }

@@ -50,6 +50,7 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Grid extends Mage
         $this->addColumn('order_id', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Order'),
             'index' => 'increment_id',
+            'filter_index' => 'order.increment_id'
         ));
         $this->addColumn('customer_email', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Customer'),
@@ -69,6 +70,7 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Grid extends Mage
         $this->addColumn('signed_at', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Signed At'),
             'index' => 'signed_at',
+            'type' => 'date',
         ));
 
         $this->addColumn('action',
