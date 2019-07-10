@@ -47,13 +47,15 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
         $translate = Mage::getSingleton('core/translate');
         $translate->setTranslateInline(false);
 
+        $url = Mage::getUrl('evenparticipants/order/index',array('hash'=>$hash));
+
         /** @var Egovs_Base_Model_Core_Email_Template_Mailer $mailer */
         $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         $mailer->addEmailInfo($emailInfo);
         $mailer->setSender($sender);
         $mailer->setStoreId($storeId);
         $mailer->setTemplateId($template);
-        $mailer->setTemplateParams(['eventName' => $item->getName(), 'eventHash' => $hash, 'eventHashLink' => Mage::getBaseUrl() . '/' . $hash]);
+        $mailer->setTemplateParams(['eventname' => $item->getName(), 'eventhash' => $hash, 'eventhashlink' => $url]);
 
         try {
             $emailQueue = Mage::getModel('egovsbase/core_email_queue');
