@@ -19,13 +19,18 @@ class Bfr_Eventparticipants_Notification_OrderController extends Mage_Core_Contr
         $model = Mage::getModel('bfr_eventparticipants/notification_order');
         $hash = $this->getRequest()->getParam('hash');
 
-        if($hash != null ){
+        if ($hash != null) {
             $model->load($hash, 'hash');
+        } else {
+            Mage::register('participationlist_agreement_hash', 0);
         }
 
-        if($model->hasData('id') && $model->getData('status') === '0'){
+        if ($model->hasData('id') && $model->getData('status') === '0') {
             $model->setStatus(1);
             $model->save();
+            Mage::register('participationlist_agreement_hash', 1);
+        } else {
+            Mage::register('participationlist_agreement_hash', 0);
         }
 
         $this->loadLayout();
