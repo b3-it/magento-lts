@@ -1,0 +1,23 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.widget {}
+
+.widget-title {
+    @extend h2;
+    font-size: 1.9rem;
+    margin: $default-margin 0;
+}
+
+.widget-products {
+    // see \pages\_catalog-category-view.scss [203]
+    top: 0 !important;
+
+    .product-info {
+        position: relative;
+    }
+}

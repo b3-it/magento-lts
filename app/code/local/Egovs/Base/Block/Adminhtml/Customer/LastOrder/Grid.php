@@ -82,6 +82,20 @@ class Egovs_Base_Block_Adminhtml_Customer_LastOrder_Grid extends Mage_Adminhtml_
             'index'     => 'lastname',
             'filter_condition_callback' => array($this, '_filterCustomerCondition')
         ));
+
+        $groups = Mage::getResourceModel('customer/group_collection')
+            ->addFieldToFilter('customer_group_id', array('gt'=> 0))
+            ->load()
+            ->toOptionHash();
+
+        $this->addColumn('group', array(
+            'header'    =>  Mage::helper('customer')->__('Group'),
+            'width'     =>  '100',
+            'index'     =>  'group_id',
+            'type'      =>  'options',
+            'options'   =>  $groups,
+        ));
+
         
         $this->addColumn('base_company', array(
             'header'    => Mage::helper('customer')->__('Company'),

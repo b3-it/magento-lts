@@ -1,0 +1,177 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$bp-tablet: 1024px;                                      // Maximale Breite von Tablets
+$bp-mobil: 750px;                                        // Haupt-Breakpoint zwischen Desktop und Tablet
+$bp-small: 500px;                                        // Haupt-Breakpoint zwischen Tablet und Handy
+
+// Heading \\
+$h1-size: 1.2rem;                                        // Schrift-Größe H1 / Welcome
+$h1-line: 1.2rem;                                        // Zeilen-Höhe H1
+$h2-size: 1.1rem;                                        // Schrift-Größe H2
+$h2-line: 1.1rem;                                        // Zeilen-Höhe H2
+$h3-size: 1.1rem;                                        // Schrift-Größe H3
+$h3-line: 1rem;                                          // Zeilen-Höhe H3
+$h4-size: 1;                                             // Schrift-Größe H4
+$h4-line: 1;                                             // Zeilen-Höhe H4
+$h5-size: 1;                                             // Schrift-Größe H5
+$h5-line: 1;                                             // Zeilen-Höhe H5
+$h6-size: 1;                                             // Schrift-Größe H6
+$h6-line: 1;                                             // Zeilen-Höhe H6
+
+// Raster-Maß \\
+$raster-size   : 20px;                                   // Breite einer einzelnen Raster-Spalte
+$raster-1-count: 14;                                     // Anzahl der Rasterspalten für Marginal-Spalten
+$raster-2-count: 30;                                     // Anzahl der Rasterspalten für 3-Spaltig-Mitte
+$raster-3-count: 45;                                     // Anzahl der Rasterspalten für 2-Spaltig
+$raster-4-count: 60;                                     // Anzahl der Rasterspalten für 1-Spaltig
+
+// Seiten-Maße in Pixel \\
+$pixel-1-column: $raster-size * $raster-4-count;         // Breite in Pixel für 1-Spaltig
+$pixel-2-column: $raster-size * $raster-2-count;         // Breite in Pixel für Content bei 3-Spaltig
+$pixel-3-column: $raster-size * $raster-3-count;         // Breite in Pixel für Content bei 2-Spaltig
+$pixel-4-column: $raster-size * $raster-1-count;         // Breite in Pixel für Marginal-Spalten
+
+$desktop-page-width: $pixel-1-column;                    // maximale Seitenbreite in Pixel
+$page-min-width    : 320px;                              // Mindestbreite der Seite
+$content-min-height: 400px;                              // Mindesthöhe des Content-Bereiches
+
+$content-offset: -22px;                                  // Eventuell vorhandene Inhalts-Verschiebung korrigieren (Login, Catalog)
+
+$text-size      : 14px;                                  // Standard-Schriftgröße
+$text-lineheight: 23px;                                  // Standard-Zeilenhöhe
+$fa-icon-margin : 5px;                                   // Abstand zwischen Icons und Schrift
+$toolbar-height : 40px;                                  // Block- und Zeilen-Höhe der Toolbars im Katalog
+$toolbar-button : 20px;                                  // Höhe & Breite der Sortier-Buttons in der Toolbar
+
+$border-radius: 0;                                       // Border-Radius für Elemente
+$border-width : 1px;                                     // Breite für Element-Rahmen
+
+$default-margin      : 20px;                             // Standard-Abstand für Elemente auf der Seite (Boxen, Text, etc.)
+$default-padding     : 5px;                              // Standard-Abstand für Innen-Elemente
+$default-input-height: 29px;                             // Standard-Höhe für Eingabefelder
+$default-text-height : 10rem;                            // Standard-Höhe bei Textarea's
+
+$button-margin         : 10px;                           // Abstand zwischen Buttons
+$button-zeilen-hoehe   : 1.67rem;                        // Zeilenhöhe bei Buttons
+$button-schrift-groesse: 1rem;                           // Schriftgröße auf Buttons
+$buttonset-margin      : 15px;                           // Außen-Abstand für das Button-Set (Links und Rechts)
+
+$image-padding        : 5px;                             // Abstand vom Produkt-Bild zum Rahmen
+$produkt-titel-schrift: 1.2rem;                          // Schriftgröße des Produkt-Titel im Katalog
+$produkt-titel-hoehe  : 1.5rem;                          // Höhe des Produkt-Titel im Katalog (danach wird abgeschnitten)
+$produkt-titel-zeile  : 1.3rem;                          // Zeilenhöhe für Produkt-Titel
+$katalog-button       : 90%;                             // Breite des Buttons in der Katalog-Ansicht
+
+// Seite-Maße in Prozenten \\
+$prozent-margin    : percentage( $default-margin / $desktop-page-width );
+$prozent-2-marginal: round( percentage( $pixel-4-column / $desktop-page-width ) );
+$prozent-2-content : percentage( $pixel-3-column / $desktop-page-width );
+$prozent-3-content : percentage( $pixel-2-column / $desktop-page-width );
+
+// Message-Block \\
+$message-triagle: 6px;                                   // Größe des Triangles bei den Meldungen
+$message-border : 5px;                                   // Breite des linken Randes bei den Meldungen
+$message-size   : 0.9rem;                                // Schriftgröße für Meldungen
+
+// Button-Set \\
+$one-button-width  : 100%;                               // Button-Breite bei einem Button
+$two-button-width  : 47%;                                // Button-Breite bei zwei Buttons
+$three-button-width: 27%;                                // Button-Breite bei drei Buttons
+$four-button-width : 20%;                                // Button-Breite bei vier Buttons
+
+// Logo \\
+$logo-padding-vrt: 0;                                    // Innenabstand des Logos (oben, unten)
+$logo-padding-hrz: 0;                                    // Innenabstand des Logos (links, rechts)
+$logo-margin-top : 0;                                    // Außenabstand oben
+$logo-width      : 138px;                                // Breite des Logo
+$logo-height     : 86px;                                 // Höhe des Logo in Pixel
+
+// Header-Angaben \\
+$bitv-width                      : 15em;                 // Breite des BITV-Menüs
+$header-buttons-block-width      : 70%;                  // Breite des Blocks im Header mit Startseite, Warenkorb, etc.
+$header-background-position-start: 0;                    // -- Position des Header-Bildes
+$header-background-position-top  : $logo-height;         // -- Position des Header-Bildes
+$header-min-height               : $logo-height;         // Minesthöhe des Header-Block
+$header-link-height              : $logo-height / 2;     // Höhe der Links im Header
+$header-link-margin-top          : 8px;                  // Abstand der Header-Links nach oben
+
+// Language-Switcher \\
+$lng-switch-width      : 40%;                            // Breite des Overlay-Fensters für Sprachumschaltung
+$lng-switch-minheight  : 10vh;                           // Mindesthöhe des Overlay-Fensters
+$lng-switch-margin     : 15%;                            // Abstand von oben und unten zur Zentrierung des Overlay-Fensters
+$lng-switch-title      : 1.1rem;                         // Schriftgröße des Titels
+$lng-switch-button     : 47.5%;                          // Breite der Buttons zum Sprach-Auswahl
+$lng-switch-button-gap : 5%;                             // Abstand zwischen 2 Buttons auf einer Zeile
+$lng-switch-image      : 18px;                           // Größe des Bildes für die Landes-Sprache
+$lng-switch-name-offset: -3px;                           // Offset, damit Schriftzug und Bild vertical mittig sind
+
+// Welcome-Header \\
+$welcome-left-padding: 15px;                             // Platz nach Links für den Home-Icon schaffen
+$welcome-bottom      : 0;                                // Abstand des Schriftzuges vom unteren Rand
+$welcome-height      : $logo-height / 2;                 // Gleiche Höhe, wie die Buttons im Header
+
+// Kreditkarten-Widget \\
+$credit-card-image-width: 22%;                           // Breite des Bilder für Kreditkarten
+
+// Minicart \\
+$minicard-width        : 350px;                          // Breite des MiniCart im Header
+$minicard-right        : 0;                              // Positions-Korrektur für MiniCard
+$minicard-counter      : 25px;                           // Höhe und Breite des Minicart-Counters
+$minicard-counter-top  : 3px;                            // Positionierung vom oberen Button-Rand
+$minicard-counter-right: 5px;                            // Positionierung vom rechten Button-Rand
+$minicard-padding      : 4px;                            // Innenabstand des Minicard-Counters
+$minicard-line         : 1rem;                           // Zeilenhöhe des Minicard-Counters
+$minicard-closed       : 35px;                           // Höhe und Breite des Cosed-Buttons im Minicard
+$minicard-items        : 20px;                           // Innenabstand der Artikell-Liste im Minicard
+$minicard-title        : 3rem;                           // Maximale Höhe der Produktnamen im MiniCard
+
+// Block-Maße im Katalog \\
+$category-image-max-width : 20%;                         // Maximale Breite des Kategorie-Bildes
+$category-image-max-height: 10%;                         // Maximale Höhe des Kategorie-Bildes
+$category-price-size      : 1.2rem;                      // Preisanzeige auf der Katalog-Seite
+$category-list-item-height: 330px;                       // Höhe der Items in der Listendarstellung (Es sind keine %-Angaben möglich!!)
+$category-list-bild-block : 30%;                         // Breite des Bilder-Blocks in der Listendarstellung
+$category-list-info-block : 67%;                         // Breite des Inhalts-Blocks in der Listendarstellung
+$category-list-desc-block : 200px;                       // Höhe der Kurzbeschreibung in der Listendarstellung
+$category-list-img-heigh  : 280px;                       // Höhe des Produkt-Bildes in der Listendarstellung
+
+// Checkout-Progress Multipage \\
+$progress-item-height : 3.5rem;                          // Höhe der Progress-Punkte im MP-Checkout
+$progress-item-width  : 13%;                             // Breite der Progress-Punkte im MP-Checkout
+$progress-item-space  : 0.5%;                            // Abstand zwischen den der Progress-Punkten im MP-Checkout
+$progress-item-padding: 3px;                             // Innenabstand der Progress-Punkte im MP-Checkout
+$progress-item-border : 4px;                             // Breite des oberen Randes bei dem Progress-Punkten im MP-Checkout
+
+// Checkout \\
+$checkout-title       : 1.5rem;                          // Schriftgröße der Überschriften im MP-Checkout
+$checkout-title-height: 1.7rem;                          // Zeilenhöhe der Überschriften im MP-Checkout
+$checkout-numbers     : 1.3rem;                          // Schriftgrößen für Bestellnummer und Kassenzeichen (SuccessView)
+
+// Warenkorb \\
+$cart-title-height: 3rem;                                // Maximale Höhe des Artikelnamen
+$cart-action-width: 40px;                                // Breit der Spalte mit der Produkt-Anzahl
+$cart-image-width : 10%;                                 // Breit der Spalte mit dem Produkt-Bild
+$cart-price-width : 10%;                                 // Breit der Spalten für die einzelnen Preis-Angaben
+
+// Artikel-Details \\
+$article-base-height  : 300px;                           // Höhe des oberen Artikel-Blocks
+$article-image-width  : 27%;                             // Breite des Thumbnails in der Detailansicht
+$article-short-left   : 20px;                            // Abstand der Kurzbeschreibung nach Links
+$article-short-right  : 30px;                            // Abstand der Kurzbeschreibung nach Rechts
+$article-ps-width     : 30%;                             // Breit der oberen Box mit dem Kaufen-Button
+$article-h2-size      : 1.2rem;                          // Größe der Überschriften in der Artikelansicht
+$article-bottom-height: 75px;                            // Höhe des Blocks "product-options-bottom"
+$article-stock-size   : 1.1rem;                          // Schrift-Größe bei (nicht) Auf Lager
+$article-price-size   : 1.5rem;                          // Größe der Preisanzeige
+
+// Gruppen-Artikel-Tabelle \\
+$grouped-image-width: 100px;                             // Breite der ersten Spalte bei Gruppen-Artikeln
+$grouped-price-width: 22%;                               // Breit der letzten Spalte bei Gruppen-Artikeln
+
+// Beliebte Suchanfragen \\
+$search-tag-font-size: 1.5rem;                           // Schriftgröße für Beliebte Suchanfragen

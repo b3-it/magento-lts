@@ -61,4 +61,17 @@
             </block>
         </reference>
     </sendfriend_product_send>
+
+    <egovs_checkout_multipage_login>
+        <reference name="head">
+            <action method="addJs"><file>egovs/jquery.captchatools.js</file></action>
+        </reference>
+        <reference name="checkout_login">
+            <block type="core/text_list" name="form.additional.info">
+                <block type="egovscaptcha/captcha" name="captcha">
+                    <action method="setFormId"><formId>user_login</formId></action>
+                </block>
+            </block>
+        </reference>
+    </egovs_checkout_multipage_login>
 </layout>

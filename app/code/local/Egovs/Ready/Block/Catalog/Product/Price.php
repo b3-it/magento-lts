@@ -218,7 +218,9 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 		if (!in_array($this->getTemplate(), $this->_tierPriceDefaultTemplates)) {
 			$_htmlObject = new Varien_Object();
 			$_htmlObject->setParentHtml($_html);
-			$_infoBlock = $this->getLayout()->createBlock('core/template')
+
+			/** @var \Egovs_Ready_Block_Catalog_Product_Price_Info $_infoBlock */
+			$_infoBlock = $this->getLayout()->createBlock('egovsready/catalog_product_price_info')
 				->setTemplate('egovs/ready/catalog/product/price/info.phtml')
 				->setProduct($this->getProduct())
 				->setFormattedTaxRate($this->getFormattedTaxRate())

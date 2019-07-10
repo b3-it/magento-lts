@@ -140,10 +140,9 @@ class Dwd_ConfigurableVirtual_Model_Product_Observer extends Varien_Object
             return;
         }
 
-
         //nur bei Status änderung weitermachen
         $origState = 'dummy';
-        if (count($order->getOrigData()) > 0) {
+        if ( ( is_array($order->getOrigData()) || is_object($order->getOrigData()) ) && count($order->getOrigData()) > 0) {
             $orig = $order->getOrigData();
             $origState = $orig['state'];
         }

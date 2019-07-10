@@ -1,0 +1,110 @@
+﻿<?php
+/**
+ * @category    design
+ * @package     lhdd_default
+ * @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/** @var $this Mage_Page_Block_Html_Topmenu_Renderer */
+/** @var $menuTree Varien_Data_Tree_Node */
+/** @var string $childrenWrapClass */
+
+$html = array();
+
+$children = $menuTree->getChildren();
+$parentLevel = $menuTree->getLevel();
+
+// Anpassen der Start-Ebene, da die Kategorie-Nav eine Hard geschrieben Ober-Navigation hat
+$childLevel = is_null($parentLevel) ? 1 : $parentLevel + 1;
+
+$counter = 1;
+$childrenCount = $children->count();
+
+$parentPositionClass = $menuTree->getPositionClass();
+$itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
+
+foreach ($children as $child) {
+	$show_all_link = TRUE;
+	
+    $spacer = str_repeat('    ', $childLevel);
+	
+	$child->setLevel($childLevel);
+    $child->setIsFirst($counter == 1);
+    $child->setIsLast($counter == $childrenCount);
+    $child->setPositionClass($itemPositionClassPrefix . $counter);
+
+    $file_name = $child->getUrl();
+    $file_info = pathinfo($file_name);
+    $ext = '';
+    if(isset($file_info['extension']))
+    {
+    	$ext = $file_info['extension'];
+    }
+
+    $file_id = strtolower( basename( $file_name, '.' . $ext ) );
+
+    $outermostClassCode = 'level'. $childLevel;
+    $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
+
+    if ( $childLevel == 1 ) {
+        // First Level => Arrow append
+        $_cssAppend = ' egov-arrow-main-closed';
+    }
+    else {
+        // First Level => Arrow first
+        $_cssAppend = ' egov-arrow-sub-closed';
+    }
+    
+    $html[] = $spacer . '<li id="' . $file_id . '" ' . $this->_getRenderedMenuItemAttributes($child) . '>';
+
+    $html[] = $spacer . '    <a href="'. $child->getUrl() .'" data-category-count="" class="'. $outermostClassCode .' '. $_hasChildren . $_cssAppend .'">'.
+              $this->escapeHtml($this->__($child->getName())) .'</a>';
+
+    if (!empty($childrenWrapClass)) {
+        $html[] = $spacer . '    <div class="'. $childrenWrapClass .'">';
+    }
+
+    $nextChildLevel = $childLevel + 1;
+
+    if (!empty($_hasChildren)) {
+        $html[] = $spacer . '<ul id="sub-' . $file_id . '" class="level'. $childLevel .'">';
+		if (
+				(
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PRODUCT
+					&& $child->getProductCount() < 1
+				)
+			|| (
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_PAGE
+					&& !$child->getLandingPage()
+				)
+			|| (
+					$child->getDisplayMode() == Mage_Catalog_Model_Category::DM_MIXED
+					&& !$child->getLandingPage()
+					&& $child->getProductCount() < 1
+				)
+			) {
+			$show_all_link = false;
+		}
+        if ($show_all_link == TRUE) {
+            $html[] = $spacer . '<li id="all-' . $file_id . '" class="level'. $nextChildLevel .' view-all">';
+            $html[] = $spacer . '    <a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
+            $html[] = $spacer . '        ' . $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
+            $html[] = $spacer . '    </a>';
+            $html[] = $spacer . '</li>';
+        }
+
+        $html[] = $spacer . '    ' . $this->render($child, $childrenWrapClass);
+        $html[] = $spacer . '</ul>';
+    }
+
+    if (!empty($childrenWrapClass)) {
+        $html[] = $spacer . '    </div>';
+    }
+
+    $html[] = '</li>';
+
+    $counter++;
+}
+
+return implode("\n", $html);

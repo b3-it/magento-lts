@@ -1,0 +1,52 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+@mixin default-hidden-border {
+	border-width: $border-width;
+	border-style: solid;
+	border-color: transparent;
+}
+
+// heller Hintergrund + dunkle Schrift => dunkler Hintergrund + helle Schrift
+@mixin hell-dunkel {
+	@include default-hidden-border;
+	text-decoration: none;
+	background-color: $grundfarbe4;
+	color: $grundfarbe1;
+	text-align: center;
+	
+	&:hover, &:active, &:focus {
+		background-color: $grundfarbe1;
+		color: $grundfarbe4;
+	}
+}
+
+// dunkler Hintergrund + helle Schrift => heller Hintergrund + dunkle Schrift
+@mixin dunkel-hell {
+	@include default-hidden-border;
+	text-decoration: none;
+	background-color: $grundfarbe1;
+	color: $grundfarbe4;
+	text-align: center;
+	
+	&:hover, &:active, &:focus {
+		background-color: $grundfarbe4;
+		color: $grundfarbe1;
+		border-color: $grundfarbe1;
+	}
+}
+
+@mixin toolbar-button {
+	display: inline-block;
+	width: $toolbar-button;
+	height: $toolbar-button;
+	margin-left: $toolbar-button / 2;
+	box-shadow: inset 0 0 2px 0 $grundfarbe4;
+	border: $border-width solid $element-schatten;
+	background-color: $grundfarbe1;
+	color: $grundfarbe-hell;
+	padding: 1px;
+}

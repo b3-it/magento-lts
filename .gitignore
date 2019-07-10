@@ -54,3 +54,5 @@ Hackathon*
 /var/importexport/*
 *.exe
 /.externalToolBuilders/
+B3it_All.xml
+/app/etc/modules/Magneto_Debug.xml

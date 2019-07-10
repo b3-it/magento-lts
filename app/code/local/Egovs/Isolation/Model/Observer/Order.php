@@ -142,6 +142,8 @@ class Egovs_Isolation_Model_Observer_Order extends Egovs_Isolation_Model_Observe
 	protected function addStoreGroupFilterToCollection($collection, $order_id_field = "order_id")
     {
     	if($collection == null) return;
+        if($this->_skipIsolation()) return null;
+
     	$storeGroups = $this->getUserStoreGroups();
     	if(($storeGroups) && (count($storeGroups) > 0)) 
     	{

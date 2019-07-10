@@ -1,0 +1,61 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.mp-checkout .col-main {
+	.page-title {
+		@extend .h2;
+		margin-bottom: $default-margin;
+		
+		h2 {
+			margin-bottom: 0;
+			font-size: $checkout-title;
+			line-height: $checkout-title-height;
+		}
+	}
+	
+	input[type="radio"] {
+		width: auto;
+		height: auto;
+	}
+	
+	dl dt {
+		margin-bottom: $default-margin / 2;
+	}
+
+	ul.form-list {
+		@include form-list;
+	}
+
+	table {
+		@extend .data-table;
+		
+		tbody td {
+			border-width: $border-width;
+		}
+	}
+
+	.shipping-costs {
+		margin-right: $default-margin / 2;
+	}
+	
+	.oder-info {
+		margin-bottom: $default-margin / 2;
+
+		> * {
+			display: inline-block;
+			
+			&:first-child {
+				margin-right: $default-margin / 2;
+			}
+			&:last-child {
+				color: $grundfarbe1;
+				font-size: $checkout-numbers;
+				font-weight: bold;
+			}
+		}
+	}
+}

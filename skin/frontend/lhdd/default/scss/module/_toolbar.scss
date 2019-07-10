@@ -1,0 +1,97 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.toolbar {
+	@include clearfix;
+    display: block;
+
+    > div {
+        border-color: $grundfarbe2;
+        border-width: $border-width 0;
+        border-style: solid;
+        background-color: $grundfarbe3;
+        margin: $default-padding 0;
+        line-height: $toolbar-height;
+        height: $toolbar-height;
+        padding: 0 $default-padding * 2;
+    }
+
+    .count-container, .pager, .limiter,
+    .sort-by, .view-mode {
+        display: inline-block;
+
+		a {
+			text-decoration: none;
+		}
+    }
+
+    .pager {
+        position: relative;
+        left: 30%;
+    }
+
+    .pages {
+        > *, li {
+            display: inline-block;
+            line-height: 1rem;
+        }
+        ol {
+            font-size: 0;
+        }
+        li {
+            @include toolbar-button;
+            font-size: 0.9rem;
+            text-align: center;
+            width: auto;
+            min-width: $toolbar-button;
+
+            &.current,
+            &:active, &:hover, &:focus {
+                text-decoration: none;
+                background-color: $grundfarbe3;
+                color: $grundfarbe1;
+            }
+
+            &.current {
+                cursor: not-allowed;
+            }
+
+            a {
+                color: $grundfarbe-hell;
+            }
+        }
+    }
+
+    .limiter, .sort-by {
+        float: right;
+    }
+
+    p label {
+        position: relative;
+        top: -4px;
+    }
+
+    .sort-by-switcher--asc, .sort-by-switcher--desc {
+    	@extend .egov-fa-base;
+        @include toolbar-button;
+        padding-top: 2px;
+        padding-left: 3px;
+
+	    &:active, &:hover, &:focus {
+	    	text-decoration: none;
+	    	background-color: $grundfarbe3;
+	    	color: $grundfarbe1;
+	    }
+    }
+
+    .sort-by-switcher--asc {
+    	@extend .fa-arrow-down;
+    }
+    .sort-by-switcher--desc {
+    	@extend .fa-arrow-up;
+    }
+}

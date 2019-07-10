@@ -1,0 +1,258 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.catalog-product-view {
+	header, .main-container {
+	}
+}
+
+.product-image-gallery {
+    overflow: hidden;
+
+    .gallery-image {
+        display: none;
+
+        &.visible {
+            display: block;
+
+            &.hidden {
+                visibility:hidden;
+            }
+        }
+    }
+
+    @include loadingOverlay();
+}
+
+#additional-product-images {
+	margin-bottom: $default-margin;
+}
+
+#product_addtocart_form > .availability-only {
+	// wird per JS umgelegt
+	display: none;
+}
+.availability-only {
+	margin-top: $default-margin;
+
+	@include messages-formater($fehler-text-color, $fehler-back-color);
+}
+
+.col-main{
+	.product-name > h1 {
+		border-bottom: $border-width solid $grundfarbe1;
+	}
+
+	.product-view h2 {
+		font-size: $article-h2-size;
+		line-height: normal;
+		margin-bottom: $default-margin / 2;
+	}
+
+	.product-sku, .product-collateral,
+	.product-options, .product-options-bottom {
+		margin-bottom: $default-margin;
+	}
+
+	.product-options-bottom .add-to-links {
+		display: none;
+	}
+
+	#product-base-block {
+		max-height: $article-base-height;
+		margin-bottom: $default-margin;
+
+		.product-image {
+			position: relative;
+			top: 0 - $default-margin;
+		}
+
+		.product-img-box, .short-description, .product-shop {
+			display: table-cell;
+			vertical-align: top;
+		}
+
+		.product-img-box {
+			width: $article-image-width;
+
+			img {
+				@include product-image;
+			}
+		}
+		.short-description {
+			padding: 0 $article-short-left 0 $article-short-right;
+
+			.std {
+				max-height: $article-base-height;
+				overflow: hidden;
+				position: relative;
+
+				&:after {
+					@include fading-top-bottom(10%, $grundfarbe-hell);
+				}
+			}
+		}
+		.product-shop {
+			width: $article-ps-width;
+			text-align: right;
+
+			.price {
+				font-size: $article-price-size;
+			}
+		}
+	}
+
+	.grouped-items-table-wrapper {
+		padding: $default-padding * 4;
+		margin-bottom: $default-margin;
+		border: $border-width solid $grundfarbe1;
+
+		.grouped-items-table {
+			width: 100%;
+
+			.name-wrapper {
+				display: inline-block;
+				width: 70%;
+			}
+			.qty-wrapper {
+				display: block;
+				margin-top: $default-margin / 4;
+				background-color: $grundfarbe3;
+				padding: $default-padding * 2;
+			}
+			td {
+				padding: $default-padding;
+				border: 0;
+
+				img {
+					width: 100%;
+					height: auto;
+				}
+
+				&:first-child {
+					width: $grouped-image-width;
+				}
+				&:last-child {
+					width: $grouped-price-width;
+
+					> * {
+						display: inline-block;
+					}
+					.price-box {
+						float: right;
+					}
+				}
+			}
+		}
+	}
+
+	.product-options {
+		border: $border-width solid $grundfarbe1;
+		padding: $default-padding * 3;
+
+		dd {
+			margin-bottom: $default-margin / 2;
+			background-color: $grundfarbe4;
+			padding: $default-padding;
+
+			input, textarea, select {
+				background-image: none;
+			}
+
+			.input-option-select {
+				display: inline-block;
+			}
+			.qty-holder:not(.option-qty-holder) {
+				float: left;
+				margin-right: $default-margin;
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		input[type="checkbox"] {
+			position: relative;
+			top: 1px;
+		}
+		input[type="radio"] {
+			height: 1rem;
+			position: relative;
+			top: 3px;
+		}
+		select[multiple] {
+			width: 100%;
+		}
+
+		.options-list li {
+			display: inline-block;
+			width: 33%;
+			padding-right: $default-padding * 4;
+
+			.price-notice {
+				float: right;
+			}
+		}
+
+		p.required {
+			margin-top: $default-margin;
+			line-height: normal;
+		}
+	}
+
+	.product-options-bottom {
+		height: $article-bottom-height;
+
+		.price-box, .add-to-cart {
+			display: inline-block;
+		}
+		.tax-details:before {
+			content: '';
+			display: block;
+		}
+		.add-to-cart {
+			float: right;
+			position: relative;
+			top: -22px;
+
+			.button {
+				padding: $default-padding * 2 $default-padding;
+			}
+		}
+	}
+
+	.product-collateral {
+        @include tabs;
+    }
+
+    .form-add {
+    	> label, > div.input-box {
+    		width: 30%;
+    	}
+    	input {
+    		width: 82%;
+    	}
+    	button {
+    		float: right;
+			position: relative;
+			top: -50px;
+    	}
+    }
+}
+
+.box-tags {
+	p.note {
+		font-size: 0.8rem;
+		line-height: normal;
+	}
+}
+
+.col3-layout {
+	.form-add div.input-box {
+		width: 45%
+	}
+}

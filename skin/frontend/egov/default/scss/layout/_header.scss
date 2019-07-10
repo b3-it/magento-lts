@@ -388,6 +388,7 @@ a.skip-link {
 @include bp(max-width, 500px) {
     .skip-search {
     	top: 0;
+        height: 47px;
     }
 }
 

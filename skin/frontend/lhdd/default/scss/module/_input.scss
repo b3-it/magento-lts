@@ -1,0 +1,57 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+a, input, button, select, textarea {
+    /* Bugfix für IE11, da er das Rumpf-Element bei Seite laden auf Active setzt */
+    &:focus {
+        border: $border-width solid $zusatzfarbe2;
+    }
+}
+
+input, textarea, select {
+	@include default-hidden-border;
+	border-color: $grundfarbe1;
+	background-clip: padding-box;
+	box-shadow: inset 0 5px 5px -5px $box-shatten;
+	text-shadow: 0 1px 1px $input-alpha;
+	background-repeat: repeat-x;
+	background-image: linear-gradient(to bottom, $grundfarbe-hell 0, $gradient1 100%);
+	padding: $default-padding;
+	height: $default-input-height;
+	margin-right: $default-margin / 2;
+
+	&:active, &:hover, &:focus {
+	    border-color: $zusatzfarbe2;
+	    outline: $border-width solid $zusatzfarbe2;
+	}
+
+	&:disabled {
+		background-color: $grundfarbe2;
+	}
+}
+
+select[multiple] {
+	height: auto;
+}
+
+input[type="checkbox"] {
+	width: auto;
+	height: auto;
+
+	&:checked {
+	    outline: $border-width solid $zusatzfarbe2;
+	}
+}
+
+input[type="checkbox"], input[type="radio"] {
+	&:focus {
+		/* see https://developer.mozilla.org/de/docs/Web/CSS/outline */
+    	outline-width: $border-width;
+    	outline-style: solid;
+    	outline-color: $zusatzfarbe2;
+	}
+}

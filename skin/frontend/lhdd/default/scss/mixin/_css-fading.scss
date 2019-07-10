@@ -1,0 +1,26 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@mixin fading-left-right($fade-width: 10%, $fade-color: #FFFFFF) {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $fade-width;
+    height: 100%;
+    background-image: linear-gradient(to right, rgba($fade-color, 0) 0%, $fade-color 80%, $fade-color 100%);
+}
+
+@mixin fading-top-bottom($fade-height: 10%, $fade-color: #FFFFFF) {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: $fade-height;
+    background-image: linear-gradient(to bottom, rgba($fade-color, 0) 0%, $fade-color 80%, $fade-color 100%);
+}

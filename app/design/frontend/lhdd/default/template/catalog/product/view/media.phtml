@@ -1,0 +1,116 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+
+/* @var $this Mage_Catalog_Block_Product_View_Media */
+
+
+    $_product    = $this->getProduct();
+    $_helper     = $this->helper('catalog/output');
+    $_helper_img = $this->helper('catalog/image');
+    $_image_list = $this->getGalleryImages();
+
+    $js_url      = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS);
+    $media_url   = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);
+    $media_url  .= "catalog/product";
+    $types_flash = array('flv', 'avi');
+    $types_html5 = array('ogg', 'mp4', 'webm', 'wav', 'ogv', 'oga', 'm4v', 'm4a');
+
+    $thumb_width  = 90;   // Breite des Vorschaubildes für Videos
+    $thumb_height = 90;   // Höhe des Vorschaubildes für Video
+    $pre_image    = 130;  // Größe des Vorschaubildes für normale Bilder
+
+?>
+
+<?php if (count($_image_list) > 1): ?>
+<div id="additional-product-images">
+    <h2><?php echo $this->__('More Views') ?></h2>
+    <div class="silver-track">
+        <div class="view-port">
+            <div class="product-image-thumbs">
+                <?php
+                  $i = 0;
+                  foreach ($_image_list as $_image): ?>
+                    <?php if ($this->isGalleryImageVisible($_image)): ?>
+                    <?php
+                        $file_name  = $_image->getFile();
+                        $full_url   = $_image->getUrl();
+                        $file_label = $this->escapeHtml($_image->getLabel());
+                        $file_info  = pathinfo($file_name);
+
+                        if ( !strlen($file_label) ) {
+                            // als Alternative den Produkt-Namen verwenden
+                            $file_label = $_product->getName();
+                        }
+
+                        $image_thumb = $_helper_img->init($_product, 'thumbnail', $file_name)->resize($pre_image);
+                        $image_path  = $_helper_img->init($_product, 'thumbnail', $file_name)->resize($thumb_width, $thumb_height);
+                    ?>
+                    <div class="item">
+                      <?php
+                      if ( in_array($file_info['extension'], $types_flash) ):
+                      ?>
+                        <div class="swap-video" data-image-index="<?php echo $i; ?>">
+                            <object id="egov-flash-video-<?php echo $i; ?>"
+                                    type="application/x-shockwave-flash"
+                                    data="<?php echo $js_url; ?>flash/player_flv.swf"
+                                    class="egov-product-flash"
+                                    width="<?php echo $thumb_width; ?>"
+                                    height="<?php echo $thumb_height; ?>">
+                                <param name="movie" value="<?php echo $js_url; ?>flash/player_flv.swf" />
+                                <param name="wmode" value="transparent" />
+                                <param name="quality" value="high" />
+                                <param name="allowFullScreen" value="true" />
+                                <param name="allowScriptAccess" value="always" />
+                                <param name="flashvars" value="flv=<?php echo $full_url; ?>" />
+                            </object>
+                        </div>
+                      <?php elseif ( in_array($file_info['extension'], $types_html5) ): ?>
+                        <video id="egov-html5-video-<?php echo $i; ?>"
+                               width="<?php echo $thumb_width; ?>"
+                               height="<?php echo $thumb_height; ?>"
+                               class="swap-video egov-product-video"
+                               autobuffer="true"
+                               preload="auto"
+                               data-image-index="<?php echo $i; ?>"
+                               poster="<?php echo $image_path; ?>">
+                            <source src="<?php echo $full_url; ?>"
+                                    type='video/<?php echo $file_info['extension']; ?>' />
+                        </video>
+                      <?php else: ?>
+                        <a id="egov-product-image-<?php echo $i; ?>"
+                           class="thumb-link egov-product-image"
+                           href="javascript:void(0);"
+                           title="<?php echo $file_label ?>"
+                           data-image-index="<?php echo $i; ?>">
+                            <img src="<?php echo $image_thumb; ?>"
+                                 alt="<?php echo $file_label ?>"
+                                 title="<?php echo $file_label ?>" />
+                        </a>
+                      <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                <?php $i++; endforeach; ?>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <a href="javascript:void(0);" class="prev disabled"></a>
+            <a href="javascript:void(0);" class="next disabled"></a>
+        </div>
+        <script type="text/javascript" src="<?php echo $js_url; ?>egovs/jquery.swapVideo.js"></script>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php echo $this->getChildHtml('after'); ?>

@@ -1,0 +1,95 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+form {
+	.form-list li > div,
+	.fullwide .field,
+	.half-space .halfwide,
+	.half-space:not(.wide)  {
+		width: 48%;
+		display: inline-block;
+		vertical-align: top;
+
+		@include bp(max-width, $desktop-page-width) {
+			width: 100%;
+			display: block;
+		}
+
+		&:nth-child(2n):not(.halfwide) {
+			margin-left: 3%;
+
+			@include bp(max-width, $desktop-page-width) {
+				margin-left: 0;
+			}
+		}
+	}
+
+	.passwordnotice {
+		// Passwort-Hinweis
+	}
+
+	.form-list {
+		li {
+			display: block;
+			width: 100%;
+
+			label:not(#is-subscribed, .inline-element) {
+				display: block;
+			}
+			input:not([type="checkbox"]), textarea, select {
+				width: 100%;
+			}
+			textarea {
+				height: $default-text-height;
+				resize: none;
+			}
+
+			> div {
+				&:only-of-type {
+					width: 99.6%;
+					margin-left: 0;
+				}
+
+				input {
+					margin-bottom: $default-margin / 2;
+
+					&:only-of-type, &:last-child {
+						margin: 0;
+					}
+				}
+			}
+
+			.input-range {
+				position: relative;
+
+				input {
+					width: 48.1%;
+
+					&:nth-of-type(2) {
+						margin-right: 0;
+					}
+				}
+				.separator {
+					margin: 0 $default-margin / 2 0 0;
+				}
+				small {
+					position: absolute;
+					top: -23px;
+					left: 50px;
+				}
+			}
+		}
+
+		li, .field {
+			margin-bottom: $default-margin / 2;
+		}
+	}
+
+	.buttons-set {
+		margin: 0;
+	}
+}

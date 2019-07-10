@@ -33,7 +33,7 @@
  */
 class Sid_Roles_Model_Customer_Attribute_Source_Group extends Mage_Eav_Model_Entity_Attribute_Source_Table
 {
-    public function getAllOptions()
+    public function getAllOptions($withEmpty = true, $defaultValues = false)
     {
         if (!$this->_options) {
             $model = Mage::getResourceModel('customer/group_collection');

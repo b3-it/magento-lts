@@ -72,7 +72,7 @@ class Egovs_EventBundle_Block_Checkout_Cart_Item_Renderer extends Mage_Bundle_Bl
                         if ($qty) {
                             $quoteItem = $this->getSelectionQuoteItem($childs, $bundleSelection->getSelectionId());
                             $text = $qty . ' x ' . Mage::helper('eventbundle')->escapeHtml($bundleSelection->getName());
-                            $text .= Mage::helper('eventbundle')->getAdditionalPriceInfo($item);
+                            $text .= Mage::helper('eventbundle')->getAdditionalPriceInfo($quoteItem);
                             $option['value'][] = $text;
                         }
                     }

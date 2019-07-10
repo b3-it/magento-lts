@@ -1,0 +1,54 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.button {
+	display: inline-block;
+	white-space: normal;
+	max-width: 100%;
+	color: $grundfarbe-hell;
+	background-color: $zusatzfarbe1;
+	font-weight: 700;
+	text-align: center;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	padding: $default-padding $default-padding * 3;
+	font-size: $button-schrift-groesse;
+	line-height: $button-zeilen-hoehe;
+	border-radius: round( $border-radius / 2 );
+	border: $border-width solid transparent;
+
+	@include bp(max-width, $desktop-page-width) {
+		font-size: 0.8rem;
+	}
+	@include bp(max-width, $bp-tablet) {
+		line-height: 1rem;
+		height: 2.7rem;
+		width: 100%;
+	}
+
+	span {
+	    font-family: $base-font;
+	    margin-left: $default-padding;
+
+		@include bp(max-width, $bp-tablet) {
+			display: block;
+			width: 95%;
+		}
+	}
+
+	&:focus, &:active, &:hover {
+		background-color: $grundfarbe1;
+	    background-image: none;
+	    text-decoration: underline;
+	    border-color: $grundfarbe4;
+	}
+}
+
+button {
+	@extend .button;
+}

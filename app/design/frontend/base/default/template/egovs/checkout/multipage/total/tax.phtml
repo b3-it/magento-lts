@@ -24,44 +24,37 @@
 	<?php $isTop = 1; ?>
     <?php foreach ($this->getTotal()->getFullInfo() as $info): ?>
         <?php if (isset($info['hidden']) && $info['hidden']) continue; ?>
-        <?php $percent = $info['percent']; ?>
         <?php $amount = $info['amount']; ?>
         <?php $rates = $info['rates']; ?>
-        <?php $isFirst = 1; ?>
+        <?php $rate = reset($rates); ?>
 
-        <?php foreach ($rates as $rate): ?>
-        <tr class="tax-details tax-details-<?php echo $taxIter; ?>">
+        <tr class="tax-details tax-details-<?php echo $taxIter; ?> summary-details-<?php echo $taxIter; ?>" style="display:none;">
             <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
                 <?php echo $rate['title']; ?> <?php if ($rate['percent']): ?>(<?php echo $rate['percent']; ?>%)<?php endif; ?>
                 <br />
             </td>
-            <?php if ($isFirst): ?>
-            <td rowspan="<?php echo count($rates); ?>" class="a-right" style="<?php echo $_style ?>">
+            <td class="a-right" style="<?php echo $_style ?>">
                 <?php echo $this->helper('checkout')->formatPrice($amount); ?>
             </td>
-            <?php endif; ?>
         </tr>
-        <?php $isFirst = 0; ?>
         <?php $isTop = 0; ?>
-        <?php endforeach; ?>
-
-        <?php $weees = $this->getAllWeee(); ?>
-
-        <?php if( is_array($weees) && count($weees) ): ?>
-            <?php foreach ($weees as $weeeTitle => $weeeAmount): ?>
-            <tr class="summary-details-<?php echo $taxIter; ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif; ?>" style="display:none;">
-                <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
-                    <?php echo $this->escapeHtml($weeeTitle); ?>
-                    <br />
-                </td>
-                <td style="<?php echo $_style ?>" class="a-right" rowspan="1">
-                    <?php echo $this->helper('checkout')->formatPrice($weeeAmount); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-
     <?php endforeach; ?>
+
+    <?php $weees = $this->getAllWeee(); ?>
+
+    <?php if( is_array($weees) && count($weees) ): ?>
+        <?php foreach ($weees as $weeeTitle => $weeeAmount): ?>
+        <tr class="summary-details-<?php echo $taxIter; ?> summary-details<?php if ($isTop): echo ' summary-details-first'; endif; ?>" style="display:none;">
+            <td class="a-right" style="<?php echo $_style ?>" colspan="<?php echo $_colSpan; ?>">
+                <?php echo $this->escapeHtml($weeeTitle); ?>
+                <br />
+            </td>
+            <td style="<?php echo $_style ?>" class="a-right" rowspan="1">
+                <?php echo $this->helper('checkout')->formatPrice($weeeAmount); ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
 <?php endif;?>
 
 <tr id="overview-tax" <?php if ($this->helper('tax')->displayFullSummary() && $_value!=0): ?> class="summary-total" onclick="expandDetails(this, '.summary-details-<?php echo $taxIter;?>')"<?php endif; ?>>

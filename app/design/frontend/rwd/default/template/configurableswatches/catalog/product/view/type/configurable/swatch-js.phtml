@@ -23,9 +23,12 @@
  * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+
+if (Mage::helper("configurableswatches")->isEnabled()):
 ?>
 <script type="text/javascript">
     document.observe('dom:loaded', function() {
         var swatchesConfig = new Product.ConfigurableSwatches(spConfig);
     });
 </script>
+<?php endif; ?>

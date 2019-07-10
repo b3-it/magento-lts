@@ -130,8 +130,20 @@ class Magneto_Debug_Block_Debug extends Magneto_Debug_Block_Abstract
 
     protected function createModelsPanel() {
         $title = 'Models';
-		$nModels = count(Mage::getSingleton('debug/observer')->getModels());
-		$nQueries = count(Mage::getSingleton('debug/observer')->getQueries());
+
+        if ( is_array(Mage::getSingleton('debug/observer')->getModels()) || is_object(Mage::getSingleton('debug/observer')->getModels()) ) {
+            $nModels = count(Mage::getSingleton('debug/observer')->getModels());
+        }
+        else {
+            $nModels = 0;
+        }
+        if ( is_array(Mage::getSingleton('debug/observer')->getQueries()) || is_object(Mage::getSingleton('debug/observer')->getQueries()) ) {
+            $nQueries = count(Mage::getSingleton('debug/observer')->getQueries());
+        }
+        else {
+            $nQueries = 0;
+        }
+
         $panel = array(
             'title' => $title,
             'has_content' => true,

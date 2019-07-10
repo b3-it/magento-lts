@@ -26,7 +26,7 @@ class Egovs_Base_Model_Cms_Wysiwyg_Media_Storage extends Mage_Cms_Model_Wysiwyg_
             foreach ($types as $_type) {
                 $allowed[] = $extensions["{$_type}_allowed"];
             }
-            $allowed = call_user_func_array('array_merge', $allowed);
+            $allowed = array_merge(...$allowed);
         }
 
         return array_keys(array_filter($allowed));

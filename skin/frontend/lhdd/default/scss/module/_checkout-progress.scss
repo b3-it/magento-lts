@@ -1,0 +1,33 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.checkout-progress {
+	margin-bottom: $default-margin;
+    list-style: outside none none;
+
+    li {
+        border-top: $progress-item-border solid $zusatzfarbe1;
+        color: $zusatzfarbe1;
+        height: $progress-item-height;
+        margin-right: $progress-item-space;
+        padding-top: $progress-item-padding;
+        text-align: center;
+        width: $progress-item-width;
+        display: inline-block;
+        vertical-align: top;
+        
+        &:last-child {
+        	margin-right: 0;
+        }
+
+        &.active {
+        	border-top-color: $grundfarbe1;
+        	color: $haupt-text-farbe;
+        	font-weight: bold;
+        }
+    }
+}

@@ -1,0 +1,58 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+@mixin multi-button {
+    @include bp(max-width, $bp-mobil) {
+        float: none;
+        display: block;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    // 2 Buttons
+    &:first-child:nth-last-child(2),
+    &:first-child:nth-last-child(2) ~ .button {
+        width: $two-button-width;
+
+        @include bp(max-width, $bp-tablet) {
+            width: $one-button-width;
+            margin-bottom: $button-margin;
+        }
+    }
+
+	// 3 Buttons
+    &:first-child:nth-last-child(3),
+    &:first-child:nth-last-child(3) ~ .button {
+        width: $three-button-width;
+
+        @include bp(max-width, $bp-mobil) {
+            width: $one-button-width;
+            margin-bottom: $button-margin;
+        }
+    }
+
+	// 4 Buttons
+    &:first-child:nth-last-child(4),
+    &:first-child:nth-last-child(4) ~ .button {
+        width: $four-button-width;
+
+        @include bp(max-width, $bp-mobil) {
+            width: $one-button-width;
+            margin-bottom: $button-margin;
+        }
+    }
+
+	// letzter Button
+    &:last-child {
+    	float: right;
+    	margin: 0;
+
+    	@include bp(max-width, $bp-mobil) {
+            float: none;
+        }
+    }
+}

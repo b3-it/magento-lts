@@ -1,0 +1,377 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+header {
+}
+
+.page-header, .page-header-container {
+	min-height: $header-min-height;
+	position: relative;
+}
+
+.page-header-container {
+	background-color: $grundfarbe1;
+}
+
+.page-header {
+	@include bp(max-width, $desktop-page-width) {
+	}
+
+	@include bp(max-width, $bp-tablet) {
+	}
+}
+
+.logo {
+	text-decoration: none;
+	outline: 0;
+	padding: $logo-padding-vrt $logo-padding-hrz;
+	display: inline-block;
+	float: left;
+	margin-top: $logo-margin-top;
+	height: $logo-height;
+	width: $logo-width;
+	border: 0;
+
+	.large {
+	    display: inline-block;
+
+		@include bp(max-width, $bp-tablet) {
+			width: 70%;
+		}
+
+		@include bp(max-width, $bp-mobil){
+    	    display: none;
+	    }
+	}
+	.small {
+	    display: none;
+
+	    @include bp(max-width, $bp-mobil){
+	        display: inline-block;
+	    }
+	}
+}
+
+.skip-link-block, .welcome-header {
+	display: inline-block;
+	width: calc( 100% - #{$logo-width} );
+	float: right;
+	position: relative;
+}
+
+.skip-links {
+	height: $header-link-height;
+	max-width: 75%;
+	display: inline-block;
+	float: right;
+
+	a {
+	    color: $grundfarbe-hell;
+	    text-align: center;
+	    border-width: 0;
+
+		-moz-transition: background-color .2s ease;
+		-o-transition: background-color .2s ease;
+		-webkit-transition: background-color .2s ease;
+		transition: background-color .2s ease;
+
+		&:hover, &.skip-active {
+			background-color: $zusatzfarbe2;
+			color: $grundfarbe4;
+			text-decoration: none;
+		}
+	}
+
+	> a, > div {
+		display: inline-block;
+		line-height: $header-link-height;
+		position: relative;
+	}
+	.skip-search {
+		padding: 0 $default-margin;
+	}
+	.skip-cart, .skip-account,
+	.skip-switch-language {
+	    display: inline-block;
+	}
+	.skip-switch-language:not(.skip-switch-language-fa) {
+		padding: $default-margin - 1px $default-margin;
+		display: block;
+	}
+
+	.skip-link > span {
+	    font-weight: 400;
+		text-shadow: 0 1px 0 $default-shadow;
+
+		&.label {
+			@include bp(max-width, $bp-tablet) {
+				display: none;
+			}
+		}
+	}
+
+	> .skip-link {
+	    float: left;
+	}
+
+	.no-count .count {
+	    display: none;
+	}
+
+	.count {
+		position: absolute;
+		top: $minicard-counter-top;
+		right: $minicard-counter-right;
+		padding: $minicard-padding;
+		width: $minicard-counter;
+		height: $minicard-counter;
+		line-height: $minicard-line;
+		text-align: center;
+		color: $grundfarbe1;
+		background-color: $zusatzfarbe3;
+	}
+
+	.skip-nav {
+	    display: none;
+
+	    @include bp(max-width, $bp-mobil){
+	        display: inline-block;
+	    }
+	}
+}
+.welcome-header {
+	padding-top: 13px;
+	padding-bottom: 13px;
+	padding-right: 10px;
+
+	color: $zusatzfarbe3;
+	background-color: $zusatzfarbe4;
+	height: $welcome-height;
+
+	> * {
+	    display: inline-block;
+		color: $zusatzfarbe3;
+	}
+
+	h1 {
+	    font-size: $h1-size;
+		padding-left: $welcome-left-padding;
+	}
+
+	.welcome-msg {
+	    float: right;
+	}
+}
+
+#header-account, #header-cart {
+	@include header-dropbown-box(dotted);
+}
+#header-account {
+	.links a {
+		text-align: left;
+    	display: block;
+    	color: $zusatzfarbe3;
+    	padding: $default-padding $default-padding * 3 $default-padding $default-padding * 4;
+
+		background-position: 1px 45%;
+		background-repeat  : no-repeat;
+		background-image   : $navitem-icon;
+	}
+}
+#header-cart {
+	margin-bottom: 0;
+
+	li {
+		border-top-color: transparent;
+		border-bottom-color: $grundfarbe1;
+		border-style: solid;
+
+		&:first-child {
+			border-top-color: $grundfarbe1;
+		}
+		&:last-child {
+			border-bottom-color: $grundfarbe1;
+		}
+	}
+
+	.block-subtitle {
+		font-weight: bold;
+		text-align: center;
+		vertical-align: middle;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: $minicard-closed;
+		padding-right: $minicard-closed;
+		line-height: $minicard-closed;
+		background-color: $zusatzfarbe2;
+	}
+
+	.close {
+		@include button-close;
+
+		top: 0;
+		right: 0;
+	}
+
+	.empty {
+		color: $grundfarbe1;
+	}
+}
+
+#header-select-language {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+	background-color: $loding-shaddow;
+
+	.overlay-title, .country-name {
+		color: $haupt-text-farbe;
+	}
+
+	.overlay-wrapper {
+		position: relative;
+		width: $lng-switch-width;
+		margin: $lng-switch-margin auto;
+		background-color: $grundfarbe-hell;
+		padding: $default-padding * 3;
+		min-height: $lng-switch-minheight;
+
+		@include bp(max-width, $bp-tablet) {
+			width: 80%;
+		}
+	}
+	.overlay-close {
+		@include button-close;
+
+		top: $default-margin;
+		right: $default-margin;
+		background-color: transparent;
+	}
+	.overlay-title {
+		margin: $default-margin * 0.75 0 0 $default-margin * 2.25;
+		font-size: $lng-switch-title;
+	}
+	.overlay-content {
+		padding: $default-padding * 4 $default-padding * 9;
+	}
+
+	.country-current:not(:hover) {
+		background-color: $zusatzfarbe4;
+	}
+
+	.link-inline {
+		display: inline-block;
+		width: $lng-switch-button;
+
+		@include bp(max-width, $bp-mobil) {
+			display: block;
+			width: 100%;
+		}
+
+		&:nth-child(odd) {
+			margin-right: $lng-switch-button-gap;
+		}
+	}
+	.link-block {
+		display: block;
+		width: 100%;
+	}
+
+	.county-link {
+		padding: $default-padding $default-padding * 3;
+		margin-bottom: $default-margin;
+		border-color: $zusatzfarbe2;
+		border-radius: round( $border-radius / 2 );
+		white-space: nowrap;
+
+		@include bp(max-width, $bp-tablet) {
+			padding: $default-padding;
+		}
+
+		&:hover, &:active {
+			text-decoration: none;
+		}
+	}
+	.country-dummy-image, .country-image {
+		display: inline-block;
+		height: $lng-switch-image;
+	}
+	.country-dummy-image {
+		width: 1px;
+		margin: $default-margin / 4 0 0 $default-margin / 2;
+	}
+	.country-image {
+		margin: $default-margin / 4 $default-margin 0 $default-margin * 2;
+
+		@include bp(max-width, $bp-tablet) {
+			margin: $default-margin / 4 $default-margin / 4 0 $default-margin / 4;
+		}
+	}
+	.country-name {
+		position: relative;
+		top: $lng-switch-name-offset;
+	}
+}
+
+.form-search {
+	position: relative;
+
+    label, .button span {
+	    display: none;
+	}
+
+	#search {
+		width: 84%;
+		margin: 0;
+	}
+
+	.button {
+	    background-image   : $search-icon;
+	    background-repeat  : no-repeat;
+	    background-position: center center;
+
+		color: $grundfarbe4;
+	    height: $default-input-height;
+	    width: $default-input-height;
+	    position: absolute;
+	    top: 17%;
+	}
+}
+
+.skip-content {
+    display: none;
+    z-index: 999;
+}
+
+#header-cart.skip-active,
+.skip-content.skip-active {
+    position: absolute;
+	display: block;
+    background-color: $zusatzfarbe2;
+	color: $zusatzfarbe3;
+}
+
+#header-cart.skip-active {
+    width: $minicard-width;
+    right: $minicard-right;
+	background-color: $grundfarbe-hell;
+	padding-top: $default-padding * 3;
+
+	@include bp(max-width, $bp-tablet) {
+		width: 395px;
+	}
+}
+
+#header-account.skip-active {
+	top: $header-background-position-top;
+	min-width: 200px;
+}

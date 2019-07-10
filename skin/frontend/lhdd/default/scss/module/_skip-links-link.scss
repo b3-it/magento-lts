@@ -1,0 +1,53 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// Diese Angaben sind "fix", da es sonst bei der Positionierung zu Rundungsfehlern kommen kann.
+// Das Benutzer-Menü kann nicht korrekt positioniert werden und ist daher ständig verschoben.
+// Die Berechnung erfolgt in skin/js/app_egov.js
+.skip-egov {
+    width: 170px;
+
+    @include bp(max-width, $desktop-page-width) {
+        width: 120px;
+    }
+    @include bp(max-width, $bp-tablet) {
+        width: 70px;
+    }
+}
+.skip-account {
+    width: 150px;
+
+    @include bp(max-width, $desktop-page-width) {
+        width: 110px;
+    }
+    @include bp(max-width, $bp-tablet) {
+        width: 70px;
+    }
+}
+.skip-cart {
+    width: 185px;
+
+    @include bp(max-width, $desktop-page-width) {
+        width: 145px;
+    }
+    @include bp(max-width, $bp-tablet) {
+        width: 70px;
+    }
+}
+.skip-search {
+    width: 244px;
+
+    @include bp(max-width, $desktop-page-width) {
+        width: 220px;
+    }
+    @include bp(max-width, $bp-tablet) {
+        width: 180px;
+    }
+}
+.skip-switch-language {
+    width: 70px;
+}

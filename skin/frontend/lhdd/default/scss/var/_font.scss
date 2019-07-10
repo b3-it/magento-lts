@@ -1,0 +1,58 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$font-path: "../../../lhdd/default/font" !default;
+$base-font: Arial, Verdana, Helvetica, 'Sans Serif';
+
+@font-face{
+	font-family:"RotisSansSerifW01-Bold";
+	src:url("#{$font-path}/bfaa64da-e2ff-4871-9db9-9853cec95733.eot?#iefix");
+	src:url("#{$font-path}/bfaa64da-e2ff-4871-9db9-9853cec95733.eot?#iefix") format("eot"),
+	    url("#{$font-path}/a789b8d7-2c89-433b-8852-dc661d2fb383.woff") format("woff"),
+		url("#{$font-path}/c7ede56d-0306-445f-ad54-23e574bdcb4f.ttf") format("truetype"),
+		url("#{$font-path}/31d819d5-8d6e-44d8-af1c-ec4d45138bde.svg#31d819d5-8d6e-44d8-af1c-ec4d45138bde") format("svg");
+}
+@font-face{
+	font-family:"RotisSansSerifW01-Extra";
+	src:url("#{$font-path}/7e5aeac5-0308-416d-a347-0aaad96a2d31.eot?#iefix");
+	src:url("#{$font-path}/7e5aeac5-0308-416d-a347-0aaad96a2d31.eot?#iefix") format("eot"),
+	    url("#{$font-path}/13f09a40-3a24-44ca-8083-7c5e67fe802c.woff") format("woff"),
+		url("#{$font-path}/c15c78f4-0b68-45e1-9e4e-5abf429825f4.ttf") format("truetype"),
+		url("#{$font-path}/47e771a0-71f8-457b-a507-26686cf45aad.svg#47e771a0-71f8-457b-a507-26686cf45aad") format("svg");
+}
+@font-face{
+	font-family:"RotisSansSerifW01-Itali";
+	src:url("#{$font-path}/ab60f47e-ecee-4cd6-86b9-54166c1fe42b.eot?#iefix");
+	src:url("#{$font-path}/ab60f47e-ecee-4cd6-86b9-54166c1fe42b.eot?#iefix") format("eot"),
+	    url("#{$font-path}/cadf8785-780e-486c-8257-f3315aeafdb9.woff") format("woff"),
+		url("#{$font-path}/9b599527-13af-4402-98a6-7ed7a0383430.ttf") format("truetype"),
+		url("#{$font-path}/3adfa7c2-d35a-42db-bd79-7abe704d6a9a.svg#3adfa7c2-d35a-42db-bd79-7abe704d6a9a") format("svg");
+}
+@font-face{
+	font-family:"RotisSansSerifW01-Light 735435";
+	src:url("#{$font-path}/1f3e93c6-507f-42ce-99ff-0c56ad99fef2.eot?#iefix");
+	src:url("#{$font-path}/1f3e93c6-507f-42ce-99ff-0c56ad99fef2.eot?#iefix") format("eot"),
+	    url("#{$font-path}/6ea8a73f-c5a8-459e-b22f-dffe6a99f71e.woff") format("woff"),
+		url("#{$font-path}/24e663f4-051d-454d-8b90-d729ac47bb27.ttf") format("truetype"),
+		url("#{$font-path}/8fb89571-1674-47a5-a883-23217282a94d.svg#8fb89571-1674-47a5-a883-23217282a94d") format("svg");
+}
+@font-face{
+	font-family:"RotisSansSerifW01-Light 735438";
+	src:url("#{$font-path}/936d702e-cc78-418c-bf42-07956a0e18e0.eot?#iefix");
+	src:url("#{$font-path}/936d702e-cc78-418c-bf42-07956a0e18e0.eot?#iefix") format("eot"),
+	    url("#{$font-path}/8acd0e02-7a91-4973-9c61-755704217f62.woff") format("woff"),
+		url("#{$font-path}/f308cbe1-92de-408b-91bf-9c839ab3e687.ttf") format("truetype"),
+		url("#{$font-path}/d7f4e9a4-5ff5-4460-96a6-8ae5990d4ccd.svg#d7f4e9a4-5ff5-4460-96a6-8ae5990d4ccd") format("svg");
+}
+@font-face{
+	font-family:"Rotis Sans Serif W01";
+	src:url("#{$font-path}/d3158683-496c-49da-9a42-6a2ab1f8457a.eot?#iefix");
+	src:url("#{$font-path}/d3158683-496c-49da-9a42-6a2ab1f8457a.eot?#iefix") format("eot"),
+	    url("#{$font-path}/60d6e9b1-72ed-49c7-bcd9-026d74b98deb.woff") format("woff"),
+		url("#{$font-path}/03122496-25a2-4eb5-8181-fc843043fcc3.ttf") format("truetype"),
+		url("#{$font-path}/e1a0a2cd-e8f5-41a5-952b-1949af850606.svg#e1a0a2cd-e8f5-41a5-952b-1949af850606") format("svg");
+}

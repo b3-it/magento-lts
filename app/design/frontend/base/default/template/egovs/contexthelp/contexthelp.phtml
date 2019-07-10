@@ -11,6 +11,7 @@
     </div>
     <input type="hidden" name="showBlocks" id="showBlocks" value="0" />
 
+    <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.context.helper.popup.js"></script>
 	<script type="text/javascript">
 	    var readyToShow = false;                         // Kann das Popup angezeigt werden (Inhalt?)
         var popupBodyId = '#context-help-popup-body';    // ID des Scroll-Containers
@@ -47,5 +48,4 @@
             updatePopupScrollBar();
         }
 	</script>
-    <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.context.helper.popup.js"></script>
 <?php endif;?>

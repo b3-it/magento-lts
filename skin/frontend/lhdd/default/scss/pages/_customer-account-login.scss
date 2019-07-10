@@ -1,0 +1,66 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.account-login, .egov-account-login {
+	position: relative;
+	top: $content-offset;
+
+	.remember-me-popup {
+		display: none;
+	}
+
+	.col-1, .col-2 {
+		height: 21rem;
+		position: relative;
+
+		.buttons-set {
+		    position: absolute;
+		    width: 92%;
+		    bottom: 0;
+		    margin: 0 $buttonset-margin $default-margin / 2 $buttonset-margin;
+		}
+	}
+
+	.form-list {
+	    margin: $default-margin 0;
+	}
+
+	.required em,
+	span.required {
+	    margin-right: $default-margin / 2;
+	    color: $fehler-text-color;
+	}
+
+	.content {
+	    position: relative;
+
+	    input {
+	        width: 70%;
+	    }
+
+	    .full-width {
+	        input {
+	        	width: 99%;
+	    	}
+	    }
+
+	    .securityLabel {
+	        position: absolute;
+	        top: 75px;
+	        left: 73%;
+	    }
+	}
+}
+
+.login-only .col-2 {
+	margin: 0 auto;
+	display: block;
+}
+
+.registered-users form .form-list li > div.input-box {
+	margin-left: 0;
+}

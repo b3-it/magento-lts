@@ -1,24 +1,13 @@
-$j(document).ready(function(){
-    $j('#context-help').css('display', 'inline-block');
-});
-
-/**
- * Popup für eine Anzeige vorbereiten
- */
-function resetPopup()
-{
-    $j(popupBodyId).html('');
-    hidePopup();
-}
+let elementId = "#context-help-popup";
 
 /**
  * Popup ausblenden
  */
 function hidePopup()
 {
-    $j('#context-help-popup').css({
-        'z-index': hideLevel,
-        'left'   : '-100000px'
+    $j(elementId).css({
+        "z-index": hideLevel,
+        "left"   : "-100000px"
     });
 }
 
@@ -27,10 +16,19 @@ function hidePopup()
  */
 function viewPopup()
 {
-    $j('#context-help-popup').css({
-        'z-index': showLevel,
-        'left'   : '20%'
+    $j(elementId).css({
+        "z-index": showLevel,
+        "left"   : "20%"
     });
+}
+
+/**
+ * Popup für eine Anzeige vorbereiten
+ */
+function resetPopup()
+{
+    $j(popupBodyId).html("");
+    hidePopup();
 }
 
 /**
@@ -46,3 +44,7 @@ function updatePopupScrollBar()
         $j(popupBodyId).getNiceScroll().resize();
     });
 }
+
+$j(document).ready(function(){
+    $j("#context-help").css("display", "inline-block");
+});

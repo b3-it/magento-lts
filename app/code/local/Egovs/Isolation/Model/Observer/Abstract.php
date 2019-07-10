@@ -6,8 +6,8 @@
  * @category   	Egovs
  * @package    	Egovs_Isolation
  * @name       	Egovs_Isolation_Model_Relation
- * @author 		Holger K�gel <hkoegel@edv-beratung-hempel.de>
- * @copyright  	Copyright (c) 2011 EDV Beratung Hempel - http://www.edv-beratung-hempel.de
+ * @author 		Holger Kögel <h.koegel@b3-it.de>
+ * @copyright  	Copyright (c) 2016 - 2019 B3 IT Systeme GmbH - https://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
@@ -50,7 +50,6 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		if($token == null){
 			$error = 'Authorization Token Not found.';
 			throw new Exception($error);
-			return null;
 		}
 		
 		$oauth =  Mage::getModel('oauth/token')->load($token,'token');
@@ -62,10 +61,25 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 		
 	}
 	
-	
+
+	protected function _skipIsolation()
+    {
+        $value = Mage::registry('IGNORE_STORE_ISOLATION');
+        $isCron = isset($_SERVER['PHP_SELF']) ? strtolower(basename($_SERVER['PHP_SELF'])) === 'cron.php' : false;
+
+        if ($value === true || $isCron) {
+            return true;
+        }
+
+        return false;
+    }
+
 	
 	protected function getUserStoreGroups()
 	{
+	    if($this->_skipIsolation()){
+	        return null;
+        }
 		$user = $this->getUser();
 		return $user->getStoreGroups();
 	}
@@ -77,8 +91,7 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 	protected function getUserStoreViews()
 	{
 		$res = array();
-		$user = $this->getUser();
-		$storeGroups = $user->getStoreGroups();
+		$storeGroups = $this->getUserStoreGroups();
 		
 		if(($storeGroups) && (count($storeGroups) > 0)) 
 		{	
@@ -98,8 +111,7 @@ class Egovs_Isolation_Model_Observer_Abstract extends Varien_Object
 	protected function getUserStoreRootCategories()
 	{
 		$res = array();
-		$user = $this->getUser();
-		$storeGroups = $user->getStoreGroups();
+		$storeGroups = $this->getUserStoreGroups();
 		if(($storeGroups) && (count($storeGroups) > 0)) 
 		{	
 			$storeGroups = implode(',', $storeGroups);

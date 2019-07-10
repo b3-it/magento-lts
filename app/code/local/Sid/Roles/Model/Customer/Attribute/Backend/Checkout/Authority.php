@@ -33,7 +33,7 @@
  */
 class Sid_Roles_Model_Customer_Attribute_Backend_Checkout_Authority extends Mage_Eav_Model_Entity_Attribute_Source_Table
 {
-    public function getAllOptions()
+    public function getAllOptions($withEmpty = true, $defaultValues = false)
     {
         $options = Sid_Roles_Model_Customer_Authority::getOptionArray();
         $res = array();

@@ -217,6 +217,14 @@
                     </egovs_wysiwyg>
                 </observers>
             </cms_wysiwyg_images_static_urls_allowed>
+            <cms_wysiwyg_config_prepare>
+                <observers>
+                    <egovs_wysiwyg>
+                        <class>egovsbase/observer</class>
+                        <method>cmsWysiwygConfigPrepare</method>
+                    </egovs_wysiwyg>
+                </observers>
+            </cms_wysiwyg_config_prepare>
         </events>
         <cms>
             <browser>
@@ -647,6 +655,11 @@
                 <tempate_filter>widget/template_filter</tempate_filter>
             </content>
         </catalog>
+        <cms>
+            <page>
+                <tempate_filter>egovsbase/cms_template_filter</tempate_filter>
+            </page>
+        </cms>
     </global>
     <default>
         <dev>
