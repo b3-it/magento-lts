@@ -15,12 +15,40 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Edit_Tab_Form ext
     {
         $form = new Varien_Data_Form();
         $this->setForm($form);
-        $fieldset = $form->addFieldset('notificationorder_form', array('legend' => Mage::helper('bfr_eventparticipants')->__(' Notification Order information')));
+        $fieldset = $form->addFieldset('notificationorder_form', array('legend'=>Mage::helper('bfr_eventparticipants')->__(' Notification Order information')));
 
-        if (Mage::getSingleton('adminhtml/session')->getnotificationorderData()) {
-            $form->setValues(Mage::getSingleton('adminhtml/session')->getnotificationorderData());
-            Mage::getSingleton('adminhtml/session')->setnotificationorderData(null);
-        } elseif (Mage::registry('notificationorder_data')) {
+        $fieldset->addField('order_item_id', 'text', array(
+            'label'     => Mage::helper('bfr_eventparticipants')->__('Order'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'name'      => 'order_item_id',
+        ));
+        $fieldset->addField('customer_id', 'text', array(
+            'label'     => Mage::helper('bfr_eventparticipants')->__('Customer'),
+            'class'     => 'readonly',
+            'readonly' => true,
+            'name'      => 'customer_id',
+        ));
+        $fieldset->addField('status', 'text', array(
+            'label'     => Mage::helper('bfr_eventparticipants')->__('Status'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'name'      => 'status',
+        ));
+        $fieldset->addField('event_id', 'text', array(
+            'label'     => Mage::helper('bfr_eventparticipants')->__('Event'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'name'      => 'event_id',
+        ));
+        $fieldset->addField('signed_at', 'text', array(
+            'label'     => Mage::helper('bfr_eventparticipants')->__('Signed At'),
+            //'class'     => 'required-entry',
+            //'required'  => true,
+            'name'      => 'signed_at',
+        ));
+
+        if ( Mage::registry('notificationorder_data') ) {
             $form->setValues(Mage::registry('notificationorder_data')->getData());
         }
         return parent::_prepareForm();

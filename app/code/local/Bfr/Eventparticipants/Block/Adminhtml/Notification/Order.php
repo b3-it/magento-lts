@@ -15,7 +15,7 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order extends Mage_Admi
     {
         $this->_controller = 'adminhtml_notification_order';
         $this->_blockGroup = 'bfr_eventparticipants';
-        $this->_headerText = Mage::helper('bfr_eventparticipants')->__('Notification Order Manager');
+        $this->_headerText = Mage::helper('bfr_eventparticipants')->__('Participationlist Agreement Manager');
         $this->_addButtonLabel = Mage::helper('bfr_eventparticipants')->__('Add Item');
         parent::__construct();
     }

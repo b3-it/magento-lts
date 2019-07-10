@@ -20,13 +20,25 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Grid extends Mage
         $this->setSaveParametersInSession(true);
     }
 
+    /**
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     */
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('bfr_eventparticipants/notification_order')->getCollection();
+        $collection->getSelect()
+            ->join(['orderItem' => $collection->getTable('sales/order_item')],'orderItem.item_id = main_table.order_item_id',['item_id'])
+            ->join(['order' => $collection->getTable('sales/order')],'order.entity_id = orderItem.order_id',['increment_id'])
+            ->join(['customer' => $collection->getTable('customer/entity')], 'main_table.customer_id = customer.entity_id',['email'])
+            ->join(['event' => $collection->getTable('eventmanager/event')],'main_table.event_id = event.event_id',['title']);
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
 
+    /**
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     * @throws Exception
+     */
     protected function _prepareColumns()
     {
         $this->addColumn('id', array(
@@ -35,47 +47,27 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order_Grid extends Mage
             'width' => '50px',
             'index' => 'id',
         ));
-
-        $this->addColumn('quote_item_id', array(
-            'header' => Mage::helper('bfr_eventparticipants')->__('Quote'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index' => 'quote_item_id',
-        ));
-        $this->addColumn('order_item_id', array(
+        $this->addColumn('order_id', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Order'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index' => 'order_item_id',
+            'index' => 'increment_id',
         ));
-        $this->addColumn('customer_id', array(
+        $this->addColumn('customer_email', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Customer'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index' => 'customer_id',
-        ));
-        $this->addColumn('hash', array(
-            'header' => Mage::helper('bfr_eventparticipants')->__('Hash'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index' => 'hash',
+            'index' => 'email',
         ));
         $this->addColumn('status', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Status'),
-            //'align'     =>'left',
-            //'width'     => '150px',
             'index' => 'status',
+            'type'  => 'options',
+            'options' => Bfr_Eventparticipants_Model_Resource_Accepted::getOptionArray(),
+            'filter_index' => 'main_table.status'
         ));
-        $this->addColumn('event_id', array(
+        $this->addColumn('event_name', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Event'),
-            //'align'     =>'left',
-            //'width'     => '150px',
-            'index' => 'event_id',
+            'index' => 'title',
         ));
         $this->addColumn('signed_at', array(
             'header' => Mage::helper('bfr_eventparticipants')->__('Signed At'),
-            //'align'     =>'left',
-            //'width'     => '150px',
             'index' => 'signed_at',
         ));
 
