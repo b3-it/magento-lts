@@ -11,13 +11,13 @@
  */
 class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function sendEmail($templateConfigPath, $storeId = 0, Mage_Sales_Model_Quote_Item $item = null, $hash = null)
+    public function sendEmail($templateConfigPath, $storeId = 0, Mage_Sales_Model_Order $order = null, $hash = null, $eventName = null)
     {
         /**
-         * Break if Item or Hash is missing
+         * Break if Order or Hash is missing
          */
-        if($item == null || $hash == null){
-            Mage::log('\nBfr_Eventparticipants :: Missing Item or Hash in sendMail!\n');
+        if($order == null || $hash == null){
+            Mage::log('\nBfr_Eventparticipants :: Missing Order or Hash in sendMail!\n');
             return $this;
         }
 
@@ -41,7 +41,7 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
 
         /** @var Mage_Core_Model_Email_Info $emailInfo */
         $emailInfo = Mage::getModel('core/email_info');
-        $emailInfo->addTo($item->getQuote()->getCustomerEmail(), $item->getQuote()->getCustomerFirstname() . ' ' . $item->getQuote()->getCustomerMiddlename() . ' ' . $item->getQuote()->getCustomerLastname());
+        $emailInfo->addTo($order->getCustomerEmail(), $order->getCustomerFirstname() . ' ' . $order->getCustomerMiddlename() . ' ' . $order->getCustomerLastname());
 
         /** @var Mage_Core_Model_Translate $translate */
         $translate = Mage::getSingleton('core/translate');
@@ -55,11 +55,11 @@ class Bfr_Eventparticipants_Helper_Data extends Mage_Core_Helper_Abstract
         $mailer->setSender($sender);
         $mailer->setStoreId($storeId);
         $mailer->setTemplateId($template);
-        $mailer->setTemplateParams(['eventname' => $item->getName(), 'eventhash' => $hash, 'eventhashlink' => $url]);
+        $mailer->setTemplateParams(['eventname' => $eventName, 'eventhash' => $hash, 'eventhashlink' => $url]);
 
         try {
             $emailQueue = Mage::getModel('egovsbase/core_email_queue');
-            $emailQueue->setEntityId($item->getQuote()->getId())
+            $emailQueue->setEntityId($order->getId())
                 ->setEntityType('participant')
                 ->setEventType('participation_agreement')
                 ->setIsForceCheck(true);
