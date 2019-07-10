@@ -617,6 +617,7 @@ body:not(.customer-account) .block:first-child .block-title {
             float: left;
             position: relative;
             width: $global-leftcol-percent;
+            min-height: 100px;
 
             @include bp(max-width, 490px) {
             	display: none;
@@ -693,6 +694,7 @@ body:not(.customer-account) .block:first-child .block-title {
             margin-right: $global-leftcol-rightmargin-percent;
             float: left;
             width: $global-leftcol-percent;
+            min-height: 100px;
         }
 
         .col-main {
