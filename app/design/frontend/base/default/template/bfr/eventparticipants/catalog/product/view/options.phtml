@@ -35,6 +35,7 @@ $_product = $this->getProduct(); ?>
         <ul class="group-select">
             <li>
                 <input id="eventParticipationList_agreement" type="checkbox" name="eventparticipants">
+                <?php /* implemented method expects a "on" as yes trigger for eventparticipants field (radiobutton/yes => value="on")*/ ?>
                 <label for="eventParticipationList_agreement"><?= $this->__('I accept the use of my personal data for a participation list.') ?></label>
             </li>
         </ul>
