@@ -102,7 +102,7 @@
             <modules>
                 <Bfr_Eventparticipants>
                     <files>
-                        <default>bfr/Eventparticipants.csv</default>
+                        <default>Bfr/Eventparticipants.csv</default>
                     </files>
                 </Bfr_Eventparticipants>
             </modules>
@@ -154,7 +154,7 @@
             <modules>
                 <Bfr_Eventparticipants>
                     <files>
-                        <default>bfr/Eventparticipants.csv</default>
+                        <default>Bfr/Eventparticipants.csv</default>
                     </files>
                 </Bfr_Eventparticipants>
             </modules>
