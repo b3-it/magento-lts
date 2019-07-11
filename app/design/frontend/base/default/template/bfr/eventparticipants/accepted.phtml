@@ -1,0 +1,11 @@
+<?php if ($this->getValidHash()): ?>
+<div class="page-title">
+    <h1><?= $this->__('Participationlist') ?></h1>
+    <span><?= $this->__('Your agreement is noted.') ?></span>
+</div>
+<?php else: ?>
+    <div class="page-title">
+        <h1><?= $this->__('Whoops, something went wrong...') ?></h1>
+    </div>
+    <span><?= $this->__('The requested url is not valid.') ?></span>
+<?php endif; ?>
