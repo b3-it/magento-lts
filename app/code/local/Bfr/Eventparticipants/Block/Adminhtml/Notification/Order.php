@@ -18,5 +18,6 @@ class Bfr_Eventparticipants_Block_Adminhtml_Notification_Order extends Mage_Admi
         $this->_headerText = Mage::helper('bfr_eventparticipants')->__('Participationlist Agreements Manager');
         $this->_addButtonLabel = Mage::helper('bfr_eventparticipants')->__('Add Item');
         parent::__construct();
+        $this->removeButton('add');
     }
 }
