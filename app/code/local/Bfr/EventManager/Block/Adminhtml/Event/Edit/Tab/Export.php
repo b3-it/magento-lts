@@ -15,8 +15,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
 {
     /**
      *
-     * Dispatch: eventmanager_export_grid_prepare_collection
-     * Dispatch: eventmanager_export_grid_prepare_columns
+     * Dispatch: eventmanager_export_grid_prepare_collection [grid => Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export]
+     * Dispatch: eventmanager_export_grid_prepare_columns [grid => Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export]
      *
      */
 
@@ -124,7 +124,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
         $collection->getSelect()
             ->distinct()
             ->columns(array('name' => "TRIM(CONCAT(firstname,' ',lastname))"))
-            ->where('event_id=' . (int)($this->getEvent()->getId()));
+            ->where('main_table.event_id=' . (int)($this->getEvent()->getId()));
 
         $collection->setSelectCountSql($collection->getSelect());
 
@@ -150,11 +150,11 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
             $collection->getSelect()->where('order.entity_id=0');
         }
 
-        // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
-        Mage::dispatchEvent('eventmanager_export_grid_prepare_collection', ['collection' => $collection, 'event' => $this->getEvent()]);
         $this->setCollection($collection);
-        parent::_prepareCollection();
+        /** after setCollection, to get it in grid */
+        Mage::dispatchEvent('eventmanager_export_grid_prepare_collection', ['grid' => $this]);
         //die( $collection->getSelect()->__toString());
+        parent::_prepareCollection();
         //$this->_prepareTotals();
         return $this;
     }
