@@ -36,7 +36,15 @@
                 <Mage_Catalog/>
                 <Mage_Customer/>
            </depends>
-        </Bfr_Mach> 
+        </Bfr_Mach>
+        <Bfr_Eventparticipants>
+           <active>true</active>
+           <codePool>local</codePool>
+           <depends>
+              <Egovs_EventBundle/>
+              <Bfr_EventManager/>
+           </depends>
+        </Bfr_Eventparticipants>
      <Bfr_Report>
       <active>true</active>
       <codePool>local</codePool>
