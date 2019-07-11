@@ -13,6 +13,13 @@
  */
 class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminhtml_Block_Widget_Grid
 {
+    /**
+     *
+     * Dispatch: eventmanager_export_grid_prepare_collection
+     * Dispatch: eventmanager_export_grid_prepare_columns
+     *
+     */
+
     private $_selections = null;
     private $_options = null;
 
@@ -144,8 +151,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
         }
 
         // $collection->getSelect()->orWhere('event_id=?',intval($this->getEvent()->getId()));
+        Mage::dispatchEvent('eventmanager_export_grid_prepare_collection', ['collection' => $collection, 'event' => $this->getEvent()]);
         $this->setCollection($collection);
-
         parent::_prepareCollection();
         //die( $collection->getSelect()->__toString());
         //$this->_prepareTotals();
@@ -489,6 +496,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export extends Mage_Adminh
         $this->addExportType('*/*/exportAllCsv', Mage::helper('eventmanager')->__('CSV'), array('id' => $this->getEvent()->getId()));
         $this->addExportType('*/*/exportAllXml', Mage::helper('eventmanager')->__('XML'), array('id' => $this->getEvent()->getId()));
 
+        Mage::dispatchEvent('eventmanager_export_grid_prepare_columns', ['grid' => $this]);
         return parent::_prepareColumns();
     }
 
