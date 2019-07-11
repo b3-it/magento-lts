@@ -31,12 +31,17 @@ $_product = $this->getProduct(); ?>
 
 <?php if ($_product->hasData('eventParticipationList') && $_product->getData('eventParticipationList') === '1'): ?>
     <br><hr><br>
+    <span style="font-size:1.3em">Teilnehmerliste:</span><span style="font-size:1.3em" class="required"> *</span>
+    <br><br>
     <div class="input-box">
-        <ul class="group-select">
+        <ul class="options-list">
             <li>
-                <input id="eventParticipationList_agreement" type="checkbox" name="eventparticipants">
-                <?php /* implemented method expects a "on" as yes trigger for eventparticipants field (radiobutton/yes => value="on")*/ ?>
-                <label for="eventParticipationList_agreement"><?= $this->__('I accept the use of my personal data for a participation list.') ?></label>
+                <input id="eventParticipationList_agreement_yes" class="radio  validate-one-required-by-name product-custom-option" type="radio" name="eventparticipants" value="on">
+                <label for="eventParticipationList_agreement_yes"><?= $this->__('I accept the use of my personal data for a participation list.') ?>
+            </li>
+            <li>
+                <input id="eventParticipationList_agreement_no" class="radio  validate-one-required-by-name product-custom-option" type="radio" name="eventparticipants" value="off">
+                <label for="eventParticipationList_agreement_no"><?= $this->__('I don\'t agree.') ?></label>
             </li>
         </ul>
     </div>
