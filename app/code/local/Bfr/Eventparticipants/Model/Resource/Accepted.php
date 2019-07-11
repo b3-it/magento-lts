@@ -11,8 +11,9 @@
  */
 class Bfr_Eventparticipants_Model_Resource_Accepted extends Varien_Object
 {
+    const STATUS_PRIVATE = 0;
     const STATUS_REQUESTED = 1;
-    const STATUS_ACCEPTED = 2;
+    const STATUS_PUBLIC = 2;
 
     /**
      * @return array
@@ -20,8 +21,9 @@ class Bfr_Eventparticipants_Model_Resource_Accepted extends Varien_Object
     static public function getOptionArray()
     {
         return array(
+            self::STATUS_PRIVATE => Mage::helper('bfr_eventparticipants')->__('Private'),
             self::STATUS_REQUESTED => Mage::helper('bfr_eventparticipants')->__('Requested'),
-            self::STATUS_ACCEPTED => Mage::helper('bfr_eventparticipants')->__('Accepted'),
+            self::STATUS_PUBLIC => Mage::helper('bfr_eventparticipants')->__('Public'),
         );
     }
 }

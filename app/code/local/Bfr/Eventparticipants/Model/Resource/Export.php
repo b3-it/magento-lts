@@ -13,7 +13,7 @@ class Bfr_Eventparticipants_Model_Resource_Export extends Varien_Object
 {
     const STATUS_PRIVATE = 0;
     const STATUS_REQUESTED = 1;
-    const STATUS_Public = 2;
+    const STATUS_PUBLIC = 2;
 
     /**
      * @return array
@@ -23,7 +23,7 @@ class Bfr_Eventparticipants_Model_Resource_Export extends Varien_Object
         return array(
             self::STATUS_PRIVATE => Mage::helper('bfr_eventparticipants')->__('Private'),
             self::STATUS_REQUESTED => Mage::helper('bfr_eventparticipants')->__('Requested'),
-            self::STATUS_Public => Mage::helper('bfr_eventparticipants')->__('Public'),
+            self::STATUS_PUBLIC => Mage::helper('bfr_eventparticipants')->__('Public'),
         );
     }
 }
