@@ -38,15 +38,58 @@ class Bfr_Eventparticipants_Model_Notification_AgreementObserver extends Mage_Co
                     $notification->setSignedAt(date('Y-m-d h:m:s'));
                     $notification->setHash($hash);
                     $notification->setOrderItemId($item->getId());
-                    $notification->setStatus(0);
+                    $notification->setStatus(1);
                     $notification->setCustomerId($order->getCustomerId());
                     $notification->save();
 
                     Mage::helper('bfr_eventparticipants')->sendEmail('eventmanager/participation_agreement_email/template', $storeId, $order, $hash, $item->getName());
                 }
-
             }
         }
+        return $observer;
+    }
+
+
+    /**
+     * @param Varien_Event_Observer $observer
+     * @return Varien_Event_Observer
+     */
+    public function OnEventManagerExportGridPrepareCollection(Varien_Event_Observer $observer)
+    {
+        /** @var Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export $grid */
+        $grid = $observer->getData('grid');
+        if($grid == null){
+            return $observer;
+        }
+
+        /** @var Bfr_EventManager_Model_Resource_Participant_Collection $collection */
+        $collection = $grid->getCollection();
+        $sql = new Zend_Db_Expr('');
+        $collection->getSelect()->joinLeft(['notification_order' => $collection->getTable('bfr_eventparticipants/notification_order')], 'notification_order.order_item_id = main_table.order_item_id', ['agreement_status' => 'coalesce(notification_order.status, 0)']);
+        return $observer;
+    }
+
+    /**
+     * @param Varien_Event_Observer $observer
+     * @return Varien_Event_Observer
+     * @throws Exception
+     */
+    public function OnEventManagerExportGridPrepareColumns(Varien_Event_Observer $observer)
+    {
+        /** @var Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Export $grid */
+        $grid = $observer->getData('grid');
+        if($grid == null){
+            return $observer;
+        }
+
+        $grid->addColumn('notification_order_status', array(
+            'header' => Mage::helper('bfr_eventparticipants')->__('Status'),
+            'align' => 'left',
+            'index' => 'agreement_status',
+            'filter_index' => 'notification_order.status',
+            'type'  => 'options',
+            'options' => Bfr_Eventparticipants_Model_Resource_Export::getOptionArray(),
+        ));
         return $observer;
     }
 

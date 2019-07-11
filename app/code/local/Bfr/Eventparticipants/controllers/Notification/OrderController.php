@@ -26,7 +26,7 @@ class Bfr_Eventparticipants_Notification_OrderController extends Mage_Core_Contr
         }
 
         if ($model->hasData('id') && $model->getData('status') === '0') {
-            $model->setStatus(1);
+            $model->setStatus(2);
             $model->save();
             Mage::register('participationlist_agreement_hash', 1);
         } else {

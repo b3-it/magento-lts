@@ -52,6 +52,24 @@
                     </participation_agreement>
                 </observers>
             </checkout_submit_all_after>
+            <eventmanager_export_grid_prepare_collection>
+                <observers>
+                    <participation_agreement>
+                        <type>singleton</type>
+                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
+                        <method>OnEventManagerExportGridPrepareCollection</method>
+                    </participation_agreement>
+                </observers>
+            </eventmanager_export_grid_prepare_collection>
+            <eventmanager_export_grid_prepare_columns>
+                <observers>
+                    <participation_agreement>
+                        <type>singleton</type>
+                        <class>Bfr_Eventparticipants_Model_Notification_AgreementObserver</class>
+                        <method>OnEventManagerExportGridPrepareColumns</method>
+                    </participation_agreement>
+                </observers>
+            </eventmanager_export_grid_prepare_columns>
         </events>
         <template>
             <email>
