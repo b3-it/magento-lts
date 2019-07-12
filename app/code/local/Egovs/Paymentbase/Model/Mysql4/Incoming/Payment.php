@@ -40,10 +40,10 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
 //        $sql .= ')';
 
 
-        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, epaybl_capture_date, message) ";
-        $sql .= '(';
+        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, epaybl_capture_date, message)";
+        $sql .= ' VALUES (';
         $sql .= " {$order_id}, {$amount}, {$base_amount}, UTC_TIMESTAMP(), '{$msg}'";
-        $sql .= ')';
+        $sql .= ');';
         $this->_getWriteAdapter()->query($sql);
     }
 
