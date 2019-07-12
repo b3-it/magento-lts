@@ -526,6 +526,14 @@
 					<model>paymentbase/observer::runAutomaticPaymentRetrieval</model>
 				</run>
 			</egovs_epaybl_auto_payment_rerieval>
+			<egovs_paymentbase_incoming_payment>
+				<schedule>
+					<cron_expr>*/9 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>paymentbase/incoming_cron::runCron</model>
+				</run>
+			</egovs_paymentbase_incoming_payment>
 		</jobs>
 	</crontab>
 </config>
