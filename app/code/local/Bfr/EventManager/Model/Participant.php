@@ -10,8 +10,70 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
+
+/**
+ *  @method int getParticipantId()
+ *  @method setParticipantId(int $value)
+ *  @method int getEventId()
+ *  @method setEventId(int $value)
+ *  @method int getOrderId()
+ *  @method setOrderId(int $value)
+ *  @method int getOrderItemId()
+ *  @method setOrderItemId(int $value)
+ *  @method string getPrefix()
+ *  @method setPrefix(string $value)
+ *  @method string getFirstname()
+ *  @method setFirstname(string $value)
+ *  @method string getLastname()
+ *  @method setLastname(string $value)
+ *  @method string getEmail()
+ *  @method setEmail(string $value)
+ *  @method string getCompany()
+ *  @method setCompany(string $value)
+ *  @method string getCompany2()
+ *  @method setCompany2(string $value)
+ *  @method string getCompany3()
+ *  @method setCompany3(string $value)
+ *  @method string getCity()
+ *  @method setCity(string $value)
+ *  @method string getStreet()
+ *  @method setStreet(string $value)
+ *  @method string getPostcode()
+ *  @method setPostcode(string $value)
+ *  @method string getNote()
+ *  @method setNote(string $value)
+ *  @method string getPostfix()
+ *  @method setPostfix(string $value)
+ *  @method int getStatus()
+ *  @method setStatus(int $value)
+ *  @method int getVip()
+ *  @method setVip(int $value)
+ *  @method int getOnlineEval()
+ *  @method setOnlineEval(int $value)
+ *  @method int getInternal()
+ *  @method setInternal(int $value)
+ *  @method int getRoleId()
+ *  @method setRoleId(int $value)
+ *  @method int getJobId()
+ *  @method setJobId(int $value)
+ *  @method  getCreatedTime()
+ *  @method setCreatedTime( $value)
+ *  @method  getUpdateTime()
+ *  @method setUpdateTime( $value)
+ *  @method string getPhone()
+ *  @method setPhone(string $value)
+ *  @method string getCountry()
+ *  @method setCountry(string $value)
+ *  @method string getTitle()
+ *  @method setTitle(string $value)
+ *  @method string getPosition()
+ *  @method setPosition(string $value)
+ */
 class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
 {
+
+    protected $_Order = null;
+
     public function _construct()
     {
         parent::_construct();
@@ -159,7 +221,96 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
     {
     	$res = Mage::getResourceModel('eventmanager/participant');
     	$res->changeStatus($itemIds,$newStatus);
-    	
-    	
+
     }
+
+    /**
+     * Teilnahmebestätigung anzeigen
+     */
+    public function showPdf($event)
+    {
+        $pdf = $this->_createPdf($event);
+        $pdf->render();
+        return;
+    }
+
+
+    protected function _createPdf($event,$mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_DIRECT_OUTPUT)
+    {
+        $pdf = Mage::getModel('eventmanager/participant_pdf');
+        //$pdf->preparePdf();
+        $pdf->Mode =  $mode;
+
+        $helper = Mage::getModel('eventmanager/participant_helper');
+
+        $helper->setParticipant($this);
+        $helper->setEvent($event);
+        $helper->setOrder($this->getOrder());
+        $helper->setStoreId($this->getOrder()->getStoreId());
+        return $pdf->getPdf(array($helper));//->save($path);
+    }
+
+    /**
+     * Die Teilnahmebestätigung per Email versenden
+     * @param $event
+     */
+    public function sendPdfFile()
+    {
+        $event = Mage::getModel('eventmanager/event')->load($this->getEventId());
+        $pdf = $this->_createPdf($event,Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL);
+
+        $file = array();
+        $file['content']  = $pdf->render();
+        $file['filename'] = Mage::helper('eventmanager')->__('ParticipationCertificate').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';
+
+        $storeId = $this->getOrderStoreId();
+
+        //$template = Mage::getStoreConfig('eventmanager/participation_certificate_email/template',$storeId);
+
+        $helper = Mage::getModel('eventmanager/participant_helper');
+        $helper->setParticipant($this);
+        $helper->setEvent($event);
+        $helper->setOrder($this->getOrder());
+
+        Mage::helper('eventmanager')->sendEmail('eventmanager/participation_certificate_email/template', $this, $helper->getData() , $storeId, $file);
+    }
+
+    /**
+     * Die Bestellung des Teilnehmers
+     * @return Mage_Sales_Model_Order
+     */
+    public function getOrder()
+    {
+        if($this->_Order == null){
+            $this->_Order = Mage::getModel('sales/order')->load((int)$this->getOrderId());
+
+        }
+        return $this->_Order;
+    }
+
+    /**
+     * die SoreId der Bestellung
+     * @return int
+     */
+    public function getOrderStoreId()
+    {
+        return $this->getOrder()->getStoreId();
+    }
+
+
+    public function getBundleOptions()
+    {
+        $options = array();
+
+        foreach($this->getOrder()->getAllItems() as $item) {
+            if ($item->getParentItemId() == $this->getOrderItemId()) {
+                if ($item->getProduct()->getUse4ParticipationCertificate() == 1) {
+                    $options[] = $item;
+                }
+            }
+        }
+        return $options;
+    }
+
+
 }

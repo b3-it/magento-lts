@@ -116,7 +116,7 @@ implements Egovs_Paymentbase_Model_Sepa_Bankaccount
 		return $this;
 	}
 	
-	public function getBankname($bic) {
+	public function getBankname($bic = null) {
 		if (!$bic) {
 			$bic = $this->getBic();
 		}

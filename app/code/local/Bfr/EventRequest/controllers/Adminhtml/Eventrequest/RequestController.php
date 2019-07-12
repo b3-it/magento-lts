@@ -15,9 +15,10 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
 
 	protected function _initAction() {
 		$this->loadLayout()
-			->_setActiveMenu('request/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Events'), Mage::helper('adminhtml')->__('Events'));
+			->_setActiveMenu('bfr_eventmanager/eventrequest_request')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Application'), Mage::helper('adminhtml')->__('Application'));
 
+		$this->_title( Mage::helper('adminhtml')->__('Application'));
 		return $this;
 	}
 
@@ -121,17 +122,17 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
 
     public function massDeleteAction() {
         $requestIds = $this->getRequest()->getParam('request');
-        if(!is_array($eventrequestIds)) {
+        if(!is_array($requestIds)) {
 			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($eventrequestIds as $eventrequestId) {
+                foreach ($requestIds as $eventrequestId) {
                     $eventrequest = Mage::getModel('eventrequest/request')->load($eventrequestId);
                     $eventrequest->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($eventrequestIds)
+                        'Total of %d record(s) were successfully deleted', count($requestIds)
                     )
                 );
             } catch (Exception $e) {
@@ -144,19 +145,19 @@ class Bfr_EventRequest_Adminhtml_EventRequest_RequestController extends Mage_Adm
     public function massStatusAction()
     {
         $requestIds = $this->getRequest()->getParam('request');
-        if(!is_array($eventrequestIds)) {
+        if(!is_array($requestIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select item(s)'));
         } else {
             try {
                 foreach ($requestIds as $requestId) {
                     $request = Mage::getSingleton('eventrequest/request')
-                        ->load($eventrequestId)
+                        ->load($requestIds)
                         ->setStatus($this->getRequest()->getParam('status'))
                         ->setIsMassupdate(true)
                         ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($eventrequestIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($requestIds))
                 );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());

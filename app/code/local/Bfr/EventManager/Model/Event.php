@@ -32,5 +32,51 @@ class Bfr_EventManager_Model_Event extends Mage_Core_Model_Abstract
     	
     	return $this->_product;
     }
+
+    public function getSignatureImage()
+    {
+        return Mage::helper('eventmanager')->getSignaturePath() . DS . $this->getSignatureFilename();
+    }
+
+
+    public function removeIndividualoptions()
+    {
+        $product = $this->getProduct();
+        if($product){
+            $order_items = Mage::getModel('sales/order_item')->getCollection();
+            $order_items->getSelect()->where('product_id=?',(int)$product->getId());
+            foreach($order_items as $item){
+                $this->_removeIndividalOption($item);
+            }
+
+
+            $res = $this->getResource();
+            $res->removeQuoteItemOptions((int)$product->getId());
+        }
+    }
+
+
+
+    protected function _removeIndividalOption($item)
+    {
+        if( $item instanceof Mage_Sales_Model_Order_Item)
+        {
+            $product_options =  $item->getProductOptions();
+            if($product_options) {
+                //$product_options = unserialize($product_options);
+
+                if (isset($product_options['info_buyRequest']['options'])) {
+                    unset($product_options['info_buyRequest']['options']);
+                    if (isset($product_options['options'])) {
+                        unset($product_options['options']);
+                    }
+                    //$product_options = serialize($product_options);
+                    $item->setProductOptions($product_options)
+                         ->save();
+                }
+            }
+        }
+    }
+
     
 }

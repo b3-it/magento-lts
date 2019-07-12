@@ -10,7 +10,7 @@
  * @copyright  	Copyright (c) 2015 B3 It Systeme GmbH - http://www.b3-it.de
  * @license		http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
-class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Bfr_EventManager_Block_Adminhtml_Options_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
   public function __construct()
   {
@@ -72,61 +72,32 @@ class Bfr_EventManager_Block_Adminhtml_Event_Grid extends Mage_Adminhtml_Block_W
           'options'   => Bfr_EventManager_Model_Status::getOptionArray(),
       ));
 	*/
-        $this->addColumn('action',
-            array(
-                'header'    =>  Mage::helper('eventmanager')->__('Action'),
-                'width'     => '100',
-                'type'      => 'action',
-                'getter'    => 'getId',
-                'actions'   => array(
-                    array(
-                        'caption'   => Mage::helper('eventmanager')->__('Edit'),
-                        'url'       => array('base'=> '*/*/edit'),
-                        'field'     => 'id'
-                    )
-                ),
-                'filter'    => false,
-                'sortable'  => false,
-                'index'     => 'stores',
-                'is_system' => true,
-        ));
+//        $this->addColumn('action',
+//            array(
+//                'header'    =>  Mage::helper('eventmanager')->__('Action'),
+//                'width'     => '100',
+//                'type'      => 'action',
+//                'getter'    => 'getId',
+//                'actions'   => array(
+//                    array(
+//                        'caption'   => Mage::helper('eventmanager')->__('Edit'),
+//                        'url'       => array('base'=> '*/*/edit'),
+//                        'field'     => 'id'
+//                    )
+//                ),
+//                'filter'    => false,
+//                'sortable'  => false,
+//                'index'     => 'stores',
+//                'is_system' => true,
+//        ));
 
-
-		$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
-		$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
+		//$this->addExportType('*/*/exportCsv', Mage::helper('eventmanager')->__('CSV'));
+		//$this->addExportType('*/*/exportXml', Mage::helper('eventmanager')->__('XML'));
 
       return parent::_prepareColumns();
   }
 
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('event_id');
-        $this->getMassactionBlock()->setFormFieldName('event');
 
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('eventmanager')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('eventmanager')->__('Are you sure?')
-        ));
-
-        $statuses = Mage::getSingleton('eventmanager/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('eventmanager')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('eventmanager')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
-        return $this;
-    }
 
   public function getRowUrl($row)
   {
