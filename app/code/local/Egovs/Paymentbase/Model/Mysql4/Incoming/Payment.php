@@ -29,7 +29,6 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
         $order_id = (int)$order_id;
         $amount = (float)$amount;
         $base_amount = (float)$base_amount;
-        $force = (int)$force;
 
 //        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, paid, base_paid, epaybl_capture_date, message) ";
 //        $sql .= '(';
@@ -40,10 +39,12 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
 //        $sql .= ')';
 
 
-        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, epaybl_capture_date, message)";
-        $sql .= ' VALUES (';
-        $sql .= " {$order_id}, {$amount}, {$base_amount}, UTC_TIMESTAMP(), '{$msg}'";
-        $sql .= ');';
+        /** @noinspection SqlResolve */
+        $sql = sprintf(
+            'INSERT INTO %s (order_id, total_paid, base_total_paid, epaybl_capture_date, message) VALUES (%s);'
+            , $this->getMainTable()
+            , "{$order_id}, {$amount}, {$base_amount}, UTC_TIMESTAMP(), '{$msg}'"
+        );
         $this->_getWriteAdapter()->query($sql);
     }
 
@@ -53,17 +54,17 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
         $total = (float)$object->getTotalPaid();
         $baseTotal = (float)$object->getBaseTotalPaid();
 
-
         $sql = "SELECT sum(paid) as p, sum(base_paid) as bp";
         $sql .= " FROM {$this->getMainTable()}";
         $sql .= " WHERE order_id = {$order_id} AND paid is NOT NULL;";
-
 
         $res = $this->_getReadAdapter()->fetchRow($sql);
         if(is_array($res))
         {
             $total -= (float) isset($res['p']) ? $res['p'] : 0;
             $baseTotal -= (float) isset($res['bp']) ? $res['bp'] : 0;
+            $total = max(0, $total);
+            $baseTotal = max(0, $baseTotal);
         }
         $object->setPaid($total);
         $object->setBasePaid($baseTotal);
