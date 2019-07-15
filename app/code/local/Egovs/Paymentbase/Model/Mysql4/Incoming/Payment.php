@@ -29,26 +29,45 @@ class Egovs_Paymentbase_Model_Mysql4_Incoming_Payment extends Mage_Core_Model_My
         $order_id = (int)$order_id;
         $amount = (float)$amount;
         $base_amount = (float)$base_amount;
-        $force = (int)$force;
-        /*
-         * set @base_amount = 10.52;
-         * set @amount = @base_amount;
-         * set @order_id = 61;
-         * INSERT INTO magento19.egovs_paymentbase_incoming_payment (order_id, total_paid, base_total_paid, paid, base_paid,  epaybl_capture_date)
-         * (
-         *     SELECT @order_id, @amount, @base_amount, IFNULL(@amount - sum(paid),@amount), IFNULL(@base_amount - sum(base_paid),@base_amount) , UTC_TIMESTAMP()
-         *     FROM magento19.egovs_paymentbase_incoming_payment as t
-         *     WHERE order_id = @order_id
-         *     HAVING (IFNULL(@base_amount - sum(base_paid), @base_amount) > 0.00)
-         * )
-         */
-        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, paid, base_paid, epaybl_capture_date, message) ";
-        $sql .= '(';
-        $sql .= "SELECT {$order_id}, {$amount}, {$base_amount}, IFNULL({$amount} - sum(paid), {$amount}), IFNULL({$base_amount} - sum(base_paid), {$base_amount}), UTC_TIMESTAMP(), '{$msg}'";
-        $sql .= " FROM {$this->getMainTable()}";
-        $sql .= " WHERE order_id = {$order_id}";
-        $sql .= " HAVING (IFNULL({$base_amount} - sum(base_paid), {$base_amount}) > 0.00) OR {$force}=1";
-        $sql .= ')';
+
+//        $sql = "INSERT INTO {$this->getMainTable()} (order_id, total_paid, base_total_paid, paid, base_paid, epaybl_capture_date, message) ";
+//        $sql .= '(';
+//        $sql .= "SELECT {$order_id}, {$amount}, {$base_amount}, IFNULL({$amount} - sum(paid), {$amount}), IFNULL({$base_amount} - sum(base_paid), {$base_amount}), UTC_TIMESTAMP(), '{$msg}'";
+//        $sql .= " FROM {$this->getMainTable()}";
+//        $sql .= " WHERE order_id = {$order_id}";
+//        $sql .= " HAVING (IFNULL({$base_amount} - sum(base_paid), {$base_amount}) > 0.00) OR {$force}=1";
+//        $sql .= ')';
+
+
+        /** @noinspection SqlResolve */
+        $sql = sprintf(
+            'INSERT INTO %s (order_id, total_paid, base_total_paid, epaybl_capture_date, message) VALUES (%s);'
+            , $this->getMainTable()
+            , "{$order_id}, {$amount}, {$base_amount}, UTC_TIMESTAMP(), '{$msg}'"
+        );
         $this->_getWriteAdapter()->query($sql);
     }
+
+    public function calculatePaidAmound($object)
+    {
+        $order_id = (int)$object->getOrderId();
+        $total = (float)$object->getTotalPaid();
+        $baseTotal = (float)$object->getBaseTotalPaid();
+
+        $sql = "SELECT sum(paid) as p, sum(base_paid) as bp";
+        $sql .= " FROM {$this->getMainTable()}";
+        $sql .= " WHERE order_id = {$order_id} AND paid is NOT NULL;";
+
+        $res = $this->_getReadAdapter()->fetchRow($sql);
+        if(is_array($res))
+        {
+            $total -= (float) isset($res['p']) ? $res['p'] : 0;
+            $baseTotal -= (float) isset($res['bp']) ? $res['bp'] : 0;
+            $total = max(0, $total);
+            $baseTotal = max(0, $baseTotal);
+        }
+        $object->setPaid($total);
+        $object->setBasePaid($baseTotal);
+    }
+
 }

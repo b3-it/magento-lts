@@ -33,4 +33,13 @@ class Egovs_Paymentbase_Model_Incoming_Payment extends Mage_Core_Model_Abstract
             Mage::log($ex->getMessage(), Zend_Log::ERR, Egovs_Helper::EXCEPTION_LOG_FILE);
         }
     }
+
+    /**
+     * aus den Beträgen vorangegangener Zahlungen
+     * und dem gegenwärtigen Totals den tatsächlich gezahlten Betrag ermittel
+     */
+    public function calculatePaidAmound()
+    {
+        $this->getResource()->calculatePaidAmound($this);
+    }
 }
