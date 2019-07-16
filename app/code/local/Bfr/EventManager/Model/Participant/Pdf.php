@@ -15,7 +15,7 @@ class Bfr_EventManager_Model_Participant_Pdf extends Egovs_Pdftemplate_Model_Pdf
     public function preparePdf($participant = array())
     {
         $participant = array_shift($participant);
-        $this->Name = Mage::helper('eventmanager')->__('ParticipationCertificate').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';
+        $this->Name = Mage::helper('eventmanager')->__('ParticipationCertificate').'.pdf';
 
         $pdfs = Mage::getModel('eventmanager/event_pdftemplate')->getCollection();
         $pdfs->getSelect()

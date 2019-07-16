@@ -27,56 +27,54 @@ if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDI
 $formated = $this->getFormattedTaxRate();
 $_taxPostfix = $formated === true ? 'Tax' : '%s Tax';
 $_productType = $this->getProduct()->getTypeId();
+$wscText = $this->getWithoutShippingCostsText()
 
 ?>
 
 <?php if ($_productType != 'eventbundle'): ?>
-<?php if ( $this->getPriceDisplayType() != Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
-<?php if (!$this->getExcludeContainer()): ?>
-    <span class="tax-details">
-<?php endif; ?>
-<?php if ($formated !== false): ?>
-    <?php if ($formated === 0): ?>
-        <?php echo $this->__( 'Tax Free' ); ?>
-    <?php else: ?>
-        <?php echo $this->__( "$_taxPrefix $_taxPostfix", $formated ) ?>
-    <?php endif ?>
-    <?php if ( $showShippingLink && (!empty( $shippingCostUrl ) || $this->getWithoutShippingCostsText())): ?>
+    <?php if ( $this->getPriceDisplayType() != Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH ): ?>
         <?php if (!$this->getExcludeContainer()): ?>
-            <span class="tax-separator">,&nbsp;</span>
-        <?php else: ?>
-            ,&nbsp;
+            <span class="tax-details">
+        <?php endif; ?>
+        <?php if ($formated !== false): ?>
+            <?php if ($formated === 0): ?>
+                <?php echo $this->__( 'Tax Free' ); ?>
+            <?php else: ?>
+                <?php echo $this->__( "$_taxPrefix $_taxPostfix", $formated ) ?>
+            <?php endif ?>
+            <?php if ( $showShippingLink && (!empty( $shippingCostUrl ) || $wscText)): ?>
+                <?php if (!$this->getExcludeContainer()): ?>
+                    <span class="tax-separator">,&nbsp;</span>
+                <?php else: ?>
+                    ,&nbsp;
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php if (!$this->getExcludeContainer()): ?>
+            </span>
         <?php endif; ?>
     <?php endif; ?>
-<?php endif; ?>
-<?php if (!$this->getExcludeContainer()): ?>
-    </span>
-<?php endif; ?>
-<?php endif; ?>
-<?php if( !empty( $shippingCostUrl ) && $showShippingLink ): ?>
-	<?php
+    <?php if( !empty( $shippingCostUrl ) && $showShippingLink ): ?>
+        <?php
         if ( $this->getIsIncludingShippingCosts() ) {
-        	$_sIncludingShippingCosts = 'incl.';
+            $_sIncludingShippingCosts = 'incl.';
         } else {
-        	$_sIncludingShippingCosts = 'excl.';
+            $_sIncludingShippingCosts = 'excl.';
         }
-    ?>
-    <?php if (!$this->getExcludeContainer()): ?>
-        <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?></span>
+        ?>
+        <?php if (!$this->getExcludeContainer()): ?>
+            <span class="shipping-cost-details"><?php echo $this->__($_sIncludingShippingCosts.' <a href="%s">Shipping Cost</a>', $shippingCostUrl ) ?></span>
+        <?php else: ?>
+            <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
+        <?php endif; ?>
     <?php else: ?>
-        <?php echo $this->__("$_sIncludingShippingCosts Shipping Cost") ?>
-    <?php endif; ?>
-<?php else: ?>
-    <?php if ( $showShippingLink && ($wscText = $this->getWithoutShippingCostsText())): ?>
         <?php if (!$this->getExcludeContainer()): ?>
             <span class="shipping-cost-details"><?php echo $this->__($wscText) ?></span>
         <?php else: ?>
             <?php echo $this->__($wscText) ?>
         <?php endif; ?>
     <?php endif; ?>
-<?php endif; ?>
-<?php if ($this->getDisplayProductWeight()): ?>
+    <?php if ($this->getDisplayProductWeight()): ?>
         <br/> (<?php echo $this->__('Shipping Weight %s', $this->getFormattedWeight()) ?>)
-<?php endif; ?>
-
+    <?php endif; ?>
 <?php endif; // End if is not EventBundle ?>

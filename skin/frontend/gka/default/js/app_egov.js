@@ -16,12 +16,17 @@ var egov_break = {
 };
 
 $j(document).ready(function () {
-    // Custom-Scrollbar im Skin-Design
-    $j('body').niceScroll({
-        'cursorcolor'       : '#003366',
-        'cursorwidth'       : '15px',
-        'cursorborderradius': '3px'
-    });
+    // Fixed HTML-Scroll-Bug für IE ab Version 8
+    $j('html').css({'overflow-y': '', '-ms-overflow-y': ''});
+
+    if ( detectIE() == false && is_touch_device() == false ) {
+        // Custom-Scrollbar im Skin-Design
+        $j('body').niceScroll({
+            'cursorcolor'       : '#003366',
+            'cursorwidth'       : '15px',
+            'cursorborderradius': '3px'
+        });
+    }
 
     // Dynamische Skallierung der Welcome-Schrift
     var resizeText = function() {

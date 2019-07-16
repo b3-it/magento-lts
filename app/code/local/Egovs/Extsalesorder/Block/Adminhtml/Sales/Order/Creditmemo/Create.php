@@ -52,19 +52,17 @@ class Egovs_Extsalesorder_Block_Adminhtml_Sales_Order_Creditmemo_Create extends 
     public function getHeaderText()
     {
         if ($this->getCreditmemo()->getInvoice()) {
-            $header = Mage::helper('sales')->__('New Return for Invoice #%s',
-                $this->getCreditmemo()->getInvoice()->getIncrementId()
+            $header = Mage::helper('sales')->__(
+                'New Return for Invoice #%s',
+                $this->escapeHtml($this->getCreditmemo()->getInvoice()->getIncrementId())
             );
         } else {
-            $header = Mage::helper('sales')->__('New Return for Order #%s',
-                $this->getCreditmemo()->getOrder()->getRealOrderId()
+            $header = Mage::helper('sales')->__(
+                'New Return for Order #%s',
+                $this->escapeHtml($this->getCreditmemo()->getOrder()->getRealOrderId())
             );
         }
-        /*$header = Mage::helper('sales')->__('New Credit Memo for Order #%s | Order Date: %s | Customer Name: %s',
-            $this->getCreditmemo()->getOrder()->getRealOrderId(),
-            $this->formatDate($this->getCreditmemo()->getOrder()->getCreatedAt(), 'medium', true),
-            $this->getCreditmemo()->getOrder()->getCustomerName()
-        );*/
+
         return $header;
     }
 

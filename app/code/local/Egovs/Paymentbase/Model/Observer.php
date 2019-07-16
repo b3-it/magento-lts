@@ -652,7 +652,7 @@ class Egovs_Paymentbase_Model_Observer extends Mage_Core_Model_Abstract
             throw new Mage_Cron_Exception("LOCK $lockKey couldn't be obtained!");
         }
 
-        if ($lockResult == 0) {
+        if ($lockResult == false) {
             Mage::log("egovs_paymentbase::apr:LOCK $lockKey already called, omitting!", Zend_Log::WARN, Egovs_Helper::LOG_FILE);
             return true;
         }
