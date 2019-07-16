@@ -261,7 +261,7 @@ class Bfr_EventManager_Model_Participant extends Mage_Core_Model_Abstract
 
         $file = array();
         $file['content']  = $pdf->render();
-        $file['filename'] = Mage::helper('eventmanager')->__('ParticipationCertificate').'_' .Mage::getSingleton('core/date')->date('Y-m-d__H_i_s').'.pdf';
+        $file['filename'] = Mage::helper('eventmanager')->__('ParticipationCertificate').'.pdf';
 
         $storeId = $this->getOrderStoreId();
 
