@@ -73,11 +73,12 @@
         </events>
         <template>
             <email>
-                <eventparticipants_participation_agreement_email_template translate="label" module="bfr_eventparticipants">
+                <!-- Name is generated as Path of the configurationField (section eventManager -> name has to begin with eventManager)-->
+                <eventmanager_participation_agreement_email_template translate="label" module="bfr_eventparticipants">
                     <label>Participation list agreement</label>
                     <file>bfr/eventparticipants/participation_agreement.html</file>
                     <type>html</type>
-                </eventparticipants_participation_agreement_email_template>
+                </eventmanager_participation_agreement_email_template>
             </email>
         </template>
     </global>
@@ -170,7 +171,7 @@
     <default>
         <eventmanager>
             <participation_agreement_email>
-                <template>eventparticipants_participation_agreement_email_template</template>
+                <template>eventmanager_participation_agreement_email_template</template>
             </participation_agreement_email>
         </eventmanager>
     </default>
