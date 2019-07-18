@@ -73,7 +73,7 @@
         </events>
         <template>
             <email>
-                <eventparticipants_participation_agreement_email_template translate="label" module="eventparticipants">
+                <eventparticipants_participation_agreement_email_template translate="label" module="bfr_eventparticipants">
                     <label>Participation list agreement</label>
                     <file>bfr/eventparticipants/participation_agreement.html</file>
                     <type>html</type>
