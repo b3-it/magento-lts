@@ -1809,10 +1809,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 						if ($base == $translate) {
 							Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
 						} else {
-							Mage::throwException($translate);
+                            throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 						}
 					} else {
-						Mage::throwException($translate);
+                        throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 					}
 			}
 		}
@@ -1825,10 +1825,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			if ($base == $translate) {
 				Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
 			} else {
-				Mage::throwException($translate);
+                throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 			}
 		} else {
-			Mage::throwException($translate);
+            throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 		}
 	}
 
