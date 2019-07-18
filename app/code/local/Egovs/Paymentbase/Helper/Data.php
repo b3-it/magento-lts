@@ -2063,12 +2063,12 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * @param Mage_Customer_Model_Customer $customer Customer
      * @param String                       $key      Key
      * 
-     * @return Varien_Object|null
+     * @return array|null
      */
     public function getAdditionalCustomerMandateData($customer, $key = null) {
     	$data = $customer->getData(self::ATTRIBUTE_SEPA_ADDITIONAL);
     	if ($data) {
-    		$data = unserialize($data);
+    		$data = unserialize($data, ['allowed_classes' => false]);
     	}
     	
     	if ($key) {
