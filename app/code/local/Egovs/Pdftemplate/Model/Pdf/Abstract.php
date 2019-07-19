@@ -737,57 +737,51 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	
 	
 	protected function replaceVariables($data, $html, $root = null) {
-	    $html = $this->filter($data, $html);
-		$html = str_replace("\n", '', $html);
-		preg_match_all("~{{(.*)}}~U", $html, $ausgabe, PREG_SET_ORDER);
+        $html = $this->filter($data, $html);
+        $html = str_replace("\n", '', $html);
+        preg_match_all("~{{(.*)}}~U", $html, $ausgabe, PREG_SET_ORDER);
 
-		foreach ($ausgabe as $treffer) {
-				
-			//Typecast für formatierung suchen z.B. (price)12.00000
-			preg_match_all("|\((.*)\)|U", $treffer[1], $cast, PREG_SET_ORDER);
-			$format = "";
-			if (count($cast) > 0) {
-				$format = $cast[0][1];
-				$treffer[1] = str_replace($cast[0][0], '', $treffer[1]);
-			}
-				
-			$treffer[1] = str_replace('[','.',$treffer[1]);	
-			$treffer[1] = str_replace(']','',$treffer[1]);	
-			$keys = explode('.', $treffer[1]);
-			//$value = $data->getData($treffer[1]);
-			$value = $this->extractData($data, $keys);
-			if (!($this->Mode == Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW) && $value === null) $value = "";
+        foreach ($ausgabe as $treffer) {
 
-			if ($value !== null)
-			{
-				if(is_array($value))
-					{
-						$linehtml = "";
-						$parent = $treffer[1];
-						preg_match_all("|{{".$parent."(.*)}}(.*){{/".$parent."}}|U",$html, $line, PREG_SET_ORDER);
-						if(isset($line[0])) {
-                            $parentline = $line[0][2];
-                            foreach ($value as $item) {
-                                $this->setLoopitem($item);
-                                $linehtml .= $this->replaceVariables($this, $parentline, $parent);
-                            }
-                            $html = str_replace($line[0][0], $linehtml, $html);
+            //Typecast für formatierung suchen z.B. (price)12.00000
+            preg_match_all("|\((.*)\)|U", $treffer[1], $cast, PREG_SET_ORDER);
+            $format = "";
+            if (count($cast) > 0) {
+                $format = $cast[0][1];
+                $treffer[1] = str_replace($cast[0][0], '', $treffer[1]);
+            }
+
+            $treffer[1] = str_replace('[', '.', $treffer[1]);
+            $treffer[1] = str_replace(']', '', $treffer[1]);
+            $keys = explode('.', $treffer[1]);
+            //$value = $data->getData($treffer[1]);
+            $value = $this->extractData($data, $keys);
+            if (!($this->Mode == Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW) && $value === NULL) $value = "";
+
+            if ($value !== NULL) {
+                if (is_array($value)) {
+                    $linehtml = "";
+                    $parent = $treffer[1];
+                    preg_match_all("|{{" . $parent . "(.*)}}(.*){{/" . $parent . "}}|U", $html, $line, PREG_SET_ORDER);
+                    if (isset($line[0])) {
+                        $parentline = $line[0][2];
+                        foreach ($value as $item) {
+                            $this->setLoopitem($item);
+                            $linehtml .= $this->replaceVariables($this, $parentline, $parent);
                         }
-					}
-					else
-					{
-						if((strpos($treffer[1], 'loopitem') === false) || $root != null)
-						{
-							$html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
-						}else if((strpos($treffer[1], 'loopitem') !== false) && empty($value)){
-                            $html = str_replace($treffer[0], "", $html);
-                        }
-					}
-				}
-            }else{
+                        $html = str_replace($line[0][0], $linehtml, $html);
+                    }
+                } else {
+                    if ((strpos($treffer[1], 'loopitem') === false) || $root != NULL) {
+                        $html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+                    } elseif ((strpos($treffer[1], 'loopitem') !== false) && empty($value)) {
+                        $html = str_replace($treffer[0], "", $html);
+                    }
+                }
+            } else {
                 $html = str_replace($treffer[0], '', $html);
             }
-			}
+        }
 
 		return $html;
 
