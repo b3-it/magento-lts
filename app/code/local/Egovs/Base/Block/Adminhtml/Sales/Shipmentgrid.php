@@ -74,8 +74,9 @@ class Egovs_Base_Block_Adminhtml_Sales_Shipmentgrid extends Mage_Adminhtml_Block
         $this->addColumn('order_increment_id', array(
             'header'    => Mage::helper('sales')->__('Order #'),
             'index'     => 'order_increment_id',
-            'type'      => 'number',
-        	'filter_index' => 'order.increment_id'
+            'type'      => 'text',
+        	'filter_index' => 'order.increment_id',
+            'escape'    => true,
         ));
 
         $this->addColumn('order_created_at', array(
