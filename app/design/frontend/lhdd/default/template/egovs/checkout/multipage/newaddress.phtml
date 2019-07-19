@@ -124,7 +124,7 @@
 		    		    <li class="fields">
 		    		        <div class="field" id="block-region">
 		    		            <label for="billing:region">
-		    		                <?php echo $_egov_helper->getFieldRequiredHtml('region', $_checkout_method) ?>
+                                    <span class="required">*</span>
 		    		                <?php echo $this->__('State/Province') ?>
 		    		            </label>
 		    		            <?php echo $this->getRegionHtmlSelect('billing') ?>
