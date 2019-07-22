@@ -225,6 +225,14 @@
                     </egovs_wysiwyg>
                 </observers>
             </cms_wysiwyg_config_prepare>
+            <sales_order_place_before>
+                <observers>
+                    <egovs_base_sales_order_place_before_admin>
+                        <class>egovsbase/owner_observer</class>
+                        <method>onSalesOrderPlaceBeforeAdmin</method>
+                    </egovs_base_sales_order_place_before_admin>
+                </observers>
+            </sales_order_place_before>
         </events>
         <cms>
             <browser>
@@ -274,6 +282,14 @@
                     </egovs_base_core_block_abstract_to_html_after>
                 </observers>
             </controller_front_send_response_before>
+            <sales_order_place_before>
+                <observers>
+                    <egovs_base_sales_order_place_before>
+                        <class>egovsbase/owner_observer</class>
+                        <method>onSalesOrderPlaceBefore</method>
+                    </egovs_base_sales_order_place_before>
+                </observers>
+            </sales_order_place_before>
         </events>
     </frontend>
 
@@ -455,15 +471,6 @@
                     </egovs_base_customer_save_observer>
                 </observers>
             </customer_save_before>
-            <sales_order_place_before>
-                <observers>
-                    <egovs_base_sales_order_place_before>
-                        <type>singleton</type>
-                        <class>egovsbase/owner_observer</class>
-                        <method>onSalesOrderPlaceBefore</method>
-                    </egovs_base_sales_order_place_before>
-                </observers>
-            </sales_order_place_before>
             <checkout_type_onepage_save_order_after>
                 <observers>
                     <mpcheckout_invoice>
