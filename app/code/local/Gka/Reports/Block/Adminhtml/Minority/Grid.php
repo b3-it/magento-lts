@@ -69,7 +69,7 @@ class Gka_Reports_Block_Adminhtml_Minority_Grid extends Mage_Adminhtml_Block_Wid
                 }else{
                     $storeGroups[] = '-1';
                 }
-                $collection->getSelect()->where("store_group in ({$storeGroups})");
+                $collection->getSelect()->where("store_group in (?)",$storeGroups);
             }
 
         }
