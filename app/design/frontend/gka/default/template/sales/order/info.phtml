@@ -24,6 +24,9 @@
             if ( $_link->getName() == 'invoice' ) {
                 $_addCss = ' class="button" style="position:relative; top:30px;"';
             }
+            else {
+                $_addCss = '';
+            }
             ?>
             <?php if($_link->getUrl()): ?>
                 <li><a<?php echo $_addCss; ?> href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a></li>
