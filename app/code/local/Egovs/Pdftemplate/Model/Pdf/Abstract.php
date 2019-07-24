@@ -763,7 +763,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
                     $linehtml = "";
                     $parent = $treffer[1];
                     preg_match_all("|{{" . $parent . "(.*)}}(.*){{/" . $parent . "}}|U", $html, $line, PREG_SET_ORDER);
-                    if (isset($line[0])) {
+                    if ( is_array($line) && count($line) && isset($line[0]) ) {
                         $parentline = $line[0][2];
                         foreach ($value as $item) {
                             $this->setLoopitem($item);
@@ -772,10 +772,12 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
                         $html = str_replace($line[0][0], $linehtml, $html);
                     }
                 } else {
-                    if ((strpos($treffer[1], 'loopitem') === false) || $root != NULL) {
-                        $html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
-                    } elseif ((strpos($treffer[1], 'loopitem') !== false) && empty($value)) {
-                        $html = str_replace($treffer[0], "", $html);
+                    if ( isset($treffer[0]) && isset($treffer[1]) ) {
+                        if ((strpos($treffer[1], 'loopitem') === false) || $root != NULL) {
+                            $html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+                        } elseif ((strpos($treffer[1], 'loopitem') !== false) && empty($value)) {
+                            $html = str_replace($treffer[0], "", $html);
+                        }
                     }
                 }
             } else {
