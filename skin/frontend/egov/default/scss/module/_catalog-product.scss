@@ -454,9 +454,16 @@
             margin-top: 0;
 
             .price-from, .price-to {
-                padding: 10px 0;
+                display: block;
             }
-                        .old-price,
+            .price-from {
+                padding: 10px 0 0 0;
+            }
+            .price-to {
+                padding: 0 0 0 10px;
+            }
+
+            .old-price,
             .special-price,
             .regular-price {
                 padding-right: 0;
@@ -1238,6 +1245,10 @@
     float: right;
     margin: 0 0 $gap;
     padding: 0;
+}
+/* tax details after price box need to be disabled too */
+.product-options-bottom .price-box ~ .tax-details {
+    display: none;
 }
 .product-options-bottom .price-tax {
     float: left;

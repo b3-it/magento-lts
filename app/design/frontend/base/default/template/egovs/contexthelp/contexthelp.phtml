@@ -13,39 +13,11 @@
 
     <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>egovs/jquery.context.helper.popup.js"></script>
 	<script type="text/javascript">
-	    var readyToShow = false;                         // Kann das Popup angezeigt werden (Inhalt?)
-        var popupBodyId = '#context-help-popup-body';    // ID des Scroll-Containers
-        var hideLevel   = '-1';                          // Level, bei welchem das Popup unsichtbar ist
-        var showLevel   = '900';                         // Level, bei welchem das Popup sichtbar ist
-
-        /**
-         * Inhalt per AJAX-Request laden
-         * Popup anzeigen
-         */
-        function showPopup()
-        {
-            if ( readyToShow == false ) {
-                resetPopup();
-
-                <?php foreach($urls as $url):?>
-                $j.ajax({
-                    'url'       : "<?php echo $url; ?>?showblocks=" + $j('#showBlocks').val(),
-                    'dataType'  : 'json',
-                    'async'     : false,
-                    'beforeSend': function() {},
-                })
-                .done(function(data) {
-                    $j(popupBodyId).append(data.html);
-                    $j('#showBlocks').val(data.blocks);
-                })
-                .fail(function(jqXHR, status){
-                    alert( "Request failed: " + status );
-                });
-              <?php endforeach;?>
-                readyToShow = true;
-            }
-            viewPopup();
-            updatePopupScrollBar();
-        }
+        $j(document).ready(function(){
+            // Declared in js/egovs/jquery.context.helper.popup.js
+        <?php foreach($urls as $url):?>
+            ajaxUrls.push("<?php echo $url; ?>?showblocks=" + $j('#showBlocks').val());
+        <?php endforeach;?>
+        });
 	</script>
 <?php endif;?>

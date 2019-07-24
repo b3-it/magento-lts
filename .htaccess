@@ -235,11 +235,16 @@
     RewriteRule .* - [R=429]
 
 ############################################
-## AhrefsBot und SEMrush Spider blocken
-## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
+## User Agent Strings anderer Herkunft blocken
+## https://www.barrierefreie-webloesungen.de/blog/faq/120203_htaccess.php
 
-    RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
-    RewriteCond %{HTTP_USER_AGENT} AhrefsBot
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5\.0.?compatible.?de.?$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/4\.0.?\(compatible\)$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5\.0.?\(compatible\)$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/6\.0.?\(compatible\)$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/4\.0$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5\.0.?\(Windows.?NT.?6\.1;.?WOW64\)$ [OR]
+	RewriteCond %{HTTP_USER_AGENT} Windows\ NT\ 2\.0
     RewriteRule .* - [R=429]
 
 ############################################

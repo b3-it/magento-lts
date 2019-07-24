@@ -1809,10 +1809,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 						if ($base == $translate) {
 							Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
 						} else {
-							Mage::throwException($translate);
+                            throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 						}
 					} else {
-						Mage::throwException($translate);
+                        throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 					}
 			}
 		}
@@ -1825,10 +1825,10 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
 			if ($base == $translate) {
 				Mage::throwException(Mage::helper('paymentbase')->__('TEXT_PROCESS_ERROR:UNKNOWN SOAP ERROR', Mage::helper('paymentbase')->getCustomerSupportMail()));
 			} else {
-				Mage::throwException($translate);
+                throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 			}
 		} else {
-			Mage::throwException($translate);
+            throw new Mage_Core_Exception($translate, Egovs_Helper::EXCEPTION_CODE_PUBLIC);
 		}
 	}
 
@@ -2063,12 +2063,12 @@ class Egovs_Paymentbase_Helper_Data extends Mage_Payment_Helper_Data
      * @param Mage_Customer_Model_Customer $customer Customer
      * @param String                       $key      Key
      * 
-     * @return Varien_Object|null
+     * @return array|null
      */
     public function getAdditionalCustomerMandateData($customer, $key = null) {
     	$data = $customer->getData(self::ATTRIBUTE_SEPA_ADDITIONAL);
     	if ($data) {
-    		$data = unserialize($data);
+    		$data = unserialize($data, ['allowed_classes' => false]);
     	}
     	
     	if ($key) {

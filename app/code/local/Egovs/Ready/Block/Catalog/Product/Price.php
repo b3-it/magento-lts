@@ -18,24 +18,6 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 	protected $_tierPriceDefaultTemplates = array(
 			'catalog/product/view/tierprices.phtml',
 	);
-	
-	protected function _addDeliveryTimeHtml($htmlObject) {
-		if (!Mage::getStoreConfigFlag('catalog/price/display_delivery_time_on_categories')) {
-			return;
-		}
-	
-		$pathInfo = Mage::app()->getRequest()->getPathInfo();
-		if (strpos($pathInfo, 'catalog/category/view') !== false
-				|| strpos($pathInfo, 'catalogsearch/result') !== false
-		) {
-			if ($this->getProduct()->getDeliveryTime()) {
-				$html = '<p class="delivery-time time1">';
-				$html .= $this->__('Delivery Time') . ': ' . $this->getProduct()->getDeliveryTime();
-				$html .= '</p>';
-				$htmlObject->setSuffix($html);
-			}
-		}
-	}
 
     /**
      * @param \Mage_Catalog_Model_Product $product
@@ -218,7 +200,9 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 		if (!in_array($this->getTemplate(), $this->_tierPriceDefaultTemplates)) {
 			$_htmlObject = new Varien_Object();
 			$_htmlObject->setParentHtml($_html);
-			$_infoBlock = $this->getLayout()->createBlock('core/template')
+
+			/** @var \Egovs_Ready_Block_Catalog_Product_Price_Info $_infoBlock */
+			$_infoBlock = $this->getLayout()->createBlock('egovsready/catalog_product_price_info')
 				->setTemplate('egovs/ready/catalog/product/price/info.phtml')
 				->setProduct($this->getProduct())
 				->setFormattedTaxRate($this->getFormattedTaxRate())
@@ -235,8 +219,6 @@ class Egovs_Ready_Block_Catalog_Product_Price extends Mage_Catalog_Block_Product
 			;
             $_htmlTemplate = preg_replace('/((?<=\>)[\s]+)|([\s]+(?=\<))/i', '', $_htmlTemplate);
 			$_htmlObject->setHtml($_htmlTemplate);
-	
-			$this->_addDeliveryTimeHtml($_htmlObject);
 	
 			Mage::dispatchEvent('egovsready_after_product_price',
 					array(
