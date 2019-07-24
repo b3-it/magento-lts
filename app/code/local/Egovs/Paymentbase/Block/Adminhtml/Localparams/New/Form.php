@@ -64,6 +64,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Localparams_New_Form extends Mage_Adminh
 
 
 		$groups = Mage::getModel('customer/group')->getCollection();
+        // Sort by Group Label
+        $groups->addOrder('customer_group_code', 'ASC');
 		$fieldset->addField('customer_group_id', 'multiselect', array(
 				'label'     => Mage::helper('paymentbase')->__('Customer Group'),
 				// 'class'     => 'required-entry',
