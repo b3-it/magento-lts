@@ -663,6 +663,17 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	                	$pos++;
 	                	$childpos = 0;
 	                }
+
+	                $options = $oi->getProductOptions();
+	                $res = array();
+	                $res[] = ""; //leerzeile
+                    if(isset($options['options'])){
+                        foreach($options['options'] as $opt) {
+                            $res[] = sprintf('%s: %s',$opt['label'],$opt['option_value']);
+                        }
+                    }
+
+                    $item->setProductOptions(implode('<br>',$res));
 				}
                 
                 $item->setPosition($pos);
@@ -697,7 +708,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 		$this->_Pdf->lastPage();
 		return $this;
 	}
-	
+
 	protected function RenderEntity($data,$template)
 	{
 		$html = $template->getContent();
@@ -721,51 +732,58 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	}
 	
 	
-	protected function replaceVariables($data,$html) {
+	protected function replaceVariables($data, $html, $root = null) {
+        $html = $this->filter($data, $html);
+        $html = str_replace("\n", '', $html);
+        preg_match_all("~{{(.*)}}~U", $html, $ausgabe, PREG_SET_ORDER);
 
-	    $html = $this->filter($data, $html);
-		
-		preg_match_all("|{{(.*)}}|U", $html, $ausgabe, PREG_SET_ORDER);
+        foreach ($ausgabe as $treffer) {
 
-		foreach ($ausgabe as $treffer) {
-				
-			//Typecast für formatierung suchen z.B. (price)12.00000
-			preg_match_all("|\((.*)\)|U", $treffer[1], $cast, PREG_SET_ORDER);
-			$format = "";
-			if (count($cast) > 0) {
-				$format = $cast[0][1];
-				$treffer[1] = str_replace($cast[0][0], '', $treffer[1]);
-			}
-				
-			$treffer[1] = str_replace('[','.',$treffer[1]);	
-			$treffer[1] = str_replace(']','',$treffer[1]);	
-			$keys = explode('.', $treffer[1]);
-			//$value = $data->getData($treffer[1]);
-			$value = $this->extractData($data, $keys);
-			if (!($this->Mode == Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW) && $value === null) $value = "";
+            //Typecast für formatierung suchen z.B. (price)12.00000
+            preg_match_all("|\((.*)\)|U", $treffer[1], $cast, PREG_SET_ORDER);
+            $format = "";
+            if (count($cast) > 0) {
+                $format = $cast[0][1];
+                $treffer[1] = str_replace($cast[0][0], '', $treffer[1]);
+            }
 
-            if ($value !== null) {
-                if(is_array($value))
-                {
+            $treffer[1] = str_replace('[', '.', $treffer[1]);
+            $treffer[1] = str_replace(']', '', $treffer[1]);
+            $keys = explode('.', $treffer[1]);
+            //$value = $data->getData($treffer[1]);
+            $value = $this->extractData($data, $keys);
+            if (!($this->Mode == Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_PREVIEW) && $value === NULL) {
+                $value = '';
+            }
+
+            if ($value !== NULL) {
+                if (is_array($value)) {
                     $linehtml = "";
                     $parent = $treffer[1];
-                    preg_match_all("|{{".$parent."(.*)}}(.*){{/".$parent."}}|U",$html, $line, PREG_SET_ORDER);
-                    $parentline = $line[0][2];
-                    foreach($value as $item)
-                    {
-                        $this->setItem($item);
-                        $linehtml .= $this->replaceVariables($this,$parentline);
+                    preg_match_all("|{{" . $parent . "(.*)}}(.*){{/" . $parent . "}}|U", $html, $line, PREG_SET_ORDER);
+                    if (isset($line[0])) {
+                        $parentline = $line[0][2];
+                        foreach ($value as $item) {
+                            $this->setLoopitem($item);
+                            $linehtml .= $this->replaceVariables($this, $parentline, $parent);
+                        }
+                        $html = str_replace($line[0][0], $linehtml, $html);
                     }
-                    $html = str_replace($line[0][0], $linehtml, $html);
+                } else {
+                    if ( isset($treffer[0]) && isset($treffer[1]) ) {
+                        if ((strpos($treffer[1], 'loopitem') === false) || $root != NULL) {
+                            $html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+                        } elseif ((strpos($treffer[1], 'loopitem') !== false) && empty($value)) {
+                            $html = str_replace($treffer[0], "", $html);
+                        }
+                    }
                 }
-                else
-                {
-                    $html = str_replace($treffer[0], $this->formatValue($value, $format), $html);
+            } else {
+                if ( isset($treffer[0])) {
+                    $html = str_replace($treffer[0], '', $html);
                 }
-            }else{
-                $html = str_replace($treffer[0], '', $html);
             }
-		}
+        }
 
 		return $html;
 
