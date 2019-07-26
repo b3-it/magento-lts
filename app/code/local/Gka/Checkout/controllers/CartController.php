@@ -396,41 +396,6 @@ class Gka_Checkout_CartController extends Mage_Checkout_CartController
     }
 
     /**
-     * Update shoping cart data action
-     */
-    public function updatePostAction()
-    {
-        try {
-            $cartData = $this->getRequest()->getParam('cart');
-            if (is_array($cartData)) {
-                $filter = new Zend_Filter_LocalizedToNormalized(
-                    array('locale' => Mage::app()->getLocale()->getLocaleCode())
-                );
-                foreach ($cartData as $index => $data) {
-                    if (isset($data['qty'])) {
-                        $cartData[$index]['qty'] = $filter->filter(trim($data['qty']));
-                    }
-                }
-                $cart = $this->_getCart();
-                if (! $cart->getCustomerSession()->getCustomer()->getId() && $cart->getQuote()->getCustomerId()) {
-                    $cart->getQuote()->setCustomerId(null);
-                }
-
-                $cartData = $cart->suggestItemsQty($cartData);
-                $cart->updateItems($cartData)
-                    ->save();
-            }
-            $this->_getSession()->setCartWasUpdated(true);
-        } catch (Mage_Core_Exception $e) {
-            $this->_getSession()->addError($e->getMessage());
-        } catch (Exception $e) {
-            $this->_getSession()->addException($e, $this->__('Cannot update shopping cart.'));
-            Mage::logException($e);
-        }
-        $this->_goBack();
-    }
-
-    /**
      * Delete shoping cart item action
      */
     public function deleteAction()
