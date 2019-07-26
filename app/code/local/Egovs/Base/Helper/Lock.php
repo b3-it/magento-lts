@@ -55,14 +55,14 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
 
     /**
      * Tries to obtain a lock with a name given by the string $lockKey, using a timeout of timeout seconds.
-     * Returns 1 if the lock was obtained successfully, 0 if the attempt timed out (for example,
+     * Returns true if the lock was obtained successfully, false if the attempt timed out (for example,
      * because another client has previously locked the name), or NULL if an error occurred
      * (such as running out of memory or the thread was killed with mysqladmin kill).
      *
      * @param     $lockKey
      * @param int $ttl
      *
-     * @return string|null
+     * @return bool|null
      */
     public function getDbLock($lockKey, $ttl=300) {
         $lockResult = null;
@@ -77,7 +77,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
                  * Requires MySQL >= 5.7.5 oder MariaDB >= 10.0.2
                  */
                 $lockResult = $adapter->fetchOne("SELECT GET_LOCK(':id', $ttl) as 'lock_result';", array('id' => $lockKey));
-                static::$dbLockResult[$lockKey] = $lockResult;
+                static::$dbLockResult[$lockKey] = (bool) $lockResult;
             }
         } catch (Exception $e) {
             Mage::logException($e);
@@ -97,7 +97,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      *
      * @return bool|null
      */
-    public function isFreeLock($lockKey) {
+    public function isFreeLockDb($lockKey) {
         $lockResult = null;
         $adapter = Mage::getSingleton('core/resource')->getConnection('core_write');
         /** @var $adapter \Varien_Db_Adapter_Pdo_Mysql */
@@ -154,7 +154,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Returns 1 if the lock was obtained, 0 if the lock was already obtained,
+     * Returns true if the lock was obtained, false if the lock was already obtained,
      * and NULL if the lock function did not exist.
      *
      * @param     $lockKey
@@ -187,7 +187,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Returns 1 if the lock was obtained, 0 if the lock was already obtained,
+     * Returns true if the lock was obtained, false if the lock was already obtained,
      * and NULL if the lock function did not exist.
      *
      * @param     $lockKey
@@ -201,6 +201,25 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
                 return false;
             }
             return apcu_add($lockKey, true, $ttl);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns true if the lock is not set, false if the lock was already obtained,
+     * and NULL if the lock function did not exist or cgi mode is in use.
+     *
+     * @param $lockKey
+     *
+     * @return bool|null
+     */
+    public function isFreeLockApcu($lockKey) {
+        if (!$this->isCgiMode() && function_exists('apcu_fetch')) {
+            if (apcu_fetch($lockKey)) {
+                return false;
+            }
+            return true;
         }
 
         return null;
@@ -223,7 +242,7 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
      * Try to get a lock, returning first working lock.
      * Starts with APC than DB
      *
-     * Returns 1 if the lock was obtained, 0 if the lock was already obtained,
+     * Returns true if the lock was obtained, false if the lock was already obtained,
      * and NULL if the lock function did not exist.
      *
      * @param     $lockKey
@@ -271,5 +290,31 @@ class Egovs_Base_Helper_Lock extends Mage_Core_Helper_Abstract
         }
 
         return $this->releaseApcuLock($lockKey);
+    }
+
+    /**
+     * Returns true if at least one lock was released
+     *
+     * @param $lockKey
+     *
+     * @return bool
+     */
+    public function releaseAllLocks($lockKey) {
+        $lockResultDb = $this->releaseDbLock($lockKey);
+
+        if ($lockResultDb === null) {
+            //TODO Result speichern
+        }
+        $lockResultApc = $this->releaseApcLock($lockKey);
+        if ($lockResultApc === null) {
+            //TODO Result speichern
+        }
+
+        $lockResultApcu = $this->releaseApcuLock($lockKey);
+        if ($lockResultApcu === null) {
+            //TODO Result speichern
+        }
+
+        return $lockResultDb || $lockResultApc || $lockResultApcu;
     }
 }

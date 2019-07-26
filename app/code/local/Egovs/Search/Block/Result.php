@@ -24,7 +24,6 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
  * Product search result block
  *
@@ -34,26 +33,22 @@
  */
 class Egovs_Search_Block_Result extends Mage_CatalogSearch_Block_Result
 {
-  
     /**
      * Set search available list orders
      *
      * @return Mage_CatalogSearch_Block_Result
      */
-    public function setListOrders() {
-        $category = Mage::getSingleton('catalog/layer')
-            ->getCurrentCategory();
+    public function setListOrders()
+    {
         /* @var $category Mage_Catalog_Model_Category */
+        $category = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+
         $availableOrders = $category->getAvailableSortByOptions();
         unset($availableOrders['position']);
-        $availableOrders = array_merge(array(
-            'relevance' => $this->__('Relevance')
-        ), $availableOrders);
-        
-        $availableOrders = array_merge($availableOrders,array(
-            'ordered_qty' => 'Bestseller'));
-        
-      
+
+        /** Order of array items is important */
+        $availableOrders = array_merge(array('relevance' => $this->__('Relevance')), $availableOrders);
+        $availableOrders = array_merge($availableOrders, array('ordered_qty' => $this->__('Bestseller')));
 
         $this->getListBlock()
             ->setAvailableOrders($availableOrders)
@@ -62,5 +57,4 @@ class Egovs_Search_Block_Result extends Mage_CatalogSearch_Block_Result
 
         return $this;
     }
-
-  }
+}

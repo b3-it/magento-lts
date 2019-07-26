@@ -15,7 +15,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   public function __construct()
   {
       parent::__construct();
-      $this->setId('participantGrid');
+      $this->setId('eventParticipantGrid');
       $this->setDefaultSort('participant_id');
       $this->setDefaultDir('ASC');
       
@@ -55,6 +55,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   protected function _prepareColumns()
   {
     $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray();
+
   	$this->addColumn('pa_participant_id', array(
   			'header'    => Mage::helper('eventmanager')->__('ID'),
   			'align'     =>'right',
@@ -208,14 +209,14 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'index'     => 'city',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
-  	
+
   	$this->addColumn('pa_postcode', array(
   			'header'    => Mage::helper('eventmanager')->__('Zip'),
   			'align'     =>'left',
   			'index'     => 'postcode',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
-  	
+
   	$this->addColumn('pa_country', array(
   			'header'    => Mage::helper('eventmanager')->__('Country'),
   			'align'     =>'left',
@@ -258,7 +259,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'type'      => 'options',
   			'options'   => $role,
   	));
-  	
+
   	$job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
   	$this->addColumn('pa_jop', array(
   			'header'    => Mage::helper('eventmanager')->__('Job'),

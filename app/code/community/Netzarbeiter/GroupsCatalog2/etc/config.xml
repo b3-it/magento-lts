@@ -288,9 +288,6 @@
                 <show_multiselect_field>1</show_multiselect_field>
             </general>
         </netzarbeiter_groupscatalog2>
-        <general>
-        	<groupscatalog2_groups>-2</groupscatalog2_groups>
-        </general>
     </default>
     <phpunit>
         <suite>
