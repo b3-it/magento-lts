@@ -15,7 +15,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   public function __construct()
   {
       parent::__construct();
-      $this->setId('participantGrid');
+      $this->setId('eventParticipantGrid');
       $this->setDefaultSort('participant_id');
       $this->setDefaultDir('ASC');
       
@@ -31,13 +31,13 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   
   protected function _prepareCollection()
   {
-  	
-  	$industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+
+      $industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY.' group by participant_id)');
-  		
-  	$lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.value) as value, participant_id FROM eventmanager_participant_attribute as a
+      
+      $lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
-  	
+
       $collection = Mage::getModel('eventmanager/participant')->getCollection();
       $collection->getSelect()
       ->joinLeft(array('order'=>$collection->getTable('sales/order')),'order.entity_id = main_table.order_id',array('order_increment_id'=>'increment_id','order_status'=>'status','created_at','base_grand_total','base_currency_code','base_total_paid'))
@@ -54,13 +54,8 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
   protected function _prepareColumns()
   {
-  	
-  	$yn = Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray();
-  	$yesno = array();
-  	foreach ($yn as $n)
-  	{
-  		$yesno[$n['value']] = $n['label'];
-  	}
+    $yesno = Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray();
+
   	$this->addColumn('pa_participant_id', array(
   			'header'    => Mage::helper('eventmanager')->__('ID'),
   			'align'     =>'right',
@@ -214,39 +209,47 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'index'     => 'city',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
-  	
+
   	$this->addColumn('pa_postcode', array(
   			'header'    => Mage::helper('eventmanager')->__('Zip'),
   			'align'     =>'left',
   			'index'     => 'postcode',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
-  	
+
   	$this->addColumn('pa_country', array(
   			'header'    => Mage::helper('eventmanager')->__('Country'),
   			'align'     =>'left',
   			'index'     => 'country',
   			//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
   	));
-  	
-  	
-  	
-  	
-  	
+
+  	$industryOptions = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY)->getOptionArray();
+
   	$this->addColumn('pa_industry', array(
-  			'header'    => Mage::helper('eventmanager')->__('Industry'),
-  			'align'     =>'left',
-  			'index'     => 'industry',
-  			'filter_condition_callback' => array($this, '_filterIndustryCondition'),
+  	    'header'    => Mage::helper('eventmanager')->__('Industry'),
+  	    'align'     =>'left',
+  	    'index'     => 'industry',
+  	    'filter_index' => 'industryT.value',
+  	    'type'      => 'options',
+  	    'options'   => $industryOptions,
+  	    'renderer' => new Bfr_EventManager_Block_Adminhtml_Renderer_Lookup(),
+  	    'filter_condition_callback' => array($this, '_filterLookupCondition'),
   	));
-  	
+
+  	$lobbyOptions = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY)->getOptionArray();
+
   	$this->addColumn('pa_lobby', array(
-  			'header'    => Mage::helper('eventmanager')->__('Lobby'),
-  			'align'     =>'left',
-  			'index'     => 'lobby',
-  			'filter_condition_callback' => array($this, '_filterLobbyCondition'),
+  	    'header'    => Mage::helper('eventmanager')->__('Lobby'),
+  	    'align'     =>'left',
+  	    'index'     => 'lobby',
+  	    'filter_index' => 'lobbyT.value',
+  	    'type'      => 'options',
+  	    'options'   => $lobbyOptions,
+  	    'renderer' => new Bfr_EventManager_Block_Adminhtml_Renderer_Lookup(),
+  	    'filter_condition_callback' => array($this, '_filterLookupCondition'),
   	));
-  	
+
   	$role = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_ROLE)->getOptionArray();
   	$this->addColumn('role', array(
   			'header'    => Mage::helper('eventmanager')->__('Role'),
@@ -256,7 +259,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   			'type'      => 'options',
   			'options'   => $role,
   	));
-  	
+
   	$job = Mage::getModel('eventmanager/lookup_model')->setTyp(Bfr_EventManager_Model_Lookup_Typ::TYPE_JOB)->getOptionArray();
   	$this->addColumn('pa_jop', array(
   			'header'    => Mage::helper('eventmanager')->__('Job'),
@@ -470,27 +473,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
    *
    * @return void
    */
-  protected function _filterIndustryCondition($collection, $column) {
-  	if (!$value = $column->getFilter()->getValue()) {
-  		return;
-  	}
-  	$condition = "industryT.value like ?";
-  	$collection->getSelect()->where($condition, "%$value%");
-  }
-  
-  /**
-   * FilterIndex
-   *
-   * @param Mage_Core_Model_Resource_Db_Collection_Abstract $collection Collection
-   * @param Mage_Adminhtml_Block_Widget_Grid_Column         $column     Column
-   *
-   * @return void
-   */
-  protected function _filterLobbyCondition($collection, $column) {
-  	if (!$value = $column->getFilter()->getValue()) {
-  		return;
-  	}
-  	$condition = "lobbyT.value like ?";
-  	$collection->getSelect()->where($condition, "%$value%");
+  protected function _filterLookupCondition($collection, $column) {
+      if (!$value = $column->getFilter()->getValue()) {
+          return;
+      }
+      $findex = $column->getData('filter_index');
+      
+      $collection->addFieldToFilter($findex, array('finset' => $value));
   }
 }

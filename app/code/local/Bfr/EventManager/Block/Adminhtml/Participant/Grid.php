@@ -183,10 +183,10 @@ where participant_id = 1 AND el.typ = 3
       ));
       
       $this->addColumn('pa_email', array(
-      		'header'    => Mage::helper('eventmanager')->__('Email'),
-      		'align'     =>'left',
-      		'index'     => 'email',
-      		//'filter_condition_callback' => array($this, '_filterCompanyCondition'),
+          'header'       => Mage::helper('eventmanager')->__('Email'),
+          'align'        =>'left',
+          'index'        => 'email',
+          'filter_index' => 'main_table.email'
       ));
       
       $this->addColumn('pa_phone', array(
@@ -424,7 +424,7 @@ where participant_id = 1 AND el.typ = 3
   	$condition = "TRIM(CONCAT(firstname,' ',lastname)) like ?";
   	$collection->getSelect()->where($condition, "%$value%");
   }
-  
+
   /**
    * FilterIndex
    *
