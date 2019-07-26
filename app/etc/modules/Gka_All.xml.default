@@ -14,6 +14,17 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_Checkout>
+        <Gka_Flexprice>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Gka_Flexprice>
+        <Gka_InternalPayId>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+            </depends>
+        </Gka_InternalPayId>
         <Gka_Product>
             <active>true</active>
             <codePool>local</codePool>
@@ -29,6 +40,15 @@
             <active>true</active>
             <codePool>local</codePool>
         </Gka_Reports>
+        <Gka_SalesApi>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Api2/>
+                <Mage_Sales/>
+                <Egovs_Paymentbase/>
+            </depends>
+        </Gka_SalesApi>
         <Gka_Tkonnektpay>
             <active>true</active>
             <codePool>local</codePool>
