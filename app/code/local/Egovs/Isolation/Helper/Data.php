@@ -22,14 +22,16 @@ class Egovs_Isolation_Helper_Data extends Mage_Core_Helper_Abstract
 		$user = Mage::getSingleton('admin/session')->getUser();
 		return $user->getStoreGroups();
 	}
-	
+
 	public function getUserIsAdmin()
 	{
-		$user = Mage::getSingleton('admin/session')->getUser();	
-		return ($user->getRole()->getId() == 1);
+		return $this->isAdmin(Mage::getSingleton('admin/session')->getUser());
 	}
-	
-	
+
+	public function isAdmin($user) {
+	    return ($user->getRole()->getId() == 1);
+	}
+
 	public function getUsername($id)
 	{
 		$user = Mage::getModel('admin/user')->load($id);

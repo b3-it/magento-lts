@@ -20,7 +20,7 @@ class Egovs_Isolation_Model_Observer_User extends Varien_Object
     		$stores = $user->getStoreGroups();
     		Mage::getModel('isolation/relation')->removeAllStoreRelations($user->getId());
 
-            if(!Mage::helper('isolation')->getUserIsAdmin()) {
+            if(!Mage::helper('isolation')->isAdmin($user)) {
                 if (is_array($stores)) {
                     foreach ($stores as $store) {
                         $store_relation = Mage::getModel('isolation/relation');

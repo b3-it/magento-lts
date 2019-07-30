@@ -11,26 +11,18 @@
  */
 class Egovs_Isolation_Block_Adminhtml_Permissions_User_Edit_Tabs extends Mage_Adminhtml_Block_Permissions_User_Edit_Tabs
 {
-
-   
-
     protected function _beforeToHtml()
     {
-    	
-    	$user = Mage::registry('permissions_user');
-    	$r = $user->getRole();
-    	if($user->getRole()->getId() != 1)
-    	{
-	        $this->addTabAfter('user_section', array(
-	            'label'     => Mage::helper('adminhtml')->__('Stores'),
-	            'title'     => Mage::helper('adminhtml')->__('Stores'),
-	            'content'   => $this->getLayout()->createBlock('isolation/adminhtml_permissions_user_edit_tabs_store')->toHtml(),
-	            
-	        ),'roles_section');
+        $user = Mage::registry('permissions_user');
 
-    	}
-    
+        if(!Mage::helper('isolation')->isAdmin($user)) {
+            $this->addTabAfter('user_section', array(
+                'label'     => Mage::helper('adminhtml')->__('Stores'),
+                'title'     => Mage::helper('adminhtml')->__('Stores'),
+                'content'   => $this->getLayout()->createBlock('isolation/adminhtml_permissions_user_edit_tabs_store')->toHtml(),
+            ),'roles_section');
+        }
+
         return parent::_beforeToHtml();
     }
-
 }
