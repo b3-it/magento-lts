@@ -29,25 +29,25 @@
  *
  * @category   Mage
  * @package    Mage_CatalogSearch
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @module     Catalog
  */
 class Egovs_Search_Block_Advanced_Result extends Mage_CatalogSearch_Block_Advanced_Result
-{  
-    public function setListOrders() {
-        $category = Mage::getSingleton('catalog/layer')
-            ->getCurrentCategory();
+{
+    /**
+     * Set search available list orders
+     */
+    public function setListOrders()
+    {
         /* @var $category Mage_Catalog_Model_Category */
+        $category = Mage::getSingleton('catalog/layer')->getCurrentCategory();
 
         $availableOrders = $category->getAvailableSortByOptions();
         unset($availableOrders['position']);
-       	
-       $availableOrders = array_merge($availableOrders,array(
-            'ordered_qty' => 'Bestseller'));
-       
+
+        /** Order of array items is important */
+        $availableOrders = array_merge($availableOrders, array('ordered_qty' => $this->__('Bestseller')));
+
         $this->getChild('search_result_list')
             ->setAvailableOrders($availableOrders);
     }
-
- 
-
 }
