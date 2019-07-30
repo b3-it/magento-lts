@@ -618,6 +618,7 @@ body:not(.customer-account) .block:first-child .block-title {
             position: relative;
             width: $global-leftcol-percent;
             min-height: 100px;
+            max-width: $global-leftcol-width;
 
             @include bp(max-width, 490px) {
             	display: none;
