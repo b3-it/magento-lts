@@ -32,6 +32,10 @@
         position: relative;
         background-color: $global-minicart-background;
     }
+    .shipping-cost-details {
+        height: 1rem;
+        text-align: right;
+    }
 
     .block-cart {
         display: none;
