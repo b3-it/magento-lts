@@ -42,6 +42,18 @@ $block-padding: $default-padding * 3;
 		padding: $block-padding;
 		font-size: 0.9rem;
 		line-height: 1.24rem;
+
+		li.item a {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: inline-block;
+			width: 88%;
+			font-size: 1rem;
+		}
+		li.item input[type="checkbox"] {
+			position: relative;
+			top: -6px;
+		}
 	}
 
 	.block-footer {

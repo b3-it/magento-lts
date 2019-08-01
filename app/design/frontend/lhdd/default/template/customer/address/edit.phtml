@@ -41,11 +41,11 @@ $_isAdditionalCompany = Mage::getStoreConfig('customer/registerrequired/addition
         <ul class="form-list">
             <li class="fields street-field" id="adress-edit-street">
                 <?php $_streetValidationClass = $_egov_helper->isFieldRequired('street') ? 'required-entry' : ''; ?>
-                <label for="street_1">
-                    <?php echo $this->isFieldRequired('street') ? '<span class="required">*</span>' : ''; ?>
-                    <?php echo $this->__('Street Address') ?>
-                </label>
                 <div class="input-box">
+                    <label for="street_1">
+                        <?php echo $this->isFieldRequired('street') ? '<span class="required">*</span>' : ''; ?>
+                        <?php echo $this->__('Street Address') ?>
+                    </label>
                     <input tabindex="4" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" />
                   <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
                   <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
@@ -128,16 +128,18 @@ $_isAdditionalCompany = Mage::getStoreConfig('customer/registerrequired/addition
         <ul class="form-list">
           <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
             <li class="fields" id="adress-edit-taxvat">
-                <label for="vat_id">
-                    <?php echo $_egov_helper->isFieldRequired('taxvat') ? '<span class="required">*</span>' : ''; ?>
-                    <?php echo $this->__('VAT Number') ?>
-                </label>
                 <div class="input-box">
+                    <label for="vat_id">
+                        <?php echo $_egov_helper->isFieldRequired('taxvat') ? '<span class="required">*</span>' : ''; ?>
+                        <?php echo $this->__('VAT Number') ?>
+                    </label>
                     <input tabindex="7" type="text" name="vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('VAT Number')) ?>" id="vat_id" class="input-text <?php echo $_egov_helper->isFieldRequired('taxvat') ? 'required-entry' : ''; ?> <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
                 </div>
             </li>
           <?php else : ?>
-            <li class="wide dummy"></li>
+            <li class="wide dummy">
+                <div class="input-box"></div>
+            </li>
           <?php endif; ?>
           <?php if ($_isAdditionalCompany) : ?>
             <li class="fields" id="adress-edit-company3">
