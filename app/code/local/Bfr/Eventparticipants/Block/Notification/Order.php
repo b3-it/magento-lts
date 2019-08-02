@@ -27,25 +27,6 @@ class Bfr_Eventparticipants_Block_Notification_Order extends Mage_Core_Block_Tem
      */
     public function getValidHash()
     {
-        return $this->_getRegistry()['valid'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getAcceptUrl()
-    {
-        return $this->_getRegistry()['url'];
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getRegistry()
-    {
-        if($this->_registry == null){
-            $this->_registry = Mage::registry('participationlist_agreement');
-        }
-        return $this->_registry;
+        return Mage::registry('participationlist_agreement_hash');
     }
 }

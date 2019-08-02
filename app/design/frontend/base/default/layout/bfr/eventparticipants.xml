@@ -39,10 +39,4 @@
             <block type="bfr_eventparticipants/notification_order" name="notification_order" template="bfr/eventparticipants/agreement.phtml" />
         </reference>
     </bfr_eventparticipants_notification_order_index>
-
-    <bfr_eventparticipants_notification_order_accepted>
-        <reference name="content">
-            <block type="bfr_eventparticipants/notification_order" name="notification_order" template="bfr/eventparticipants/accepted.phtml" />
-        </reference>
-    </bfr_eventparticipants_notification_order_accepted>
 </layout>

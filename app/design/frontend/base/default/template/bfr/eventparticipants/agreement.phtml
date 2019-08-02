@@ -4,20 +4,12 @@
 
 <?php if ($this->getValidHash()): ?>
     <div class="page-title">
-        <h1><?php echo $this->__('Participationlist'); ?></h1>
-    </div>
-    <div class="product-options">
-        <form id="accept-participationslist-form" method="post" action="<?php echo $this->getAcceptUrl(); ?>">
-            <input id="useless-participationslist-accept" type="checkbox" name="accept">
-            <label for="useless-participationslist-accept"><?php echo $this->__('I accept the use of my personal data for a participation list.'); ?></label>
-            <div class="buttons-set">
-                <button class="button" type="submit"><span><?php echo $this->__('Accept'); ?></span></button>
-            </div>
-        </form>
+        <h1><?= $this->__('Participationlist') ?></h1>
+        <span><?= $this->__('Your agreement is noted.') ?></span>
     </div>
 <?php else: ?>
     <div class="page-title">
-        <h1><?php echo $this->__('Whoops, something went wrong...') ?></h1>
+        <h1><?= $this->__('Whoops, something went wrong...') ?></h1>
     </div>
-    <span><?php echo $this->__('The requested url is not valid.') ?></span>
+    <span><?= $this->__('The requested url is not valid.') ?></span>
 <?php endif; ?>
