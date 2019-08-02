@@ -87,7 +87,7 @@
 							<show_in_store>1</show_in_store>
 						</including_shipping_costs>
 						<without_shipping_costs_text>
-							<label>Text for "Without Shipping Costs"</label>
+							<label>Text for Products without Shipping Costs</label>
 							<frontend_type>text</frontend_type>
 							<sort_order>41</sort_order>
 							<show_in_default>1</show_in_default>
