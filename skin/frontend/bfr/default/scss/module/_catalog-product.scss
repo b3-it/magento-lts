@@ -239,10 +239,6 @@ div#details-block {
             }
 
             .add-to-cart {
-                left: 76.3%;
-                position: absolute;
-                top: 0px;
-
 	            @include bp(max-width, $bp-small) {
 	                position: relative;
 	                top: auto;

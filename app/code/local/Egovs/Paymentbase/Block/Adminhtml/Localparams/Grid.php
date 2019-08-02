@@ -103,6 +103,8 @@ class Egovs_Paymentbase_Block_Adminhtml_Localparams_Grid extends Mage_Adminhtml_
 		*/
 		$groups = Mage::getModel('customer/group')->getCollection()->toOptionHash();
 		$groups['-1'] = Mage::helper('paymentbase')->__('All Customer Groups');
+        // Sort by Group Label
+        asort($groups);
 		$this->addColumn('customer_group_id', array(
 				'header'    => Mage::helper('paymentbase')->__('Customer Group'),
 				//'align'     =>'right',

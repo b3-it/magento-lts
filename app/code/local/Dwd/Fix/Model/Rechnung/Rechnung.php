@@ -96,7 +96,7 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     	
     	// Get the destination email addresses to send copies to
     	$copyTo = $this->_getEmails(self::XML_PATH_EMAIL_COPY_TO);
-    	$copyMethod = Mage::getStoreConfig(self::XML_PATH_EMAIL_COPY_METHOD, $storeId);
+    	//$copyMethod = Mage::getStoreConfig(self::XML_PATH_EMAIL_COPY_METHOD, $storeId);
     	// Check if at least one recepient is found
     	
     
@@ -127,8 +127,11 @@ class Dwd_Fix_Model_Rechnung_Rechnung extends Mage_Core_Model_Abstract
     		$templateId = Mage::getStoreConfig(self::XML_PATH_EMAIL_TEMPLATE, $storeId);
     		
     	}
-    
-    	$mailer = Mage::getModel('egovsbase/core_email_mailer');
+
+    	/**
+    	 * @var Egovs_Base_Model_Core_Email_Template_Mailer $mailer
+    	 */
+    	$mailer = Mage::getModel('egovsbase/core_email_template_mailer');
     	$emailInfo = Mage::getModel('core/email_info');
     		
     	

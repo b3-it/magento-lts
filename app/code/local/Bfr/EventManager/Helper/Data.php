@@ -52,21 +52,16 @@ class Bfr_EventManager_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
 
-        /** @var $mailer Egovs_Base_Model_Core_Email_Mailer */
-        $mailer = Mage::getModel('egovsbase/core_email_mailer');
+        /** @var $mailer Egovs_Base_Model_Core_Email_Template_Mailer */
+        $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         $emailInfo = Mage::getModel('core/email_info');
         $emailInfo->addTo($participant->getEmail(), trim($participant->getFirstname() . " " .$participant->getLastname()));
 
         $mailer->addEmailInfo($emailInfo);
 
-
-
         $translate = Mage::getSingleton('core/translate');
         /* @var $translate Mage_Core_Model_Translate */
         $translate->setTranslateInline(false);
-
-        $mailTemplate = Mage::getModel('core/email_template');
-        /* @var $mailTemplate Mage_Core_Model_Email_Template */
 
         $sender = array();
         $sender['name'] = Mage::getStoreConfig("eventmanager/participation_certificate_email/sender_name", $storeId);
