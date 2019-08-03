@@ -1,0 +1,18 @@
+﻿//
+// @category    design
+// @package     egov_wide
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+$global-repeat-scroll: none repeat scroll 0 0;
+$global-norepeat-scroll: no-repeat scroll;
+
+$global-category-image: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0icmdiYSgyMjQsIDIzMCwgMjE1LCAwLjkpIi8+PHN0b3Agb2Zmc2V0PSI2NiUiIHN0b3AtY29sb3I9InJnYmEoMTkzLCAyMDgsIDE4NywgMC45NykiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjMWQwYmIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=';
+
+$global-header-background-image   : '../images/header_desktop.png';
+$global-content-top-image         : '../images/schatten_themenbox.png';
+$global-category-arrow-full-down  : '../images/arrow_green_down.png';
+$global-category-arrow-full-right : '../images/arrow_green_right.png';
+$global-category-arrow-light-right: '../images/arrow_right_small.png';
+$global-category-arrow-light-down : '../images/arrow_down_small.png';
