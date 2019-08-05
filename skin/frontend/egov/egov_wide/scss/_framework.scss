@@ -1,0 +1,53 @@
+﻿//
+// @category    design
+// @package     egov_wide
+// @copyright   Copyright (c) 2019 B3-IT System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// ==============================================
+// SASS / Compass Framework
+// ==============================================
+
+// ----------------------------------------------
+// Compass
+
+@import "compass";
+@import "compass/css3";
+
+// ----------------------------------------------
+// EGOV-Definitionen (Maße und Variablen)
+@import "../../default/scss/egov/fontbase";
+@import "egov/style-size";
+@import "egov/style-images";
+@import "../../default/scss/egov/style-colors";
+
+// ----------------------------------------------
+// Default :: Vars
+
+@import "../../default/scss/var";
+
+// ----------------------------------------------
+// Default :: font-awesome
+@import "../../default/scss/egov/font-awesome";
+
+// ----------------------------------------------
+// Functions
+
+// ----------------------------------------------
+// Defaults
+@import "../../default/scss/mixin/breakpoint";
+@import "../../default/scss/mixin/multi-column";
+@import "../../default/scss/mixin/clearfix";
+@import "../../default/scss/mixin/default-form";
+@import "../../default/scss/mixin/egov_loginform";
+@import "../../default/scss/mixin/image-replacement";
+@import "../../default/scss/mixin/menu";
+@import "../../default/scss/mixin/main-navigation";
+@import "../../default/scss/mixin/new_address";
+@import "../../default/scss/mixin/not-selectable";
+@import "../../default/scss/mixin/if-resolution";
+@import "../../default/scss/mixin/toggle-content";
+@import "../../default/scss/mixin/triangle";
+@import "../../default/scss/mixin/typography";
+@import "../../default/scss/mixin/loading-overlay";

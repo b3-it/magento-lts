@@ -136,4 +136,19 @@ class Egovs_BankPayment_Block_Info extends Mage_Payment_Block_Info
     	
     	return call_user_func(array($this->getMethod(), __FUNCTION__));
     }
+
+    /**
+     * Retrieve payment method model
+     *
+     * @return Mage_Payment_Model_Method_Abstract
+     */
+    public function getMethod()
+    {
+        try {
+            return $this->getInfo()->getMethodInstance();
+        } catch (Exception $e) {
+
+        }
+        return Mage::getModel('bankpayment/bankpayment');
+    }
 }
