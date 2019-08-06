@@ -210,7 +210,7 @@
         },
 
         /**
-         * Wenn MEHR als 2 Optionen vorhanden sind oder die Option 'userMlti' TRUE ist,
+         * Wenn MEHR als 2 Optionen vorhanden sind oder die Option 'userMulti' TRUE ist,
 		 * muss ein Drop-Down erzeugt werden
          */
         '_buildMultiToggleButtons': function() {
@@ -219,21 +219,23 @@
 			var elementCaption = this.options.elementText;
 
 			// Titel ist leer, aber ein Bild wurde angegeben
-			if ( this.options.elementText == null && this.options.elementImage.length ) {
-				if ( lngUseImageButton == 0 ) {
-					// Font-Awesome-Icvon benutzen
-					elementCaption = $('<span />', {
-						'id'   : elementNewID,
-						'class': 'egov-lang'
-					});
-					// Dummy-Klasse hinzufügen, um Margin beim Link zu verhindern
-					this.options.elementClass += ' skip-switch-language-fa';
-				}
-				else {
-					// Grafik als Button benutzen
-					elementCaption = $('<img />', {
-						'src': this.options.elementImage
-					});
+			if ( this.options.elementImage != null ) {
+				if ( this.options.elementText == null && this.options.elementImage.length ) {
+					if ( lngUseImageButton == 0 ) {
+						// Font-Awesome-Icvon benutzen
+						elementCaption = $('<span />', {
+							'id'   : elementNewID,
+							'class': 'egov-lang'
+						});
+						// Dummy-Klasse hinzufügen, um Margin beim Link zu verhindern
+						this.options.elementClass += ' skip-switch-language-fa';
+					}
+					else {
+						// Grafik als Button benutzen
+						elementCaption = $('<img />', {
+							'src': this.options.elementImage
+						});
+					}
 				}
 			}
 
@@ -303,6 +305,10 @@
 		 * Erzeugt im Overlay einen DIV mit dem Titel
 		 */
 		'localCreateOverlayTitel': function() {
+			if ( languageSelectTitle == null || !languageSelectTitle.length ) {
+				var languageSelectTitle = "";
+			}
+
 			var element = $('<div />', {
 				'html' : languageSelectTitle,
 				'class': 'overlay-title'
@@ -339,7 +345,7 @@
 					var lngActive = ' country-current';
 				}
 
-				if ( lngShowFlags == 1 ) {
+				if ( typeof lngShowFlags !== 'undefined' && lngShowFlags == 1 ) {
 					var image = $('<img />', {
 	        	    	'src'  : baseUrl + 'media/' + imagePath + '/' + lngRegion.toLowerCase() + '.' + imageType,
 	        	    	'title': lngCountry,
@@ -354,23 +360,28 @@
 	        	    });
 				}
 
-				switch( lngButtonCaption ) {
-					case '1': bntCaption = lngCountry;
-					          break;
-			        case '2': bntCaption = lngCountry + ' ' + lngLanguage;
-					          break;
-			        case '3': bntCaption = lngLanguage;
-					          break;
-			        case '4': bntCaption = lngRegion;
-					          break;
-			        case '5': bntCaption = lngStore;
-					          break;
-			        case '6': bntCaption = lngStore + ' ' + lngLanguage;
-					          break;
-					default : bntCaption = lngCountry;
+				if ( typeof lngButtonCaption !== 'undefined' ) {
+					switch( lngButtonCaption ) {
+						case '1': bntCaption = lngCountry;
+							break;
+						case '2': bntCaption = lngCountry + ' ' + lngLanguage;
+							break;
+						case '3': bntCaption = lngLanguage;
+							break;
+						case '4': bntCaption = lngRegion;
+							break;
+						case '5': bntCaption = lngStore;
+							break;
+						case '6': bntCaption = lngStore + ' ' + lngLanguage;
+							break;
+						default : bntCaption = lngCountry;
+					}
+				}
+				else {
+					bntCaption = lngCountry;
 				}
 
-				if ( lngButtonRow == 1 ) {
+				if ( typeof lngButtonRow !== 'undefined' && lngButtonRow == 1 ) {
 					btnClass = ' link-block';
 				}
 				else {
