@@ -43,6 +43,30 @@ function addJsToHeader($scriptPath)
     }
 }
 
+(function($) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    $.fn.attrchange = function(callback) {
+        if (MutationObserver) {
+            var options = {
+                subtree: false,
+                attributes: true
+            };
+
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(e) {
+                    callback.call(e.target, e.attributeName);
+                });
+            });
+
+            return this.each(function() {
+                observer.observe(this, options);
+            });
+
+        }
+    }
+})(jQuery);
+
 $j(document).ready(function () {
     if ( detectIE() == false && is_touch_device() == false ) {
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.min.js');
