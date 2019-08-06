@@ -32,7 +32,7 @@
 
 // ----------------------------------------------
 // Core
-@import "../../default/scss/core/common";
+@import "core/common";
 
 
 // ----------------------------------------------
@@ -44,13 +44,13 @@
 @import "../../default/scss/layout/button-set";
 @import "../../default/scss/layout/buttons";
 @import "../../default/scss/layout/global";
-@import "../../default/scss/layout/header";
+@import "layout/header";
 @import "../../default/scss/layout/header-nav";
 @import "../../default/scss/layout/header-search";
-@import "../../default/scss/layout/header-account";
+@import "layout/header-account";
 @import "../../default/scss/layout/header-cart";
 @import "../../default/scss/layout/marginal-blocks";
-@import "../../default/scss/layout/footer";
+@import "layout/footer";
 
 
 // ----------------------------------------------
