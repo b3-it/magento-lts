@@ -670,6 +670,9 @@
     </global>
     <default>
         <dev>
+            <devhelp>
+                <show_document_size_box>0</show_document_size_box>
+            </devhelp>
             <debug>
                 <!-- 32759::All but notice -->
                 <error_reporting>32759</error_reporting>
