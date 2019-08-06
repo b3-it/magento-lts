@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+
+<!--
+Default layout, loads most of the pages
+-->
+
+    <default>
+        <!-- Mage_Checkout -->
+        <reference name="top.links">
+            <block type="checkout/links" name="checkout_cart_link">
+                <action method="addCartLink"></action>
+                <action method="addCheckoutLink"></action>
+            </block>
+        </reference>
+        <reference name="header">
+            <block type="checkout/cart_minicart" name="minicart_head" template="checkout/cart/minicart.phtml" before="-">
+                <block type="checkout/cart_sidebar" name="minicart_content" template="checkout/cart/minicart/items.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/cart/minicart/default.phtml</template></action>
+                    <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/minicart/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/minicart/default.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/minicart/default.phtml</template></action>
+
+                    <block type="core/text_list" name="cart_sidebar.cart_promotion" as="cart_promotion" translate="label" module="checkout">
+                        <label>Mini-cart promotion block</label>
+                    </block>
+                    <block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
+                        <label>Shopping Cart Sidebar Extra Actions</label>
+                    </block>
+                </block>
+            </block>
+        </reference>
+        <reference name="right">
+            <block type="sidcheckout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+            </block>
+        </reference>
+    </default>
+
+    <checkout_cart_configure translate="label">
+        <label>Configure Cart Item</label>
+        <update handle="catalog_product_view"/>
+        <reference name="product.info">
+            <block type="checkout/cart_item_configure" name="checkout.cart.item.configure.block"></block>
+        </reference>
+    </checkout_cart_configure>
+
+    <checkout_cart_index translate="label">
+        <remove name="right"/>
+		<remove name="breadcrumbs"/>
+
+        <!-- Mage_Checkout -->
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="sidcheckout/cart_cart" name="checkout.cart">
+				<action method="setData"><key>accesskey</key><value>i</value></action>
+               	<action method="setData"><key>jumptitle</key><value>Warenkorb-Inhalt</value></action>
+
+                <action method="setCartTemplate"><value>checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/item/default.phtml</template></action>
+
+                <block type="core/text_list" name="checkout.cart.top_methods" as="top_methods">
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                </block>
+
+                <block type="core/text_list" name="checkout.cart.methods" as="methods" />
+
+<!--
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
+
+                <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+ -->
+                <block type="sidcheckout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+				<action method="setData"><key>accesskey</key><value>b</value></action>
+               	<action method="setData"><key>jumptitle</key><value>Bestellung aufgeben</value></action>
+				</block>
+            </block>
+        </reference>
+    </checkout_cart_index>
+
+<!--
+Multi address shipping checkout main layout,
+will be rendered on all checkout pages
+-->
+
+    <checkout_multishipping>
+        <!-- Mage_Checkout -->
+        <remove name="right"/>
+        <remove name="left"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-addresses</className></action>
+            <action method="addBodyClass"><className>egovs-checkout-multipage-addresses</className></action>
+            <action method="addBodyClass"><className>mp-checkout</className></action>
+        </reference>
+        <reference name="content">
+            <block type="sidcheckout/multishipping_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
+        </reference>
+    </checkout_multishipping>
+
+    <checkout_multishipping_login>
+        <update handle="customer_account_login"/>
+    </checkout_multishipping_login>
+
+    <checkout_multishipping_register>
+        <update handle="customer_account_create"/>
+    </checkout_multishipping_register>
+
+<!--
+Multi address shipping checkout selection of address per item page
+-->
+
+    <checkout_multishipping_address_select>
+        <update handle="checkout_multishipping"/>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/select.phtml"/>
+        </reference>
+    </checkout_multishipping_address_select>
+
+    <checkout_multishipping_address_selectbilling>
+        <update handle="checkout_multishipping"/>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/select.phtml"/>
+        </reference>
+    </checkout_multishipping_address_selectbilling>
+
+
+    <checkout_multishipping_address_newshipping>
+        <update handle="checkout_multishipping"/>
+        <update handle="checkout_multishipping_customer_address"/>
+    </checkout_multishipping_address_newshipping>
+
+    <checkout_multishipping_address_newbilling>
+        <update handle="checkout_multishipping"/>
+        <update handle="checkout_multishipping_customer_address"/>
+    </checkout_multishipping_address_newbilling>
+
+    <checkout_multishipping_address_editshipping>
+        <update handle="checkout_multishipping"/>
+        <update handle="checkout_multishipping_customer_address"/>
+    </checkout_multishipping_address_editshipping>
+
+    <checkout_multishipping_address_editaddress>
+        <update handle="checkout_multishipping"/>
+        <update handle="checkout_multishipping_customer_address"/>
+    </checkout_multishipping_address_editaddress>
+
+    <checkout_multishipping_address_editbilling>
+        <update handle="checkout_multishipping"/>
+        <update handle="checkout_multishipping_customer_address"/>
+    </checkout_multishipping_address_editbilling>
+
+    <checkout_multishipping_customer_address>
+        <reference name="content">
+            <block type="customer/address_edit" name="customer_address_edit" template="customer/address/edit.phtml"/>
+        </reference>
+    </checkout_multishipping_customer_address>
+
+<!--
+Multi address shipping checkout address page
+-->
+
+    <checkout_multishipping_addresses>
+        <update handle="checkout_multishipping"/>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="sidcheckout/multishipping_addresses" name="checkout_addresses" template="sid/checkout/multishipping/addresses.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+            </block>
+        </reference>
+    </checkout_multishipping_addresses>
+
+<!--
+Multi address shipping checkout shipping information
+-->
+
+    <checkout_multishipping_shipping>
+        <update handle="checkout_multishipping"/>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="checkout/multishipping_shipping" name="checkout_shipping" template="checkout/multishipping/shipping.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+
+                <block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+                </block>
+            </block>
+        </reference>
+    </checkout_multishipping_shipping>
+
+<!--
+Multi address shipping checkout billing information
+-->
+
+    <checkout_multishipping_billing>
+        <update handle="checkout_multishipping"/>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">
+                <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+
+                <!--<block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+                </block>-->
+
+            </block>
+        </reference>
+    </checkout_multishipping_billing>
+
+<!--
+Multi address shipping checkout overview
+-->
+
+    <checkout_multishipping_overview translate="label">
+        <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-overview</className></action>
+        </reference>
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="sidcheckout/multishipping_overview" name="checkout_overview" template="sid/checkout/multishipping/overview.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+                <block type="checkout/multishipping_payment_info" name="payment_info">
+                    <action method="setInfoTemplate"><method></method><template></template></action>
+                </block>
+                <block type="checkout/agreements" name="checkout.multishipping.agreements" as="agreements" template="sid/checkout/multishipping/agreements.phtml"/>
+                <block type="checkout/cart_totals" name="totals" />
+            </block>
+        </reference>
+    </checkout_multishipping_overview>
+
+<!--
+Multi address shipping checkout success
+-->
+
+    <checkout_multishipping_success translate="label">
+        <update handle="checkout_multishipping"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="removeBodyClass"><className>checkout-multishipping-success</className></action>
+        </reference>
+
+        <!-- Mage_Checkout -->
+        <reference name="content">
+            <block type="sidcheckout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>
+        </reference>
+    </checkout_multishipping_success>
+
+</layout>

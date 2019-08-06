@@ -1,0 +1,40 @@
+<?php
+/**
+ * @category    design
+ * @package     egov_default
+ * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="col2-set">
+    <div class="col-1">
+        <div class="box egov-float-left">
+            <div class="box-title">
+                <h3>
+                    <?php echo $this->__('Contact Information') ?>
+                    <span class="spacer"> | </span>
+                    <a class="egov-pencile" href="<?php echo $this->getUrl('customer/account/edit') ?>" title="<?php echo $this->__('Edit') ?>"> </a>
+                </h3>
+            </div>
+            <div class="box-content">
+                    <div>
+                        <?php echo $this->escapeHtml($this->getCustomer()->getName()) ?>
+                    </div>
+                    <div>
+                        <?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?>
+                        <span class="spacer"> | </span>
+                        <a class="egov-password" href="<?php echo $this->getChangePasswordUrl() ?>" title="<?php echo $this->__('Change Password') ?>"> </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="col-2">
+        <div class="box egov-float-right">
+
+        </div>
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
+    </div>
+    <?php endif; ?>
+</div>

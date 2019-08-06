@@ -31,6 +31,9 @@
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers"/>
             </block>
         </reference>
+        <reference name="product_list">
+            <action method="setColumnCount"><count>4</count></action>
+        </reference>
     </catalog_category_default>
 
     <customer_account>
