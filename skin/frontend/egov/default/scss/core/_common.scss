@@ -496,25 +496,8 @@ body:not(.customer-account) .block:first-child .block-title {
 /* -------------------------------------------- *
  * Container
  */
-
-.main-container {
-    max-width: $global-fullpage-width;
-    position: relative;
-    top: $global-cms-top-position;
-}
-
-.footer-container {
-    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
-    min-height: $global-footer-height;
-    line-height: $global-footer-lineheight;
-    background-color: $global-footer-backgroundcolor;
-    width: 100%;
-    padding-top: 0px;
-}
-
 .main-container,
 .footer-container {
-    position: relative;
     margin: 0 auto;
 
     /* Zeilenhöhe auf Normal setzen (_global.scss [15]) */
@@ -523,6 +506,24 @@ body:not(.customer-account) .block:first-child .block-title {
     &:after {
         @include clearfix;
     }
+}
+
+.main-container {
+    max-width: $global-fullpage-width;
+    position: relative;
+    top: $global-cms-top-position;
+    position: relative;
+}
+
+.footer-container {
+    position: absolute;
+    box-shadow: 1px 1px 3px 0 $global-text-shadow inset;
+    min-height: $global-footer-height;
+    line-height: $global-footer-lineheight;
+    background-color: $global-footer-backgroundcolor;
+    width: 100%;
+    padding-top: 0px;
+    bottom: 0;
 }
 
 /* -------------------------------------------- *

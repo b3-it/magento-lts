@@ -6,6 +6,12 @@ function setTabIndex(arr)
     });
 }
 
+// Seiten-Breite für Entwicklung in Pixel
+function showPageWideInPixel()
+{
+    $j("#page-size-box").html( "W: " + $j(document).width() + "px<br />H: " + $j(document).height() + "px" );
+}
+
 // Definieren der Break-Points für JavaScript-Aktionen
 var egov_break = {
     lngSwitch: 760,    // Store-Language Switcher
@@ -37,6 +43,7 @@ $j(document).ready(function () {
 
     $j(window).bind('resize', function(){
         resizeText();
+        showPageWideInPixel();
     }).trigger('resize');
 
     // Rechte Seitenspalte im 3-Spalten-Layout

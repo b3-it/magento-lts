@@ -25,6 +25,7 @@ body {
 
     .page {
         height: 100vh;
+        position: relative;
 
         > .widget-static-block {
             @include bp(max-width, 500px) {
