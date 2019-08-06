@@ -46,6 +46,30 @@ function checkMobileCustomerNavigation()
     }
 }
 
+(function($) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    $.fn.attrchange = function(callback) {
+        if (MutationObserver) {
+            var options = {
+                subtree: false,
+                attributes: true
+            };
+
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(e) {
+                    callback.call(e.target, e.attributeName);
+                });
+            });
+
+            return this.each(function() {
+                observer.observe(this, options);
+            });
+
+        }
+    }
+})(jQuery);
+
 $j(document).ready(function(){
     // Alt-Attribut in die Copyright-Box schreiben
     $j('.thumb-link').click(function(){
@@ -60,7 +84,7 @@ $j(document).ready(function(){
         removeZoom();
     });
 
-    // mobielen Warenkorb erzeugen
+    // mobilen Warenkorb erzeugen
     $j('#mobile-header-minicart > a').attr({
     	'id'                 : 'mobile-cart-menu',
     	'data-target-element': '#mobile-header-cart'
@@ -91,6 +115,12 @@ $j(document).ready(function(){
             }
         });
     }
+
+    $j("#checkoutSteps li.section").attrchange(function(attrName) {
+        if ( $j(this).hasClass("active") ) {
+            updateScrollbar(scroll_element);
+        }
+    });
 
     $j('div.minicart-wrapper a.skip-link-close').on('click', function(){
         $j('a.skip-cart, div.block-cart').toggleClass('skip-active');
