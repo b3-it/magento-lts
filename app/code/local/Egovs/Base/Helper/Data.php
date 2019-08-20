@@ -261,7 +261,7 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
     public function replaceTemplateAbbr($html)
     {
         /* <ul><li style="display:none"></li> - hardcoded string of CatalogSearch in Block Autocomplete (Suggestion)*/
-        if (empty($html) || stripos($html, '<ul><li style="display:none"></li>') >= 0) {
+        if (empty($html) || stripos($html, '<ul><li style="display:none"></li>') !== false) {
             return $html;
         }
 
