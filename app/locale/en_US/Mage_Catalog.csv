@@ -860,3 +860,6 @@
 "select all","select all"
 "unselect all","unselect all"
 "x","x"
+
+"excl. <a href="%s">Shipping Cost</a>","excl.&nbsp;<a href="%s">Shipping Cost</a>"
+"incl. <a href="%s">Shipping Cost</a>","incl.&nbsp;<a href="%s">Shipping Cost</a>"
