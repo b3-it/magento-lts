@@ -5,6 +5,7 @@ function addPages() {
 	selected.each(function(){
         nodeOptions.addPage($j(this).val(),$j(this).text());
     });
+    nodeOptions.open_all();
 }
 
 function isEmptyElement(val) {
