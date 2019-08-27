@@ -27,7 +27,7 @@ if ( $this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_EXCLUDI
 $formated = $this->getFormattedTaxRate();
 $_taxPostfix = $formated === true ? 'Tax' : '%s Tax';
 $_productType = $this->getProduct()->getTypeId();
-$wscText = $this->getWithoutShippingCostsText()
+$wscText = $this->getWithoutShippingCostsText();
 
 ?>
 
@@ -42,7 +42,7 @@ $wscText = $this->getWithoutShippingCostsText()
             <?php else: ?>
                 <?php echo $this->__( "$_taxPrefix $_taxPostfix", $formated ) ?>
             <?php endif ?>
-            <?php if ( $showShippingLink && (!empty( $shippingCostUrl ) || $wscText)): ?>
+            <?php if ( (!empty( $shippingCostUrl ) && $showShippingLink) || $wscText): ?>
                 <?php if (!$this->getExcludeContainer()): ?>
                     <span class="tax-separator">,&nbsp;</span>
                 <?php else: ?>
