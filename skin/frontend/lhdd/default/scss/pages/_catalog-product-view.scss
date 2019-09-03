@@ -8,6 +8,10 @@
 .catalog-product-view {
 	header, .main-container {
 	}
+
+	form#addTagForm {
+		margin-bottom: $default-margin;
+	}
 }
 
 .product-image-gallery {
