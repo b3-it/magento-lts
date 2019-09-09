@@ -68,7 +68,8 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
                 ->mime('text/xml');
 
             $response = $request->send();
-            $this->setLog('recieve: ' . $response);
+            $this->setLog('Add Document - request: ' . $document);
+            $this->setLog('Add Document - receive: ' . $response);
             return $response;
         } catch (Exception $ex) {
             Mage::logException($ex);
@@ -90,7 +91,7 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
                 ->sendsAndExpects('text/xml');
 
             $response = $request->send();
-            $this->setLog('recieve: ' . $response);
+            $this->setLog('Remove Document - receive: ' . $response);
             return $response;
         } catch (Exception $ex) {
             Mage::logException($ex);
