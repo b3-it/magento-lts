@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_CatalogSearch
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <solr translate="label" module="b3it_solr">
+            <label>Solr Search</label>
+            <sort_order>101</sort_order>
+        </solr>
+    </tabs>
+    <sections>
+
+        <solr_general translate="label" module="b3it_solr">
+            <label>Solr - General</label>
+            <tab>solr</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+
+                <solr_connection translate="label" module="b3it_solr">
+                    <label>Server Connection</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <server_name translate="label comment" module="b3it_solr">
+                            <label>Server Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Example: localhost]]></comment>
+                        </server_name>
+
+                        <server_port translate="label comment" module="b3it_solr">
+                            <label>Server Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Example: 8983]]></comment>
+                        </server_port>
+
+                        <server_path translate="label comment" module="b3it_solr">
+                            <label>Core Path</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Example: solrDirectoryName/coreName]]></comment>
+                        </server_path>
+
+                    </fields>
+                </solr_connection>
+
+                <search_options translate="label" module="b3it_solr">
+                    <label>Search Options</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <results_per_page translate="label comment" module="b3it_solr">
+                            <label>Results per Page Allowed Values</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-per-page-value-list</validate>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Comma-separated.]]></comment>
+                        </results_per_page>
+
+                        <results_per_page_default translate="label comment" module="b3it_solr">
+                            <label>Results per Page Default Value</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Must be in the allowed values list.]]></comment>
+                        </results_per_page_default>
+
+                        <max_query_length translate="label comment" module="b3it_solr">
+                            <label>Maximum Query Length</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Adjust your query length depending on your product name length]]></comment>
+                        </max_query_length>
+
+                        <fuzzy_distance translate="label comment" module="b3it_solr">
+                            <label>Fuzzy Search Distance</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Number of different characters to match (0 to deactivate)]]></comment>
+                        </fuzzy_distance>
+
+                        <facets translate="label comment" module="b3it_solr">
+                            <label>Field Options (Filter, Priority)</label>
+                            <sort_order>40</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_default>1</show_in_default>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <frontend_model>b3it_solr/adminhtml_facetTable</frontend_model>
+                            <comment><![CDATA[Add attributes for faceting or a priority boost in search (optional)]]></comment>
+                        </facets>
+
+                    </fields>
+                </search_options>
+
+                <sorting_options translate="label" module="b3it_solr">
+                    <label>Sorting</label>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <sortable_attributes translate="label comment" module="b3it_solr">
+                            <label>Sortable Attributes</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>b3it_solr/config_source_facet</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <comment><![CDATA[Add attributes to allow sorting the search results (relevant is always default)]]></comment>
+                        </sortable_attributes>
+
+                    </fields>
+                </sorting_options>
+
+                <spellcheck_options translate="label" module="b3it_solr">
+                    <label>Spellchecker</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <spellcheck_active translate="label comment" module="b3it_solr">
+                            <label>Suggestions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Activate for 'Do you mean' suggestions]]></comment>
+                        </spellcheck_active>
+
+                        <spellcheck_results translate="label comment" module="b3it_solr">
+                            <label>Minimal Results</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Suggestions will only get used if the result count is lower or equal to this option (0 for always)]]></comment>
+                        </spellcheck_results>
+
+                    </fields>
+                </spellcheck_options>
+
+                <index_options translate="label" module="b3it_solr">
+                    <label>Index Options</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <search_cms translate="label comment" module="b3it_solr">
+                            <label>Search for cms pages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>b3it_solr/config_backend_cms</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[This option will add all your cms pages to Solr (changing this option does not require to index or delete manually)]]></comment>
+                        </search_cms>
+
+                        <solr_product_type translate="label comment" module="b3it_solr">
+                            <label>Product Type Exception</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>b3it_solr/config_source_type</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <comment><![CDATA[Solr will not index this product types (changing this option requires a manually reindex)]]></comment>
+                        </solr_product_type>
+
+                        <enable_index_cron translate="label comment" module="b3it_solr">
+                            <label>Enable automatic reindexing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enabling this cron is recommended, otherwise prices could be outdated and cause a imprecise price filtering.]]></comment>
+                        </enable_index_cron>
+
+                        <index_cron_time translate="label comment tooltip" module="b3it_solr">
+                            <label>Cron configuration for reindexing</label>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[P1 P2 P3 P4 P5<br/>P1 Minute (0-59)<br/>P2 Hour (0-23)<br/>P3 Day (0-31)<br/>P4 Month (1-12)<br/>P5 Day of Week (0-7, Sunday is 0 or 7)]]></comment>
+                            <tooltip>Default is: 0 * * * *<br/>Cron runs every full hour</tooltip>
+                        </index_cron_time>
+
+                    </fields>
+                </index_options>
+
+                <price_range_options translate="label" module="b3it_solr">
+                    <label>Price Range Options (Filter)</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <default_price_ranges translate="label comment" module="b3it_solr">
+                            <label>Number of default Price Ranges</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Number of price ranges for the automatic calculation (1-20)]]></comment>
+                        </default_price_ranges>
+
+                        <price_range_empty_active translate="label comment" module="b3it_solr">
+                            <label>Show empty Ranges</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Activate to display ranges without products]]></comment>
+                        </price_range_empty_active>
+
+                        <custom_price_range_active translate="label comment" module="b3it_solr">
+                            <label>Active Custom Price Range</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Activate for custom price ranges]]></comment>
+                        </custom_price_range_active>
+
+                        <custom_price_ranges translate="label comment" module="b3it_solr">
+                            <label>Custom Price Ranges</label>
+                            <sort_order>4</sort_order>
+                            <show_in_store>1</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <show_in_default>1</show_in_default>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <frontend_model>b3it_solr/adminhtml_priceRangeTable</frontend_model>
+                            <comment><![CDATA[Price Ranges from - to]]></comment>
+                        </custom_price_ranges>
+
+                    </fields>
+                </price_range_options>
+
+            </groups>
+        </solr_general>
+
+        <solr_security translate="label" module="b3it_solr">
+            <label>Solr - Security</label>
+            <tab>solr</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>30</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+
+                <solr_connection translate="label" module="b3it_solr">
+                    <label>Watch Server Connection</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <check_connection translate="label comment" module="b3it_solr">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </check_connection>
+
+                        <error_count translate="label comment" module="b3it_solr">
+                            <label>Max Error Count</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[max error count until a email will get send]]></comment>
+                        </error_count>
+
+                        <send_email translate="label comment" module="b3it_solr">
+                            <label>Send Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </send_email>
+
+                        <email_adress translate="label comment" module="b3it_solr">
+                            <label>Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <backend_model>adminhtml/system_config_backend_email_sender</backend_model>
+                            <validate>validate-emailSender</validate>
+                            <comment><![CDATA[]]></comment>
+                        </email_adress>
+
+                        <email_sender translate="label comment" module="b3it_solr">
+                            <label>Sender Email</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <backend_model>adminhtml/system_config_backend_email_sender</backend_model>
+                            <validate>validate-emailSender</validate>
+                            <comment><![CDATA[]]></comment>
+                        </email_sender>
+
+                        <email_sender_name translate="label comment" module="b3it_solr">
+                            <label>Sender Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </email_sender_name>
+
+                    </fields>
+                </solr_connection>
+
+            </groups>
+        </solr_security>
+
+    </sections>
+</config>
