@@ -241,7 +241,7 @@ class B3it_Solr_Model_Index_Product
                 if ($search['frontend_input'] == 'boolean') {
                     $value = ($value == '1') ? $solrHelper->__('Yes') : Mage::helper('b3it_solr')->__('No');
                 }
-                $doc->addField($attribute . $solrHelper->getDynamicField($search), preg_replace('/[&]/', '&amp;', html_entity_decode(strip_tags($value))));
+                $doc->addField($attribute . $solrHelper->getDynamicField($search), $value);
             }
         }
 

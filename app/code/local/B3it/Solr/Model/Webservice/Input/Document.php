@@ -6,7 +6,7 @@
  * @package     B3it_Solr
  * @name        B3it_Solr_Model_Webservice_Input_Document
  * @author      Holger Kögel <h.koegel@b3-it.de>
- * @copyright   Copyright (c) 2017 B3 It Systeme GmbH - http://www.b3-it.de
+ * @copyright   Copyright (c) 2019 B3 It Systeme GmbH - http://www.b3-it.de
  * @license     http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class B3it_Solr_Model_Webservice_Input_Document
@@ -22,6 +22,9 @@ class B3it_Solr_Model_Webservice_Input_Document
      */
     public function addField($key, $value)
     {
+        // Xml encoding of special characters
+        $value = strip_tags($value);
+        $value = htmlspecialchars($value);
         $this->_fields[] = ['key' => $key, 'value' => $value];
     }
 
