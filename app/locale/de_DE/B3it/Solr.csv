@@ -56,6 +56,10 @@
 "Custom Price Ranges", "Benutzerdefinierte Preisbereiche"
 "Price Ranges from - to", "Preisebereich von - bis"
 
+"Backend Messages", "Backend Benachrichtigungen"
+"Message after save or delete". "Benachrichtigung nach speichern oder löschen"
+"Activate to show success/error messages, after a product was saved or deleted.", "Aktivieren um eine Erfolgs-/Fehlermeldung nach dem speichern oder löschen eines Produktes anzuzeigen."
+
 "Do you mean: ", "Meinten sie: "
 "Search results for:","Ergebnisse ihrer Suche:"
 "There are no products matching the selection.","Es wurden keine Artikel gefunden."
@@ -77,3 +81,8 @@
 "Products were removed from Solr.", "Artikel aus Solr entfernt."
 "Pages were removed from Solr.", "Seiten aus Solr entfernt."
 "Unknown type, please try again.", "Unbekannte Art ausgewählt, bitte erneut versuchen."
+
+" added or updated. ", " hinzugefügt oder aktualisiert. "
+" could not be added or updated. ", "konnte nicht hinzugefügt order aktualisiert werden. "
+" was removed. ", " wurde entfernt. "
+" could not be removed. ", " konnte nicht entfernt werden. "
