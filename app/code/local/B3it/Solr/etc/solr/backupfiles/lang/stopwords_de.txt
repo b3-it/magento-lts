@@ -33,9 +33,7 @@ anderem
 anderen
 anderer
 anderes
-anderm
 andern
-anderr
 anders
 
 auch           |  also
@@ -246,11 +244,7 @@ um             |  about, around
 und            |  and
 
 uns            |  us
-unse
-unsem
-unsen
 unser
-unses
 
 unter          |  under
 viel           |  much
@@ -291,4 +285,3 @@ zum            |  zu + dem
 zur            |  zu + der
 zwar           |  indeed
 zwischen       |  between
-

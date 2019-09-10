@@ -26,12 +26,12 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
             $request = \Httpful\Request::get($url);
 
             $response = $request->send();
+            $this->setLog('Suggest - receive: ' . $response);
+            return $response;
         } catch (Exception $ex) {
             Mage::logException($ex);
             return null;
         }
-
-        return $response;
     }
 
     /**
@@ -46,12 +46,11 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
             $request = \Httpful\Request::get($url);
 
             $response = $request->send();
+            return $response;
         } catch (Exception $ex) {
             Mage::logException($ex);
             return null;
         }
-
-        return $response;
     }
 
     /**
@@ -103,7 +102,7 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
     /**
      * Durchführen der Suche
      * @param B3it_Solr_Model_Webservice_Output_Query $query
-     * @return SimpleXMLElement
+     * @return SimpleXMLElement|null
      */
     public function query(B3it_Solr_Model_Webservice_Output_Query $query)
     {
@@ -114,14 +113,14 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
             $request = \Httpful\Request::get($url);
 
             $response = $request->send();
-
             if ($response->code != 200) {
                 Mage::throwException(sprintf("SOLR Search query=%s response=%s", $url, $response->body));
             }
-            $this->setLog('recieve: ' . $response);
+
+            $this->setLog('Query - request: ' . $url);
+            $this->setLog('Query - receive: ' . $response);
 
             $obj = json_decode($response->body);
-
             return $obj;
         } catch (Exception $ex) {
             Mage::logException($ex);
@@ -138,14 +137,15 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
             $url = $this->_getUrl('commit');
             \Httpful\Bootstrap::init();
             $request = \Httpful\Request::get($url);
-            //$this->setLog('send: ' .$url);
             $response = $request->send();
-            $this->setLog('recieve: ' . $response);
+
+            $this->setLog('Commit - request: ' . $url);
+            $this->setLog('Commit - receive: ' . $response);
+            return true;
         } catch (Exception $ex) {
             Mage::logException($ex);
             return null;
         }
-        return true;
     }
 
     /**
