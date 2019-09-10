@@ -57,9 +57,8 @@ class B3it_Solr_Model_Search_Select
             $q = mb_substr($q, 0, $length);
         }
 
-        $q = strip_tags($q);
-        $q = preg_replace('/[^\w: \-äÄöÖüÜß()%]/', '', $q);
-        $q = preg_replace('/[:"]/', '\:', $q);
+        $q = strip_tags(html_entity_decode($q));
+        $q = addcslashes($q, '+-!(){}[]^"~*?:\\/|&');
         return $q;
     }
 
@@ -69,15 +68,9 @@ class B3it_Solr_Model_Search_Select
      */
     public function getSecuredFilter($filter)
     {
-        $filter = strip_tags($filter);
-        $filter = preg_replace('/[^\w\: \-äÄöÖüÜß\(\)\*\.\,\[\]]/', '', $filter);
-        $filter = preg_replace('/[\:"]/', '\:', $filter);
-        $filter = preg_replace('/[\("]/', '\(', $filter);
-        $filter = preg_replace('/[\)"]/', '\)', $filter);
-        $filter = preg_replace('/[\."]/', '\.', $filter);
-        $filter = preg_replace('/[\,"]/', '\,', $filter);
-        $filter = urlencode($filter);
-        return $filter;
+        $filter = strip_tags(html_entity_decode($filter));
+        $filter = addcslashes($filter, '+-!(){}[]^"~*?:\\/|&');
+        return urlencode($filter);
     }
 
     /**

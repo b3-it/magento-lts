@@ -48,10 +48,8 @@ class B3it_Solr_Model_Search_Suggest
     public function getSecuredQuery($q)
     {
         $q = mb_substr($q, 0, Mage::getStoreConfig('solr_general/search_options/max_query_length', Mage::app()->getStore()->getId()));
-        $q = strip_tags($q);
-        $q = preg_replace('/[^\w \-äÄöÖüÜß()%:]/', '', $q);
-        $q = str_ireplace(':', '\:', $q);
-
+        $q = strip_tags(html_entity_decode($q));
+        $q = addcslashes($q, '+-!(){}[]^"~*?:\\/|&');
         return urlencode($q);
     }
 }
