@@ -30,7 +30,7 @@ class B3it_Solr_Block_Adminhtml_FacetTable extends Mage_Adminhtml_Block_System_C
         ));
         $this->addColumn('extended', array(
             'label' => $this->__('Extended'),
-            'renderer' => $this->_getDefaultOrRangeRenderer(),
+            'renderer' => $this->_getDefaultorRangeRenderer(),
         ));
 
         $this->_addAfter = false;
@@ -56,7 +56,7 @@ class B3it_Solr_Block_Adminhtml_FacetTable extends Mage_Adminhtml_Block_System_C
     /**
      * @return Mage_Core_Block_Abstract
      */
-    protected function _getDefaultOrRangeRenderer()
+    protected function _getDefaultorRangeRenderer()
     {
         return Mage::app()->getLayout()->createBlock('b3it_solr/adminhtml_htmlBlocks_defaultOrRange', '', array('is_render_to_js_template' => true));
     }
@@ -68,10 +68,11 @@ class B3it_Solr_Block_Adminhtml_FacetTable extends Mage_Adminhtml_Block_System_C
     protected function _prepareArrayRow(Varien_Object $row)
     {
         foreach ($row->getData() as $key => $value) {
-            if (!isset($this->_columns[$key]) || empty($this->_columns[$key]['renderer'])) {
-                continue;
+            $renderer = ($this->_columns[$key]['renderer']) ?? false;
+
+            if ($renderer instanceof Mage_Core_Block_Html_Select) {
+                $row->setData('option_extra_attr_' . $renderer->calcOptionHash($row->getData($key)), 'selected="selected"');
             }
-            $row->setData('option_extra_attr_' . $this->_columns[$key]['renderer']->calcOptionHash($row->getData($key)), 'selected="selected"');
         }
         return $this;
     }

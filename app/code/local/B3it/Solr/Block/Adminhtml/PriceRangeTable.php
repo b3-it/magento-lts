@@ -29,19 +29,4 @@ class B3it_Solr_Block_Adminhtml_PriceRangeTable extends Mage_Adminhtml_Block_Sys
         $this->_addAfter = false;
         parent::__construct();
     }
-
-    /**
-     * @param Varien_Object $row
-     * @return $this|void
-     */
-    protected function _prepareArrayRow(Varien_Object $row)
-    {
-        foreach ($row->getData() as $key => $value) {
-            if (!isset($this->_columns[$key]) || empty($this->_columns[$key]['renderer'])) {
-                continue;
-            }
-            $row->setData('option_extra_attr_' . $this->_columns[$key]['renderer']->calcOptionHash($row->getData($key)), 'selected="selected"');
-        }
-        return $this;
-    }
 }
