@@ -30,7 +30,7 @@ class B3it_Solr_Block_Adminhtml_FacetTable extends Mage_Adminhtml_Block_System_C
         ));
         $this->addColumn('extended', array(
             'label' => $this->__('Extended'),
-            'renderer' => $this->_getDefaultorRangeRenderer(),
+            'renderer' => $this->_getDefaultOrRangeRenderer(),
         ));
 
         $this->_addAfter = false;
@@ -56,7 +56,7 @@ class B3it_Solr_Block_Adminhtml_FacetTable extends Mage_Adminhtml_Block_System_C
     /**
      * @return Mage_Core_Block_Abstract
      */
-    protected function _getDefaultorRangeRenderer()
+    protected function _getDefaultOrRangeRenderer()
     {
         return Mage::app()->getLayout()->createBlock('b3it_solr/adminhtml_htmlBlocks_defaultOrRange', '', array('is_render_to_js_template' => true));
     }
