@@ -51,9 +51,14 @@ class B3it_Solr_Model_Index_Product
             }
 
             try {
-                $client->addDocument($this->_getDocument($product_store, $storeId, $taxIncluded));
+                if ($client->addDocument($this->_getDocument($product_store, $storeId, $taxIncluded))) {
+                    $this->singleProductMessage(true, $product, $store, ' added or updated. ');
+                } else {
+                    $this->singleProductMessage(false, $product, $store, ' could not be added or updated. ');
+                }
             } catch (Exception $ex) {
                 Mage::logException($ex);
+                $this->singleProductMessage(false, $product, $store, ' could not be added or updated. ');
             }
         }
     }
@@ -69,7 +74,12 @@ class B3it_Solr_Model_Index_Product
         foreach (Mage::app()->getStores() as $store) {
             $client = new B3it_Solr_Model_Webservice_Solr();
             $client->storeId = $store->getId();
-            $client->removeDocument('id:' . $this->_getId($product, $store->getId()));
+
+            if ($client->removeDocument('id:' . $this->_getId($product, $store->getId()))) {
+                $this->singleProductMessage(true, $product, $store, ' was removed. ');
+            } else {
+                $this->singleProductMessage(false, $product, $store, ' could not be removed. ');
+            }
         }
     }
 
@@ -313,5 +323,26 @@ class B3it_Solr_Model_Index_Product
     public function setSearchData($searchData)
     {
         $this->searchData = $searchData;
+    }
+
+    /**
+     * @param bool $success
+     * @param Mage_Catalog_Model_Product $product
+     * @param Mage_Core_Model_Store $store
+     * @param string $message
+     */
+    public function singleProductMessage($success, $product, $store, $message)
+    {
+        if (Mage::getStoreConfig('solr_security/solr_messages/afterSaveOrDelete_message')) {
+            /** @var Mage_Core_Model_Session $singleton */
+            $singleton = Mage::getSingleton('core/session');
+            $message = $product->getName() . Mage::helper('b3it_solr')->__($message) . ' (' . Mage::getStoreConfig('solr_general/solr_connection/server_path', $store->getId()) . ' - ' . $store->getName() . ')';
+
+            if ($success) {
+                $singleton->addSuccess($message);
+            } else {
+                $singleton->addError($message);
+            }
+        }
     }
 }

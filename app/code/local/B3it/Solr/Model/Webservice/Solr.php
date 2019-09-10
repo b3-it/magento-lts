@@ -55,7 +55,7 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
 
     /**
      * @param $document
-     * @return \Httpful\Response|null
+     * @return bool
      */
     public function addDocument($document)
     {
@@ -69,16 +69,20 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
             $response = $request->send();
             $this->setLog('Add Document - request: ' . $document);
             $this->setLog('Add Document - receive: ' . $response);
-            return $response;
+
+            if ($response->code != 200) {
+                return false;
+            }
+            return true;
         } catch (Exception $ex) {
             Mage::logException($ex);
-            return null;
+            return false;
         }
     }
 
     /**
      * @param $q
-     * @return \Httpful\Response|null
+     * @return bool
      */
     public function removeDocument($q)
     {
@@ -91,10 +95,14 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
 
             $response = $request->send();
             $this->setLog('Remove Document - receive: ' . $response);
-            return $response;
+
+            if ($response->code != 200) {
+                return false;
+            }
+            return true;
         } catch (Exception $ex) {
             Mage::logException($ex);
-            return null;
+            return false;
         }
     }
 
