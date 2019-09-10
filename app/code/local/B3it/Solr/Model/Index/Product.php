@@ -105,6 +105,11 @@ class B3it_Solr_Model_Index_Product
         $count = 0;
         $docs = null;
 
+        // Admin Message
+        $success = 0;
+        $error = 0;
+        $store = Mage::app()->getStore($storeId);
+
         foreach ($collection as $product) {
 
             if (!$this->_getType($product) || !($product instanceof Mage_Catalog_Model_Product) || !$product->getId()) {
@@ -115,22 +120,35 @@ class B3it_Solr_Model_Index_Product
             $count++;
             if ($count >= 100) {
                 try {
-                    $client->addDocument($docs);
+                    if ($client->addDocument($docs)) {
+                        $success++;
+                    } else {
+                        $error++;
+                    }
                     $count = 0;
                     $docs = null;
                 } catch (Exception $ex) {
                     Mage::logException($ex);
+                    $error++;
                 }
             }
         }
 
         if ($docs != null) {
             try {
-                $client->addDocument($docs);
+                if ($client->addDocument($docs)) {
+                    $success++;
+                } else {
+                    $error++;
+                }
             } catch (Exception $ex) {
                 Mage::logException($ex);
+                $error++;
             }
         }
+
+        // Admin Message Output
+        $this->multiProductMessage($success, $error, $store);
     }
 
     /**
@@ -343,6 +361,23 @@ class B3it_Solr_Model_Index_Product
             } else {
                 $singleton->addError($message);
             }
+        }
+    }
+
+    /**
+     * @param int $success
+     * @param int $error
+     * @param Mage_Core_Model_Store $store
+     */
+    public function multiProductMessage($success, $error, $store)
+    {
+        /** @var Mage_Core_Model_Session $singleton */
+        $singleton = Mage::getSingleton('core/session');
+
+        if ($error == 0) {
+            $singleton->addSuccess('All Products indexed.' . ' (' . Mage::getStoreConfig('solr_general/solr_connection/server_path', $store->getId()) . ' - ' . $store->getName() .')');
+        } else {
+            $singleton->addError($error . ' of ' . ($error + $success) . ' requests could not be indexed.' . ' (' . Mage::getStoreConfig('solr_general/solr_connection/server_path', $store->getId()) . ' - ' . $store->getName() .')');
         }
     }
 }

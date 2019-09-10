@@ -44,10 +44,9 @@ class B3it_Solr_Adminhtml_SolrController extends Mage_Adminhtml_Controller_Actio
         if ($type == 0) {
             $this->_reindexProduct($store);
             $this->_reIndexCms($store);
-            $singleton->addSuccess(Mage::helper('b3it_solr')->__('Products and Pages were added to Solr.'));
+            $singleton->addSuccess(Mage::helper('b3it_solr')->__('Pages were added to Solr.'));
         } elseif ($type == 1) {
             $this->_reindexProduct($store);
-            $singleton->addSuccess(Mage::helper('b3it_solr')->__('Products were added to Solr.'));
         } elseif ($type == 2) {
             $this->_reIndexCms($store);
             $singleton->addSuccess(Mage::helper('b3it_solr')->__('Pages were added to Solr.'));
