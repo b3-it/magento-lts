@@ -49,8 +49,8 @@ class B3it_Solr_Model_Search_Suggest
     {
         $q = mb_substr($q, 0, Mage::getStoreConfig('solr_general/search_options/max_query_length', Mage::app()->getStore()->getId()));
         $q = strip_tags($q);
-        $q = preg_replace('/[^\w\: \-äÄöÖüÜß\(\)\%]/', '', $q);
-        $q = preg_replace('/[\:"]/', '\:', $q);
+        $q = preg_replace('/[^\w \-äÄöÖüÜß()%:]/', '', $q);
+        $q = str_ireplace(':', '\:', $q);
 
         return urlencode($q);
     }

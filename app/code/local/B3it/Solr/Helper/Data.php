@@ -42,7 +42,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * Retrieve result page url and set "secure" param to avoid confirm
-     * message when we submit form from secure page to unsecure
+     * message when we submit form from secure page to insecure
      *
      * @param string $query
      * @return  string

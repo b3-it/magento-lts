@@ -10,7 +10,7 @@
     <!-- points to the root document of a block of nested documents. Required for nested document support, may be removed otherwise -->
     <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
 
-    <!-- Copyfield for all content, used as default field and select debugging -->
+    <!-- CopyField for all content, used as default field and select debugging -->
     <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
 
     <!-- uniqueKey for document replacement and routing in solrCloud -->

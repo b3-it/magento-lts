@@ -24,7 +24,7 @@
 Only Products of type 'Mage_Catalog_Model_Product' with a Id will be indexed.  
 They also need to be visible in search and activated.  
 
-A Product will automaticly be indexed after it got saved (observer).  
+A Product will automatically be indexed after it got saved (observer).  
 All products can be indexed with the backend option System/Solr Search/Index.  
 
 If a product is not visible or activated the connected document (solr) will be removed and the product not indexed. (same result as deleting the product)  
