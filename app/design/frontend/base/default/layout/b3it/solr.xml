@@ -7,6 +7,11 @@
                 <stylesheet>css/solr.css</stylesheet>
             </action>
         </reference>
+        <reference name="top.search">
+            <action method="setTemplate">
+                <template>b3it/solr/form.mini.phtml</template>
+            </action>
+        </reference>
     </default>
 
     <b3it_solr_search_index translate="label">
