@@ -1,0 +1,19 @@
+<?php /** @var B3it_Solr_Block_Result_Page $this */ ?>
+
+<?php $page = $this->getPage(); ?>
+
+<li class="item solr-page">
+    <div class="product-name"><a href="<?= $this->getPageUrl(); ?>" title="<?= $page->getData('title'); ?>"><?= $page->getData('title'); ?></a>
+    </div>
+    <div class="product-list-description">
+        <?= $this->getPreview($page->getData('content')); ?>
+    </div>
+    <div class="product-list-action">
+        <div class="product-price"></div>
+        <a title="<?= $this->quoteEscape($this->__('View Details')) ?>" class="button egov-view" href="<?= $this->getPageUrl() ?>">
+            <span>
+                <?= $this->__('View Details') ?>
+            </span>
+        </a>
+    </div>
+</li>

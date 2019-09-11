@@ -1,0 +1,78 @@
+<?php /** @var B3it_Solr_Block_Solr_Toolbar $this */
+$count = $this->getCount();
+$pageCount = $this->getPageCount();
+$currentPage = $this->getCurrentPage();
+?>
+
+<div class="toolbar toolbar-pager">
+    <div class="pager">
+        <div class="count-container">
+            <?php if ($this->getRows() < $count): ?>
+                <p class="amount amount--has-pages">
+                    <strong><?= $this->__('%s-%s of %s', $this->getStartElement(), $this->getLastElement(), $count) ?></strong>
+                </p>
+            <?php else: ?>
+                <p class="amount amount--no-pages">
+                    <strong><?= $this->__('%s Item(s)', $count); ?></strong>
+                </p>
+            <?php endif; ?>
+        </div>
+        <div class="limiter">
+            <label><?= $this->__('Show') ?></label>
+            <select onchange="" title="<?= Mage::helper('core')->quoteEscape($this->__('Results per page')); ?>">
+
+                <?php foreach ($this->getLimitValues() as $value): ?>
+                    <option value="<?= $value; ?>"<?php if ($this->getLimitCurrent() == $value): ?> selected="selected"<?php endif; ?>><?= $value; ?></option>
+                <?php endforeach ?>
+
+            </select>
+        </div><?php if ($pageCount > 1): ?>
+            <div class="pages">
+            <ol>
+                <?php if ($currentPage != 1): ?>
+                    <li value="-1">
+                        <a href="javascript:void(0)" class="previous i-previous"></a>
+                    </li>
+                <?php endif; ?>
+
+                <?php for ($i = 1; $pageCount >= $i; $i++): ?>
+                    <?php if ($currentPage == $i): ?>
+                        <li class="current" value="<?= $i; ?>"><?= $i; ?></li>
+                    <?php elseif ($currentPage == ($i + 1) || $currentPage == ($i - 1)): ?>
+                        <li value="<?= $i; ?>"><a href="javascript:void(0)"><span><?= $i; ?></span></a></li>
+                    <?php else: ?>
+                        <li value="<?= $i; ?>" style="display:none;"><a href="javascript:void(0)"><?= $i; ?><span></span></a></li>
+                    <?php endif; ?>
+                <?php endfor; ?>
+
+                <?php if ($currentPage != $pageCount): ?>
+                    <li value="0">
+                        <a href="javascript:void(0)" class="next i-next"></a>
+                    </li>
+                <?php endif; ?>
+            </ol>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<div class="toolbar toolbar-sorter">
+    <div class="sorter">
+        <div class="sort-by">
+            <label><?php echo $this->__('Sort By') ?></label>
+            <select title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sort By')) ?>">
+                <?php foreach ($this->getAvailableOrders() as $label => $key): ?>
+                    <option value="<?= $key ?>"<?php if ($this->isOrderCurrent($key)): ?> selected="selected"<?php endif; ?>><?= $label ?></option>
+                <?php endforeach; ?>
+            </select>
+            <?php if ($this->getCurrentDirection() == 'desc'): ?>
+                <a href="javascript:void(0)"
+                    class="sort-by-switcher sort-by-switcher--desc"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Set Ascending Direction')) ?>"> </a>
+            <?php else: ?>
+                <a href="javascript:void(0)"
+                    class="sort-by-switcher sort-by-switcher--asc"
+                    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Set Descending Direction')) ?>"> </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
