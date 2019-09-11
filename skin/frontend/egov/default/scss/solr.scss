@@ -1,0 +1,20 @@
+.solr-suggest-item {
+    display: block;
+    width: 100%;
+    padding: 16px 8px;
+    color: #000 !important;
+    background-color: #eee;
+
+    &:not(:last-child){
+        border-bottom: 1px solid #b1b1b1;
+    }
+
+    &:hover,
+    &._active{
+        background-color: #b1b1b1;
+    }
+}
+
+.solr-search-fieldset > label {
+    display: none;
+}
