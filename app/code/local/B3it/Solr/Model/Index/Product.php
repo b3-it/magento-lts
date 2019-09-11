@@ -40,7 +40,13 @@ class B3it_Solr_Model_Index_Product
             $taxIncluded = $this->getTaxConfig($storeId);
 
             /** @var Mage_Catalog_Model_Product $product_store */
-            $product_store = Mage::getModel('catalog/product')->setStoreId($storeId)->load($product->getId());
+            $product_store = Mage::getModel('catalog/product')->setData('store_id', $storeId);
+            $product_store->load($product->getId());
+
+            if(!in_array($store->getWebsiteId(), $product_store->getWebsiteIds())){
+                continue;
+            }
+
             $client = new B3it_Solr_Model_Webservice_Solr();
             $client->storeId = $storeId;
 
@@ -90,8 +96,13 @@ class B3it_Solr_Model_Index_Product
      */
     public function reIndexProducts($storeId = 0)
     {
-        $collection = Mage::getModel('catalog/product')->getCollection()
-            ->addAttributeToSelect('*')
+        /** @var Mage_Catalog_Model_Resource_Product_Collection $collection */
+        $collection = Mage::getModel('catalog/product')->getCollection();
+        /** @var Mage_Core_Model_Store $store */
+        $store = Mage::app()->getStore($storeId);
+
+        $collection->addAttributeToSelect('*')
+            ->addWebsiteFilter($store->getWebsiteId())
             ->setStoreId($storeId)
             ->addAttributeToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
             ->addAttributeToFilter([['attribute' => 'visibility', 'eq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_SEARCH], ['attribute' => 'visibility', 'eq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH]]);
