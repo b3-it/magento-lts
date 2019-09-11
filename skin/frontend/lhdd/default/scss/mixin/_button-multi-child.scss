@@ -6,6 +6,8 @@
 //
 
 @mixin multi-button {
+    margin-right: 20px;
+
     @include bp(max-width, $bp-mobil) {
         float: none;
         display: block;
