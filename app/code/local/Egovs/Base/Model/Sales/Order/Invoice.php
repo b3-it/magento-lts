@@ -130,6 +130,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
 			$pdfRendered = $pdf->render();
             $pdfSize = mb_strlen($pdfRendered, '8bit');
             Mage::log(sprintf('egovs::mail:attachment:Try to send e-mail attachment with %s bytes', $pdfSize), Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+            //Mage::log(sprintf("egovs::mail:attachment:\n%s", $pdfRendered), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
 			$mailer->setAttachment($pdfRendered,$pdf->Name);
         }
         
