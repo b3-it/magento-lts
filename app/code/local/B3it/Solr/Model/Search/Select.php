@@ -63,14 +63,19 @@ class B3it_Solr_Model_Search_Select
     }
 
     /**
-     * @param $filter
+     * @param string $value
+     * @param bool $addAllSlashes
      * @return string
      */
-    public function getSecuredFilter($filter)
+    public function getSecuredFilter($value, $addAllSlashes = true)
     {
-        $filter = strip_tags(html_entity_decode($filter));
-        $filter = addcslashes($filter, '+-!(){}[]^"~*?:\\/|&');
-        return urlencode($filter);
+        $value = strip_tags(html_entity_decode($value));
+        if ($addAllSlashes) {
+            $value = addcslashes($value, '+-!(){}[]^"~*?:\\/|&');
+        } else {
+            $value = addcslashes($value, '+-!(){}^"~?:\\/|&');
+        }
+        return urlencode($value);
     }
 
     /**
@@ -208,11 +213,20 @@ class B3it_Solr_Model_Search_Select
         if (is_array($facets) && !empty($facets)) {
             $dynamic = [];
             foreach ($facets as $facet) {
-                if ($solrHelper->getDynamicField($facet['field']) == '_string') {
-                    $dynamic[] = array('field' => $facet['field'] . $solrHelper->getDynamicField($facet['field']) . '_facet', 'value' => $this->getSecuredFilter($facet['value']));
+                $type = $solrHelper->getDynamicField($facet['field']);
+                $value = $facet['value'];
+
+                if($type == '_date' || $type == '_decimal'){
+                    $value = $this->getSecuredFilter($value, false);
                 } else {
-                    $dynamic[] = array('field' => $facet['field'] . $solrHelper->getDynamicField($facet['field']), 'value' => $this->getSecuredFilter($facet['value']));
+                    $value = $this->getSecuredFilter($value, true);
                 }
+
+                if($type == '_string'){
+                    $type .= '_facet';
+                }
+
+                $dynamic[] = array('field' => $facet['field'] . $type, 'value' => $value);
             }
             return $dynamic;
         } else {

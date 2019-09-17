@@ -112,7 +112,7 @@
                 <allowspecific>0</allowspecific>
                 <autoclose>0</autoclose>
                 <cancel_order_after_active>1</cancel_order_after_active>
-                <cancel_order_after>30</cancel_order_after>
+                <cancel_order_after>45</cancel_order_after>
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>
@@ -127,7 +127,7 @@
                 <allowspecific>0</allowspecific>
                 <autoclose>0</autoclose>
                 <cancel_order_after_active>1</cancel_order_after_active>
-                <cancel_order_after>30</cancel_order_after>
+                <cancel_order_after>45</cancel_order_after>
                 <!-- Der Kunde soll nach jeder Zahlung gelöscht werden -->
                 <delete_customer_after_transaction>1</delete_customer_after_transaction>
                 <group>epaybl</group>

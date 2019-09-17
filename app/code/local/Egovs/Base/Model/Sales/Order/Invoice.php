@@ -127,7 +127,11 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
         if ($pdf) {
         	$pdf = $pdf->getPdf(array($this));
 			$pdf->Mode = Egovs_Pdftemplate_Model_Pdf_Abstract::MODE_EMAIL;
-			$mailer->setAttachment($pdf->render(),$pdf->Name);
+			$pdfRendered = $pdf->render();
+            $pdfSize = mb_strlen($pdfRendered, '8bit');
+            Mage::log(sprintf('egovs::mail:attachment:Try to send e-mail attachment with %s bytes', $pdfSize), Zend_Log::INFO, Egovs_Helper::LOG_FILE);
+            //Mage::log(sprintf("egovs::mail:attachment:\n%s", $pdfRendered), Zend_Log::DEBUG, Egovs_Helper::LOG_FILE);
+			$mailer->setAttachment($pdfRendered,$pdf->Name);
         }
         
         /** @var $emailQueue Egovs_Base_Model_Core_Email_Queue */
@@ -136,7 +140,7 @@ class Egovs_Base_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Invoic
 	        ->setEntityType('invoice')
 	        ->setEventType('new_invoice')
 	        ->setIsForceCheck(true);
-        
+
         $mailer->setQueue($emailQueue)->send();
 
         $this->setEmailSent(true);
