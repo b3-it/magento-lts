@@ -23,6 +23,10 @@
 	margin-bottom: $default-margin;
 	//@include linearize-table;
 
+	tfoot button {
+		@include multi-button;
+	}
+
 	h2 {
 		font-size: $h1-size;
 		line-height: normal;

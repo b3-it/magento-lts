@@ -21,4 +21,16 @@
 	.form-instructions {
 		margin-bottom: $default-margin / 2;
 	}
+
+	#customer-create-password-left {
+        .field, input {
+			width: 100%;
+		}
+
+		div.passwordnotice {
+			display: block;
+			margin: 0;
+			width: 90%;
+		}
+	}
 }

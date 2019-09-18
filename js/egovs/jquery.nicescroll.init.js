@@ -1,8 +1,3 @@
-
-let color_element  = "";
-let color_proberty = "";
-let scroll_element = "";
-
 function updateScrollbar(localScrollElement)
 {
     if ( detectIE() != false || is_touch_device() != false ) {

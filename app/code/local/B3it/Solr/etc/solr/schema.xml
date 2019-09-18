@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="b3it-solr" version="1.6">
+
+    <!-- Field to use to determine and enforce document uniqueness. Unless this field is marked with required="false", it will be a required field -->
+    <uniqueKey>id</uniqueKey>
+
+    <!-- doc values are enabled by default for primitive types such as long so we don't index the version field  -->
+    <field name="_version_" type="plong" indexed="false" stored="false"/>
+
+    <!-- points to the root document of a block of nested documents. Required for nested document support, may be removed otherwise -->
+    <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
+
+    <!-- CopyField for all content, used as default field and select debugging -->
+    <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
+
+    <!-- uniqueKey for document replacement and routing in solrCloud -->
+    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+
+    <!-- type of the document content 'product' or 'cms page' -->
+    <field name="type" type="string"/>
+
+    <!-- real magento id of the product/page -->
+    <field name="db_id" type="plong"/>
+
+    <!-- store id of the product/page -->
+    <field name="store_id" type="plong"/>
+
+    <!-- field for suggester-->
+    <field name="name" type="string"/>
+
+    <!-- field for spell checker -->
+    <field name="spelling" type="b3it_spell_check"/>
+
+    <!-- Dynamic fieldTypes for magento attributes -->
+    <dynamicField name="*_decimal" type="pdouble" indexed="true" stored="true"/>
+    <dynamicField name="*_string" type="b3it_string_default" indexed="true" stored="true"/>
+    <dynamicField name="*_string_facet" type="string" indexed="true" stored="true"/>
+    <dynamicField name="*_text" type="b3it_text_default" indexed="true" stored="true"/>
+    <dynamicField name="*_date" type="pdate" indexed="true" stored="true"/>
+
+    <!-- Copy fields -->
+    <copyField source="*_string" dest="*_string_facet" maxChars="30000"/>
+    <copyField source="name" dest="spelling" maxChars="30000"/>
+    <copyField source="*" dest="_text_"/>
+
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim. -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+
+    <!-- boolean type: "true" or "false" -->
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+
+    <!-- Numeric field types that index values using KD-trees. Point fields don't support FieldCache, so they must have docValues="true" if needed for sorting, faceting, functions, etc. -->
+    <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
+    <fieldType name="pfloat" class="solr.FloatPointField" docValues="true"/>
+    <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
+    <fieldType name="pdouble" class="solr.DoublePointField" docValues="true"/>
+    <fieldType name="pints" class="solr.IntPointField" docValues="true" multiValued="true"/>
+    <fieldType name="pfloats" class="solr.FloatPointField" docValues="true" multiValued="true"/>
+    <fieldType name="plongs" class="solr.LongPointField" docValues="true" multiValued="true"/>
+    <fieldType name="pdoubles" class="solr.DoublePointField" docValues="true" multiValued="true"/>
+
+    <!-- KD-tree versions of date fields -->
+    <fieldType name="pdate" class="solr.DatePointField" docValues="true"/>
+    <fieldType name="pdates" class="solr.DatePointField" docValues="true" multiValued="true"/>
+
+    <!--Binary data type. The data should be sent/retrieved in as Base64 encoded Strings -->
+    <fieldType name="binary" class="solr.BinaryField"/>
+
+    <!-- Type for suggester ans _text_ default field -->
+    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+        <analyzer type="index">
+            <tokenizer class="solr.StandardTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.StandardTokenizerFactory"/>
+            <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+        </analyzer>
+    </fieldType>
+
+    <!-- Default type for strings like 'Title'. Uses TextField class, because StrField is not tokenized or analyzed -->
+    <fieldType name="b3it_string_default" class="solr.TextField" sortMissingLast="true" positionIncrementGap="100">
+        <analyzer type="index">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.WordDelimiterGraphFilterFactory" splitOnCaseChange="0" splitOnNumerics="0" preserveOriginal="1"/>
+            <filter class="solr.FlattenGraphFilterFactory"/>
+            <filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="15"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.TrimFilterFactory"/>
+        </analyzer>
+    </fieldType>
+
+    <!-- Default type for texts like 'Description' -->
+    <fieldType name="b3it_text_default" class="solr.TextField" sortMissingLast="true" positionIncrementGap="100">
+        <analyzer type="index">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.PatternReplaceFilterFactory" pattern="&quot;" replacement=""/>
+            <filter class="solr.StopFilterFactory" format="snowball" words="conf/lang/stopwords_de.txt"/>
+            <filter class="solr.WordDelimiterGraphFilterFactory" splitOnCaseChange="0" splitOnNumerics="0" preserveOriginal="1"/>
+            <filter class="solr.FlattenGraphFilterFactory"/>
+            <filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="15"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.TrimFilterFactory"/>
+        </analyzer>
+    </fieldType>
+
+    <!-- Default spellcheck type -->
+    <fieldType name="b3it_spell_check" class="solr.TextField" sortMissingLast="true" positionIncrementGap="100">
+        <analyzer type="index">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.WordDelimiterGraphFilterFactory" splitOnCaseChange="0" splitOnNumerics="0"/>
+            <filter class="solr.FlattenGraphFilterFactory"/>
+            <filter class="solr.LengthFilterFactory" min="3" max="32"/>
+            <filter class="solr.StopFilterFactory" format="snowball" words="conf/lang/stopwords_de.txt"/>
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.TrimFilterFactory"/>
+        </analyzer>
+    </fieldType>
+</schema>

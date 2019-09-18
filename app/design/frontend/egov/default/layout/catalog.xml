@@ -185,7 +185,7 @@ Product view
             <action method="addItem"><type>js</type><name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
             <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
 
-            <block type="page/html_head" output="toHtml" name="silver_track" template="catalog/product/view/head_silver_track.phtml" />
+            <block type="page/js_cookie" name="silver_track" template="catalog/product/view/head_silver_track.phtml" />
         </reference>
 
         <reference name="content">

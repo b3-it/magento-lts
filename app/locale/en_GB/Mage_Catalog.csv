@@ -862,3 +862,5 @@
 
 "Excl. %s Tax","Excl. %s Vat"
 "Incl. %s Tax","Incl. %s Vat"
+"excl. <a href="%s">Shipping Cost</a>","excl.&nbsp;<a href="%s">Shipping Cost</a>"
+"incl. <a href="%s">Shipping Cost</a>","incl.&nbsp;<a href="%s">Shipping Cost</a>"

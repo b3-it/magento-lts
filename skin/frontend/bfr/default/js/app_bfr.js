@@ -60,7 +60,7 @@ $j(document).ready(function(){
         removeZoom();
     });
 
-    // mobielen Warenkorb erzeugen
+    // mobilen Warenkorb erzeugen
     $j('#mobile-header-minicart > a').attr({
     	'id'                 : 'mobile-cart-menu',
     	'data-target-element': '#mobile-header-cart'
@@ -91,6 +91,12 @@ $j(document).ready(function(){
             }
         });
     }
+
+    $j("#checkoutSteps li.section").attrchange(function(attrName) {
+        if ( $j(this).hasClass("active") ) {
+            updateScrollbar(scroll_element);
+        }
+    });
 
     $j('div.minicart-wrapper a.skip-link-close').on('click', function(){
         $j('a.skip-cart, div.block-cart').toggleClass('skip-active');

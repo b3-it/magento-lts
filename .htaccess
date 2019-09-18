@@ -39,110 +39,57 @@
     AddType video/ogg .ogv
     AddType video/ogg .ogg
 
-<IfModule mod_php5.c>
-############################################
-# !!!Funktioniert nur falls Apache mit mod_php läuft!!
-# Unter Windows läuft PHP meist als CGI/FPM usw.
-
-############################################
-## adjust memory limit
-
-    php_value memory_limit 512M
-    php_value max_execution_time 18000
-    php_value upload_max_filesize 10M
-    php_value post_max_size 10M
-
-############################################
-## PHP-Error-LOG
-    php_flag log_errors on
-    #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
-
-############################################
-## disable automatic session start
-## before autoload was initialized
-
-    php_value session.auto_start off
-
-############################################
-## Session-Configuration
-## https://trac.kawatest.de/ticket/1647
-
-    php_value session.gc_probability 1
-    php_value session.gc_divisor 100
-    php_value session.gc_maxlifetime 86400
-
-############################################
-## enable resulting html compression
-
-    #php_value zlib.output_compression on
-
-###########################################
-# disable user agent verification to not break multiple image upload
-
-    php_value suhosin.session.cryptua off
-
-###########################################
-</IfModule>
-
 <IfModule mod_php7.c>
-############################################
-## adjust memory limit
-
+    ############################################
+    ## adjust memory limit
     php_value memory_limit 512M
     php_value max_execution_time 18000
     php_value upload_max_filesize 10M
     php_value post_max_size 10M
 
-############################################
-## PHP-Error-LOG
+    ############################################
+    ## PHP-Error-LOG
     php_flag log_errors on
     #php_value error_log /srv/www/htdocs/ *CUSTOMIZE* /var/log/php_error.log
 
 
-############################################
-## disable automatic session start
-## before autoload was initialized
-
+    ############################################
+    ## disable automatic session start
+    ## before autoload was initialized
     php_flag session.auto_start off
 
-############################################
-## Session-Configuration
-## https://trac.kawatest.de/ticket/1647
-
+    ############################################
+    ## Session-Configuration
+    ## https://trac.kawatest.de/ticket/1647
     php_value session.gc_probability 1
     php_value session.gc_divisor 100
     php_value session.gc_maxlifetime 86400
 
-############################################
-## enable resulting html compression
-
+    ############################################
+    ## enable resulting html compression
     #php_flag zlib.output_compression on
 
-###########################################
-# disable user agent verification to not break multiple image upload
-
+    ###########################################
+    # disable user agent verification to not break multiple image upload
     php_flag suhosin.session.cryptua off
 
-###########################################
-# turn off compatibility with PHP4 when dealing with objects
-
+    ###########################################
+    # turn off compatibility with PHP4 when dealing with objects
     php_flag zend.ze1_compatibility_mode Off
 
 </IfModule>
 
 <IfModule mod_security.c>
-###########################################
-# disable POST processing to not break multiple image upload
-
+    ###########################################
+    # disable POST processing to not break multiple image upload
     SecFilterEngine Off
     SecFilterScanPOST Off
 </IfModule>
 
 <IfModule mod_deflate.c>
-
-############################################
-## enable apache served files compression
-## http://developer.yahoo.com/performance/rules.html#gzip
+    ############################################
+    ## enable apache served files compression
+    ## http://developer.yahoo.com/performance/rules.html#gzip
 
     # Insert filter on all content
     ###SetOutputFilter DEFLATE
@@ -167,77 +114,65 @@
 </IfModule>
 
 <IfModule mod_ssl.c>
-
-############################################
-## make HTTPS env vars available for CGI mode
-
+    ############################################
+    ## make HTTPS env vars available for CGI mode
     SSLOptions StdEnvVars
-
 </IfModule>
 
 <IfModule mod_rewrite.c>
-
-############################################
-## enable rewrites
-
+    ############################################
+    ## enable rewrites
     Options +FollowSymLinks
     RewriteEngine on
 
-############################################
-## you can put here your magento root folder
-## path relative to web root
-
+    ############################################
+    ## you can put here your magento root folder
+    ## path relative to web root
     #RewriteBase /magento/
 
-############################################
-## uncomment next line to enable light API calls processing
+    ############################################
+    ## uncomment next line to enable light API calls processing
+    #RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
 
-#    RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
-
-############################################
-## rewrite API2 calls to api.php (by now it is REST only)
-
+    ############################################
+    ## rewrite API2 calls to api.php (by now it is REST only)
     RewriteRule ^api/rest api.php?type=rest [QSA,L]
 
-############################################
-## workaround for HTTP authorization
-## in CGI environment
-
+    ############################################
+    ## workaround for HTTP authorization
+    ## in CGI environment
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-############################################
-## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
-
+    ############################################
+    ## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
     RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
     RewriteRule .* - [L,R=405]
 
-<IfModule mod_setenvif.c>
-    <IfModule mod_headers.c>
+    <IfModule mod_setenvif.c>
+        <IfModule mod_headers.c>
 
-        ############################################
-        # X-Content-Type-Options: nosniff disable content-type sniffing on some browsers.
-        Header set X-Content-Type-Options: nosniff
+            ############################################
+            # X-Content-Type-Options: nosniff disable content-type sniffing on some browsers.
+            Header set X-Content-Type-Options: nosniff
 
-        ############################################
-        # This header forces to enables the Cross-site scripting (XSS) filter in browsers (if disabled)
-        BrowserMatch \bMSIE\s8 ie8
-        Header set X-XSS-Protection: "1; mode=block" env=!ie8
+            ############################################
+            # This header forces to enables the Cross-site scripting (XSS) filter in browsers (if disabled)
+            BrowserMatch \bMSIE\s8 ie8
+            Header set X-XSS-Protection: "1; mode=block" env=!ie8
 
+        </IfModule>
     </IfModule>
-</IfModule>
 
-############################################
-## AhrefsBot und SEMrush Spider blocken
-## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
-
+    ############################################
+    ## AhrefsBot und SEMrush Spider blocken
+    ## https://blog.emeidi.com/2018/07/07/ahrefsbot-und-semrush-spider-mit-htaccess-blocken/
     RewriteCond %{HTTP_USER_AGENT} SemrushBot [OR]
     RewriteCond %{HTTP_USER_AGENT} AhrefsBot
     RewriteRule .* - [R=429]
 
-############################################
-## User Agent Strings anderer Herkunft blocken
-## https://www.barrierefreie-webloesungen.de/blog/faq/120203_htaccess.php
-
+    ############################################
+    ## User Agent Strings anderer Herkunft blocken
+    ## https://www.barrierefreie-webloesungen.de/blog/faq/120203_htaccess.php
 	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5\.0.?compatible.?de.?$ [OR]
 	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/4\.0.?\(compatible\)$ [OR]
 	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5\.0.?\(compatible\)$ [OR]
@@ -247,28 +182,24 @@
 	RewriteCond %{HTTP_USER_AGENT} Windows\ NT\ 2\.0
     RewriteRule .* - [R=429]
 
-############################################
-## redirect for mobile user agents
-
+    ############################################
+    ## redirect for mobile user agents
     #RewriteCond %{REQUEST_URI} !^/mobiledirectoryhere/.*$
     #RewriteCond %{HTTP_USER_AGENT} "android|blackberry|ipad|iphone|ipod|iemobile|opera mobile|palmos|webos|googlebot-mobile" [NC]
     #RewriteRule ^(.*)$ /mobiledirectoryhere/ [L,R=302]
 
-############################################
-## always send 404 on missing files in these folders
-
+    ############################################
+    ## always send 404 on missing files in these folders
     RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
 
-############################################
-## never rewrite for existing files, directories and links
-
+    ############################################
+    ## never rewrite for existing files, directories and links
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
 
-############################################
-## rewrite everything else to index.php
-
+    ############################################
+    ## rewrite everything else to index.php
     RewriteRule .* index.php [L]
 
 </IfModule>
@@ -277,23 +208,19 @@
 ############################################
 ## Prevent character encoding issues from server overrides
 ## If you still have problems, use the second line instead
-
-    AddDefaultCharset Off
-    #AddDefaultCharset UTF-8
+AddDefaultCharset Off
+#AddDefaultCharset UTF-8
 
 <IfModule mod_expires.c>
-
-############################################
-## Add default Expires header
-## http://developer.yahoo.com/performance/rules.html#expires
-
+    ############################################
+    ## Add default Expires header
+    ## http://developer.yahoo.com/performance/rules.html#expires
     ExpiresDefault "access plus 1 year"
-
 </IfModule>
 
 <IfModule mod_authz_host.c>
-############################################
-## By default allow all access
+    ############################################
+    ## By default allow all access
     <IfModule mod_authz_core.c>
         #Apache 2.3+
     	Require all granted
@@ -302,7 +229,6 @@
 
 ###########################################
 ## Deny access to release notes to prevent disclosure of the installed Magento version
-
 <Files RELEASE_NOTES.txt>
     <IfModule mod_authz_core.c>
 	      #Apache 2.3+
@@ -313,28 +239,26 @@
 ############################################
 ## If running in cluster environment, uncomment this
 ## http://developer.yahoo.com/performance/rules.html#etags
-
-    #FileETag none
+#FileETag none
 
 ###########################################
 ## Deny access to cron.php
 <Files cron.php>
+    ############################################
+    ## uncomment next lines to enable cron access with base HTTP authorization
+    ## http://httpd.apache.org/docs/2.2/howto/auth.html
+    ##
+    ## Warning: .htpasswd file should be placed somewhere not accessible from the web.
+    ## This is so that folks cannot download the password file.
+    ## For example, if your documents are served out of /usr/local/apache/htdocs
+    ## you might want to put the password file(s) in /usr/local/apache/.
 
-############################################
-## uncomment next lines to enable cron access with base HTTP authorization
-## http://httpd.apache.org/docs/2.2/howto/auth.html
-##
-## Warning: .htpasswd file should be placed somewhere not accessible from the web.
-## This is so that folks cannot download the password file.
-## For example, if your documents are served out of /usr/local/apache/htdocs
-## you might want to put the password file(s) in /usr/local/apache/.
+    #AuthName "Cron auth"
+    #AuthUserFile ../.htpasswd
+    #AuthType basic
+    #Require valid-user
 
-        #AuthName "Cron auth"
-        #AuthUserFile ../.htpasswd
-        #AuthType basic
-        #Require valid-user
-
-############################################
+    ############################################
     <IfModule mod_authz_core.c>
         #Apache 2.3+
 		Require all denied

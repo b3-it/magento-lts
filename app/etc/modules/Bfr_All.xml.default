@@ -1,37 +1,44 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config>
 <config>
-  <modules>
-         <Bfr_Base>
-           <active>false</active>
-           <codePool>local</codePool>
-           <depends>
-           </depends>
+    <modules>
+        <Bfr_Base>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+            </depends>
         </Bfr_Base>
         <Bfr_EventManager>
-           <active>false</active>
-           <codePool>local</codePool>
-           <depends>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
                 <Mage_Bundle/>
                 <Mage_Sales/>
                 <Mage_Catalog/>
                 <Mage_Customer/>
                 <Egovs_EventBundle/>
-           </depends>
+            </depends>
         </Bfr_EventManager>
+        <Bfr_Eventparticipants>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Egovs_EventBundle/>
+            </depends>
+        </Bfr_Eventparticipants>
         <Bfr_EventRequest>
-           <active>false</active>
-           <codePool>local</codePool>
-           <depends>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
                 <Mage_Sales/>
                 <Mage_Catalog/>
                 <Mage_Customer/>
-           </depends>
+            </depends>
         </Bfr_EventRequest>
         <Bfr_Mach>
-           <active>false</active>
-           <codePool>local</codePool>
-           <depends>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
                 <Mage_Sales/>
                 <Mage_Catalog/>
                 <Mage_Customer/>
@@ -47,7 +54,7 @@
       </depends>
     </Bfr_Report>
     <Bfr_EventFeed>
-        <active>false</active>
+        <active>true</active>
         <codePool>local</codePool>
         <depends>
             <Bfr_Base />
@@ -55,5 +62,5 @@
             <Egovs_ProductFile />
         </depends>
     </Bfr_EventFeed>
-  </modules>
+    </modules>
 </config>

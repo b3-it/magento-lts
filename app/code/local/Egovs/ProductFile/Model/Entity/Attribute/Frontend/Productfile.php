@@ -49,7 +49,10 @@ class Egovs_ProductFile_Model_Entity_Attribute_Frontend_Productfile extends Mage
 
             $html = array();
 
-            $html[] = '<img src="' . $_image . '" alt="' . $_img_descr . '" title="' . $_img_descr . '" />';
+            if ( strlen($_image) ) {
+                $html[] = '<img src="' . $_image . '" alt="' . $_img_descr . '" title="' . $_img_descr . '" />';
+            }
+
             $html[] = '<div id="egov-productfile" class="egov-productfile-block">';
 
             if ( strlen($_descr) ) {

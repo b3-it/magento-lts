@@ -9,6 +9,20 @@
 /* ============================================ *
  * Header
  * ============================================ */
+#page-size-box {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px;
+    height: 70px;
+    padding: 15px;
+    background-color: #0D4FA0;
+    color: #ffffff;
+    border: 2px solid #ff0000;
+    line-height: 1.2rem;
+    font-weight: bold;
+    z-index: 99999;
+}
 
 @include bp(min-width, $bp-medium + 1) {
 
@@ -464,9 +478,9 @@ a.skip-link {
  * ============================================ */
 .account-cart-wrapper {
     position: absolute;
-    top:5px;
-    right:25%;
-    width: 80%;
+    top: $global-header-top;
+    right: $global-header-right;
+    width: $global-header-width;
     text-align: right;
 
     .skip-link {

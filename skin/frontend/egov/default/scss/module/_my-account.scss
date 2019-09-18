@@ -177,6 +177,7 @@
         top: $global-cms-top-position;
 
         .col-left {
+            line-height: 0;
             top: -15px;
 
             @include bp(max-width, 800px) {

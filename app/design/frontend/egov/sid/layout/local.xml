@@ -26,8 +26,9 @@
 
     <catalog_category_default translate="label">
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav.bottom" after="navbar" as="category_filter" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
+            <block type="catalog/layer_view" name="catalog.leftnav.bottom" after="navbar" as="category_filter"
+                   template="catalog/layer/view.phtml">
+                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers"/>
             </block>
         </reference>
     </catalog_category_default>

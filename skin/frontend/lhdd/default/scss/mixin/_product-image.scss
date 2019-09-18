@@ -8,7 +8,7 @@
 @mixin product-image {
 	max-width: 95%;
 	width: auto;
-	max-height: 95%;
+	max-height: $article-base-height;
 	height: auto;
 	border: $border-width solid $grundfarbe2;
 	padding: $default-padding;

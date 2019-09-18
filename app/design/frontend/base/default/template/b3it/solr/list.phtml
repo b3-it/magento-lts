@@ -1,0 +1,32 @@
+<div class="page-title">
+    <h1><?= $this->__('Search results for:') . " " . $this->getQuery(); ?></h1>
+</div>
+<?php /*echo $this->getMessagesBlock()->getGroupedHtml() */?>
+
+<div class="category-products">
+
+    <?php foreach ($this->getSuggestions() as $suggestion): ?>
+        <h3 class="note-msg"><?= $this->__('Do you mean: ') ?><a
+                    href="<?= $this->helper('b3it_solr')->getResultUrl($suggestion) ?>"><?= $suggestion ?></a></h3>
+    <?php endforeach; ?>
+
+    <?php if (empty($this->getList())): ?>
+        <p class="note-msg"><?= $this->__('There are no products matching the selection.') ?></p>
+    <?php else: ?>
+        <div class="toolbar-top"><?= $this->getChildHtml('solr_result_toolbar'); ?></div>
+        <ol class="products-list">
+            <?php foreach ($this->getList() as $item): ?>
+                <?php if ($item->getType() == $this::TYPE_PRODUCT): ?>
+                    <?php $child = $this->getChild('search_result_list_product');
+                    $child->loadEntityById($item->getId()) ?>
+                    <?= $this->getChildHtml('search_result_list_product', false) ?>
+                <?php elseif ($item->getType() == $this::TYPE_PAGE): ?>
+                    <?php $child = $this->getChild('search_result_list_page');
+                    $child->loadEntityById($item->getId()) ?>
+                    <?= $this->getChildHtml('search_result_list_page', false) ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ol>
+        <div class="toolbar-bottom"><?= $this->getChildHtml('solr_result_toolbar'); ?></div>
+    <?php endif; ?>
+</div>

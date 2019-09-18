@@ -59,14 +59,9 @@ class Bfr_EventManager_Helper_Data extends Mage_Core_Helper_Abstract
 
         $mailer->addEmailInfo($emailInfo);
 
-
-
         $translate = Mage::getSingleton('core/translate');
         /* @var $translate Mage_Core_Model_Translate */
         $translate->setTranslateInline(false);
-
-        $mailTemplate = Mage::getModel('core/email_template');
-        /* @var $mailTemplate Mage_Core_Model_Email_Template */
 
         $sender = array();
         $sender['name'] = Mage::getStoreConfig("eventmanager/participation_certificate_email/sender_name", $storeId);

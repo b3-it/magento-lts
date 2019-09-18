@@ -43,8 +43,31 @@ function addJsToHeader($scriptPath)
     }
 }
 
+(function($) {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    $.fn.attrchange = function(callback) {
+        if (MutationObserver) {
+            var options = {
+                subtree: false,
+                attributes: true
+            };
+
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(e) {
+                    callback.call(e.target, e.attributeName);
+                });
+            });
+
+            return this.each(function() {
+                observer.observe(this, options);
+            });
+
+        }
+    }
+})(jQuery);
+
 $j(document).ready(function () {
-    //alert(is_touch_device());
     if ( detectIE() == false && is_touch_device() == false ) {
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.min.js');
         addJsToHeader(baseUrl + 'js/egovs/jquery.nicescroll.init.js');
@@ -54,6 +77,10 @@ $j(document).ready(function () {
         toggleLoadingMask();
     });
 });
+
+let color_element  = "";
+let color_proberty = "";
+let scroll_element = "";
 
 (function($j){
     $j.eGovMenu = function(element, options){
@@ -73,7 +100,7 @@ $j(document).ready(function () {
         this.settings = {}
         this.settings = $j.extend({}, defaults, options);
 
-        var elem = $j(element), element = element;
+        var elem = $j(element);
         var from = $j(element).attr('id');
 
         var cssClasses = ["main-open", "main-closed", "sub-open", "sub-closed"];
@@ -96,6 +123,7 @@ $j(document).ready(function () {
                     toggleMenu( $j(this).next() );
                     changeGrafic( $j(this), $j(this).next() );
                     getStatus(from);
+                    updateScrollbar(scroll_element);
                 }
                 else {
                     openURL( $j(this).attr('href') );

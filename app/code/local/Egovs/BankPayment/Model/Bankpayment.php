@@ -345,7 +345,7 @@ class Egovs_BankPayment_Model_Bankpayment extends Egovs_Paymentbase_Model_Abstra
 		$objResult = null;
 		try {
 			$objResult = $this->_getSoapClient()->ueberweisenVorLieferungMitBLP($this->_getECustomerId(), $objBuchungsliste, $this->getBuchungsListeParameter($payment, $amount));
-			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->code == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
+			if ($objResult instanceof SoapFault && $objResult->faultcode == 'Client' && $objResult->getCode() == '0' && stripos($objResult->faultstring, self::SOAP_METHOD_NOT_AVAILABLE) > 0) {
 				//Fallback zu alter Methode
 				Mage::log($this->getCode().'::Fallback new Method MitBLP not available try old method without parameter list.', Zend_Log::NOTICE, Egovs_Helper::LOG_FILE);
 			        $objResult = $this->_getSoapClient()->ueberweisenVorLieferung($this->_getECustomerId(), $objBuchungsliste);

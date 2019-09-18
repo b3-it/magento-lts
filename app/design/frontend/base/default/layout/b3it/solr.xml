@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE layout>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/solr.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="top.search">
+            <action method="setTemplate">
+                <template>b3it/solr/form.mini.phtml</template>
+            </action>
+        </reference>
+    </default>
+
+    <b3it_solr_search_index translate="label">
+        <label>My Solr Results</label>
+        <reference name="content">
+            <block type="b3it_solr/solr_list" name="search_result_wrapper" template="b3it/solr/wrapper.phtml">
+                <block type="b3it_solr/solr_list" name="search_result_list" template="b3it/solr/list.phtml">
+                    <block type="b3it_solr/result_page" name="search_result_list_page" template="b3it/solr/result/page.phtml"/>
+                    <block type="b3it_solr/result_product" name="search_result_list_product" template="b3it/solr/result/product.phtml"/>
+                    <block type="b3it_solr/solr_toolbar" name="solr_result_toolbar" template="b3it/solr/result/toolbar.phtml"/>
+                </block>
+            </block>
+        </reference>
+        <reference name="root">
+            <action method="addBodyClass"><classname>catalog-category-view</classname></action>
+            <action method="setHeaderTitle" translate="title" module="b3it_solr">
+                <title>Search</title>
+            </action>
+        </reference>
+        <reference name="right">
+            <block type="b3it_solr/facet" name="solr_facet" template="b3it/solr/facet.phtml"/>
+        </reference>
+    </b3it_solr_search_index>
+
+    <b3it_solr_facet_facet translate="label">
+        <label>My Solr Results</label>
+        <reference name="content">
+            <block type="b3it_solr/solr_list" name="search_result_list" template="b3it/solr/list.phtml">
+                <block type="b3it_solr/result_page" name="search_result_list_page" template="b3it/solr/result/page.phtml"/>
+                <block type="b3it_solr/result_product" name="search_result_list_product" template="b3it/solr/result/product.phtml"/>
+                <block type="b3it_solr/solr_toolbar" name="solr_result_toolbar" template="b3it/solr/result/toolbar.phtml"/>
+            </block>
+        </reference>
+    </b3it_solr_facet_facet>
+</layout>

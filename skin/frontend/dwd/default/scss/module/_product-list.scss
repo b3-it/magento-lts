@@ -95,6 +95,7 @@ body.catalogsearch-result-index .page-title h1 {
         @include link-blau;
         background-color: transparent;
         font-size: 1rem;
+        line-height: 1.1rem;
     }
 }
 
@@ -121,6 +122,10 @@ body.catalogsearch-result-index .page-title h1 {
 
 .product_sku {
 	overflow: hidden;
+
+    > span {
+        line-height: 1.1rem;
+    }
 }
 
 
@@ -150,13 +155,13 @@ body.catalogsearch-result-index .page-title h1 {
     	margin-bottom: 10px;
     }
     .product-name {
-        height: $global-h5-size * 3;
+        height: $global-h5-size * 3.5;
     }
 
     .product-new-block {
 		right: 0;
 		top: 160px;
-		
+
 		@include bp(max-width, $global-fullpage-width) {
             top: 25%;
         }
@@ -176,6 +181,10 @@ body.catalogsearch-result-index .page-title h1 {
     .product-info {
         position: relative;
         padding-bottom: $global-product-grid-action-height + 10px;
+
+        .tax-details {
+            display: block;
+        }
     }
 
     .actions {
@@ -199,7 +208,7 @@ body.catalogsearch-result-index .page-title h1 {
                     font-family: "FontAwesome";
                     font-size: $global-fontsize + 7;
                     margin-right: $global-fontsize + 7;
-                    
+
                     @include bp(max-width, $global-fullpage-width) {
                         content: none;
                     }

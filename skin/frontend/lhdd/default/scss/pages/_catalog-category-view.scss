@@ -203,14 +203,12 @@
 	}
 
 	&:hover {
-		background-color: $grundfarbe3;
-
 		.product-name a:after {
-			@include fading-left-right(20%, $grundfarbe3);
+			@include fading-left-right(20%, transparent);
 		}
 
 		.product-shop .desc:after {
-			@include fading-top-bottom(30%, $grundfarbe3);
+			@include fading-top-bottom(30%, transparent);
 		}
 	}
 }

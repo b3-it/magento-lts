@@ -5,6 +5,10 @@
 // @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 //
 
+.shipping-cost-details a:not(:hover) {
+	color: $haupt-text-farbe !important;
+}
+
 .minicart-wrapper {
 	.product-image, .product-details {
 		vertical-align: top;
