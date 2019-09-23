@@ -24,7 +24,7 @@ if ( ($_use_ssl_logo == 0) || ($_use_ssl_logo == 2 && $_is_https) ) {
 }
 $show_css = '';
 if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
-    $show_css = ' style="' . $this->htmlEscape($_ssl_image_css) . '"';
+    $show_css = ' style="' . $this->escapeHtml($_ssl_image_css) . '"';
 }
 ?>
 
@@ -110,7 +110,7 @@ if ( strlen($_ssl_image_css) && !empty($_ssl_image_css) ) {
 		                    <li>
 		                        <div class="input-box">
 		                            <label for="login-email"><?php echo $this->__('Email Address') ?> <span class="required">*</span></label><br />
-		                            <input type="text" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" />
+		                            <input type="text" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" />
 		                        </div>
 		                    </li>
 		                    <li>

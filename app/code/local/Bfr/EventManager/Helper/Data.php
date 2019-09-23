@@ -52,7 +52,7 @@ class Bfr_EventManager_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
 
-        /** @var $mailer Egovs_Base_Model_Core_Email_Template_Mailer */
+        /** @var $mailer Egovs_Base_Model_Core_Email_Mailer */
         $mailer = Mage::getModel('egovsbase/core_email_template_mailer');
         $emailInfo = Mage::getModel('core/email_info');
         $emailInfo->addTo($participant->getEmail(), trim($participant->getFirstname() . " " .$participant->getLastname()));

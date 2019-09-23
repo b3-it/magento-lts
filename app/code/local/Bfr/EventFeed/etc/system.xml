@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <sections>
+        <eventbundle>
+            <groups>
+                <eventfeed translate="label" module="bfr_eventfeed">
+                    <label>Event Feed</label>
+                    <sort_order>400</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <title translate="label comment" module="bfr_eventfeed">
+                            <label>Event Feed Title</label>
+                            <sort_order>1</sort_order>
+                            <comment>Title for Event Feed</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                    </fields>
+                </eventfeed>
+            </groups>
+        </eventbundle>
+    </sections>
+</config>

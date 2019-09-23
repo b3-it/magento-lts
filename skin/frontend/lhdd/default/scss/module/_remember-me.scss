@@ -1,0 +1,39 @@
+//
+// @category    design
+// @package     lhdd_default
+// @copyright   Copyright (c) 2019 B3-it System GmbH (https://www.b3-it.de)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+.remember-me-box {
+    a.hide {
+        display: none;
+    }
+    .link-tip {
+        font-size: $text-size;
+        padding-left: $default-padding;
+    }
+}
+
+.remember-me-popup {
+    display: none;
+    border: $border-width solid $grundfarbe1;
+    padding: $default-padding;
+    position: relative;
+
+    &.show {
+        display: block;
+    }
+
+    .remember-me-popup-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: $default-padding;
+        font-size: $text-size;
+    }
+
+    .remember-me-popup-close-button {
+        display: none;
+    }
+}

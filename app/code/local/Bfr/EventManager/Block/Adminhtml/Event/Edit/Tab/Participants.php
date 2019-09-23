@@ -34,7 +34,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
 
       $industry = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_INDUSTRY.' group by participant_id)');
-      
+
       $lobby = new Zend_Db_Expr('(SELECT GROUP_CONCAT(l.lookup_id) as value, participant_id FROM eventmanager_participant_attribute as a
 						join eventmanager_lookup as l on l.lookup_id = a.lookup_id WHERE l.typ = '.Bfr_EventManager_Model_Lookup_Typ::TYPE_LOBBY.' group by participant_id)');
 
@@ -64,12 +64,12 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	));
   	
   	$this->addColumn('pa_created_time', array(
-  			'header'    => Mage::helper('eventmanager')->__('Created at'),
-  			'align'     =>'left',
-  			'index'     => 'created_at',
-  			//'filterindex' => 'order.created_at',
-  			'type'	=> 'Date',
-  			'width'     => '100px',
+  	    'header'    => Mage::helper('sales')->__('Created At'),
+  	    'align'     =>'left',
+  	    'index'     => 'created_at',
+  	    'filter_index' => 'order.created_at',
+  	    'type'	=> 'Date',
+  	    'width'     => '100px',
   	));
   	
   	/*
@@ -464,7 +464,7 @@ class Bfr_EventManager_Block_Adminhtml_Event_Edit_Tab_Participants extends Mage_
   	$condition = "TRIM(CONCAT(firstname,' ',lastname)) like ?";
   	$collection->getSelect()->where($condition, "%$value%");
   }
-  
+
   /**
    * FilterIndex
    *

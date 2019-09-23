@@ -21,62 +21,68 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 	public function getProduct() {
 		return Mage::registry('current_product');
 	}
-	
+
 	/**
 	 * Liefert die URL zur Beschreibungsdatei
-	 * 
+	 *
 	 * @return string URL
 	 */
 	public function getProductFileUrl() {
-		$url =  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory()."/".$this->getProductFile();
-		return $url;
+	    /**
+	     * @var Egovs_ProductFile_Helper_Data $helper
+	     */
+	    $helper = $this->helper('productfile');
+	    return $helper->getFileUrl($this->getProductFile());
 	}
+
 	/**
 	 * Liefert die URL zum Bild der Beschreibungsdatei
 	 *
 	 * @return string URL
 	 */
 	public function getProductImageUrl() {
-		$url =   Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->helper('productfile')->getProductFileUploadDirectory()."/".trim($this->getProductImage());
-		return $url;
+	    /**
+	     * @var Egovs_ProductFile_Helper_Data $helper
+	     */
+	    $helper = $this->helper('productfile');
+	    return $helper->getFileUrl($this->getProductImage());
 	}
+
 	/**
 	 * Prüft ob die Beschreibungsdatei vorhanden ist
 	 *
 	 * @return boolean
 	 */
 	public function existsProductFile() {
-		$path = Mage::getBaseDir('media') . DS . $this->helper('productfile')->getProductFileUploadDirectory() . DS;
-		if (file_exists($path . $this->getProductFile()) && !is_dir($path . $this->getProductFile())) {
-			return true;
-		}
-		
-		return false;
+	    /**
+	     * @var Egovs_ProductFile_Helper_Data $helper
+	     */
+	    $helper = $this->helper('productfile');
+	    return $helper->fileExists($this->getProductFile());
 	}
-	
+
 	/**
 	 * Prüft ob ein Bild der Beschreibungsdatei vorhanden ist
 	 *
 	 * @return boolean
 	 */
 	public function existsProductImage() {
-		$path = Mage::getBaseDir('media') . DS . $this->helper('productfile')->getProductFileUploadDirectory() . DS;
-		if (file_exists($path . $this->getProductImage()) && !is_dir($path . $this->getProductImage())) {
-			return true;
-		}
-	
-		return false;
+	    /**
+	     * @var Egovs_ProductFile_Helper_Data $helper
+	     */
+	    $helper = $this->helper('productfile');
+	    return $helper->fileExists($this->getProductImage());
 	}
-	
+
 	/**
 	 * Liefert den Dateinamen der Beschreibungsdatei
-	 * 
+	 *
 	 * @return string Name
 	 */
 	public function getProductFile() {
 		return $this->getProduct()->getProductfile();
 	}
-	
+
 	/**
 	 * Liefert den Dateinamen zum Bild der Beschreibungsdatei
 	 *
@@ -85,21 +91,21 @@ class Egovs_ProductFile_Block_Adminhtml_Catalog_Product_Edit_Tabs_Productfile ex
 	public function getProductImage() {
 		return $this->getProduct()->getProductimage();
 	}
-	
+
 	/**
 	 * Gibt die Beschreibung für die Beschreibungsdatei zurück
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getProductFileDescription() {
 		return $this->escapeHtml($this->getProduct()->getProductfiledescription());
 	}
-	
+
 	/**
 	 * Fügt Felder zum Form hinzu
-	 * 
+	 *
 	 * @return Mage_Adminhtml_Block_Widget_Form
-	 * 
+	 *
 	 * @see Mage_Adminhtml_Block_Widget_Form::_prepareForm()
 	 */
 	protected function _prepareForm()

@@ -42,16 +42,25 @@
                 <Mage_Sales/>
                 <Mage_Catalog/>
                 <Mage_Customer/>
-            </depends>
-        </Bfr_Mach>
-        <Bfr_Report>
-            <active>true</active>
-            <codePool>local</codePool>
-            <depends>
-                <Mage_Sales />
-                <Mage_Catalog />
-                <Mage_Customer />
-            </depends>
-        </Bfr_Report>
+           </depends>
+        </Bfr_Mach> 
+     <Bfr_Report>
+      <active>true</active>
+      <codePool>local</codePool>
+       <depends>
+        <Mage_Sales />
+        <Mage_Catalog />
+        <Mage_Customer />
+      </depends>
+    </Bfr_Report>
+    <Bfr_EventFeed>
+        <active>true</active>
+        <codePool>local</codePool>
+        <depends>
+            <Bfr_Base />
+            <Bfr_EventManager />
+            <Egovs_ProductFile />
+        </depends>
+    </Bfr_EventFeed>
     </modules>
 </config>

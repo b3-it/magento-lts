@@ -98,6 +98,62 @@
     }
 }
 
+#co-payment-form {
+    dl {
+        display: grid;
+        grid-template-columns: 20% auto;
+
+        > * {
+            margin-top: 10px;
+        }
+
+        dt {
+            grid-column-start: 1;
+        }
+        dd {
+            grid-column-start: 2;
+        }
+    }
+
+    .required {
+        color: $global-available-color;
+    }
+    p.required {
+        display: none;
+    }
+
+    #dd_method_sepadebitbund fieldset {
+        padding: 0;
+    }
+
+    #payment_form_sepadebitbund {
+        display: grid;
+        grid-template-columns: 50% auto;
+
+        li:last-child {
+            margin-top: 30px;
+            grid-column: auto / span 2;
+
+            input[type="text"] {
+                width: 95%;
+            }
+        }
+
+        .input-box input[type="text"] {
+            width: 90%;
+        }
+        .input-box input[type="checkbox"], .input-box input[type="radio"] {
+            float: left;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .input-box input[type="radio"] {
+            width: auto !important;
+            float: left !important;
+        }
+    }
+}
+
 #checkout-step-billing, #checkout-step-shipping {
     @include new_address;
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <Bfr_EventFeed>
+            <version>0.0.1.0</version>
+        </Bfr_EventFeed>
+    </modules>
+    <global>
+        <models>
+            <bfr_eventfeed>
+                <class>Bfr_EventFeed_Model</class>
+            </bfr_eventfeed>
+        </models>
+        <resources>
+            <bfr_eventfeed_setup>
+                <setup>
+                    <module>Bfr_EventFeed</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </bfr_eventfeed_setup>
+        </resources>
+        <helpers>
+            <bfr_eventfeed>
+                <class>Bfr_EventFeed_Helper</class>
+            </bfr_eventfeed>
+        </helpers>
+        <events>
+        </events>
+    </global>
+
+    <frontend>
+        <routers>
+            <bfr_eventfeed>
+                <use>standard</use>
+                <args>
+                    <module>Bfr_EventFeed</module>
+                    <frontName>eventfeed</frontName>
+                </args>
+            </bfr_eventfeed>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Bfr_EventFeed>
+                    <files>
+                        <default>Bfr/EventFeed.csv</default>
+                    </files>
+                </Bfr_EventFeed>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <eventbundle>
+            <eventfeed>
+                <title>Event Feed</title>
+            </eventfeed>
+        </eventbundle>
+    </default>
+</config>

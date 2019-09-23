@@ -127,7 +127,7 @@ class Slpb_Product_Block_Adminhtml_Pickup_Grid extends Mage_Adminhtml_Block_Widg
                     'actions'   => array(
                         array(
                             'caption' => Mage::helper('sales')->__('View'),
-                            'url'     => array('base'=>'/../admin/sales_order/view'),
+                            'url'     => array('base'=>'/*/../sales_order/view'),
                             'field'   => 'order_id',
                         	'popup' => true,
                         )
