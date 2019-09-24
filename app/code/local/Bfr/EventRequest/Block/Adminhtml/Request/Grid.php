@@ -87,12 +87,14 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Grid extends Mage_Adminhtml_Block
       		'header'    => Mage::helper('eventrequest')->__('Firstname'),
       		'align'     =>'left',
       		'index'     => 'firstname',
+          'filter_index' => 'first.value'
       ));
       
       $this->addColumn('lastname', array(
       		'header'    => Mage::helper('eventrequest')->__('Lastname'),
       		'align'     =>'left',
       		'index'     => 'lastname',
+          'filter_index' => 'last.value'
       ));
 
       $this->addColumn('status', array(

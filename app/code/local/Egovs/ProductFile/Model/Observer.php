@@ -31,6 +31,9 @@ class Egovs_ProductFile_Model_Observer extends Mage_Core_Model_Abstract
 				 * Load the current product model
 				 */
 				$product = $observer->getProduct();
+				/**
+				 * @var $helper Egovs_ProductFile_Helper_Data
+				 */
 				$helper = Mage::helper('productfile');
 				$fileext = $helper->getProductFileAllowedExtensions();
 				$imgext = $helper->getProductImageAllowedExtensions();

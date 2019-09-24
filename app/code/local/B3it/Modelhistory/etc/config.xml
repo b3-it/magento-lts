@@ -59,10 +59,10 @@
                     <tools translate="title">
                         <children>
                             <modelhistory translate="title" module="adminhtml">
-                                <title>Model History</title>
+                                <title>Change History</title>
                                 <children>
                                     <modelhistory_model module="adminhtml">
-                                        <title>Model</title>
+                                        <title>Data</title>
                                         <sort_order>20</sort_order>
                                         <action>adminhtml/modelhistory_modelhistory</action>
                                     </modelhistory_model>
@@ -90,11 +90,11 @@
                                 <tools>
                                     <children>
                                         <modelhistory translate="title">
-                                            <title>Modelhistory</title>
+                                            <title>Change History</title>
                                             <sort_order>10</sort_order>
                                             <children>
                                                <modelhistory_model module="adminhtml">
-                                                    <title>Model</title>
+                                                    <title>Data</title>
                                                     <sort_order>20</sort_order>
                                                 </modelhistory_model>
                                                 <modelhistory_config module="adminhtml">

@@ -184,7 +184,8 @@ class Bfr_EventRequest_Model_Request extends Mage_Core_Model_Abstract
         if($this->getQuoteId()){
             $order = Mage::getModel('sales/order')->load($this->getQuoteId(),'quote_id');
             if(!$order->getId()) {
-                $quote = Mage::getModel('sales/quote')->load($this->getQuoteId());
+                $quote = Mage::getModel('sales/quote');
+                $quote->setId($this->getQuoteId());
                 $quote->delete();
             }
         }

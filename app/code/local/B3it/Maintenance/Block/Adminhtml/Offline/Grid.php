@@ -80,6 +80,13 @@ class B3it_Maintenance_Block_Adminhtml_Offline_Grid extends Mage_Adminhtml_Block
 		 		'index'     => 'duration',
 		 		'width'     => '150px',
 		 ));
+
+        $this->addColumn('user', array(
+            'header'    => Mage::helper('b3it_maintenance')->__('User'),
+            'align'     =>'left',
+            'index'     => 'user',
+            'width'     => '150px',
+        ));
 		
 	
 		 

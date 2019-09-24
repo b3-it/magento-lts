@@ -127,6 +127,7 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
      */
     private function __save($data)
     {
+        $data['user'] = $this->__getUser();
     	switch ($data['lock'])
     	{
     		case B3it_Maintenance_Model_Offline::OFFLINE_NO: $this->__saveOn($data); break;
@@ -134,6 +135,23 @@ class B3it_Maintenance_Model_Backend extends Mage_Core_Model_Config_Data
     		case B3it_Maintenance_Model_Offline::OFFLINE_SCHEDULED: $this->__saveOffSceduled($data); break;
     		
     	}
+
+
+    	Mage::helper('b3it_maintenance')->sendMailToAdmin($data);
+    }
+
+
+    private function __getUser()
+    {
+        $session =  Mage::getSingleton('admin/session');
+        if($session) {
+            $user = $session->getUser();
+            if($user){
+                return $user->getUsername();
+            }
+        }
+
+        return "";
     }
     
     /**

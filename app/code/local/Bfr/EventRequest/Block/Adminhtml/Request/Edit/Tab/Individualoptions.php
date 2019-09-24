@@ -78,44 +78,41 @@ class Bfr_EventRequest_Block_Adminhtml_Request_Edit_Tab_Individualoptions extend
 		  		}
 		  		
 		  		
-		  		
+
 		  		
 		  		$options = $product->getOptions();
-		  		$quoteOptions =$quoteItem->getOptionsByCode();
-		  		if(isset($quoteOptions['option_ids']))
-		  		{
-		  			$optionsIds = explode(',',$quoteOptions['option_ids']->getValue());
-		  		}else{
-		  			$optionsIds = array();
-		  		}
-		  		foreach($options as $option)
-		  		{
-		  			/** @var $option Mage_Catalog_Model_Product_Option */
-		  			if(in_array($option->getId(),$optionsIds))
-		  			{
-		  				$opt = $option->getValuesCollection()->getItems();
-		  				if(isset($quoteOptions['option_'.$option->getId()]))
-		  				{
-		  					$value = $quoteOptions['option_'.$option->getId()]->getValue();
-		  				}else{
-		  					$value = null;
-		  				}
-		  				if($option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN ){
-		  					$value = $opt[$value]->getTitle();
-		  				}
-		  				if($option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX || $option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE){
-		  					$value = explode(',',$value);
-		  					foreach($value as $key=> $val)
-		  					{
-		  						$value[$key] = $opt[$val]->getTitle();
-		  					}
-		  					$value = implode(',',$value);
-		  				}
+                if($quoteItem != null) {
+                    $quoteOptions = $quoteItem->getOptionsByCode();
+                    if (isset($quoteOptions['option_ids'])) {
+                        $optionsIds = explode(',', $quoteOptions['option_ids']->getValue());
+                    } else {
+                        $optionsIds = array();
+                    }
+                    foreach ($options as $option) {
+                        /** @var $option Mage_Catalog_Model_Product_Option */
+                        if (in_array($option->getId(), $optionsIds)) {
+                            $opt = $option->getValuesCollection()->getItems();
+                            if (isset($quoteOptions['option_' . $option->getId()])) {
+                                $value = $quoteOptions['option_' . $option->getId()]->getValue();
+                            } else {
+                                $value = null;
+                            }
+                            if ($option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN) {
+                                $value = $opt[$value]->getTitle();
+                            }
+                            if ($option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX || $option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE) {
+                                $value = explode(',', $value);
+                                foreach ($value as $key => $val) {
+                                    $value[$key] = $opt[$val]->getTitle();
+                                }
+                                $value = implode(',', $value);
+                            }
 
-		  				$individualOptions[] = array('title'=>$option->getTitle(),'value'=>$value);
-		  			}
-		  			
-		  		}
+                            $individualOptions[] = array('title' => $option->getTitle(), 'value' => $value);
+                        }
+
+                    }
+                }
 	  		}
 	  		$this->_modelData->setIndividualOptions($individualOptions);
 	  		
