@@ -6878,7 +6878,14 @@ class TCPDF {
 			}
 			// check if file exist and it is valid
 			if (!@TCPDF_STATIC::file_exists($file)) {
-				return false;
+                // try to encode spaces on filename
+                $tfile = str_replace(' ', '%20', $file);
+                if (@file_exists($tfile)) {
+                    $file = $tfile;
+                }
+                else {
+                    return false;
+                }
 			}
 			if (($imsize = @getimagesize($file)) === FALSE) {
 				if (in_array($file, $this->imagekeys)) {
