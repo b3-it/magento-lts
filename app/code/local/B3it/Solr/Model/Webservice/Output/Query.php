@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @category    B3it Solr
  * @package     B3it_Solr
@@ -33,64 +34,63 @@ class B3it_Solr_Model_Webservice_Output_Query
         $storeId = Mage::app()->getStore()->getId();
 
         // Search Query
-        $res = "?q=".$this->_query;
+        $res = "?q=" . $this->_query;
 
-        if(($fuzzy = Mage::getStoreConfig('solr_general/search_options/fuzzy_distance', $storeId)) > 0){
-            $res .= '~'.$fuzzy;
+        if (($fuzzy = Mage::getStoreConfig('solr_general/search_options/fuzzy_distance', $storeId)) > 0) {
+            $res .= '~' . $fuzzy;
         }
 
-        if(Mage::getStoreConfig('solr_general/spellcheck_options/spellcheck_active', $storeId)){
+        if (Mage::getStoreConfig('solr_general/spellcheck_options/spellcheck_active', $storeId)) {
             $res .= '&spellcheck=true';
-            if(($spellcheck_results = Mage::getStoreConfig('solr_general/spellcheck_options/spellcheck_results', $storeId)) > 0){
-                $res .= '&spellcheck.maxResultsForSuggest='.$spellcheck_results;
+            if (($spellcheck_results = Mage::getStoreConfig('solr_general/spellcheck_options/spellcheck_results', $storeId)) > 0) {
+                $res .= '&spellcheck.maxResultsForSuggest=' . $spellcheck_results;
             }
         }
 
         //paging
-        $res .= "&start=".$this->_start;
-        $res .= "&rows=".$this->_rows;
+        $res .= "&start=" . $this->_start;
+        $res .= "&rows=" . $this->_rows;
 
         // Json
         $res .= "&wt=json";
 
         // Filter the current ShopView to prevent errors by wrong configuration
-        $res .= "&fq=store_id:".$storeId;
+        $res .= "&fq=store_id:" . $storeId;
 
         // Faceting on / off
-        if(!empty($this->_facet_fields || !empty($this->_facets_range_fields))){
+        if (!empty($this->_facet_fields || !empty($this->_facets_range_fields))) {
             $res .= "&facet=true";
-            $res .= "&facet.mincount=".$this->_min_count;
+            $res .= "&facet.mincount=" . $this->_min_count;
         }
 
         // Faceting
-        if(!empty($this->_facet_fields)){
+        if (!empty($this->_facet_fields)) {
 
-            foreach($this->_facet_fields as $facet){
-                $res .= "&facet.field="."{!ex=dt}".$facet;
+            foreach ($this->_facet_fields as $facet) {
+                $res .= "&facet.field=" . "{!ex=dt}" . $facet;
             }
         }
 
         // Filter
-        if(!empty($this->_filters)){
+        if (!empty($this->_filters)) {
             $buffer = null;
-            foreach($this->_filters as $filter){
-                if(empty($filter['field']) || empty($filter['value']) || $filter['value'] == '%2A'){
+            foreach ($this->_filters as $filter) {
+                if (empty($filter['field']) || empty($filter['value']) || $filter['value'] == '%2A') {
                     continue;
                 }
-                if($buffer == $filter['field']){
-                    $res = substr($res, 0 ,-1);
-                    if(strpos($filter['field'], '_decimal') !== false){
-                        $res .= "+OR+".$filter['value'].")";
-                    } else{
-                        $res .= "+OR+\"".$filter['value']."\")";
+                if ($buffer == $filter['field']) {
+                    $res = substr($res, 0, -1);
+                    if (strpos($filter['field'], '_decimal') !== false) {
+                        $res .= "+OR+" . $filter['value'] . ")";
+                    } else {
+                        $res .= "+OR+\"" . $filter['value'] . "\")";
                     }
 
-                }
-                else{
-                    if(strpos($filter['field'], '_decimal') !== false){
-                        $res .= "&fq={!tag=dt}".$filter['field'].":(".$filter['value'].")";
-                    } else{
-                        $res .= "&fq={!tag=dt}".$filter['field'].":(\"".$filter['value']."\")";
+                } else {
+                    if (strpos($filter['field'], '_decimal') !== false) {
+                        $res .= "&fq={!tag=dt}" . $filter['field'] . ":(" . $filter['value'] . ")";
+                    } else {
+                        $res .= "&fq={!tag=dt}" . $filter['field'] . ":(\"" . $filter['value'] . "\")";
                     }
                 }
                 $buffer = $filter['field'];
@@ -98,51 +98,49 @@ class B3it_Solr_Model_Webservice_Output_Query
         }
 
         // Result Fields
-        if(count($this->_fields) > 0) {
-            $res .= "&fl=". implode(',', $this->_fields);
+        if (count($this->_fields) > 0) {
+            $res .= "&fl=" . implode(',', $this->_fields);
         }
 
-        if($this->_edismax == true){
+        if ($this->_edismax == true) {
             $res .= "&defType=edismax";
         }
 
         // Edismax Fields
-        if($this->_edismax == true && !empty($this->_edismax_fields)){
+        if ($this->_edismax == true && !empty($this->_edismax_fields)) {
             $first = true;
-            foreach($this->_edismax_fields as $field){
-                if(array_key_exists($field, $this->_edismax_phrase_boost)){
-                    $field .= '^'.$this->_edismax_phrase_boost[$field];
-                }
-                else{
+            foreach ($this->_edismax_fields as $field) {
+                if (array_key_exists($field, $this->_edismax_phrase_boost)) {
+                    $field .= '^' . $this->_edismax_phrase_boost[$field];
+                } else {
                     $field .= '^0.5';
                 }
-                if($first){
-                    $res .= "&qf=".$field;
+                if ($first) {
+                    $res .= "&qf=" . $field;
                     $first = false;
-                }
-                else{
-                    $res .= "+".$field;
+                } else {
+                    $res .= "+" . $field;
                 }
             }
 
-            $res .= '+spelling^10&bq=spelling:'.$this->_query;
+            $res .= '+spelling^10&bq=spelling:' . $this->_query;
         }
 
         //OrderDirection without Order
-        if(($this->_order == null || $this->_order == 'relevance') && $this->_orderDirection == 'asc'){
+        if (($this->_order == null || $this->_order == 'relevance') && $this->_orderDirection == 'asc') {
             $res .= '&sort=score+desc';
         }
-        if(($this->_order == null || $this->_order == 'relevance') && $this->_orderDirection == 'desc'){
+        if (($this->_order == null || $this->_order == 'relevance') && $this->_orderDirection == 'desc') {
             $res .= '&sort=score+asc';
         }
 
         // Order
-        if($this->_order != null && array_key_exists($this->_order, $this->_edismax_fields)){
-            if($this->_orderDirection == null){
+        if ($this->_order != null && array_key_exists($this->_order, $this->_edismax_fields)) {
+            if ($this->_orderDirection == null) {
                 $this->_orderDirection = 'asc';
             }
 
-            if(strpos(($string_type = $this->_edismax_fields[$this->_order]), '_string') !== false){
+            if (strpos(($string_type = $this->_edismax_fields[$this->_order]), '_string') !== false) {
                 $res .= '&sort=' . $string_type . '_facet' . '+' . $this->_orderDirection;
             }
             $res .= '&sort=' . $this->_edismax_fields[$this->_order] . '+' . $this->_orderDirection;
@@ -235,7 +233,7 @@ class B3it_Solr_Model_Webservice_Output_Query
      */
     public function setStart($start)
     {
-        if($start > 0) {
+        if ($start > 0) {
             $this->_start = $start;
         }
         return $this;
@@ -247,7 +245,7 @@ class B3it_Solr_Model_Webservice_Output_Query
      */
     public function setRows($rows)
     {
-        if($rows > 0) {
+        if ($rows > 0) {
             $this->_rows = $rows;
         }
         return $this;
