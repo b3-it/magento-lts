@@ -6883,9 +6883,10 @@ class TCPDF {
                 if (@file_exists($tfile)) {
                     $file = $tfile;
                 }
-                else {
-                    return false;
-                }
+                // tcpdf:: Problem mit png + Alpha Kanal, Image wird mehrfach prozessiert und ist beim 3 Durchlauf da temporär nicht mehr da
+                //else {
+                //    return false;
+                //}
 			}
 			if (($imsize = @getimagesize($file)) === FALSE) {
 				if (in_array($file, $this->imagekeys)) {
