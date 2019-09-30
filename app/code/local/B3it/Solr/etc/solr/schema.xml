@@ -25,6 +25,9 @@
     <!-- store id of the product/page -->
     <field name="store_id" type="plong"/>
 
+    <!-- group ids of hidden groups -->
+    <field name="hidden_group_ids" type="pints"/>
+
     <!-- field for suggester-->
     <field name="name" type="string"/>
 
