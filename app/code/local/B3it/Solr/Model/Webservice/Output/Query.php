@@ -11,6 +11,8 @@
 class B3it_Solr_Model_Webservice_Output_Query
 {
     protected $_query = "";
+    protected $_group_id = 0;
+
     protected $_start = 0;
     protected $_rows = 50;
     protected $_min_count = 1;
@@ -53,6 +55,12 @@ class B3it_Solr_Model_Webservice_Output_Query
 
         // Json
         $res .= "&wt=json";
+
+        // Filter hidden groups (first filter query, because negative)
+        if (Mage::helper('core')->isModuleEnabled('Netzarbeiter_GroupsCatalog2')) {
+            $this->setGroupId();
+            $res .= "&fq=-hidden_group_ids:" . $this->getGroupId();
+        }
 
         // Filter the current ShopView to prevent errors by wrong configuration
         $res .= "&fq=store_id:" . $storeId;
@@ -166,6 +174,29 @@ class B3it_Solr_Model_Webservice_Output_Query
     public function setQuery($query)
     {
         $this->_query = urlencode($query);
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGroupId(): int
+    {
+        return $this->_group_id;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setGroupId()
+    {
+        /** @var Mage_Customer_Model_Session $session */
+        $session = Mage::getSingleton('customer/session');
+
+        if($session->isLoggedIn()){
+            $this->_group_id = $session->getCustomerGroupId();
+        }
+
         return $this;
     }
 
