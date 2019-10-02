@@ -205,6 +205,46 @@ class B3it_Solr_Model_Index_Product
         $doc->addField('store_id', $storeId);
         $doc->addField('name', $product->getName());
 
+        // Module GroupsCatalog2 (hide product for group) - add hidden-group-id's to solr
+        if (Mage::helper('core')->isModuleEnabled('Netzarbeiter_GroupsCatalog2')) {
+            $groupsCatalog2_helper = Mage::helper('netzarbeiter_groupscatalog2');
+            $group_ids = $product->getData($groupsCatalog2_helper::HIDE_GROUPS_ATTRIBUTE);
+            $product_mode = Mage::getStoreConfig($groupsCatalog2_helper::XML_CONFIG_PRODUCT_MODE, $storeId);
+
+            // Product Mode "show" -> multiselect "hide", None first priority, Other second priority and default last priority
+            if ($product_mode === $groupsCatalog2_helper::MODE_SHOW_BY_DEFAULT) {
+                if (in_array($groupsCatalog2_helper::USE_DEFAULT, $group_ids)) {
+                    $default_options = Mage::getStoreConfig($groupsCatalog2_helper::XML_CONFIG_PRODUCT_DEFAULT_PREFIX . $groupsCatalog2_helper::MODE_HIDE_BY_DEFAULT, $storeId);
+                    $group_ids = is_array($default_options) ? $default_options : [$default_options];
+                }
+                if (!in_array($groupsCatalog2_helper::USE_NONE, $group_ids)) {
+                    foreach ($group_ids as $group_id) {
+                        $doc->addField('hidden_group_ids', $group_id);
+                    }
+                }
+            }
+            // Product Mode "hide" -> multiselect "show", None first priority, Other second priority and default last priority
+            //
+            if ($product_mode === $groupsCatalog2_helper::MODE_HIDE_BY_DEFAULT) {
+                $available_group_ids = $groupsCatalog2_helper->getCustomerGroupIds();
+                if (in_array($groupsCatalog2_helper::USE_DEFAULT, $group_ids)) {
+                    $default_options = Mage::getStoreConfig($groupsCatalog2_helper::XML_CONFIG_PRODUCT_DEFAULT_PREFIX . $groupsCatalog2_helper::MODE_SHOW_BY_DEFAULT, $storeId);
+                    $group_ids = is_array($default_options) ? $default_options : [$default_options];
+                }
+                if (in_array($groupsCatalog2_helper::USE_NONE, $group_ids)) {
+                    foreach ($available_group_ids as $group_id) {
+                        $doc->addField('hidden_group_ids', $group_id);
+                    }
+                } else {
+                    foreach ($available_group_ids as $group_id) {
+                        if (!in_array($group_id, $group_ids)) {
+                            $doc->addField('hidden_group_ids', $group_id);
+                        }
+                    }
+                }
+            }
+        }
+
         foreach ($this->searchData as $search) {
 
             $attribute = $search->getData('attribute_code');
