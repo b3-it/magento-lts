@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -52,9 +52,9 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             ->setFormCode('adminhtml_customer')
             ->initDefaultValues();
 
-        $fieldset = $form->addFieldset('base_fieldset',
-            array('legend'=>Mage::helper('customer')->__('Account Information'))
-        );
+        $fieldset = $form->addFieldset('base_fieldset', array(
+            'legend' => Mage::helper('customer')->__('Account Information')
+        ));
 
         $attributes = $customerForm->getAttributes();
         foreach ($attributes as $attribute) {
@@ -158,9 +158,10 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             }
         }
 
+        $minPasswordLength = Mage::getModel('customer/customer')->getMinPasswordLength();
         if ($customer->getId()) {
             if (!$customer->isReadonly()) {
-                // add password management fieldset
+                // Add password management fieldset
                 $newFieldset = $form->addFieldset(
                     'password_fieldset',
                     array('legend'=>Mage::helper('customer')->__('Password Management'))
@@ -170,12 +171,14 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
                     array(
                         'label' => Mage::helper('customer')->__('New Password'),
                         'name'  => 'new_password',
-                        'class' => 'validate-new-password'
+                        'class' => 'validate-new-password min-pass-length-' . $minPasswordLength,
+                        'note' => Mage::helper('adminhtml')
+                            ->__('Password must be at least of %d characters.', $minPasswordLength),
                     )
                 );
                 $field->setRenderer($this->getLayout()->createBlock('adminhtml/customer_edit_renderer_newpass'));
 
-                // prepare customer confirmation control (only for existing customers)
+                // Prepare customer confirmation control (only for existing customers)
                 $confirmationKey = $customer->getConfirmation();
                 if ($confirmationKey || $customer->isConfirmationRequired()) {
                     $confirmationAttribute = $customer->getAttribute('confirmation');
@@ -186,10 +189,10 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
                         'name'  => 'confirmation',
                         'label' => Mage::helper('customer')->__($confirmationAttribute->getFrontendLabel()),
                     ))->setEntityAttribute($confirmationAttribute)
-                      ->setValues(array('' => Mage::helper('customer')->__('Confirmed'), $confirmationKey => Mage::helper('customer')->__('Not confirmed')));
+                        ->setValues(array('' => 'Confirmed', $confirmationKey => 'Not confirmed'));
 
-                    // prepare send welcome email checkbox, if customer is not confirmed
-                    // no need to add it, if website id is empty
+                    // Prepare send welcome email checkbox if customer is not confirmed
+                    // no need to add it, if website ID is empty
                     if ($customer->getConfirmation() && $customer->getWebsiteId()) {
                         $fieldset->addField('sendemail', 'checkbox', array(
                             'name'  => 'sendemail',
@@ -219,14 +222,16 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             $field = $newFieldset->addField('password', 'text',
                 array(
                     'label' => Mage::helper('customer')->__('Password'),
-                    'class' => 'input-text required-entry validate-password',
+                    'class' => 'input-text required-entry validate-password min-pass-length-' . $minPasswordLength,
                     'name'  => 'password',
-                    'required' => true
+                    'required' => true,
+                    'note' => Mage::helper('adminhtml')
+                        ->__('Password must be at least of %d characters.', $minPasswordLength),
                 )
             );
             $field->setRenderer($this->getLayout()->createBlock('adminhtml/customer_edit_renderer_newpass'));
 
-            // prepare send welcome email checkbox
+            // Prepare send welcome email checkbox
             $fieldset->addField('sendemail', 'checkbox', array(
                 'label' => Mage::helper('customer')->__('Send Welcome Email'),
                 'name'  => 'sendemail',
@@ -242,7 +247,7 @@ class Egovs_Base_Block_Adminhtml_Customer_Edit_Tab_Account extends Mage_Adminhtm
             }
         }
 
-        // Make sendemail and sendmail_store_id disabled, if website_id has empty value
+        // Make sendemail and sendmail_store_id disabled if website_id has empty value
         $isSingleMode = Mage::app()->isSingleStoreMode();
         $sendEmailId = $isSingleMode ? 'sendemail' : 'sendemail_store_id';
         $sendEmail = $form->getElement($sendEmailId);

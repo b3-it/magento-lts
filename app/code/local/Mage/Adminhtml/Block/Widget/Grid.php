@@ -466,7 +466,7 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
     {
         if ($this->getCollection()) {
             $field = ( $column->getFilterIndex() ) ? $column->getFilterIndex() : $column->getIndex();
-            if ($column->getFilterConditionCallback()) {
+            if ($column->getFilterConditionCallback() && $column->getFilterConditionCallback()[0] instanceof self) {
                 call_user_func($column->getFilterConditionCallback(), $this->getCollection(), $column);
             } else {
                 $cond = $column->getFilter()->getCondition();
@@ -1035,13 +1035,14 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
         //Content mit UTF-8 BOM
         $io->streamWrite(chr(239).chr(187).chr(191));
         
-        $io->streamWriteCsv($this->_getExportHeaders(),$this->_CsvDelimiter);
+        $io->streamWriteCsv($this->_getExportHeaders(), $this->_CsvDelimiter);
 
         $this->_exportIterateCollection('_exportCsvItem', array($io));
 
         if ($this->getCountTotals()) {
             $io->streamWriteCsv(
-                Mage::helper("core")->getEscapedCSVData($this->_getExportTotals())
+                Mage::helper("core")->getEscapedCSVData($this->_getExportTotals()),
+                $this->_CsvDelimiter
             );
         }
 
