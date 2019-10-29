@@ -50,11 +50,6 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     const XML_PATH_CHANGED_PASSWORD_OR_EMAIL_IDENTITY = 'customer/changed_account/password_or_email_identity';
     /**#@-*/
 
-    /**
-     * Maximum Password Length
-     */
-    const MAXIMUM_PASSWORD_LENGTH = 256;
-
     /**#@+
      * Codes of exceptions related to customer model
      */
