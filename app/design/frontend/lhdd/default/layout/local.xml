@@ -18,6 +18,13 @@
         </reference>
     </default>
 
+    <checkout_cart_index>
+        <!-- Rabattcodes im Warenkorb raus -->
+        <reference name="checkout.cart">
+            <action method="unsetChild"><name>coupon</name></action>
+        </reference>
+    </checkout_cart_index>
+
     <catalogsearch_advanced_index translate="label">
         <label>Advanced Search Form</label>
         <!-- Mage_Catalogsearch -->

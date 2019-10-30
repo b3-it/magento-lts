@@ -46,6 +46,10 @@
 	@include messages-formater($fehler-text-color, $fehler-back-color);
 }
 
+p.availability {
+	display: none;
+}
+
 .col-main{
 	.product-name > h1 {
 		border-bottom: $border-width solid $grundfarbe1;
@@ -62,7 +66,9 @@
 		margin-bottom: $default-margin;
 	}
 
-	.product-options-bottom .add-to-links {
+	.product-options-bottom .add-to-links,
+	ul.add-to-links .separator,
+	ul.add-to-links .link-compare {
 		display: none;
 	}
 

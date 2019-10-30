@@ -186,19 +186,13 @@
 
 	.product-name {
 		font-size: $produkt-titel-schrift;
-		height: $produkt-titel-hoehe;
-		overflow: hidden;
 		line-height: normal;
 
 		a {
-			@include word-wrap;
 			line-height: $produkt-titel-zeile;
 			display: block;
 			position: relative;
-
-			&:after {
-				@include fading-left-right(20%, $grundfarbe-hell);
-			}
+			white-space: initial;
 		}
 	}
 
