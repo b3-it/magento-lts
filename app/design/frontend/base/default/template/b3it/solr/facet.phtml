@@ -1,25 +1,12 @@
 <?php /** @var B3it_Solr_Block_Facet $this */ ?>
 
-<?php if(!empty($this->getFacetNames()) || Mage::getStoreConfig('catalog/solr_search/search_cms')): ?>
+<?php if(!empty($this->getFacetNames())): ?>
 <div class="solr-facet">
 
     <h3><?php echo $this->__('Filter Results'); ?></h3>
 
     <form id="solr_search_facet_form" action="" method="get">
         <fieldset>
-            <?php if(Mage::getStoreConfig('catalog/solr_search/search_cms')): ?>
-            <div id="type" class="solr-facet-groupbox" data-type="accordion">
-                <h3 aria-selected="true" aria-expanded="true">
-                    <span></span>
-                    <?php echo $this->__('Type'); ?>
-                </h3>
-                <div aria-hidden="false">
-                    <div class="solr-facet-input"><input type="radio" name="type" value="*" checked="checked"><span><?php echo $this->__('All'); ?></span></div>
-                    <div class="solr-facet-input"><input type="radio" name="type" value="product"><span><?php echo $this->__('Product'); ?></span></div>
-                    <div class="solr-facet-input"><input type="radio" name="type" value="page"><span><?php echo $this->__('Page'); ?></span></div>
-                </div>
-            </div>
-            <?php endif; ?>
             <?php foreach ($this->getFacetNames() as $facet =>$label) :?>
             <div id="<?php echo $facet ?>" class="solr-facet-groupbox" data-type="accordion">
                 <h3>
