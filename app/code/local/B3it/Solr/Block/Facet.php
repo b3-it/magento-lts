@@ -131,7 +131,7 @@ class B3it_Solr_Block_Facet extends Mage_Core_Block_Template
                     $countK += 1 * $resultSet[$key];
                 }
             }
-            if (Mage::getStoreConfig('solr_general/price_range_options/price_range_empty_active') || $countK > 0) {
+            if (Mage::getStoreConfig('solr_general/price_range_options/price_range_empty_active', $storeId) || $countK > 0) {
                 $classes[] = ['min' => $minK, 'max' => $maxK];
             }
         }
@@ -155,7 +155,7 @@ class B3it_Solr_Block_Facet extends Mage_Core_Block_Template
         }
 
         $classes = [];
-        if (Mage::getStoreConfig('solr_general/price_range_options/price_range_empty_active')) {
+        if (Mage::getStoreConfig('solr_general/price_range_options/price_range_empty_active', $storeId)) {
             foreach ($ranges as $range) {
                 $classes[] = ['min' => $range['price_min'], 'max' => $range['price_max']];
             }
