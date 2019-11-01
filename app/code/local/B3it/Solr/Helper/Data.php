@@ -27,7 +27,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 
     /**
      * @param $data
-     * @return \Httpful\Response|null
+     * @return bool
      */
     public function toIndex($data)
     {
@@ -218,11 +218,12 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return string
+     * @return mixed|string
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function _getAdminEmail()
     {
-        $email = Mage::getStoreConfig('solr_security/solr_connection/email_adress');
+        $email = Mage::getStoreConfig('solr_security/solr_connection/email_adress', mage::app()->getStore()->getId());
         if (strlen(trim($email)) > 0) {
             return $email;
         }
@@ -230,11 +231,12 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return string
+     * @return mixed|string
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function _getSenderEmail()
     {
-        $email = Mage::getStoreConfig('solr_security/solr_connection/email_sender');
+        $email = Mage::getStoreConfig('solr_security/solr_connection/email_sender', mage::app()->getStore()->getId());
         if (strlen(trim($email)) > 0) {
             return $email;
         }
@@ -242,11 +244,12 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return string
+     * @return mixed|string
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function _getSenderName()
     {
-        $name = Mage::getStoreConfig('solr_security/solr_connection/email_sender_name');
+        $name = Mage::getStoreConfig('solr_security/solr_connection/email_sender_name', mage::app()->getStore()->getId());
         if (strlen(trim($name)) > 0) {
             return $name;
         }
@@ -256,6 +259,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * @param $body
      * @param string $subject
+     * @throws Mage_Core_Model_Store_Exception
      */
     public function sendMailToAdmin($body, $subject = "Solr Fehler - Verbindungstest")
     {
