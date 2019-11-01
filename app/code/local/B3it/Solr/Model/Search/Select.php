@@ -95,10 +95,10 @@ class B3it_Solr_Model_Search_Select
             $fields[$attr->getData('attribute_code')] = $attr->getData('attribute_code') . $solrHelper->getDynamicField($attr);
         }
 
-        if (Mage::getStoreConfig('solr_general/index_options/search_cms', mage::app()->getStore()->getId())) {
+        /*if (Mage::getStoreConfig('solr_general/index_options/search_cms', mage::app()->getStore()->getId())) {
             $fields[] = "title_string";
             $fields[] = "content_text";
-        }
+        }*/
         return $fields;
     }
 
