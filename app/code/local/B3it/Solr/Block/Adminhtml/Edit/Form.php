@@ -39,10 +39,10 @@ class B3it_Solr_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_Widget_Fo
     public function getTypes()
     {
         $types = [];
-        if (Mage::getStoreConfig('solr_general/index_options/search_cms', Mage::app()->getStore()->getId())) {
+        /*if (Mage::getStoreConfig('solr_general/index_options/search_cms', Mage::app()->getStore()->getId())) {
             $types[] = ['value' => '0', 'label' => 'All'];
             $types[] = ['value' => '2', 'label' => 'Pages'];
-        }
+        }*/
         $types[] = ['value' => '1', 'label' => 'Products'];
         return $types;
     }
