@@ -113,7 +113,7 @@ class B3it_Solr_Model_Search_Select
 
         $fields = [];
         foreach ($this->facetConfiguration as $field) {
-            if (isset($field['attribute']) && isset($field['priority']) && $field['priority'] != "") {
+            if (isset($field['attribute'], $field['priority']) && $field['priority'] != '') {
                 $fields[$field['attribute'] . $solrHelper->getDynamicField($field['attribute'])] = $field['priority'];
             }
         }
@@ -131,7 +131,7 @@ class B3it_Solr_Model_Search_Select
 
         $facets = [];
         foreach ($this->facetConfiguration as $facet) {
-            if (isset($facet['attribute']) && isset($facet['filter']) && $facet['filter'] != 2) {
+            if (isset($facet['attribute'], $facet['filter']) && $facet['filter'] != 2) {
                 if ($solrHelper->getDynamicField($facet['attribute']) == '_string') {
                     $facets[] = $facet['attribute'] . $solrHelper->getDynamicField($facet['attribute']) . '_facet';
                 } else {
@@ -229,9 +229,9 @@ class B3it_Solr_Model_Search_Select
                 $dynamic[] = array('field' => $facet['field'] . $type, 'value' => $value);
             }
             return $dynamic;
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     /**

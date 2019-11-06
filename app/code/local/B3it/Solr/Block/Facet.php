@@ -69,8 +69,6 @@ class B3it_Solr_Block_Facet extends Mage_Core_Block_Template
         if ($helper->getDynamicField($key) != '_decimal') {
             // if field not decimal, break
             return [];
-        } else {
-            unset($helper);
         }
 
         try {
@@ -97,9 +95,9 @@ class B3it_Solr_Block_Facet extends Mage_Core_Block_Template
 
         if (Mage::getStoreConfig('solr_general/price_range_options/custom_price_range_active', $storeId)) {
             return $this->_getCustomPriceRange($resultValues, $storeId);
-        } else {
-            return $this->_getDefaultPriceRange($resultValues, $resultSet, $storeId);
         }
+
+        return $this->_getDefaultPriceRange($resultValues, $resultSet, $storeId);
     }
 
     /**
