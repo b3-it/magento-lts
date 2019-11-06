@@ -27,6 +27,11 @@
 // Change current directory to the directory of current script
 chdir(dirname(__FILE__));
 
+$updateFile = 'update.flag';
+if (!file_exists($updateFile)) {
+    exit;
+}
+
 require 'app/bootstrap.php';
 require 'app/Mage.php';
 
