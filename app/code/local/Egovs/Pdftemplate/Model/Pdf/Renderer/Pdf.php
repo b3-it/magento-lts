@@ -100,7 +100,7 @@ class Egovs_Pdftemplate_Model_Pdf_Renderer_Pdf extends TCPDF
     {
     	if($this->FooterSection)
     	{
-    		if(($this->FooterSection->getOccurrence() == 0) || ($this->_PagesSinceStart == 0) )
+    		if(($this->FooterSection->getOccurrence() == 0) || ($this->_PagesSinceStart == 1) )
     		{
 		    	$html = $this->FooterSection->getContent();
 				$left = intval($this->FooterSection->getLeft());
