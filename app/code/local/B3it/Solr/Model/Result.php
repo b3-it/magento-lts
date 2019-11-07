@@ -14,59 +14,66 @@ class B3it_Solr_Model_Result
     protected $result;
 
     /** @var array */
-    protected $_list = array();
+    protected $_list = [];
 
     /** @var array */
-    protected $_facetList = array();
+    protected $_facetList = [];
 
     /** @var string */
-    protected $_query = null;
+    protected $_query;
 
     /** @var int */
-    protected $_count = null;
+    protected $_count;
 
     /** @var int */
-    protected $_start = null;
+    protected $_start;
 
     /** @var int */
-    protected $_rows = null;
+    protected $_rows;
 
     /** @var array */
-    protected $suggestion = array();
+    protected $_docs = [];
+
+    /** @var array */
+    protected $suggestion = [];
 
     /**
      *
      */
     public function load()
     {
-        $this->_start = isset($this->_getResponseHeader()->start) ? $this->_getResponseHeader()->start : 0;
-        $this->_rows = isset($this->_getResponseHeader()->rows) ? $this->_getResponseHeader()->rows : 0;
         $this->_query = Mage::getSingleton('customer/session')->getData('solr_q');
-        $this->_count = isset($this->_getResponseContent()->numFound) ? $this->_getResponseContent()->numFound : 0;
-        $this->suggestion = isset($this->_getSuggestionContent()->suggestion) ? $this->_getSuggestionContent()->suggestion : array();
-        $docs = isset($this->_getResponseContent()->docs) ? $this->_getResponseContent()->docs : array();
 
-        foreach ($docs as $key => $doc) {
+        if (!is_null($header = $this->_getResponseHeader())) {
+            $this->_start = $header->start ?? 0;
+            $this->_rows = $header->rows ?? 0;
+            unset($header);
+        }
 
+        if (!is_null($content = $this->_getResponseContent())) {
+            $this->_count = $content->numFound ?? 0;
+            $this->suggestion = $content->suggestion ?? [];
+            $this->_docs = $content->docs ?? [];
+            unset($content);
+        }
+
+        foreach ($this->_docs as $doc) {
             if (!empty($doc->db_id) && !empty($doc->type)) {
                 /** @var B3it_Solr_Model_Result_Item $resultItem */
                 $resultItem = Mage::getModel('b3it_solr/result_item');
                 $resultItem->setId($doc->db_id);
                 $resultItem->setType($doc->type);
                 $this->_list[] = $resultItem;
-            } else {
-                continue;
             }
         }
 
         /* Facets */
-        $facetsDefault = (!empty($this->_getFacetCount()->facet_fields)) ? $this->_getFacetCount()->facet_fields : array();
+        $facetsDefault = $this->_getFacetCount()->facet_fields ?? [];
 
         foreach ($facetsDefault as $key => $facet) {
-            if (empty($facet)) {
-                continue;
+            if (!empty($facet)) {
+                $this->_facetList[preg_replace(array('/_decimal/', '/_text/', '/_string/', '/_date/', '/_facet/'), '', $key)] = $facet;
             }
-            $this->_facetList[preg_replace(array('/_decimal/', '/_text/', '/_string/', '/_date/', '/_facet/'), '', $key)] = $facet;
         }
     }
 
@@ -75,7 +82,7 @@ class B3it_Solr_Model_Result
      */
     protected function _getFacetCount()
     {
-        return (!empty($this->result->facet_counts)) ? $this->result->facet_counts : null;
+        return $this->result->facet_counts ?? null;
     }
 
     /**
@@ -83,7 +90,7 @@ class B3it_Solr_Model_Result
      */
     protected function _getResponseHeader()
     {
-        return (!empty($this->result->responseHeader->params)) ? $this->result->responseHeader->params : null;
+        return $this->result->responseHeader->params ?? null;
     }
 
     /**
@@ -91,7 +98,7 @@ class B3it_Solr_Model_Result
      */
     protected function _getResponseContent()
     {
-        return (!empty($this->result->response)) ? $this->result->response : null;
+        return $this->result->response ?? null;
     }
 
     /**
@@ -99,7 +106,7 @@ class B3it_Solr_Model_Result
      */
     protected function _getSuggestionContent()
     {
-        return (!empty($this->result->spellcheck->suggestions[1])) ? $this->result->spellcheck->suggestions[1] : null;
+        return $this->result->spellcheck->suggestions[1] ?? null;
     }
 
     /**
