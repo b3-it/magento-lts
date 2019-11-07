@@ -38,7 +38,7 @@ class B3it_Solr_FacetController extends Mage_Core_Controller_Front_Action
 
         try {
             // If No query is given (index bot, set empty result)
-            if(mb_strlen($this->_query) > 0){
+            if($this->_query != ''){
                 $model->setResult($this->_searchHandler->sendQuery());
             } else {
                 $model->setResult(new stdClass());

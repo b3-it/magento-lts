@@ -57,7 +57,7 @@ class B3it_Solr_Model_Search_Select
             $q = mb_substr($q, 0, $length);
         }
 
-        $q = strip_tags(html_entity_decode($q));
+        $q = strip_tags(html_entity_decode(trim($q)));
         $q = addcslashes($q, '+-!(){}[]^"~*?:\\/|&');
         return $q;
     }
@@ -81,7 +81,6 @@ class B3it_Solr_Model_Search_Select
     /**
      * @return array
      * @throws Mage_Core_Exception
-     * @throws Mage_Core_Model_Store_Exception
      */
     public function getEdismaxFields()
     {
