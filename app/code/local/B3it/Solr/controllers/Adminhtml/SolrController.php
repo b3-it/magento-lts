@@ -54,7 +54,7 @@ class B3it_Solr_Adminhtml_SolrController extends Mage_Adminhtml_Controller_Actio
             $singleton->addError(Mage::helper('b3it_solr')->__('Unknown type, please try again.'));
         }
 
-        $this->getResponse()->setRedirect($this->getUrl("*/*/"));
+        $this->getResponse()->setRedirect($this->getUrl('*/*/'));
     }
 
     /**
@@ -82,7 +82,7 @@ class B3it_Solr_Adminhtml_SolrController extends Mage_Adminhtml_Controller_Actio
             $singleton->addError(Mage::helper('b3it_solr')->__('Unknown type, please try again.'));
         }
 
-        $this->getResponse()->setRedirect($this->getUrl("*/*/"));
+        $this->getResponse()->setRedirect($this->getUrl('*/*/'));
     }
 
     /**

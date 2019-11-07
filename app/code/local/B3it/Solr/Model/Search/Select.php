@@ -91,7 +91,8 @@ class B3it_Solr_Model_Search_Select
 
         $fields = [];
         foreach ($indexProduct->getSearchableAttributes() as $attr) {
-            $fields[$attr->getData('attribute_code')] = $attr->getData('attribute_code') . $solrHelper->getDynamicField($attr);
+            $code = $attr->getData('attribute_code');
+            $fields[$code] = $code . $solrHelper->getDynamicField($attr);
         }
 
         /*if (Mage::getStoreConfig('solr_general/index_options/search_cms', mage::app()->getStore()->getId())) {
@@ -160,7 +161,7 @@ class B3it_Solr_Model_Search_Select
      */
     public function SetPaging($start, $rows, $page)
     {
-        if (!is_null($page) && is_array($page)) {
+        if (is_array($page)) {
             $rows = (array_key_exists('limiter', $page)) ? (int)$page['limiter'] : $rows;
             if (array_key_exists('pager', $page) && array_key_exists('current', $page)) {
 

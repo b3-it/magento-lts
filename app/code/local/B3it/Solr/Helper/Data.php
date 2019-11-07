@@ -173,10 +173,10 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
             $config = unserialize($config);
             if (is_array($config)) {
                 return $config;
-            } else {
-                return [];
             }
-        } else return [];
+        }
+
+        return [];
     }
 
     /**
@@ -203,18 +203,24 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 
             if ($input == 'select' || $input == 'boolean' || $input == 'text') {
                 return '_string';
-            } elseif ($type == 'decimal') {
-                return '_decimal';
-            } elseif ($input == 'date') {
-                return '_date';
-            } elseif ($input == 'textarea' || $input == 'multiselect') {
-                return '_text';
-            } else {
-                return '_UNIDENTIFIED_string';
             }
-        } else {
-            return '_empty';
+
+            if ($type == 'decimal') {
+                return '_decimal';
+            }
+
+            if ($input == 'date') {
+                return '_date';
+            }
+
+            if ($input == 'textarea' || $input == 'multiselect') {
+                return '_text';
+            }
+
+            return '_UNIDENTIFIED_string';
         }
+
+        return '_empty';
     }
 
     /**
@@ -224,7 +230,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getAdminEmail()
     {
         $email = Mage::getStoreConfig('solr_security/solr_connection/email_adress', mage::app()->getStore()->getId());
-        if (strlen(trim($email)) > 0) {
+        if (trim($email) !== '') {
             return $email;
         }
         return '';
@@ -237,7 +243,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getSenderEmail()
     {
         $email = Mage::getStoreConfig('solr_security/solr_connection/email_sender', mage::app()->getStore()->getId());
-        if (strlen(trim($email)) > 0) {
+        if (trim($email) !== '') {
             return $email;
         }
         return '';
@@ -250,7 +256,7 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getSenderName()
     {
         $name = Mage::getStoreConfig('solr_security/solr_connection/email_sender_name', mage::app()->getStore()->getId());
-        if (strlen(trim($name)) > 0) {
+        if (trim($name) !== '') {
             return $name;
         }
         return '';
@@ -261,9 +267,9 @@ class B3it_Solr_Helper_Data extends Mage_Core_Helper_Abstract
      * @param string $subject
      * @throws Mage_Core_Model_Store_Exception
      */
-    public function sendMailToAdmin($body, $subject = "Solr Fehler - Verbindungstest")
+    public function sendMailToAdmin($body, $subject = 'Solr Fehler - Verbindungstest')
     {
-        if (strlen($body) > 0) {
+        if ($body != '') {
             /** @var Mage_Core_Model_Email $mail */
             $mail = Mage::getModel('core/email');
             $mailTo = $this->_getAdminEmail();
