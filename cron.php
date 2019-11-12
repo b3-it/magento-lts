@@ -28,7 +28,7 @@
 chdir(dirname(__FILE__));
 
 $updateFile = 'update.flag';
-if (!file_exists($updateFile)) {
+if (file_exists($updateFile)) {
     exit;
 }
 
