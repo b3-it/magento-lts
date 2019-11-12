@@ -89,5 +89,6 @@ try {
     }
 } catch (Exception $e) {
     Mage::printException($e);
+    Mage::logException($e);
     exit(1);
 }
