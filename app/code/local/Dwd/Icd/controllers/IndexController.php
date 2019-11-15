@@ -112,7 +112,7 @@ class Dwd_Icd_IndexController extends Mage_Core_Controller_Front_Action
 			return array_shift($items);
 		} 	
 		
-		Mage::log('ICD Account could not loaded. CustomerId:' . $customer->getId() . '; Item: '. $itemId);
+		Mage::log('ICD Account could not loaded. CustomerId:' . $customer->getId() . '; Account ID: '. $accountId);
 		
 		return null;	
 		
