@@ -183,7 +183,15 @@
                                     <span>*</span>
                                     <?php echo $this->__('Password') ?>
                                 </label>
-                                <input type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo $this->quoteEscape($this->__('Password')) ?>" class="input-text required-entry validate-password" />
+                                <?php $minPasswordLength = max((int)$this->getCustomer()->getMinPasswordLength(), Mage_Core_Model_App::ABSOLUTE_MIN_PASSWORD_LENGTH); ?>
+                                <input type="password"
+                                       name="billing[customer_password]"
+                                       id="billing:customer_password"
+                                       title="<?php echo $this->quoteEscape($this->__('Password')) ?>"
+                                       class="input-text required-entry validate-password min-pass-length-<?php echo $minPasswordLength ?>" />
+                                <p class="form-instructions">
+                                    <?php echo Mage::helper('customer')->__('The minimum password length is %s', $minPasswordLength) ?>
+                                </p>
                             </div>
                             <div class="field">
                                 <label for="billing:confirm_password">

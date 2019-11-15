@@ -33,105 +33,114 @@
 ?>
 <div class="page-head-alt button-level">
     <h3><?php echo $this->__('Shopping Cart') ?></h3>
-    <?php if(!$this->hasError()): ?>
-    <ul class="checkout-types">
-        <?php echo $this->getChildHtml('top_methods') ?>
-    </ul>
+    <?php if (!$this->hasError()): ?>
+        <ul class="checkout-types">
+            <?php echo $this->getChildHtml('top_methods') ?>
+        </ul>
     <?php endif; ?>
 </div>
 
 <script type="text/javascript">
-function deleteAll(url)
-{
-	q = confirm("<?php echo Mage::helper('mpcheckout')->__('Delete All Items'); ?>?");
-	if(q == true)
-	{
-		window.location.href = url;
-	}
-}
+    function deleteAll(url) {
+        q = confirm("<?php echo Mage::helper('mpcheckout')->__('Delete All Items'); ?>?");
+        if (q == true) {
+            window.location.href = url;
+        }
+    }
 </script>
 
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <?php echo $this->getChildHtml('form_before') ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
-<table style="border:0;" id="shopping-cart-table" class="data-table box-table shopping-cart">
-    <col width="40" />
-    <col width="75" />
-    <col />
-<?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
-    <col width="1" />
-<?php endif ?>
-<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <col width="80" />
-<?php endif; ?>
-<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <col width="80" />
-<?php endif; ?>
-    <col width="1" />
-<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <col width="80" />
-<?php endif; ?>
-<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <col width="80" />
-<?php endif; ?>
+    <table style="border:0;" id="shopping-cart-table" class="data-table box-table shopping-cart">
+        <col width="40"/>
+        <col width="75"/>
+        <col/>
+        <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+            <col width="1"/>
+        <?php endif ?>
+        <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="80"/>
+        <?php endif; ?>
+        <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="80"/>
+        <?php endif; ?>
+        <col width="1"/>
+        <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="80"/>
+        <?php endif; ?>
+        <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="80"/>
+        <?php endif; ?>
 
-<?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
-    <thead>
+        <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+        <thead>
         <tr>
             <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Remove') ?></th>
             <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
             <th rowspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Product Name') ?></th>
             <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
-            <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Move to Wishlist') ?></th>
+                <th rowspan="<?php echo $mergedCells; ?>"
+                    class="a-center"><?php echo $this->__('Move to Wishlist') ?></th>
             <?php endif ?>
             <th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Unit Price') ?></th>
             <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
             <th class="a-center" colspan="<?php echo $mergedCells; ?>"><?php echo $this->__('Subtotal') ?></th>
         </tr>
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-        <tr>
-            <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
-            <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
-            <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
-            <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
-        </tr>
+            <tr>
+                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+            </tr>
         <?php endif; ?>
-    </thead>
-    <tfoot>
+        </thead>
+        <tfoot>
         <tr>
-        	<td class="a-center" id="_idDeleteAll">
-        		
-        	</td>
+            <td class="a-center" id="_idDeleteAll">
+
+            </td>
             <td colspan="100" class="a-right">
-                <button class="form-button-alt" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
-				<br />
-				<br />
-				<?php if($this->getContinueShoppingUrl()): ?>
-					<div style="float:left;">
-    		            <a href="<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>" class="button"><span><?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?></span></a>
-					</div>
-				<?php endif; ?>
+                <button class="form-button-alt" type="submit">
+                    <span><?php echo $this->__('Update Shopping Cart') ?></span></button>
+                <br/>
+                <br/>
+                <?php if ($this->getContinueShoppingUrl()): ?>
+                    <div style="float:left;">
+                        <a href="<?php echo Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl()) ?>"
+                           class="button"><span><?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?></span></a>
+                    </div>
+                <?php endif; ?>
 
-				<div style="float:right;">
-	  				<a href="<?php echo $this->getCheckoutUrl(); ?>"><?php echo $this->__('Checkout')?></a>
-				</div>
+                <div style="float:right;">
+                    <a href="<?php echo $this->getCheckoutUrl(); ?>"><?php echo $this->__('Checkout') ?></a>
+                </div>
 
-	  			<!-- TODO: egovs_multipage-checkout-url irgendwoher beziehen? url-helper hat nichts wirkliches im angebot -->
+                <!-- TODO: egovs_multipage-checkout-url irgendwoher beziehen? url-helper hat nichts wirkliches im angebot -->
             </td>
         </tr>
-    </tfoot>
-    <tbody>
-    <?php foreach($this->getItems() as $_item): ?>
-        <?php echo $this->getItemHtml($_item) ?>
-    <?php endforeach ?>
-    </tbody>
-</table>
+        </tfoot>
+        <tbody>
+        <?php foreach ($this->getItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item) ?>
+        <?php endforeach ?>
+        </tbody>
+    </table>
 
-<script type="text/javascript">
-decorateTable('shopping-cart-table');
-document.getElementById('_idDeleteAll').innerHTML = '<?php echo $this->getDeleteAllUrl();?>';
-</script>
+    <script type="text/javascript">
+        decorateTable('shopping-cart-table');
+        document.getElementById('_idDeleteAll').innerHTML = '<?php echo $this->getDeleteAllUrl();?>';
+    </script>
+    <script type="application/javascript">
+        function customFormSubmitConfirm(url, parametersArray, method) {
+            if (!confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')) {
+                return false;
+            }
+            customFormSubmit(url, parametersArray, method);
+        }
+    </script>
 
 </form>
 
@@ -141,24 +150,25 @@ document.getElementById('_idDeleteAll').innerHTML = '<?php echo $this->getDelete
         <?php echo $this->getChildHtml('crosssell') ?>
         <div class="col-1">
             <!--coupon nach totals -->
-            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping');?>
-               <h4>Versandkosten Informationen</h4>
-    <p><a href="<?php echo $this->getUrl('lieferung') ?>">Hier finden Sie Informationen zu den Versandkosten.</a></p>
+            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); ?>
+                <h4>Versandkosten Informationen</h4>
+                <p><a href="<?php echo $this->getUrl('lieferung') ?>">Hier finden Sie Informationen zu den
+                        Versandkosten.</a></p>
             <?php endif; ?>
-            
+
         </div>
         <!--Totals in class col-2  -->
         <div class="col-2">
-         <div class="shopping-cart-totals">
-	     <?php echo $this->getChildHtml('totals'); ?>
- 	     <?php if(!$this->hasError()): ?>
- 		   <ul class="checkout-types">
-         <?php echo $this->getChildHtml('methods') ?>
-   		   </ul>
-         <?php endif; ?>
-		</div>
-        <?php echo $this->getChildHtml('coupon') ?>
-       </div>
+            <div class="shopping-cart-totals">
+                <?php echo $this->getChildHtml('totals'); ?>
+                <?php if (!$this->hasError()): ?>
+                    <ul class="checkout-types">
+                        <?php echo $this->getChildHtml('methods') ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+            <?php echo $this->getChildHtml('coupon') ?>
+        </div>
     </div>
 </div>
 <!--Totals von hier in class col-2  -->
