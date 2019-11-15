@@ -56,7 +56,7 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
                 <div class="product-shop">
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getIsVisibleOnFront() ) : ?>
                     <div class="product-sku">
-                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->escapeHtml($_product->getSku()), 'sku'); ?>
                     </div>
                   <?php endif; ?>
                     <div class="price-info">

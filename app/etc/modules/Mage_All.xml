@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE config>
 <!--
 /**
@@ -316,7 +316,7 @@
             </depends>
         </Mage_Wishlist>
         <Mage_GoogleAnalytics>
-            <active>true</active>
+            <active>false</active>
             <codePool>core</codePool>
             <depends>
                 <Mage_Core/>

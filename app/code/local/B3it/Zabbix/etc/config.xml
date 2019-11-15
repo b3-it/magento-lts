@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config>
+<config>
+    <modules>
+        <B3it_Zabbix>
+            <version>0.1.0</version>
+        </B3it_Zabbix>
+    </modules>
+    <frontend>
+        <routers>
+            <b3it_zabbix>
+                <use>standard</use>
+                <args>
+                    <module>B3it_Zabbix</module>
+                    <frontName>b3it_zabbix</frontName>
+                </args>
+            </b3it_zabbix>
+        </routers>
+    </frontend>
+</config>

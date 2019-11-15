@@ -97,7 +97,7 @@
                     </solr_search_product_delete>
                 </observers>
             </catalog_product_delete_before>
-            <cms_page_save_after>
+            <!--<cms_page_save_after>
                 <observers>
                     <solr_search_cms_save>
                         <type>singleton</type>
@@ -114,7 +114,7 @@
                         <method>onPageDeleteBefore</method>
                     </solr_search_cms_delete>
                 </observers>
-            </cms_page_delete_before>
+            </cms_page_delete_before>-->
         </events>
         <menu>
             <system>

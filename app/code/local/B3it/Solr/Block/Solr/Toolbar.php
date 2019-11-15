@@ -65,9 +65,9 @@ class B3it_Solr_Block_Solr_Toolbar extends Mage_Core_Block_Template
     {
         if ($this->getRows() > 0) {
             return (int)ceil($this->getCount() / $this->getRows());
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
@@ -148,10 +148,7 @@ class B3it_Solr_Block_Solr_Toolbar extends Mage_Core_Block_Template
      */
     public function isOrderCurrent($key)
     {
-        if ($key == Mage::registry('solr_order_key')) {
-            return true;
-        }
-        return false;
+        return ($key == Mage::registry('solr_order_key'));
     }
 
     /**

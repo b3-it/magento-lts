@@ -52,10 +52,6 @@ class B3it_Solr_Block_Result_Product extends Mage_Catalog_Block_Product_Abstract
      */
     public function checkPrice()
     {
-        if($this->_entity->hasData('price') || $this->_entity->hasProductConfig()){
-            return true;
-        } else {
-            return false;
-        }
+        return ($this->_entity->hasData('price') || $this->_entity->hasProductConfig());
     }
 }

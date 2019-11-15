@@ -78,9 +78,9 @@ class B3it_Solr_Block_Result extends Mage_Catalog_Block_Product_List
     {
         if ($this->getRows() > 0) {
             return (int)ceil($this->getCount() / $this->getRows());
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
