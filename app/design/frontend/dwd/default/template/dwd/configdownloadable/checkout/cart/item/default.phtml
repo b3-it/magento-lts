@@ -24,7 +24,11 @@
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $_item = $this->getItem()?>
+<?php
+$_item = $this->getItem();
+$_params = $this->escapeHtml(json_encode(array('form_key' => $this->getFormKey())));
+$_deleteUrl = $this->getDeleteUrlCustom(false);
+?>
 <tr>
     <td class="product-cart-image">
         <a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->htmlEscape($this->getProductName()) ?>">
@@ -159,11 +163,12 @@
 		               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
 		               data-qty="<?php echo $_item->getId() ?>"
 		               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
-		        <a class="remove egov-delete2"
-		           href="<?php echo $this->getDeleteUrl() ?>"
-		           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+		        <a
+		           href="#"
 		           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-		           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+                   class="remove egov-delete2"
+                   onclick="return customFormSubmitConfirm('<?php echo $_deleteUrl ?>', '<?php echo $_params ?>', 'post')">
+                </a>
             </div>            
         </div>
 	</td>
@@ -369,10 +374,10 @@
     </td>
     <?php endif; ?>
     <td class="a-center product-cart-remove last">
-        <a class="remove egov-delete2"
-           href="<?php echo $this->getDeleteUrl() ?>"
-           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+        <a href="#"
            title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-           alt="<?php echo $this->__('Remove Item') ?>" title="<?php echo $this->__('Remove Item') ?>"> </a>
+           class="remove egov-delete2"
+           onclick="return customFormSubmitConfirm('<?php echo $_deleteUrl ?>', '<?php echo $_params ?>', 'post')">
+        </a>
     </td>
 </tr>

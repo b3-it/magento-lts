@@ -11,14 +11,6 @@
 class B3it_Solr_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     /**
-     * @return Mage_Adminhtml_Block_Widget_Form
-     */
-    protected function _prepareForm()
-    {
-        return parent::_prepareForm();
-    }
-
-    /**
      * @return array
      */
     public function getStoreViews()
@@ -34,15 +26,14 @@ class B3it_Solr_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_Widget_Fo
 
     /**
      * @return array
-     * @throws Mage_Core_Model_Store_Exception
      */
     public function getTypes()
     {
         $types = [];
-        if (Mage::getStoreConfig('solr_general/index_options/search_cms', Mage::app()->getStore()->getId())) {
+        /*if (Mage::getStoreConfig('solr_general/index_options/search_cms', Mage::app()->getStore()->getId())) {
             $types[] = ['value' => '0', 'label' => 'All'];
             $types[] = ['value' => '2', 'label' => 'Pages'];
-        }
+        }*/
         $types[] = ['value' => '1', 'label' => 'Products'];
         return $types;
     }

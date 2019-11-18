@@ -67,7 +67,15 @@
         <li>
             <div class="input-box">
                 <label for="password"><?php echo $this->__('New Password') ?></label><br />
-                <input type="password" class="input-text validate-password" name="password" id="password" />
+                <?php $minPasswordLength = max((int)$this->getCustomer()->getMinPasswordLength(), Mage_Core_Model_App::ABSOLUTE_MIN_PASSWORD_LENGTH); ?>
+                <input type="password"
+                       title="<?php echo Mage::helper('core')->quoteEscape($this->__('New Password')) ?>"
+                       class="input-text validate-password min-pass-length-<?php echo $minPasswordLength ?>"
+                       name="password"
+                       id="password" />
+                <p class="form-instructions">
+                    <?php echo $this->__('The minimum password length is %s', $minPasswordLength) ?>
+                </p>
             </div>
             <div class="input-box">
                 <label for="confirmation"><?php echo $this->__('Confirm New Password') ?></label><br />

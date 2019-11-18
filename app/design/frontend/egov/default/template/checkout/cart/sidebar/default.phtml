@@ -26,7 +26,13 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         </span>
     <?php endif; ?>
     <div class="product-details">
-        <a class="egov-delete btn_delete" href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>" onclick="return confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Are you sure you would like to remove this item from the shopping cart?')) ?>');" title="<?php echo $this->__('Remove This Item') ?>"> </a>
+        <a href="#"
+           class="egov-delete btn_delete"
+           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>"
+           onclick="if (confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Are you sure you would like to remove this item from the shopping cart?')) ?>')) {
+                   customFormSubmit('<?php echo $this->getDeleteUrlCustom(false) ?>','<?php echo $this->escapeHtml(json_encode(array('form_key' => $this->getFormKey()))) ?>', 'post')
+                   }">
+        </a>
         <a class="egov-pencile btn_edit" href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Edit item')) ?>" title="<?php echo $this->__('Edit item')?>"> </a>
         <p class="product-name">
         <?php if ($this->hasProductUrl()): ?>

@@ -2,7 +2,7 @@
 /**
  * @category    design
  * @package     egov_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -139,6 +139,14 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             </tbody>
         </table>
         <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+        <script type="application/javascript">
+            function customFormSubmitConfirm(url, parametersArray, method) {
+                if (!confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')) {
+                    return false;
+                }
+                customFormSubmit(url, parametersArray, method);
+            }
+        </script>
     </form>
 
     <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>

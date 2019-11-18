@@ -10,7 +10,7 @@
  */
 class B3it_Solr_Model_Webservice_Output_Query
 {
-    protected $_query = "";
+    protected $_query = '';
     protected $_group_id = 0;
 
     protected $_start = 0;
@@ -36,7 +36,7 @@ class B3it_Solr_Model_Webservice_Output_Query
         $storeId = Mage::app()->getStore()->getId();
 
         // Search Query
-        $res = "?q=" . $this->_query;
+        $res = '?q=' . $this->_query;
 
         if (($fuzzy = Mage::getStoreConfig('solr_general/search_options/fuzzy_distance', $storeId)) > 0) {
             $res .= '~' . $fuzzy;
@@ -50,32 +50,32 @@ class B3it_Solr_Model_Webservice_Output_Query
         }
 
         //paging
-        $res .= "&start=" . $this->_start;
-        $res .= "&rows=" . $this->_rows;
+        $res .= '&start=' . $this->_start;
+        $res .= '&rows=' . $this->_rows;
 
         // Json
-        $res .= "&wt=json";
+        $res .= '&wt=json';
 
         // Filter hidden groups (first filter query, because negative)
         if (Mage::helper('core')->isModuleEnabled('Netzarbeiter_GroupsCatalog2')) {
             $this->setGroupId();
-            $res .= "&fq=-hidden_group_ids:" . $this->getGroupId();
+            $res .= '&fq=-hidden_group_ids:' . $this->getGroupId();
         }
 
         // Filter the current ShopView to prevent errors by wrong configuration
-        $res .= "&fq=store_id:" . $storeId;
+        $res .= '&fq=store_id:' . $storeId;
 
         // Faceting on / off
         if (!empty($this->_facet_fields || !empty($this->_facets_range_fields))) {
-            $res .= "&facet=true";
-            $res .= "&facet.mincount=" . $this->_min_count;
+            $res .= '&facet=true';
+            $res .= '&facet.mincount=' . $this->_min_count;
         }
 
         // Faceting
         if (!empty($this->_facet_fields)) {
 
             foreach ($this->_facet_fields as $facet) {
-                $res .= "&facet.field=" . "{!ex=dt}" . $facet;
+                $res .= '&facet.field=' . '{!ex=dt}' . $facet;
             }
         }
 
@@ -89,16 +89,16 @@ class B3it_Solr_Model_Webservice_Output_Query
                 if ($buffer == $filter['field']) {
                     $res = substr($res, 0, -1);
                     if (strpos($filter['field'], '_decimal') !== false) {
-                        $res .= "+OR+" . $filter['value'] . ")";
+                        $res .= '+OR+' . $filter['value'] . ')';
                     } else {
                         $res .= "+OR+\"" . $filter['value'] . "\")";
                     }
 
                 } else {
                     if (strpos($filter['field'], '_decimal') !== false) {
-                        $res .= "&fq={!tag=dt}" . $filter['field'] . ":(" . $filter['value'] . ")";
+                        $res .= '&fq={!tag=dt}' . $filter['field'] . ':(' . $filter['value'] . ')';
                     } else {
-                        $res .= "&fq={!tag=dt}" . $filter['field'] . ":(\"" . $filter['value'] . "\")";
+                        $res .= '&fq={!tag=dt}' . $filter['field'] . ":(\"" . $filter['value'] . "\")";
                     }
                 }
                 $buffer = $filter['field'];
@@ -107,11 +107,11 @@ class B3it_Solr_Model_Webservice_Output_Query
 
         // Result Fields
         if (count($this->_fields) > 0) {
-            $res .= "&fl=" . implode(',', $this->_fields);
+            $res .= '&fl=' . implode(',', $this->_fields);
         }
 
         if ($this->_edismax == true) {
-            $res .= "&defType=edismax";
+            $res .= '&defType=edismax';
         }
 
         // Edismax Fields
@@ -124,10 +124,10 @@ class B3it_Solr_Model_Webservice_Output_Query
                     $field .= '^0.5';
                 }
                 if ($first) {
-                    $res .= "&qf=" . $field;
+                    $res .= '&qf=' . $field;
                     $first = false;
                 } else {
-                    $res .= "+" . $field;
+                    $res .= '+' . $field;
                 }
             }
 

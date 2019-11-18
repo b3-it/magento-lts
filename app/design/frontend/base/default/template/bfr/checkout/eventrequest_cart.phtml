@@ -109,6 +109,14 @@ $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1);
             </tbody>
         </table>
         <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+        <script type="application/javascript">
+            function customFormSubmitConfirm(url, parametersArray, method) {
+                if (!confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')) {
+                    return false;
+                }
+                customFormSubmit(url, parametersArray, method);
+            }
+        </script>
     </form>
 
     <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>

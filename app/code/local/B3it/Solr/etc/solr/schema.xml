@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema name="b3it-solr" version="1.6">
 
+    <!-- Version: 2.0 -->
+
     <!-- Field to use to determine and enforce document uniqueness. Unless this field is marked with required="false", it will be a required field -->
     <uniqueKey>id</uniqueKey>
 

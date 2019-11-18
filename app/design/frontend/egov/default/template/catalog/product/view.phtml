@@ -2,7 +2,7 @@
 /**
  * @category    design
  * @package     egov_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -41,7 +41,10 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
 </div>
 <div class="product-view">
     <div class="product-essential">
-        <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->getRequest()->isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <form action="<?php echo $this->getSubmitUrlCustom($_product, array('_secure' => $this->_isSecure()), false) ?>"
+              method="post"
+              id="product_addtocart_form"
+              <?php if ($_product->getOptions()): ?> enctype="multipart/form-data" <?php endif; ?>>
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
@@ -56,7 +59,7 @@ if(Mage::getSingleton('customer/session')->isLoggedIn()) {
                 <div class="product-shop">
                   <?php if($_attributes->getSku()->getIsVisible() AND $_attributes->getSku()->getIsVisibleOnFront() ) : ?>
                     <div class="product-sku">
-                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->htmlEscape($_product->getSku()), 'sku'); ?>
+                        <?php echo $this->__('SKU') . ':<br />' . $_helper->productAttribute($_product, $this->escapeHtml($_product->getSku()), 'sku'); ?>
                     </div>
                   <?php endif; ?>
                     <div class="price-info">

@@ -57,7 +57,7 @@ class B3it_Solr_Model_Search_Select
             $q = mb_substr($q, 0, $length);
         }
 
-        $q = strip_tags(html_entity_decode($q));
+        $q = strip_tags(html_entity_decode(trim($q)));
         $q = addcslashes($q, '+-!(){}[]^"~*?:\\/|&');
         return $q;
     }
@@ -81,7 +81,6 @@ class B3it_Solr_Model_Search_Select
     /**
      * @return array
      * @throws Mage_Core_Exception
-     * @throws Mage_Core_Model_Store_Exception
      */
     public function getEdismaxFields()
     {
@@ -92,13 +91,14 @@ class B3it_Solr_Model_Search_Select
 
         $fields = [];
         foreach ($indexProduct->getSearchableAttributes() as $attr) {
-            $fields[$attr->getData('attribute_code')] = $attr->getData('attribute_code') . $solrHelper->getDynamicField($attr);
+            $code = $attr->getData('attribute_code');
+            $fields[$code] = $code . $solrHelper->getDynamicField($attr);
         }
 
-        if (Mage::getStoreConfig('solr_general/index_options/search_cms', mage::app()->getStore()->getId())) {
+        /*if (Mage::getStoreConfig('solr_general/index_options/search_cms', mage::app()->getStore()->getId())) {
             $fields[] = "title_string";
             $fields[] = "content_text";
-        }
+        }*/
         return $fields;
     }
 
@@ -113,7 +113,7 @@ class B3it_Solr_Model_Search_Select
 
         $fields = [];
         foreach ($this->facetConfiguration as $field) {
-            if (isset($field['attribute']) && isset($field['priority']) && $field['priority'] != "") {
+            if (isset($field['attribute'], $field['priority']) && $field['priority'] != '') {
                 $fields[$field['attribute'] . $solrHelper->getDynamicField($field['attribute'])] = $field['priority'];
             }
         }
@@ -131,7 +131,7 @@ class B3it_Solr_Model_Search_Select
 
         $facets = [];
         foreach ($this->facetConfiguration as $facet) {
-            if (isset($facet['attribute']) && isset($facet['filter']) && $facet['filter'] != 2) {
+            if (isset($facet['attribute'], $facet['filter']) && $facet['filter'] != 2) {
                 if ($solrHelper->getDynamicField($facet['attribute']) == '_string') {
                     $facets[] = $facet['attribute'] . $solrHelper->getDynamicField($facet['attribute']) . '_facet';
                 } else {
@@ -161,7 +161,7 @@ class B3it_Solr_Model_Search_Select
      */
     public function SetPaging($start, $rows, $page)
     {
-        if (!is_null($page) && is_array($page)) {
+        if (is_array($page)) {
             $rows = (array_key_exists('limiter', $page)) ? (int)$page['limiter'] : $rows;
             if (array_key_exists('pager', $page) && array_key_exists('current', $page)) {
 
@@ -229,9 +229,9 @@ class B3it_Solr_Model_Search_Select
                 $dynamic[] = array('field' => $facet['field'] . $type, 'value' => $value);
             }
             return $dynamic;
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     /**

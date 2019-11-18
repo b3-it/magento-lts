@@ -203,7 +203,7 @@ class B3it_Solr_Model_Index_Product
         $doc->addField('id', $this->_getId($product, $storeId));
         $doc->addField('db_id', $product->getId());
         $doc->addField('store_id', $storeId);
-        $doc->addField('name', $product->getName());
+        $doc->addField('name', $this->secureValueForXml($product->getName()));
 
         // Module GroupsCatalog2 (hide product for group) - add hidden-group-id's to solr
         if (Mage::helper('core')->isModuleEnabled('Netzarbeiter_GroupsCatalog2')) {
@@ -320,11 +320,24 @@ class B3it_Solr_Model_Index_Product
                 if ($search['frontend_input'] == 'boolean') {
                     $value = ($value == '1') ? $solrHelper->__('Yes') : Mage::helper('b3it_solr')->__('No');
                 }
-                $doc->addField($attribute . $solrHelper->getDynamicField($search), $value);
+                $doc->addField($attribute . $solrHelper->getDynamicField($search), $this->secureValueForXml($value));
             }
         }
 
         return $doc->toXml();
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function secureValueForXml($value)
+    {
+        if(is_string($value)){
+            // escape special chars (decode first because of the & character)
+            return htmlspecialchars(html_entity_decode($value));
+        }
+        return $value;
     }
 
     /**
@@ -334,7 +347,7 @@ class B3it_Solr_Model_Index_Product
      */
     protected function _getId($product, $storeId = 0)
     {
-        return 'product_' . $product->getId() . "_" . $storeId;
+        return 'product_' . $product->getId() . '_' . $storeId;
     }
 
     /**

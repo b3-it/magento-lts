@@ -200,9 +200,9 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
     <head>
         <title>Magento - DB-Config</title>
         <style type="text/css">
-            html       {background-color:#DCDCDC; width:750px; margin: 0 auto;}
+            html       {background-color:#DCDCDC; width:950px; margin: 0 auto;}
             table      {margin:20px 0px 20px 20px;}
-            input      {width:300px;}
+            input      {width:500px;}
             hr         {width:500px;}
             .okay      {color:#008000;}
             .fail      {background-color:#FF0000; color:#FFFFFF; font-weight:bold;}

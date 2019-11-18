@@ -19,7 +19,7 @@ $options = $this->getChild('customer.wishlist.item.options')
 <?php if ($product->isSaleable()): ?>
     <a href="javascript:void(0);"
        title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
-       onclick="addWItemToCart(<?php echo $item->getId()?>);"
+       onclick="addWItemToCartCustom(<?php echo $item->getId()?>, false);"
        class="egov-cart"> </a>
 <?php else: ?>
     <?php if ($product->getIsSalable()): ?>
@@ -44,7 +44,7 @@ $options = $this->getChild('customer.wishlist.item.options')
     <?php echo $this->getChildHtml($childName, false);?>
 <?php endforeach;?>
     <div class="mobile-small-remove">
-        <a href="<?php echo $this->getItemRemoveUrl($this->getItem()); ?>"
+        <a href="<?php echo $this->getItemRemoveUrlCustom($this->getItem(), false); ?>"
            onclick="return confirmRemoveWishlistItem();"
            title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
            class="remove egov-delete"> </a>    

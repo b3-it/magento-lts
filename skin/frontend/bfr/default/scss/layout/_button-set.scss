@@ -23,7 +23,7 @@
     width: 100%;
     text-align: left;
     
-    .button {
+    button, .button {
         display: inline-block;
         margin-right: $box-spacing;
         min-width: 25%;
