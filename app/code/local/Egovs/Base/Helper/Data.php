@@ -260,19 +260,23 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function replaceTemplateAbbr($html)
     {
+        $_appendXml = false;
+        $_preXml = '<?xml encoding="UTF-8">';
+
         /* <ul><li style="display:none"></li> - hardcoded string of CatalogSearch in Block Autocomplete (Suggestion)*/
         if (empty($html) || stripos($html, '<ul><li style="display:none"></li>') !== false) {
             return $html;
         }
 
         if(stripos($html,'encoding="UTF-8"') === false) {
-            $html = '<?xml encoding="UTF-8">' . $html;
+            $_appendXml = true;
+            $html = $_preXml . $html;
         }
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->substituteEntities = false;
-        //loadHTML macht mit UTF-8 Probleme
+        //loadHTML macht mit UTF-8 Probleme daher $_preXml einfügen wenn nicht vorhanden
         $useInternalErrors = libxml_use_internal_errors(true);
-        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED | LIBXML_NONET)) {
+        if (!$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED | LIBXML_NONET | LIBXML_NOXMLDECL)) {
             $error = error_get_last();
             return $html;
         }
@@ -338,9 +342,27 @@ class Egovs_Base_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
         if ($matched) {
+            if ($_appendXml) {
+                // dirty fix
+                foreach ($dom->childNodes as $item) {
+                    if ($item->nodeType === XML_PI_NODE) {
+                        $dom->removeChild($item); // remove hack
+                        $_appendXml = false;
+                        break;
+                    }
+                }
+            }
             //saveHTML macht mit ENTITIES und UTF-8 Probleme
             $html = $dom->saveHTML();
         }
+
+        if ( $_appendXml === true ) {
+            $_firstChars = substr($html, 0, strlen($_preXml) );
+            if ( $_firstChars == $_preXml ) {
+                $html = substr($html, strlen($_preXml), strlen($html));
+            }
+        }
+
         return $html;
     }
 
