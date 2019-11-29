@@ -1,20 +1,18 @@
 <?php
 
 /**
- * @category    B3it Solr
+ * @category    B3it
  * @package     B3it_Solr
- * @name        B3it_Solr_FacetController
- * @author      Hana Anastasia Matthes <h.matthes@b3-it.de>
  * @copyright   Copyright (c) 2019 B3 It Systeme GmbH - http://www.b3-it.de
  * @license     http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class B3it_Solr_FacetController extends Mage_Core_Controller_Front_Action
 {
     /** @var B3it_Solr_Model_Search_Select */
-    protected $_searchHandler = null;
+    protected $_searchHandler;
 
     /** @var string */
-    protected $_query = null;
+    protected $_query;
 
     /**
      * @throws Mage_Core_Exception

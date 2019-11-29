@@ -1,11 +1,9 @@
 <?php
 
 /**
- * @category   B3it Solr
+ * @category   B3it
  * @package    B3it_Solr
- * @name       B3it_Solr_Block_Adminhtml_HtmlBlocks_SortDirectionSelect
- * @author     Hana Anastasia Matthes <h.matthes@b3-it.de>
- * @copyright  Copyright (c) 2018 B3 It Systeme GmbH - http://www.b3-it.de
+ * @copyright  Copyright (c) 2019 B3 It Systeme GmbH - http://www.b3-it.de
  * @license    http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
 class B3it_Solr_Block_Adminhtml_HtmlBlocks_SortDirectionSelect extends Mage_Core_Block_Html_Select

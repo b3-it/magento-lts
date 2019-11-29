@@ -2,10 +2,8 @@
 require_once('lib/Httpful/Bootstrap.php');
 
 /**
- * @category    B3it Solr
+ * @category    B3it
  * @package     B3it_Solr
- * @name        B3it_Solr_Model_Webservice_Solr
- * @author      Hana Anastasia Matthes <h.matthes@b3-it.de>
  * @copyright   Copyright (c) 2019 B3 It Systeme GmbH - http://www.b3-it.de
  * @license     http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
@@ -21,7 +19,7 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
     public function suggest($query)
     {
         try {
-            $url = $this->_getUrl('suggest') . "?q=" . $query . '&wt=xml&suggest.cfq=' . $this->storeId;
+            $url = $this->_getUrl('suggest') . '?q=' . $query . '&wt=xml&suggest.cfq=' . $this->storeId;
             \Httpful\Bootstrap::init();
             $request = \Httpful\Request::get($url);
 
@@ -41,12 +39,11 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
     public function spell($query)
     {
         try {
-            $url = $this->_getUrl('spell') . "?spellcheck.q=" . $query;
+            $url = $this->_getUrl('spell') . '?spellcheck.q=' . $query;
             \Httpful\Bootstrap::init();
             $request = \Httpful\Request::get($url);
 
-            $response = $request->send();
-            return $response;
+            return $request->send();
         } catch (Exception $ex) {
             Mage::logException($ex);
             return null;
@@ -122,14 +119,13 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
 
             $response = $request->send();
             if ($response->code != 200) {
-                Mage::throwException(sprintf("SOLR Search query=%s response=%s", $url, $response->body));
+                Mage::throwException(sprintf('SOLR Search query=%s response=%s', $url, $response->body));
             }
 
             $this->setLog('Query - request: ' . $url);
             $this->setLog('Query - receive: ' . $response);
 
-            $obj = json_decode($response->body);
-            return $obj;
+            return json_decode($response->body);
         } catch (Exception $ex) {
             Mage::logException($ex);
             return null;
@@ -179,7 +175,7 @@ class B3it_Solr_Model_Webservice_Solr extends Varien_Object
     protected function _getUrl($method)
     {
         $conn = $this->_getConnection();
-        return sprintf("http://%s:%s/%s/%s", $conn['hostname'], $conn['port'], $conn['path'], $method);
+        return sprintf('http://%s:%s/%s/%s', $conn['hostname'], $conn['port'], $conn['path'], $method);
     }
 
     /**

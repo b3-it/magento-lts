@@ -1,10 +1,8 @@
 <?php
 
 /**
- * @category    B3it Solr
+ * @category    B3it
  * @package     B3it_Solr
- * @name        B3it_Solr_Model_Webservice_Output_Query
- * @author      Hana Anastasia Matthes <h.matthes@b3-it.de>
  * @copyright   Copyright (c) 2019 B3 It Systeme GmbH - http://www.b3-it.de
  * @license     http://sid.sachsen.de OpenSource@SID.SACHSEN.DE
  */
@@ -16,8 +14,8 @@ class B3it_Solr_Model_Webservice_Output_Query
     protected $_start = 0;
     protected $_rows = 50;
     protected $_min_count = 1;
-    protected $_order = null;
-    protected $_orderDirection = null;
+    protected $_order;
+    protected $_orderDirection;
 
     protected $_edismax = true;
     protected $_edismax_fields = array();
