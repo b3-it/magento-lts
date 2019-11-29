@@ -7,7 +7,7 @@
  */
 
 ?>
-<a href="<?php echo $this->getItemRemoveUrl($this->getItem()); ?>"
+<a href="<?php echo $this->getItemRemoveUrlCustom($this->getItem(), false); ?>"
    onclick="return confirmRemoveWishlistItem();"
    title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
    class="remove egov-delete"> </a>

@@ -25,6 +25,19 @@ class Egovs_Paymentbase_Model_Attributes_Backend_Objektnummerhhstelle
 		$attrCode = $this->getAttribute()->getAttributeCode();
 		$value = $object->getData($attrCode);
 		$hhstelle = $object->getHaushaltsstelle();
+
+        if ($this->getAttribute()->getIsRequired() && $this->getAttribute()->isValueEmpty($value)) {
+            return false;
+        }
+
+        //Validate serialized data
+        if (!Mage::helper('core/string')->validateSerializedObject($value)) {
+            $label = $this->getAttribute()->getFrontend()->getLabel();
+            throw Mage::exception(
+                'Mage_Eav',
+                Mage::helper('eav')->__('The value of attribute "%s" contains invalid data.', $label)
+            );
+        }
 		
 		$type = Egovs_Paymentbase_Model_Haushaltsparameter_Type::OBJEKTNUMMER;
 		if ($attrCode == 'objektnummer_mwst') {

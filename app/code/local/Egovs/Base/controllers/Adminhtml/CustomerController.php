@@ -21,7 +21,7 @@ require_once 'Mage/Adminhtml/controllers/CustomerController.php';
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -118,9 +118,9 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                         $isDefaultShipping = isset($data['account']['default_shipping'])
                         && $data['account']['default_shipping'] == $index;
                         $address->setIsDefaultShipping($isDefaultShipping);
-                    $isBaseAddress = isset($data['account']['base_address'])
-                        && $data['account']['base_address'] == $index;
-                    $address->setIsDefaultBaseAddress($isBaseAddress);
+                        $isBaseAddress = isset($data['account']['base_address'])
+                            && $data['account']['base_address'] == $index;
+                        $address->setIsDefaultBaseAddress($isBaseAddress);
 
                         $errors   = $addressForm->validateData($formData);
                         if ($errors !== true) {
@@ -154,9 +154,9 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                 if (isset($data['account']['default_shipping'])) {
                     $customer->setData('default_shipping', $data['account']['default_shipping']);
                 }
-            if (isset($data['account']['base_address'])) {
-                $customer->setData('base_address', $data['account']['base_address']);
-            }
+                if (isset($data['account']['base_address'])) {
+                    $customer->setData('base_address', $data['account']['base_address']);
+                }
                 if (isset($data['account']['confirmation'])) {
                     $customer->setData('confirmation', $data['account']['confirmation']);
                 }
@@ -211,9 +211,15 @@ class Egovs_Base_Adminhtml_CustomerController extends Mage_Adminhtml_CustomerCon
                         }
 
                         if (!empty($data['account']['new_password'])) {
-                            $newPassword = $data['account']['new_password'];
+                    $newPassword = trim($data['account']['new_password']);
                             if ($newPassword == 'auto') {
                                 $newPassword = $customer->generatePassword();
+                    } else {
+                        $minPasswordLength = Mage::getModel('customer/customer')->getMinPasswordLength();
+                        if (Mage::helper('core/string')->strlen($newPassword) < $minPasswordLength) {
+                            Mage::throwException(Mage::helper('customer')
+                                ->__('The minimum password length is %s', $minPasswordLength));
+                        }
                             }
                             $customer->changePassword($newPassword);
                             $customer->sendPasswordReminderEmail();

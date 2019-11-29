@@ -2,7 +2,7 @@
 /**
  * @category    design
  * @package     egov_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -64,6 +64,10 @@
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     </div>
     <div id="password-block" class="fieldset" style="display:none;">
+        <p class="form-instructions">
+            <?php $minPasswordLength = max((int)$this->getCustomer()->getMinPasswordLength(), Mage_Core_Model_App::ABSOLUTE_MIN_PASSWORD_LENGTH); ?>
+            <?php echo $this->__('The minimum password length is %s', $minPasswordLength) ?>
+        </p>
         <h2 class="legend"><?php echo $this->__('Change Password') ?></h2>
         <ul class="form-list">
             <li class="fields">
@@ -73,7 +77,12 @@
                         <?php echo $this->__('New Password') ?>
                     </label>
                     <div class="input-box">
-                        <input type="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('New Password')) ?>" class="input-text validate-password" name="password" id="password" />
+                        <input type="password"
+                               title="<?php echo Mage::helper('core')->quoteEscape($this->__('New Password')) ?>"
+                               class="input-text validate-password min-pass-length-<?php echo $minPasswordLength ?>"
+                               name="password"
+                               id="password" />
+
                     </div>
                 </div>
                 <div class="field">

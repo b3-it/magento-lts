@@ -5,11 +5,12 @@
  * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-?>
-<?php
+
 $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+$_params = $this->escapeHtml(json_encode(array('form_key' => $this->getFormKey())));
+$_deleteUrl = $this->getDeleteUrlCustom(false);
 ?>
 <tr>
     <td class="product-cart-image">
@@ -164,11 +165,12 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 		               data-cart-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>"
 		               data-qty="<?php echo $_item->getId() ?>"
 		               title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
-		        <a class="remove egov-delete2"
-		           href="<?php echo $this->getDeleteUrl() ?>"
-		           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
-		           title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-		           title="<?php echo $this->__('Remove Item') ?>"> </a>
+		        <a href="#"
+                   title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
+                   class="remove egov-delete2"
+		           onclick="return customFormSubmitConfirm('<?php echo $_deleteUrl ?>', '<?php echo $_params ?>', 'post')"
+		           >
+                </a>
             </div>            
         </div>
     </td>
@@ -384,11 +386,11 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
     </td>
     <?php endif; ?>
     <td class="a-center product-cart-remove">
-        <a class="remove egov-delete2"
-           href="<?php echo $this->getDeleteUrl() ?>"
-           onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');"
+        <a href="#"
            title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>"
-           title="<?php echo $this->__('Remove Item') ?>"> </a>
+           class="remove egov-delete2"
+           onclick="return customFormSubmitConfirm('<?php echo $_deleteUrl ?>', '<?php echo $_params ?>', 'post')">
+        </a>
     </td>
 </tr>
 

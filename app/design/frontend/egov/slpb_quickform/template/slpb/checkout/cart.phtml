@@ -19,8 +19,8 @@
  * needs please refer to http://www.magentocommerce.com for more information.
  *
  * @category   egov_slpb_small
- * @package    Mage
- * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @package     egov_slpb
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT Systeme GmbH (https://www.b3-it.de)
  * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * Anpassungen für slpb_Quickform
  */
@@ -58,7 +58,9 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
-	<table id="shopping-cart-table" class="data-table box-table shopping-cart">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
+	<table id="shopping-cart-table" class="cart-table data-table box-table shopping-cart">
 	    <col width="40" />
 	    <col width="75" />
 	    <col />
@@ -114,8 +116,12 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
 	</table>
 	
 	<div class="buttons-set">
-		<a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button"><span><?php echo $this->__('Delete All Items') ?></span></a>
-		<button class="button" type="submit"><span><?php echo $this->__('Update Shopping Cart') ?></span></button>
+        <a href="<?php echo $this->getDeleteAllUrl(); ?>" class="button">
+            <?php echo $this->__('Delete All Items') ?>
+        </a>
+        <button class="button btn-update" type="submit" name="update_cart_action" data-cart-item-update value="update_qty" title="<?php echo $this->quoteEscape($this->__('Update Shopping Cart')); ?>">
+            <?php echo $this->__('Update Shopping Cart'); ?>
+        </button>
 	</div>
 	
 	<script type="text/javascript">decorateTable('shopping-cart-table');</script>
@@ -128,7 +134,15 @@ $_maxstar = intval(Mage::getStoreConfig('checkout/cart/slpb_stars', $this->getSt
 				window.location.href = url;
 			}
 		}
-	</script>	
+	</script>
+    <script type="application/javascript">
+        function customFormSubmitConfirm(url, parametersArray, method) {
+            if (!confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')) {
+                return false;
+            }
+            customFormSubmit(url, parametersArray, method);
+        }
+	</script>
 </form>
 
 <div class="cart-forms">

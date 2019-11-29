@@ -2,14 +2,14 @@
 /**
  * @category    design
  * @package     egov_default
- * @copyright   Copyright (c) 2015 B3-it System GmbH (https://www.b3-it.de)
+ * @copyright   Copyright (c) 2015 - 2019 B3 IT System GmbH (https://www.b3-it.de)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 
 <?php
 $_product = $this->getProduct();
-$_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product);
+$_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrlWithCustomParams($_product, array(), false);
 $_helper = $this->helper('catalog/output');
 $_productName = urlencode(trim($_helper->productAttribute($_product, $_product->getName(), 'name')));
 $_productImageUrl = urlencode(trim($this->helper('catalog/image')->init($_product, 'image')));

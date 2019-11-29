@@ -16,6 +16,7 @@
 <?php
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
+    $_params = $this->escapeHtml(json_encode(array('form_key' => $this->getFormKey())));
     $sku_limit = 24;
     $desc_limit = 110;
     $_imgSize_list = 300;
@@ -70,17 +71,23 @@
                 <div class="product-add-links">
                     <ul class="add-to-links">
                         <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <?php $_wishlistUrl = $this->helper('wishlist')->getAddUrlWithCustomParams($_product, array(), false); ?>
                             <li>
-                                <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
+                                <a href="#"
+                                   data-url="<?php echo $_wishlistUrl ?>"
+                                   data-params="<?php echo $_params ?>"
                                    class="link-wishlist egov-star egov-float-left"
-                                   title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
+                                   title="<?php echo $this->__('Add to Wishlist') ?>"
+                                   onclick="customFormSubmit('<?php echo $_wishlistUrl ?>', '<?php echo $_params ?>', 'post')">
+                                </a>
                             </li>
                         <?php endif; ?>
-                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrlCustom($_product, false)): ?>
                             <li>
-                                <a href="<?php echo $_compareUrl ?>"
+                                <a href="#"
                                    class="link-compare egov-float-right"
-                                   title="<?php echo $this->__('Add to Compare') ?>">
+                                   title="<?php echo $this->__('Add to Compare') ?>"
+                                   onclick="customFormSubmit('<?php echo $_compareUrl ?>', '<?php echo $_params ?>', 'post')">
                                     <span class="egov-compare"> </span>
                                 </a>
                             </li>
@@ -125,7 +132,10 @@
 	                        <button type="button"
 	                                title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
 	                                class="button btn-cart egov-cart"
-	                                onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                    onclick="customFormSubmit(
+                                            '<?php echo $this->getAddToCartUrlCustom($_product, array(), false) ?>',
+                                            '<?php echo $_params ?>',
+                                            'post')">
 	                            <span>
 	                                <?php echo $this->__('Add to Cart') ?>
 	                            </span>
@@ -214,7 +224,10 @@
                             <button type="button"
                                     title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
                                     class="button btn-cart egov-cart"
-                                    onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                    onclick="customFormSubmit(
+                                            '<?php echo $this->getAddToCartUrlCustom($_product, array(), false) ?>',
+                                            '<?php echo $_params ?>',
+                                            'post')">
                                 <span><?php echo $this->__('Add to Cart') ?></span>
                             </button>
                         <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
@@ -229,17 +242,23 @@
                         <?php endif; ?>
                         <ul class="add-to-links">
                             <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <?php $_wishlistUrl = $this->helper('wishlist')->getAddUrlWithCustomParams($_product, array(), false); ?>
                                 <li>
-                                    <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
+                                    <a href="#"
+                                       data-url="<?php echo $_wishlistUrl ?>"
+                                       data-params="<?php echo $_params ?>"
                                        class="link-wishlist egov-star egov-float-left"
-                                       title="<?php echo $this->__('Add to Wishlist') ?>"> </a>
+                                       title="<?php echo $this->__('Add to Wishlist') ?>"
+                                       onclick="customFormSubmit('<?php echo $_wishlistUrl ?>', '<?php echo $_params ?>', 'post')">
+                                    </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrlCustom($_product, false)): ?>
                                 <li>
-                                    <a href="<?php echo $_compareUrl ?>"
+                                    <a href="#"
                                        class="link-compare egov-float-right"
-                                       title="<?php echo $this->__('Add to Compare') ?>">
+                                       title="<?php echo $this->__('Add to Compare') ?>"
+                                       onclick="customFormSubmit('<?php echo $_compareUrl ?>', '<?php echo $_params ?>', 'post')">
                                         <span class="egov-compare"> </span>
                                         <!-- <span class="egov-compare-1"> </span>/<span class="egov-compare-2"> </span> -->
                                     </a>
