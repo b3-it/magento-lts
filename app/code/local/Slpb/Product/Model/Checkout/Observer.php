@@ -72,6 +72,11 @@ class Slpb_Product_Model_Checkout_Observer extends Mage_Core_Model_Abstract
 	{
 		try {
 			$quote = $observer['quote'];
+
+            if ($quote->getRequestAction() == 'successview') {
+                return $this;
+            }
+
 			$adr = $this->getAddress($quote);
 			$this->testCart($quote->getAllVisibleItems(),$adr);
 			$this->testPeriod($quote->getCustomerId()); 
@@ -214,8 +219,8 @@ class Slpb_Product_Model_Checkout_Observer extends Mage_Core_Model_Abstract
 					->where('customer_id ='.$customer_id)
 					//->join(array('t1'=>'sales_order_varchar'),'t1.entity_id = e.entity_id AND t1.attribute_id='.$status,array())
 					//->join(array('t2'=>'sales_order_varchar'),'t2.entity_id = e.entity_id AND t2.attribute_id='.$state,array())
-					->where("((status = 'canceled') OR NOT ((state = 'closed') AND (status = 'special_canceled')))");
-					//->where("((status = 'complete') OR (status = 'processing') OR (status = 'pending'))");
+					//->where("((status = 'canceled') OR NOT ((state = 'closed') AND (status = 'special_canceled')))");
+					->where("((status = 'complete') OR (status = 'processing') OR (status = 'pending'))");
 					
 				
 					

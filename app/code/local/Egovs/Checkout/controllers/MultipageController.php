@@ -65,11 +65,12 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
     {
 
         parent::preDispatch();
-
+        $action = $this->getRequest()->getActionName();
         //warenkorb begrenzung
         try
         {
         	$quote = $this->_getCheckout()->getQuote();
+            $quote->setRequestAction($action);
 
         	Mage::dispatchEvent('checkout_entry_before', array('quote'=>$quote));
         } catch (Mage_Core_Exception $e) {
@@ -90,7 +91,7 @@ class Egovs_Checkout_MultipageController extends Mage_Checkout_Controller_Action
 
 		$method = $this->_getCheckout()->getCheckoutMethod();
 		if (preg_match('#^(guest|register)#', $method)) return $this;
-        $action = $this->getRequest()->getActionName();
+
 
 
      	if ($action == 'successview' && $this->_getCheckout()->getCheckoutSession()->getDisplaySuccess()) {
