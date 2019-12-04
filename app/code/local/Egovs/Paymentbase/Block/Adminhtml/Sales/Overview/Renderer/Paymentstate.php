@@ -39,7 +39,7 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Renderer_Paymentstate ext
                 	return '<div class="balanced">'.$options[$value].'</div>';
             	}
 	            if ($value == Mage_Sales_Model_Order_Invoice::STATE_OPEN) {
-	                	return '<div class="unbalanced">'.$options[$value].'</div>';
+	                return '<div class="unbalanced">'.$options[$value].'</div>';
 	            }
             } elseif (in_array($value, $options)) {
                 return $value;
@@ -48,4 +48,26 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Renderer_Paymentstate ext
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @see Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract::renderExport()
+     */
+    public function renderExport($row) {
+        $options = $this->getColumn()->getOptions();
+        $value = $row->getData($this->getColumn()->getIndex());
+        if (is_array($value)) {
+            $res = array();
+            foreach ($value as $item) {
+                if (isset($options[$item])) {
+                    $res[] = $options[$item];
+                }
+            }
+            return implode(', ', $res);
+        } elseif (isset($options[$value])) {
+            return $options[$value];
+        } elseif (in_array($value, $options)) {
+            return $value;
+        }
+        return '';
+    }
 }

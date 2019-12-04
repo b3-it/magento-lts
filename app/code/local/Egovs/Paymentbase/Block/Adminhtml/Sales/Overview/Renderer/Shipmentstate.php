@@ -20,19 +20,26 @@ class Egovs_Paymentbase_Block_Adminhtml_Sales_Overview_Renderer_Shipmentstate ex
 	 * @see Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Options::render()
 	 */
     public function render(Varien_Object $row) {
-        $options = $this->getColumn()->getOptions();
-        $showMissingOptionValues = (bool)$this->getColumn()->getShowMissingOptionValues();
-        if (!empty($options) && is_array($options)) {
-            $value = $row->getData($this->getColumn()->getIndex());
-            
-            if (intval($value) == 0 ) {
-                return '<div style="color:green;">'.Mage::helper('paymentbase')->__('Shipped').'</div>';
-            }
-            if (intval($value) > 0) {
-                	return '<div style="color:red;">'.Mage::helper('paymentbase')->__('Not Shipped').'</div>';
-            }
-           
-            return '';
+        $value = $row->getData($this->getColumn()->getIndex());
+
+        if (intval($value) > 0 ) {
+            return '<div style="color:red;">'.Mage::helper('paymentbase')->__('Not Shipped').'</div>';
+        } else {
+            return '<div style="color:green;">'.Mage::helper('paymentbase')->__('Shipped').'</div>';
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract::renderExport()
+     */
+    public function renderExport($row) {
+        $value = $row->getData($this->getColumn()->getIndex());
+
+        if (intval($value) > 0) {
+            return Mage::helper('paymentbase')->__('Not Shipped');
+        } else {
+            return Mage::helper('paymentbase')->__('Shipped');
         }
     }
 
