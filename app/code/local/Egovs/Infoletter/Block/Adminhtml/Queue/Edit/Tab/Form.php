@@ -41,7 +41,7 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Edit_Tab_Form extends Mage_Adminhtm
       
       $fieldset->addField('sender_email', 'text', array(
       		'label'     => Mage::helper('infoletter')->__('Sender Email'),
-      		'class'     => 'required-entry',
+      		'class'     => 'required-entry validate-email',
       		'required'  => !$readonly,
       		'name'      => 'sender_email',
       		//'readonly' => $readonly,

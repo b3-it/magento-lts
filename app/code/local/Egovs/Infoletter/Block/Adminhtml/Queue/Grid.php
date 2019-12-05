@@ -49,6 +49,19 @@ class Egovs_Infoletter_Block_Adminhtml_Queue_Grid extends Mage_Adminhtml_Block_W
           'index'     => 'title',
       ));
 
+      $this->addColumn('created_at', array(
+          'header' => Mage::helper('infoletter')->__('Created At'),
+          'index' => 'created_at',
+          'width' => '200px',
+          'type' => 'datetime'
+      ));
+
+      $this->addColumn('processed_at', array(
+          'header' => Mage::helper('infoletter')->__('Processed At'),
+          'index' => 'processed_at',
+          'width' => '200px',
+          'type' => 'datetime'
+      ));
 
       $this->addColumn('recipients', array(
 			'header'    => Mage::helper('infoletter')->__('Recipients'),
