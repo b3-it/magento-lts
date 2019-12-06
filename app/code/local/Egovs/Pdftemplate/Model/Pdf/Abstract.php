@@ -646,7 +646,7 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 			$parentline = $line[0][2];
 			
 			foreach ($items as $item) {
-				/*@var $item Mage_Sales_Model_Order_Invoice_Item */
+				/* @var $item Mage_Sales_Model_Order_Invoice_Item */
 				$oi = $item->getOrderItem();
 				if($oi != null)
 				{
@@ -664,16 +664,18 @@ class Egovs_Pdftemplate_Model_Pdf_Abstract extends Varien_Object
 	                	$childpos = 0;
 	                }
 
-	                $options = $oi->getProductOptions();
-	                $res = array();
-	                $res[] = ""; //leerzeile
-                    if(isset($options['options'])){
-                        foreach($options['options'] as $opt) {
-                            $res[] = sprintf('%s: %s',$opt['label'],$opt['option_value']);
+	                if (!($item instanceof Mage_Sales_Model_Order_Item)) {
+                        $options = $oi->getProductOptions();
+                        $res = array();
+                        $res[] = ""; //leerzeile
+                        if (isset($options['options'])) {
+                            foreach ($options['options'] as $opt) {
+                                $res[] = sprintf('%s: %s', $opt['label'], $opt['option_value']);
+                            }
                         }
-                    }
 
-                    $item->setProductOptions(implode('<br>',$res));
+                        $item->setProductOptions(implode('<br>', $res));
+                    }
 				}
                 
                 $item->setPosition($pos);
