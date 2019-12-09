@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_eventparticipants_notification_order_index>
+        <reference name="content">
+            <block type="bfr_eventparticipants/adminhtml_notification_order" name="notification_order" />
+        </reference>
+    </adminhtml_eventparticipants_notification_order_index>
+
+</layout>

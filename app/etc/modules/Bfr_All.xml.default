@@ -26,6 +26,15 @@
                 <Egovs_EventBundle/>
             </depends>
         </Bfr_Eventparticipants>
+        <Bfr_EventFeed>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Bfr_Base />
+                <Egovs_EventBundle />
+                <Egovs_ProductFile />
+            </depends>
+        </Bfr_EventFeed>
         <Bfr_EventRequest>
             <active>true</active>
             <codePool>local</codePool>
