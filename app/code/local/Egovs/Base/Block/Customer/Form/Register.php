@@ -119,7 +119,7 @@ class Egovs_Base_Block_Customer_Form_Register extends Mage_Customer_Block_Form_R
 
         $cacheKey = 'DIRECTORY_COUNTRY_SELECT_STORE_'.Mage::app()->getStore()->getCode();
         if (Mage::app()->useCache('config') && $cache = Mage::app()->loadCache($cacheKey)) {
-            $options = unserialize($cache, false);
+            $options = unserialize($cache, array('allowed_classes' => false));
         } else {
             $options = $this->getCountryCollection()->toOptionArray();
             if (Mage::app()->useCache('config')) {
