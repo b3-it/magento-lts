@@ -257,7 +257,7 @@
                             <span class="required">*</span>
                             <?php echo $this->__('Password') ?>
                         </label>
-                        <?php $minPasswordLength = max((int)$this->getCustomer()->getMinPasswordLength(), Mage_Core_Model_App::ABSOLUTE_MIN_PASSWORD_LENGTH); ?>
+                        <?php $minPasswordLength = $this->getMinPasswordLength(); ?>
                         <input tabindex="16"
                                type="password"
                                name="password"
